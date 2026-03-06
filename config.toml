@@ -1,0 +1,23 @@
+baseURL = "https://example.org/"
+languageCode = "ru-RU"
+title = "Личный блог"
+defaultContentLanguage = "ru"
+enableRobotsTXT = true
+enableGitInfo = true
+
+[pagination]
+  pagerSize = 10
+
+[params]
+  description = "Личный сайт: обо мне и блог по разделам"
+  author = "Александр Блинов"
+  github = "https://github.com/aa-blinov"
+  telegram = "https://t.me/ahsasmi"
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+  [markup.highlight]
+    style = "github"
+    noClasses = false
