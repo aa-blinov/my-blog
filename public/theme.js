@@ -41,20 +41,7 @@
   };
 
   const copyToClipboard = async (text) => {
-    if (navigator.clipboard && window.isSecureContext) {
-      await navigator.clipboard.writeText(text);
-      return;
-    }
-
-    const textArea = document.createElement("textarea");
-    textArea.value = text;
-    textArea.setAttribute("readonly", "");
-    textArea.style.position = "absolute";
-    textArea.style.left = "-9999px";
-    document.body.appendChild(textArea);
-    textArea.select();
-    document.execCommand("copy");
-    document.body.removeChild(textArea);
+    await navigator.clipboard.writeText(text);
   };
 
   const enhanceCodeBlocks = () => {
@@ -96,14 +83,14 @@
   const enhanceExplorerSearch = () => {
     const explorers = document.querySelectorAll(".fs-explorer");
 
-    explorers.forEach((explorer, explorerIndex) => {
+    explorers.forEach((explorer) => {
       const search = explorer.querySelector(".fs-search");
       const sort = explorer.querySelector(".fs-sort");
       const rootNode = explorer.querySelector(".fs-tree");
       const empty = explorer.querySelector(".fs-empty");
       if (!search || !rootNode) return;
       const sortKey = "explorer_sort";
-      const collapsedKey = `explorer_collapsed_${explorerIndex}`;
+      const collapsedKey = "explorer_collapsed";
 
       let collapsedState = {};
       try {

@@ -3,7 +3,6 @@ title: "Главная"
 date: 2026-03-06
 draft: false
 summary: "Личный сайт: обо мне и блог по разделам."
-section: main
 ---
 
 # Привет

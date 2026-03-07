@@ -7,8 +7,18 @@ const blog = defineCollection({
     date: z.coerce.date(),
     draft: z.boolean().optional().default(false),
     summary: z.string().optional(),
-    section: z.enum(['dev', 'life', 'main', 'about']),
+    section: z.enum(['dev', 'life']),
   }),
 });
 
-export const collections = { blog };
+const pages = defineCollection({
+  type: 'content',
+  schema: z.object({
+    title: z.string(),
+    date: z.coerce.date(),
+    draft: z.boolean().optional().default(false),
+    summary: z.string().optional(),
+  }),
+});
+
+export const collections = { blog, pages };

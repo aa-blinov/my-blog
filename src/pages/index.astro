@@ -1,60 +1,24 @@
 ---
-import Layout from '../layouts/Layout.astro';
+import PageFromEntry from '../components/PageFromEntry.astro';
 import { getCollection } from 'astro:content';
 import { SECTION_TITLES } from '../config';
 
-const entries = (await getCollection('blog'))
-  .filter((e) => !e.data.draft)
-  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
-
-const homeEntry = entries.find((e) => e.data.section === 'main' || e.slug === 'main');
-
-function formatDate(d: Date): string {
-  return d.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
-}
+const pages = (await getCollection('pages')).filter((e) => !e.data.draft);
+const homeEntry = pages.find((e) => e.slug === 'main');
 
 let Content: import('astro').ContentComponent | null = null;
-let entryData: { title: string; date: Date; section: string; summary?: string } | null = null;
+let entryData: { data: { title: string; date: Date; summary?: string }; sectionLabel: string } | null = null;
 
 if (homeEntry) {
   const rendered = await homeEntry.render();
   Content = rendered.Content;
   entryData = {
-    title: homeEntry.data.title,
-    date: homeEntry.data.date,
-    section: SECTION_TITLES[homeEntry.data.section] ?? homeEntry.data.section,
-    summary: homeEntry.data.summary,
+    data: homeEntry.data,
+    sectionLabel: SECTION_TITLES['main'] ?? 'Главная',
   };
 }
 ---
 
-{Content && entryData ? (
-  <Layout title={entryData.title} description={entryData.summary}>
-    <section class="layout-main-single hero-layout">
-      <p class="terminal-prompt" aria-hidden="true">main &gt;</p>
-      <article class="prose flat-article single-pane">
-        <header>
-          <p class="meta">{formatDate(entryData.date)} · {entryData.section}</p>
-          <h1>{entryData.title}</h1>
-        </header>
-        <div class="article-content">
-          <Content />
-        </div>
-      </article>
-    </section>
-  </Layout>
-) : (
-  <Layout title="Главная">
-    <section class="layout-main-single hero-layout">
-      <p class="terminal-prompt" aria-hidden="true">main &gt;</p>
-      <article class="prose flat-article single-pane">
-        <header>
-          <h1>Главная</h1>
-        </header>
-        <div class="article-content">
-          <p>Добавь в <code>content/blog/</code> файл <code>main.md</code> с frontmatter: <code>section: main</code>, <code>title</code>, <code>date</code>.</p>
-        </div>
-      </article>
-    </section>
-  </Layout>
-)}
+<PageFromEntry entry={entryData} fallbackTitle="Главная" fallbackH1="Главная" prompt="main &gt;">
+  {Content ? <Content /> : <p>Добавь в <code>content/pages/</code> файл <code>main.md</code> с frontmatter: <code>title</code>, <code>date</code>.</p>}
+</PageFromEntry>

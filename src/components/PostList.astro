@@ -1,0 +1,21 @@
+---
+import { formatDate } from '../utils/date';
+import { BASE, SECTION_TITLES } from '../config';
+
+interface Props {
+  posts: { slug: string; data: { title: string; date: Date; section: string; summary?: string } }[];
+  sectionTitle?: string;
+}
+
+const { posts, sectionTitle } = Astro.props;
+---
+
+<div class="post-list">
+  {posts.map((entry) => (
+    <article class="card">
+      <p class="meta">{formatDate(entry.data.date)} · {sectionTitle ?? SECTION_TITLES[entry.data.section] ?? entry.data.section}</p>
+      <h3><a href={`${BASE}blog/${entry.data.section}/${entry.slug}/`}>{entry.data.title}</a></h3>
+      {entry.data.summary && <p>{entry.data.summary}</p>}
+    </article>
+  ))}
+</div>

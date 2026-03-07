@@ -3,7 +3,6 @@
 [data-theme="light"],
 :root:not([data-theme="dark"]) {
   --sidebar-w: 380px;
-  --navbar-w: 52px;
   --line: #d0d7de;
   --muted: #57606a;
   --surface: #f6f8fa;
@@ -30,7 +29,6 @@
 
 [data-theme="dark"] {
   --sidebar-w: 380px;
-  --navbar-w: 52px;
   --line: #30363d;
   --muted: #8b949e;
   --surface: #161b22;
@@ -171,7 +169,6 @@ html::-webkit-scrollbar-thumb:hover {
   margin-inline: auto;
 }
 
-.site-header,
 .site-footer {
   display: flex;
   align-items: center;
@@ -179,32 +176,35 @@ html::-webkit-scrollbar-thumb:hover {
   gap: calc(1rem * var(--spacing-scale));
   padding: calc(1rem * var(--spacing-scale)) calc(1rem * var(--spacing-scale));
 }
-.site-header {
-  padding-top: 0.25rem;
-  padding-bottom: 0.25rem;
-  margin-top: 0;
-}
 .site-footer {
   padding-top: calc(0.8rem * var(--spacing-scale));
   padding-bottom: calc(1rem * var(--spacing-scale));
 }
 
-.site-header {
-  justify-content: flex-start;
-  gap: 1rem;
-  border-bottom: none;
-  margin-top: 0 !important;
-}
-
-.site-header .header-left {
+.top-bar-breadcrumb .header-left {
   display: flex;
   align-items: center;
+  flex-shrink: 0;
 }
-.site-header .header-left + .brand {
-  margin-right: auto;
+.top-bar-breadcrumb .brand {
+  flex-shrink: 0;
+}
+.navbar-breadcrumb-wrap {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  overflow: hidden;
+  flex: 1;
+}
+.top-bar-path {
+  color: var(--muted);
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-/* Область контента справа от вертикального навбара */
+/* Основная область контента */
 .layout-body {
   display: flex;
   flex-direction: column;
@@ -217,9 +217,10 @@ html::-webkit-scrollbar-thumb:hover {
 .top-bar-breadcrumb {
   position: sticky;
   top: 0;
-  z-index: 40;
+  z-index: 50;
   display: flex;
   align-items: center;
+  gap: 0.75rem;
   height: var(--top-bar-height);
   min-height: var(--top-bar-height);
   padding: 0.25rem calc(1rem * var(--spacing-scale));
@@ -248,40 +249,6 @@ html::-webkit-scrollbar-thumb:hover {
 .top-bar-sep {
   margin: 0 0.25rem;
   color: var(--muted);
-}
-.top-bar-path {
-  color: var(--muted);
-}
-
-/* Вертикальный навбар от верха до низа (десктоп) */
-@media (min-width: 1001px) {
-  .site-header.site-navbar-vertical {
-    position: fixed;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    width: var(--navbar-w);
-    height: 100dvh;
-    min-height: 100dvh;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    padding: 0.5rem 0;
-    gap: 0.75rem;
-    background: var(--vscode-sidebar-bg);
-    border-right: none;
-    z-index: 50;
-    margin-top: 0 !important;
-  }
-  .site-header.site-navbar-vertical .header-left {
-    margin-right: 0;
-  }
-  .site-header.site-navbar-vertical .header-left + .brand {
-    margin-right: 0;
-  }
-  .layout-body {
-    margin-left: var(--navbar-w);
-  }
 }
 
 /* Controls (A−, A+, theme) inside top bar, same height as breadcrumb text */
@@ -331,19 +298,6 @@ html::-webkit-scrollbar-thumb:hover {
   display: block;
   width: 0.8rem;
   height: 0.8rem;
-}
-
-.header-right {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-
-.header-right {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  position: relative;
 }
 
 .site-footer {
@@ -670,45 +624,31 @@ body.nav-open .nav-menu-btn .nav-icon svg {
   padding: calc(0.5rem * var(--spacing-scale)) calc(0.75rem * var(--spacing-scale)) calc(0.75rem * var(--spacing-scale));
   font-family: "JetBrains Mono", "Cascadia Code", Consolas, monospace;
   font-size: 0.78rem;
-  overflow-x: auto;
+  overflow-x: hidden;
   overflow-y: auto;
   flex: 1;
   min-height: 0;
   scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
 }
 
-.fs-tree::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
-}
-.fs-tree::-webkit-scrollbar-track {
-  background: var(--scrollbar-track);
-}
-.fs-tree::-webkit-scrollbar-thumb {
-  background: var(--scrollbar-thumb);
-  border-radius: 10px;
-  border: 2px solid transparent;
-  background-clip: padding-box;
-}
-.fs-tree::-webkit-scrollbar-thumb:hover {
-  background: var(--scrollbar-thumb-hover);
-  background-clip: padding-box;
-}
-
-/* Скроллбар сайдбара под тему (в т.ч. мобильный .layout-sidebar) */
+/* Скроллбар дерева и сайдбара */
+.fs-tree::-webkit-scrollbar,
 .layout-sidebar::-webkit-scrollbar {
   width: 10px;
   height: 10px;
 }
+.fs-tree::-webkit-scrollbar-track,
 .layout-sidebar::-webkit-scrollbar-track {
   background: var(--scrollbar-track);
 }
+.fs-tree::-webkit-scrollbar-thumb,
 .layout-sidebar::-webkit-scrollbar-thumb {
   background: var(--scrollbar-thumb);
   border-radius: 10px;
   border: 2px solid transparent;
   background-clip: padding-box;
 }
+.fs-tree::-webkit-scrollbar-thumb:hover,
 .layout-sidebar::-webkit-scrollbar-thumb:hover {
   background: var(--scrollbar-thumb-hover);
   background-clip: padding-box;
@@ -1243,17 +1183,15 @@ h1 {
     -webkit-box-orient: vertical;
   }
 
-  /* Header: surface above sidebar so burger stays visible and clickable */
-  .site-header {
+  /* NavBar: surface above sidebar so burger stays visible and clickable */
+  .site-navbar {
     position: relative;
     z-index: 60;
-    padding-right: 5rem;
   }
 }
 
 @media (max-width: 700px) {
-  .site-header,
-  .header-right {
+  .site-navbar {
     flex-wrap: wrap;
   }
 

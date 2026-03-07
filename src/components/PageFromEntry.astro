@@ -1,0 +1,35 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { formatDate } from '../utils/date';
+
+interface Props {
+  entry: { data: { title: string; date: Date; summary?: string }; sectionLabel: string } | null;
+  fallbackTitle: string;
+  fallbackH1: string;
+  prompt: string;
+}
+
+const { entry, fallbackTitle, fallbackH1, prompt } = Astro.props;
+const hasEntry = !!entry;
+---
+
+<Layout title={hasEntry ? entry.data.title : fallbackTitle} description={hasEntry ? entry.data.summary : undefined}>
+  <section class="layout-main-single hero-layout">
+    <p class="terminal-prompt" aria-hidden="true">{prompt}</p>
+    <article class="prose flat-article single-pane">
+      <header>
+        {hasEntry ? (
+          <>
+            <p class="meta">{formatDate(entry.data.date)} · {entry.sectionLabel}</p>
+            <h1>{entry.data.title}</h1>
+          </>
+        ) : (
+          <h1>{fallbackH1}</h1>
+        )}
+      </header>
+      <div class="article-content">
+        <slot />
+      </div>
+    </article>
+  </section>
+</Layout>
