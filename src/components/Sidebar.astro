@@ -12,60 +12,118 @@ const { blogEntries, mainEntry, aboutEntry } = Astro.props;
 
 const bySection = { dev: [] as typeof blogEntries, life: [] as typeof blogEntries };
 blogEntries.forEach((e) => bySection[e.section].push(e));
+
+// Heroicons constants
+const docIcon = `
+<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="18" height="18">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
+</svg>
+`;
+
+const folderIcon = `
+<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="18" height="18">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12.75V12A2.25 2.25 0 0 1 4.5 9.75h15A2.25 2.25 0 0 1 21.75 12v.75m-8.69-6.44-2.12-2.12a1.5 1.5 0 0 0-1.06-.44H4.5A2.25 2.25 0 0 0 2.25 6v12a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9a2.25 2.25 0 0 0-2.25-2.25h-5.31c-.191 0-.372-.072-.51-.21l-2.12-2.12a1.5 1.5 0 0 0-1.06-.44H4.5A2.25 2.25 0 0 0 2.25 6v12a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9a2.25 2.25 0 0 0-2.25-2.25h-5.31c-.191 0-.372-.072-.51-.21Z" />
+</svg>
+`;
 ---
 
-<section class="fs-panel fs-explorer" aria-label="Дерево разделов и статей">
-  <div class="fs-search-wrap">
-    <div class="fs-tools">
-      <input class="fs-search" type="search" placeholder="Search files..." aria-label="Поиск по файлам" />
-      <select class="fs-sort" aria-label="Сортировка файлов">
-        <option value="date_desc">Новые</option>
-        <option value="name_asc">Имя</option>
-      </select>
-    </div>
-    <p class="fs-empty" hidden>Ничего не найдено.</p>
-  </div>
-
-  <ul class="fs-tree">
+<nav class="sidebar-nav">
+  <ul>
     {mainEntry && (
-      <li class="fs-file-item" data-name="main" data-date={Math.floor(mainEntry.date.getTime() / 1000)}>
-        <span class="fs-icon fs-icon-file" aria-hidden="true"></span>
-        <a class="fs-file-link" href={BASE} title="main.md">main.md</a>
-        <span class="fs-meta">{formatDate(mainEntry.date)}</span>
+      <li>
+        <a href={BASE} class="contrast">
+          <span class="file-icon" set:html={docIcon}></span> main.md
+        </a>
+        <div class="file-date">{formatDate(mainEntry.date)}</div>
       </li>
     )}
     {aboutEntry && (
-      <li class="fs-file-item" data-name="about-me" data-date={Math.floor(aboutEntry.date.getTime() / 1000)}>
-        <span class="fs-icon fs-icon-file" aria-hidden="true"></span>
-        <a class="fs-file-link" href={`${BASE}about-me/`} title="about-me.md">about-me.md</a>
-        <span class="fs-meta">{formatDate(aboutEntry.date)}</span>
+      <li>
+        <a href={`${BASE}about-me/`} class="contrast">
+          <span class="file-icon" set:html={docIcon}></span> about-me.md
+        </a>
+        <div class="file-date">{formatDate(aboutEntry.date)}</div>
       </li>
     )}
-    <li class="fs-folder-root">
-      <span class="fs-icon fs-icon-folder" aria-hidden="true"></span>
-      <span class="fs-folder">blog/</span>
-      <ul>
-        {(['dev', 'life'] as const).map((section) => (
-          <li class="fs-section" data-section={`${BASE}blog/${section}/`}>
-            <div class="fs-section-row">
-              <button class="fs-toggle" type="button" aria-expanded="true" aria-label={`Свернуть раздел ${SECTION_TITLES[section]}`}>
-                <span class="fs-toggle-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="14" height="14" fill="currentColor"><path d="M4 6l4 4 4-4"/></svg></span>
-              </button>
-              <span class="fs-icon fs-icon-folder fs-icon-folder-open" aria-hidden="true"></span>
-              <a class="fs-folder-link" href={`${BASE}blog/${section}/`}>{section}/</a>
-            </div>
-            <ul class="fs-files">
-              {bySection[section].map((entry) => (
-                  <li class="fs-file-item" data-name={entry.title.toLowerCase()} data-date={Math.floor(entry.date.getTime() / 1000)}>
-                    <span class="fs-icon fs-icon-file" aria-hidden="true"></span>
-                    <a class="fs-file-link" href={`${BASE}blog/${entry.section}/${entry.slug}/`} title={entry.title}>{entry.title}</a>
-                    <span class="fs-meta">{formatDate(entry.date)}</span>
-                  </li>
-                ))}
-            </ul>
-          </li>
-        ))}
-      </ul>
-    </li>
+    
+    {(['dev', 'life'] as const).map((section) => (
+      <li>
+        <details open>
+          <summary class="contrast">
+            <span class="folder-icon" set:html={folderIcon}></span> {section}/
+          </summary>
+          <ul>
+            {bySection[section].map((entry) => (
+              <li>
+                <a href={`${BASE}blog/${entry.section}/${entry.slug}/`}>
+                  <span class="file-icon" set:html={docIcon}></span> {entry.slug}.md
+                </a>
+                <div class="file-date">{formatDate(entry.date)}</div>
+              </li>
+            ))}
+          </ul>
+        </details>
+      </li>
+    ))}
   </ul>
-</section>
+</nav>
+
+<style>
+  .sidebar-nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .sidebar-nav li {
+    margin-bottom: 0.25rem;
+  }
+  
+  .sidebar-nav summary {
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: bold;
+    margin-bottom: 0.25rem;
+    display: flex;
+    align-items: center;
+  }
+  
+  .sidebar-nav summary::after {
+    display: none !important;
+  }
+
+  .sidebar-nav a {
+    text-decoration: none;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+  }
+
+  .sidebar-nav a:hover {
+    text-decoration: underline;
+  }
+
+  .file-date {
+    font-size: 0.7rem;
+    opacity: 0.5;
+    margin-left: 2rem;
+    margin-top: -0.2rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .file-icon, .folder-icon {
+    margin-right: 0.5rem;
+    width: 18px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    color: var(--pico-muted-color);
+  }
+
+  /* Indentation for nested items */
+  details ul {
+    padding-left: 1rem !important;
+    border-left: 1px solid var(--pico-muted-border-color);
+    margin-left: 0.5rem !important;
+  }
+</style>

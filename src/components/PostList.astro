@@ -11,11 +11,17 @@ const { posts, sectionTitle } = Astro.props;
 ---
 
 <div class="post-list">
-  {posts.map((entry) => (
-    <article class="card">
-      <p class="meta">{formatDate(entry.data.date)} · {sectionTitle ?? SECTION_TITLES[entry.data.section] ?? entry.data.section}</p>
-      <h3><a href={`${BASE}blog/${entry.data.section}/${entry.slug}/`}>{entry.data.title}</a></h3>
-      {entry.data.summary && <p>{entry.data.summary}</p>}
-    </article>
-  ))}
+  {posts.length === 0 ? (
+    <p>Пока ничего нет.</p>
+  ) : (
+    posts.map((entry) => (
+      <article>
+        <header>
+          <p class="meta">{formatDate(entry.data.date)} · {sectionTitle ?? SECTION_TITLES[entry.data.section] ?? entry.data.section}</p>
+          <h2 style="margin: 0"><a href={`${BASE}blog/${entry.data.section}/${entry.slug}/`} class="contrast">{entry.data.title}</a></h2>
+        </header>
+        {entry.data.summary && <p>{entry.data.summary}</p>}
+      </article>
+    ))
+  )}
 </div>

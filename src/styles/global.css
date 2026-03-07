@@ -1,1201 +1,158 @@
-/* Overrides and layout on top of Pico CSS. GitHub-style light/dark themes via data-theme. */
-
-[data-theme="light"],
-:root:not([data-theme="dark"]) {
-  --sidebar-w: 380px;
-  --line: #d0d7de;
-  --muted: #57606a;
-  --surface: #f6f8fa;
-  --accent: #656d76;
-  --github-green: #2da44e;
-  --telegram-blue: #229ed9;
-  /* VS Code–style explorer */
-  --vscode-sidebar-bg: #f3f4f6;
-  --vscode-sidebar-hover: rgba(0, 0, 0, 0.06);
-  --vscode-sidebar-active: rgba(0, 0, 0, 0.08);
-  --vscode-folder: #d4a024;
-  --vscode-file: #519aba;
-  /* GitHub light: override Pico for page/sidebar */
-  --pico-background-color: #ffffff;
-  --scrollbar-track: #f0f0f0;
-  --scrollbar-thumb: #c0c0c0;
-  --scrollbar-thumb-hover: #a0a0a0;
-  --pico-color: #1f2328;
-  --pico-muted-color: var(--muted);
-  --pico-primary: #656d76;
-  --pico-primary-hover: #424a53;
-  --pico-primary-focus: rgba(0, 0, 0, 0.08);
-}
-
-[data-theme="dark"] {
-  --sidebar-w: 380px;
-  --line: #30363d;
-  --muted: #8b949e;
-  --surface: #161b22;
-  --accent: #8b949e;
-  --github-green: #3fb950;
-  --telegram-blue: #2aabee;
-  /* VS Code–style explorer */
-  --vscode-sidebar-bg: #1e1e1e;
-  --vscode-sidebar-hover: rgba(255, 255, 255, 0.06);
-  --vscode-sidebar-active: rgba(255, 255, 255, 0.1);
-  --vscode-folder: #dcb67a;
-  --vscode-file: #519aba;
-  /* GitHub dark */
-  --pico-background-color: #0d1117;
-  --scrollbar-track: #1e1e1e;
-  --scrollbar-thumb: #424242;
-  --scrollbar-thumb-hover: #4e4e4e;
-  --pico-color: #e6edf3;
-  --pico-muted-color: var(--muted);
-  --pico-primary: #8b949e;
-  --pico-primary-hover: #a0aec0;
-  --pico-primary-focus: rgba(255, 255, 255, 0.06);
-}
-
-/* Font size: s / m / l (stored in localStorage, applied via data-font-size).
-   Profiles by viewport (MacBook, Full HD, 2K, 4K) set --profile-font-base and --spacing-scale. */
 :root {
-  --profile-font-base: 15px;
-  --spacing-scale: 1;
-  --top-bar-height: 40px;
-  font-size: var(--profile-font-base);
-  --scrollbar-track: #f0f0f0;
-  --scrollbar-thumb: #c0c0c0;
-  --scrollbar-thumb-hover: #a0a0a0;
-}
-
-/* Профили по разрешению: размер шрифта и отступы */
-/* MacBook Air 13" (1440×900) — без изменений */
-@media (min-width: 1440px) {
-  :root {
-    --profile-font-base: 15px;
-    --spacing-scale: 1;
-  }
-}
-
-/* MacBook Pro 14" (1512×982) */
-@media (min-width: 1512px) {
-  :root {
-    --profile-font-base: 15.5px;
-    --spacing-scale: 1.02;
-  }
-}
-
-/* MacBook Pro 16" (1728×1117) */
-@media (min-width: 1728px) {
-  :root {
-    --profile-font-base: 16px;
-    --spacing-scale: 1.05;
-  }
-}
-
-/* Full HD (1920×1080) */
-@media (min-width: 1920px) {
-  :root {
-    --profile-font-base: 16px;
-    --spacing-scale: 1.08;
-  }
-}
-
-/* 2K / QHD (2560×1440) */
-@media (min-width: 2560px) {
-  :root {
-    --profile-font-base: 16.5px;
-    --spacing-scale: 1.12;
-  }
-}
-
-/* 4K (3840×2160) */
-@media (min-width: 3840px) {
-  :root {
-    --profile-font-base: 17px;
-    --spacing-scale: 1.15;
-    --sidebar-w: 420px;
-  }
-}
-
-[data-font-size="s"] {
-  font-size: calc(var(--profile-font-base) * 0.933);
-  --font-size-base: 0.875rem;
-}
-[data-font-size="m"] {
-  font-size: var(--profile-font-base);
-  --font-size-base: 0.9375rem;
-}
-[data-font-size="l"] {
-  font-size: calc(var(--profile-font-base) * 1.067);
-  --font-size-base: 1rem;
+  --font-family: 'JetBrains Mono', 'Cascadia Code', Consolas, monospace;
 }
 
 body {
-  font-family: "JetBrains Mono", "Cascadia Code", Consolas, "Liberation Mono", monospace;
-  font-size: 1rem;
+  font-family: var(--font-family);
   line-height: 1.6;
-  min-height: 100dvh;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-family);
+}
+
+pre,
+code {
+  font-family: var(--font-family);
+}
+
+/* Vertical Layout */
+.app-layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.vertical-navbar {
+  width: 64px;
+  background: var(--pico-card-background-color);
+  border-right: 1px solid var(--pico-muted-border-color);
   display: flex;
   flex-direction: column;
-  margin: 0;
-  padding: 0;
-}
-
-html {
-  overflow-x: hidden;
-  margin: 0;
-  padding: 0;
-}
-
-/* Скроллбар страницы под тему */
-html::-webkit-scrollbar {
-  width: 12px;
-  height: 12px;
-}
-html::-webkit-scrollbar-track {
-  background: var(--scrollbar-track);
-}
-html::-webkit-scrollbar-thumb {
-  background: var(--scrollbar-thumb);
-  border-radius: 12px;
-  border: 3px solid transparent;
-  background-clip: padding-box;
-}
-html::-webkit-scrollbar-thumb:hover {
-  background: var(--scrollbar-thumb-hover);
-  background-clip: padding-box;
-}
-
-.wrap {
-  width: min(940px, 92vw);
-  margin-inline: auto;
-}
-
-.site-footer {
-  display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: calc(1rem * var(--spacing-scale));
-  padding: calc(1rem * var(--spacing-scale)) calc(1rem * var(--spacing-scale));
-}
-.site-footer {
-  padding-top: calc(0.8rem * var(--spacing-scale));
-  padding-bottom: calc(1rem * var(--spacing-scale));
-}
-
-.top-bar-breadcrumb .header-left {
-  display: flex;
-  align-items: center;
-  flex-shrink: 0;
-}
-.top-bar-breadcrumb .brand {
-  flex-shrink: 0;
-}
-.navbar-breadcrumb-wrap {
-  display: flex;
-  align-items: center;
-  min-width: 0;
-  overflow: hidden;
-  flex: 1;
-}
-.top-bar-path {
-  color: var(--muted);
-  min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-/* Основная область контента */
-.layout-body {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  min-width: 0;
-  min-height: 100dvh;
-}
-
-/* GitHub-style breadcrumb bar (exploreclaudecode-like) */
-.top-bar-breadcrumb {
+  padding: 1rem 0;
   position: sticky;
   top: 0;
-  z-index: 50;
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  height: var(--top-bar-height);
-  min-height: var(--top-bar-height);
-  padding: 0.25rem calc(1rem * var(--spacing-scale));
-  font-family: "JetBrains Mono", "Cascadia Code", Consolas, monospace;
-  font-size: 0.8rem;
-  line-height: 1;
-  color: var(--muted);
-  background: var(--vscode-sidebar-bg);
-  border-bottom: 1px solid var(--line);
+  height: 100vh;
+  z-index: 100;
 }
 
-.theme-controls-in-bar {
-  display: flex;
+.vertical-navbar ul {
+  flex-direction: column;
   align-items: center;
-  align-self: center;
-  gap: 0.35rem;
-  margin-left: auto;
-  flex-shrink: 0;
-  font-size: 0.8rem;
-  line-height: 1;
-}
-.top-bar-text {
-  color: var(--pico-color);
-  font-weight: 600;
-}
-.top-bar-sep {
-  margin: 0 0.25rem;
-  color: var(--muted);
+  gap: 1.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
-/* Controls (A−, A+, theme) inside top bar, same height as breadcrumb text */
-.theme-controls-in-bar .font-size-btn,
-.theme-controls-in-bar .theme-btn-icon {
-  width: 1.75rem;
-  height: 1.75rem;
-  min-width: 1.75rem;
-  min-height: 1.75rem;
+.vertical-navbar a,
+.vertical-navbar button {
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
   padding: 0;
   margin: 0;
-  border-radius: 4px;
-  font-size: inherit;
-  line-height: inherit;
 }
 
-.theme-icon {
-  display: block;
-  line-height: 0;
-  color: var(--muted);
-}
-.theme-icon-moon {
-  display: none;
-}
-[data-theme="light"] .theme-icon-sun,
-:root:not([data-theme="dark"]) .theme-icon-sun {
-  display: block;
-}
-[data-theme="light"] .theme-icon-moon,
-:root:not([data-theme="dark"]) .theme-icon-moon {
-  display: none;
-}
-[data-theme="dark"] .theme-icon-sun {
-  display: none;
-}
-[data-theme="dark"] .theme-icon-moon {
-  display: block;
+.main-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
-.theme-btn-icon {
-  line-height: 0;
-}
-.theme-btn-icon .theme-icon svg {
-  display: block;
-  width: 0.8rem;
-  height: 0.8rem;
-}
-
-.site-footer {
-  border-top: 1px solid var(--line);
-  margin-top: calc(1.5rem * var(--spacing-scale));
-  padding-top: calc(0.8rem * var(--spacing-scale));
-  padding-bottom: calc(1.2rem * var(--spacing-scale));
-  color: var(--muted);
+/* Simple Sidebar layout for desktop */
+@media (min-width: 992px) {
+  .main-grid {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 3rem;
+    padding: 2rem;
+  }
 }
 
-.site-footer .social-link {
+@media (max-width: 991px) {
+  .app-layout {
+    flex-direction: column;
+  }
+
+  .vertical-navbar {
+    width: 100%;
+    height: auto;
+    flex-direction: row;
+    position: relative;
+    padding: 0.5rem 1rem;
+  }
+
+  .vertical-navbar ul {
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .main-grid {
+    padding: 1rem;
+  }
+}
+
+/* Theme Toggle Icons */
+#sun-icon,
+#moon-icon {
+  display: none !important;
+}
+
+html[data-theme="dark"] #sun-icon {
+  display: block !important;
+}
+
+html[data-theme="light"] #moon-icon {
+  display: block !important;
+}
+
+.sidebar-nav ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar-nav li {
+  margin-bottom: 0.5rem;
+}
+
+.sidebar-nav a {
   text-decoration: none;
 }
 
-.site-footer .social-link:hover {
+.sidebar-nav .active {
+  font-weight: bold;
   text-decoration: underline;
 }
 
-.site-footer .social-link-github {
-  color: var(--github-green);
-}
-
-.site-footer .social-link-telegram {
-  color: var(--telegram-blue);
-}
-
-.site-footer .social-link-github:hover {
-  text-decoration-color: color-mix(in oklab, var(--github-green), transparent 25%);
-}
-
-.site-footer .social-link-telegram:hover {
-  text-decoration-color: color-mix(in oklab, var(--telegram-blue), transparent 25%);
-}
-
-.site-main {
-  flex: 1;
-}
-
-.brand,
-.site-nav a,
-.theme-btn,
-h1, h2, h3 {
-  font-family: "JetBrains Mono", "Cascadia Code", Consolas, monospace;
-}
-
-.brand {
-  text-decoration: none;
-  font-weight: 800;
-  letter-spacing: 0.02em;
-}
-
-.brand.brand-icon-only {
-  display: block;
-  min-width: 2rem;
-  min-height: 1.5rem;
-}
-
-.site-nav {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-
-.site-nav a {
-  text-decoration: none;
-  font-weight: 600;
-}
-
-/* Кнопка меню: стрелка вправо (открыть), при открытом меню — поворот на 180° влево (закрыть) */
-.nav-menu-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: none;
-  background: transparent;
-  color: var(--muted);
-  border-radius: 4px;
-  padding: 0.4rem;
-  cursor: pointer;
-  line-height: 0;
-}
-.nav-menu-btn:hover {
-  color: var(--pico-color);
-}
-.nav-menu-btn:focus,
-.nav-menu-btn:focus-visible {
-  outline: none;
-  box-shadow: none;
-}
-.nav-menu-btn .nav-icon {
-  display: block;
-  line-height: 0;
-}
-.nav-menu-btn .nav-icon svg {
-  display: block;
-  width: 20px;
-  height: 20px;
-  transition: transform 0.2s ease;
-}
-body.nav-open .nav-menu-btn .nav-icon svg {
-  transform: rotate(180deg);
-}
-
-.font-size-controls {
-  display: flex;
-  align-items: center;
-  gap: 0.15rem;
-}
-
-.font-size-btn {
-  border: none;
-  background: transparent;
-  color: var(--muted);
-  border-radius: 4px;
-  padding: 0;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  line-height: 1;
-}
-.font-size-btn:hover {
-  color: var(--pico-color);
-}
-.font-size-btn:focus {
-  outline: none;
-  box-shadow: none;
-}
-
-.theme-btn {
-  border: none;
-  background: transparent;
-  color: var(--muted);
-  border-radius: 4px;
-  padding: 0.4rem;
-  font-size: 0.8125rem;
-  font-weight: 600;
-  cursor: pointer;
-  line-height: 0;
-}
-.theme-btn:hover {
-  color: var(--pico-color);
-}
-.theme-btn:focus,
-.theme-btn:focus-visible {
-  outline: none;
-  box-shadow: none;
-}
-
-/* Layout: sidebar + main (in baseof). 100% вместо 100vw — убирает горизонтальный скролл из-за ширины полосы прокрутки. */
-.layout-vscode {
-  display: grid;
-  grid-template-columns: var(--sidebar-w) minmax(0, 1fr);
-  grid-template-areas: "sidebar content";
-  gap: 0;
-  align-items: stretch;
-  width: 100%;
-  flex: 1;
-  min-width: 0;
-  min-height: 0;
-}
-
-.layout-content-col {
-  grid-area: content;
-  display: flex;
-  flex-direction: column;
-  min-height: 0;
-  min-width: 0;
-}
-
-.layout-content-col .site-main {
-  flex: 1;
-}
-
-.layout-content-col .site-footer {
-  flex-shrink: 0;
-}
-
-.layout-sidebar {
-  grid-area: sidebar;
-  position: sticky;
-  top: var(--top-bar-height);
-  margin-top: 0;
-  align-self: stretch;
-  border-right: none;
-  padding-right: calc(0.9rem * var(--spacing-scale));
-  background: var(--vscode-sidebar-bg);
-  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
-  display: flex;
-  flex-direction: column;
-  min-height: 0;
-}
-
-.layout-sidebar .fs-panel {
-  margin-bottom: 0;
-  border: 0;
-  border-radius: 0;
-  background: transparent;
-  flex: 1;
-  min-height: 0;
-  display: flex;
-  flex-direction: column;
-}
-
-.layout-sidebar .fs-explorer {
-  flex: 1;
-  min-height: 0;
-  display: flex;
-  flex-direction: column;
-  background: var(--vscode-sidebar-bg);
-  border-radius: 0;
-  border: 0;
-}
-
-.layout-main {
-  width: min(940px, 92vw);
-  justify-self: center;
-  padding: calc(1.5rem * var(--spacing-scale)) calc(1.1rem * var(--spacing-scale)) calc(1rem * var(--spacing-scale));
-  border-top: 1px solid var(--line);
-}
-
-@media (min-width: 1001px) {
-  .layout-main {
-    padding-top: calc(4.5rem * var(--spacing-scale));
-  }
-}
-
-.layout-main-single {
-  width: min(940px, 100%);
-  max-width: 840px;
-  margin-inline: auto;
-}
-
-/* File tree */
-.fs-panel {
-  border: 1px solid var(--line);
-  border-radius: 14px;
-  background: color-mix(in oklab, var(--surface), transparent 10%);
-  overflow: hidden;
-  margin-bottom: 1.5rem;
-}
-
-.fs-panel-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: calc(1rem * var(--spacing-scale));
-  border-bottom: 1px solid var(--line);
-  padding: calc(0.5rem * var(--spacing-scale)) calc(0.75rem * var(--spacing-scale));
-  font-size: 0.8rem;
-}
-
-.fs-panel-head small {
-  color: var(--muted);
-  font-size: 0.7rem;
-}
-
-.fs-search-wrap {
-  padding: 0.25rem 0.6rem 0.2rem;
-  border-bottom: 1px solid var(--line);
-}
-
-.fs-tools {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: 0.35rem;
-  align-items: stretch;
-}
-
-@media (max-width: 1200px) {
-  .fs-tools {
-    grid-template-columns: 1fr;
-  }
-}
-
-.fs-search {
-  width: 100%;
-  border: 1px solid var(--line);
-  background: var(--surface);
-  color: var(--pico-color);
-  border-radius: 4px;
-  padding: 0 0.5rem 0 0.4rem;
-  font-family: "JetBrains Mono", "Cascadia Code", Consolas, monospace;
-  font-size: 0.7rem;
-  line-height: 1;
-  height: 28px !important;
-  min-height: 28px !important;
-  box-sizing: border-box;
-  margin: 0;
-}
-.fs-search::placeholder {
-  color: var(--muted);
-}
-
-.fs-sort {
-  border-radius: 4px;
-  padding: 0 0.6rem 0 0.35rem;
-  font-family: "JetBrains Mono", "Cascadia Code", Consolas, monospace;
-  font-size: 0.7rem;
-  height: 28px !important;
-  min-height: 28px !important;
-  line-height: 1;
-  box-sizing: border-box;
-  border: 1px solid var(--line);
-  background: var(--surface);
-  color: var(--pico-color);
-  margin: 0;
-}
-
-.fs-empty {
-  margin: 0.35rem 0.1rem 0.25rem;
-  color: var(--muted);
-  font-family: "JetBrains Mono", "Cascadia Code", Consolas, monospace;
-  font-size: 0.72rem;
-}
-
-.fs-tree,
-.fs-tree ul {
-  list-style: none;
-  margin: 0;
-  padding-left: 1.1rem;
-}
-
-.fs-tree {
-  padding: calc(0.5rem * var(--spacing-scale)) calc(0.75rem * var(--spacing-scale)) calc(0.75rem * var(--spacing-scale));
-  font-family: "JetBrains Mono", "Cascadia Code", Consolas, monospace;
-  font-size: 0.78rem;
-  overflow-x: hidden;
-  overflow-y: auto;
-  flex: 1;
-  min-height: 0;
-  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
-}
-
-/* Скроллбар дерева и сайдбара */
-.fs-tree::-webkit-scrollbar,
-.layout-sidebar::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
-}
-.fs-tree::-webkit-scrollbar-track,
-.layout-sidebar::-webkit-scrollbar-track {
-  background: var(--scrollbar-track);
-}
-.fs-tree::-webkit-scrollbar-thumb,
-.layout-sidebar::-webkit-scrollbar-thumb {
-  background: var(--scrollbar-thumb);
-  border-radius: 10px;
-  border: 2px solid transparent;
-  background-clip: padding-box;
-}
-.fs-tree::-webkit-scrollbar-thumb:hover,
-.layout-sidebar::-webkit-scrollbar-thumb:hover {
-  background: var(--scrollbar-thumb-hover);
-  background-clip: padding-box;
-}
-
-[data-theme="dark"] .fs-tree::-webkit-scrollbar-track,
-[data-theme="dark"] .layout-sidebar::-webkit-scrollbar-track {
-  background: #1e1e1e;
-}
-[data-theme="dark"] .fs-tree::-webkit-scrollbar-thumb,
-[data-theme="dark"] .layout-sidebar::-webkit-scrollbar-thumb {
-  background: #424242;
-}
-[data-theme="dark"] .fs-tree::-webkit-scrollbar-thumb:hover,
-[data-theme="dark"] .layout-sidebar::-webkit-scrollbar-thumb:hover {
-  background: #4e4e4e;
-}
-[data-theme="dark"] .fs-tree,
-[data-theme="dark"] .layout-sidebar {
-  scrollbar-color: #424242 #1e1e1e;
-}
-
-.fs-tree li {
-  position: relative;
-  padding-left: 0.9rem;
-  margin: 0.02rem 0;
-}
-
-.fs-tree li::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0.8em;
-  width: 0.6rem;
-  border-top: 1px solid var(--line);
-}
-
-.fs-tree li::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: -0.45rem;
-  bottom: -0.45rem;
-  border-left: 1px solid var(--line);
-}
-
-.fs-tree li:last-child::after {
-  bottom: 0.8em;
-}
-
-/* VS Code–style icons (mask + background-color) */
-.fs-icon {
-  display: inline-block;
-  width: 1em;
-  height: 1em;
-  flex-shrink: 0;
-  margin-right: 0.35em;
-  vertical-align: middle;
-}
-.fs-icon-file {
-  background-color: var(--vscode-file);
-  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='black' d='M2 1a1 1 0 0 1 1-1h5.586a1 1 0 0 1 .707.293l4 4A1 1 0 0 1 14 5.414V15a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V1zm9.586 0H3v14h10V5.414L11.586 1zM9 2v3h3l-3-3z'/%3E%3C/svg%3E") no-repeat center / contain;
-  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='black' d='M2 1a1 1 0 0 1 1-1h5.586a1 1 0 0 1 .707.293l4 4A1 1 0 0 1 14 5.414V15a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V1zm9.586 0H3v14h10V5.414L11.586 1zM9 2v3h3l-3-3z'/%3E%3C/svg%3E") no-repeat center / contain;
-}
-.fs-icon-folder,
-.fs-icon-folder-open {
-  background-color: var(--vscode-folder);
-  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='black' d='M2 2a1 1 0 0 1 1-1h3.586a1 1 0 0 1 .707.293L8.414 4H14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2zm2 1v10h10V6H7.414L4.586 4H4z'/%3E%3C/svg%3E") no-repeat center / contain;
-  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='black' d='M2 2a1 1 0 0 1 1-1h3.586a1 1 0 0 1 .707.293L8.414 4H14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2zm2 1v10h10V6H7.414L4.586 4H4z'/%3E%3C/svg%3E") no-repeat center / contain;
-}
-
-.fs-folder,
-.fs-folder-link {
-  color: var(--pico-color);
-  text-decoration: none;
-  white-space: nowrap;
-}
-
-.fs-file-link {
-  color: var(--pico-color);
-  text-decoration: none;
-  white-space: normal;
-  overflow-wrap: anywhere;
-  line-height: 1.35;
-}
-
-.fs-folder {
-  font-weight: 700;
-}
-
-.fs-folder-link {
-  font-weight: 700;
-}
-
-.fs-section .fs-toggle {
-  border: 0;
-  background: transparent !important;
-  background-color: transparent !important;
-  color: var(--muted);
-  padding: 0;
-  margin: 0 0.2rem 0 0;
-  width: 1.25rem;
-  min-width: 1.25rem;
-  height: 1.25rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  flex-shrink: 0;
-  border-radius: 0;
-  appearance: none;
-  -webkit-tap-highlight-color: transparent;
-}
-.fs-section .fs-toggle:hover,
-.fs-section .fs-toggle:active {
-  background: transparent !important;
-  background-color: transparent !important;
-}
-.fs-section .fs-toggle:focus,
-.fs-section .fs-toggle:focus-visible {
-  outline: none;
-  box-shadow: none;
-  background: transparent !important;
-  background-color: transparent !important;
-}
-.fs-section .fs-toggle .fs-toggle-icon {
-  display: block;
-  line-height: 0;
-  transition: transform 0.15s ease;
-}
-.fs-section.is-collapsed .fs-section-row .fs-toggle .fs-toggle-icon {
-  transform: rotate(-90deg);
-}
-
-.fs-section {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  /* Расширяем до правого края дерева, чтобы даты были в одной колонке */
-  width: calc(100% + 2rem);
-  margin-right: -2rem;
-}
-
-.fs-section > .fs-folder-link {
-  flex-shrink: 0;
-}
-
-.fs-section .fs-toggle:hover {
-  color: var(--pico-color);
-}
-
-.fs-section > .fs-files {
-  flex-basis: 100%;
-  margin-top: 0.02rem;
-}
-
-/* Убираем отступ между соседними разделами (dev/ и life/) — он был от .fs-tree li */
-.fs-tree .fs-folder-root ul > li.fs-section {
-  margin: 0;
-}
-
-.fs-section-row {
-  display: flex;
-  align-items: center;
-  flex-wrap: nowrap;
-  gap: 0.15rem;
-  margin: 0 -0.25rem;
-  padding: 0.04rem 0.25rem;
-  border-radius: 4px;
-}
-.fs-section-row:hover {
-  background: var(--vscode-sidebar-hover);
-}
-.layout-sidebar .fs-file-link.is-active,
-.layout-sidebar .fs-folder-link.is-active {
-  background: var(--vscode-sidebar-active);
-  border-radius: 4px;
-}
-/* Выделяем всю строку раздела (включая иконку), как у файлов */
-.layout-sidebar .fs-section-row:has(.fs-folder-link.is-active) {
-  background: var(--vscode-sidebar-active);
-}
-.layout-sidebar .fs-section-row .fs-folder-link.is-active {
-  background: none;
-}
-/* Выделяем всю строку (включая дату), без сдвига — фон на родителе */
-.layout-sidebar .fs-file-item:has(.fs-file-link.is-active) {
-  background: var(--vscode-sidebar-active);
-}
-.layout-sidebar .fs-file-item a.is-active {
-  background: none;
-}
-
-.fs-folder-link:hover,
-.fs-file-link:hover {
-  color: var(--accent);
-}
-
-.fs-meta {
-  display: block;
-  margin-top: 0.05rem;
-  margin-left: auto;
-  flex-shrink: 0;
-  color: var(--muted);
-  font-family: "JetBrains Mono", "Cascadia Code", Consolas, monospace;
-  font-size: 0.7rem;
-  white-space: nowrap;
-}
-
-.fs-file-item {
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  align-items: center;
-  width: 100%;
-  margin: 0 -0.25rem;
-  padding: 0.04rem 0.25rem;
-  border-radius: 4px;
-  gap: 0 0.35rem;
-}
-.fs-file-item:hover {
-  background: var(--vscode-sidebar-hover);
-}
-.fs-file-item .fs-file-link {
-  min-width: 0;
-}
-.fs-file-item .fs-meta {
-  margin-top: 0;
-  justify-self: end;
-}
-
-.fs-file-item + .fs-file-item {
-  margin-top: 0;
-}
-
-.fs-folder-root {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-}
-/* ul с разделами — на всю ширину, чтобы даты выравнивались как в корне */
-.fs-folder-root > ul {
-  flex-basis: 100%;
-  width: 100%;
-}
-.fs-folder-root > .fs-icon {
-  margin-right: 0.35em;
-}
-.fs-folder-root > .fs-folder {
-  flex-shrink: 0;
-}
-
-/* Home and lists */
-.home-top {
-  padding: 1.5rem 0 1rem;
-}
-
-.eyebrow {
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--muted);
-  font-size: 0.78rem;
-  font-weight: 700;
-}
-
-h1 {
-  line-height: 1.2;
-  font-size: clamp(1.5rem, 4vw, 2.25rem);
-  margin: 0.2rem 0 0.5rem;
-}
-
-.lead {
-  font-size: 1rem;
-  color: var(--muted);
-  max-width: 60ch;
-}
-
-.post-list {
-  display: flex;
-  flex-direction: column;
-  gap: calc(1.5rem * var(--spacing-scale));
-}
-
-/* Список статей без подложки — только типографика и отступы */
-.post-list .card,
-.post-list article.card {
-  border: none;
-  border-radius: 0;
-  padding: 0;
-  margin-bottom: 0;
-  background: transparent;
-}
-
-.post-list .card:last-child,
-.post-list article.card:last-child {
-  padding-bottom: 0;
-}
-
-.post-list .card h2,
-.post-list .card h3,
-.post-list article.card h2,
-.post-list article.card h3 {
-  margin: 0.2rem 0 0.35rem;
-}
-
-.recent-heading {
-  margin-top: 2rem;
-  margin-bottom: 0.75rem;
-  font-size: 1.1rem;
-  font-weight: 700;
-}
-
-.card {
-  border: 1px solid var(--line);
-  border-radius: 14px;
-  padding: calc(1rem * var(--spacing-scale));
-  background: color-mix(in oklab, var(--surface), transparent 22%);
-}
-
-.card h2,
-.card h3 {
-  margin: 0.35rem 0;
-}
-
-.card a {
-  color: inherit;
-  text-decoration: none;
-}
-
 .meta {
-  color: var(--muted);
-  font-size: 0.8125rem;
-  margin: 0;
-}
-
-.prose h1,
-.prose h2,
-.prose h3 {
-  line-height: 1.3;
-}
-
-/* Article: no card/substrate – content on page background */
-.flat-article,
-.site-main article.flat-article {
-  background: transparent !important;
-  box-shadow: none !important;
-  padding: 0 !important;
-  margin-bottom: 0;
-}
-
-.flat-article header,
-.site-main article.flat-article header {
-  margin: 0;
-  padding: 0;
-  background: transparent;
-  border: none;
-}
-
-.flat-article {
-  margin: 0 0 calc(1.5rem * var(--spacing-scale));
-  font-size: var(--font-size-base);
-}
-
-.flat-article .article-content,
-.flat-article .prose {
-  font-size: var(--font-size-base);
-}
-
-.single-pane {
-  max-width: 840px;
-  margin-inline: auto;
-  padding-inline: 0.5rem;
-}
-
-.list-flat {
-  margin: 0.55rem 0 1.2rem;
-}
-
-.flat-article h1 {
-  margin-top: 0;
-  margin-bottom: 0.75rem;
-}
-
-/* Hero + terminal aesthetic (exploreclaudecode-like) */
-.hero-layout .terminal-prompt {
-  font-family: "JetBrains Mono", "Cascadia Code", Consolas, monospace;
-  font-size: 0.85rem;
-  color: var(--muted);
-  margin: 0 0 0.5rem;
-}
-.hero-layout h1 {
-  font-size: clamp(2rem, 5vw, 3rem);
-  margin-bottom: 1rem;
-}
-.hero-layout .flat-article,
-.hero-layout .prose {
-  padding-top: 0.5rem;
-}
-
-/* Code-like lines (// comment style) */
-.code-like {
-  font-family: "JetBrains Mono", "Cascadia Code", Consolas, monospace;
-  font-size: 0.9em;
-  color: var(--muted);
-  font-style: italic;
-}
-
-.flat-article .article-content > h1:first-child {
-  display: none;
-}
-
-.prose :not(pre) > code {
-  font-family: "JetBrains Mono", "Cascadia Code", Consolas, monospace;
-  background: color-mix(in oklab, var(--line), transparent 45%);
-  padding: 0.15rem 0.35rem;
-  border-radius: 6px;
-}
-
-.prose pre {
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  padding: calc(0.9rem * var(--spacing-scale)) calc(1rem * var(--spacing-scale));
-  overflow-x: auto;
-}
-
-.prose pre code {
-  background: transparent;
-  padding: 0;
-  border-radius: 0;
+  color: var(--pico-muted-color);
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
 }
 
 .highlight {
   position: relative;
+  margin-bottom: 1rem;
 }
 
 .code-copy-btn {
   position: absolute;
-  top: 0.55rem;
-  right: 0.55rem;
-  border: 1px solid var(--line);
-  background: color-mix(in oklab, var(--pico-background-color), transparent 8%);
-  color: var(--muted);
-  border-radius: 9px;
-  padding: 0.25rem 0.55rem;
-  font-family: "JetBrains Mono", "Cascadia Code", Consolas, monospace;
-  font-size: 0.8rem;
-  font-weight: 600;
-  line-height: 1;
-  cursor: pointer;
+  top: 0.5rem;
+  right: 0.5rem;
+  font-size: 0.7rem;
+  padding: 0.2rem 0.5rem;
+  opacity: 0.6;
 }
 
 .code-copy-btn:hover {
-  color: var(--pico-color);
-}
-
-.code-copy-btn.copied {
-  color: var(--accent);
-}
-
-@media (min-width: 1001px) {
-  .nav-menu-btn {
-    display: none;
-  }
-}
-
-@media (max-width: 1000px) {
-  .layout-vscode {
-    width: 100%;
-    margin-left: 0;
-    grid-template-columns: 1fr;
-  }
-
-  /* На узком экране сайдбар скрыт; по бургеру открывается как навигация */
-  .layout-sidebar {
-    position: fixed;
-    left: 0;
-    top: 0;
-    width: min(280px, 85vw);
-    height: 100%;
-    z-index: 50;
-    background: var(--pico-background-color);
-    border-right: 1px solid var(--line);
-    overflow-y: auto;
-    transform: translateX(-100%);
-    transition: transform 0.2s ease;
-    padding-right: 0.9rem;
-    padding-top: 3rem;
-    margin: 0;
-    box-shadow: 4px 0 20px rgba(0, 0, 0, 0.15);
-  }
-  [data-theme="dark"] .layout-sidebar {
-    box-shadow: 4px 0 20px rgba(0, 0, 0, 0.4);
-  }
-  body.nav-open .layout-sidebar {
-    transform: translateX(0);
-  }
-
-  .layout-sidebar .fs-panel {
-    border: 0;
-    border-radius: 0;
-    min-height: auto;
-    background: transparent;
-  }
-
-  .layout-main {
-    width: auto;
-    transform: none;
-    justify-self: stretch;
-  }
-
-  .nav-menu-btn {
-    display: flex;
-  }
-
-  /* Sidebar: search + sort stack vertically */
-  .fs-tools {
-    grid-template-columns: 1fr;
-  }
-
-  .fs-panel-head {
-    flex-wrap: wrap;
-  }
-  .fs-panel-head small {
-    min-width: 0;
-  }
-
-  .fs-meta {
-    white-space: normal;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-  }
-
-  /* NavBar: surface above sidebar so burger stays visible and clickable */
-  .site-navbar {
-    position: relative;
-    z-index: 60;
-  }
-}
-
-@media (max-width: 700px) {
-  .site-navbar {
-    flex-wrap: wrap;
-  }
-
-  .site-nav {
-    gap: 0.8rem;
-  }
+  opacity: 1;
 }

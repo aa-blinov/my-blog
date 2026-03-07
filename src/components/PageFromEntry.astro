@@ -14,22 +14,22 @@ const hasEntry = !!entry;
 ---
 
 <Layout title={hasEntry ? entry.data.title : fallbackTitle} description={hasEntry ? entry.data.summary : undefined}>
-  <section class="layout-main-single hero-layout">
-    <p class="terminal-prompt" aria-hidden="true">{prompt}</p>
-    <article class="prose flat-article single-pane">
-      <header>
-        {hasEntry ? (
-          <>
-            <p class="meta">{formatDate(entry.data.date)} · {entry.sectionLabel}</p>
+  <article>
+    <header>
+      {hasEntry ? (
+        <>
+          <p class="meta">{formatDate(entry.data.date)} · {entry.sectionLabel}</p>
+          <hgroup>
             <h1>{entry.data.title}</h1>
-          </>
-        ) : (
-          <h1>{fallbackH1}</h1>
-        )}
-      </header>
-      <div class="article-content">
-        <slot />
-      </div>
-    </article>
-  </section>
+            {entry.data.summary && <p>{entry.data.summary}</p>}
+          </hgroup>
+        </>
+      ) : (
+        <h1>{fallbackH1}</h1>
+      )}
+    </header>
+    <div class="content">
+      <slot />
+    </div>
+  </article>
 </Layout>

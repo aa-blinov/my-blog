@@ -21,16 +21,13 @@ const { Content } = await entry.render();
 ---
 
 <Layout title={entry.data.title} description={entry.data.summary}>
-  <section class="layout-main-single hero-layout">
-    <p class="terminal-prompt" aria-hidden="true">blog/{entry.data.section} &gt;</p>
-    <article class="prose flat-article single-pane">
-      <header>
-        <p class="meta">{formatDate(entry.data.date)}</p>
-        <h1>{entry.data.title}</h1>
-      </header>
-      <div class="article-content">
-        <Content />
-      </div>
-    </article>
-  </section>
+  <article>
+    <header>
+      <p class="meta">{formatDate(entry.data.date)} · blog/{entry.data.section}</p>
+      <h1>{entry.data.title}</h1>
+    </header>
+    <div class="content">
+      <Content />
+    </div>
+  </article>
 </Layout>

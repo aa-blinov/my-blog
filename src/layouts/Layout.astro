@@ -34,7 +34,7 @@ const breadcrumbPath = getBreadcrumb(Astro.url.pathname);
 ---
 
 <!doctype html>
-<html lang="ru" data-theme="light">
+<html lang="ru">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -47,39 +47,20 @@ const breadcrumbPath = getBreadcrumb(Astro.url.pathname);
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700&display=swap" rel="stylesheet" />
     <link id="chroma-light" rel="stylesheet" href={`${BASE}css/chroma-github.css`} />
     <link id="chroma-dark" rel="stylesheet" href={`${BASE}css/chroma-github-dark.css`} disabled />
-    <script is:inline>
-      (function () {
-        var root = document.documentElement;
-        try {
-          var storedTheme = localStorage.getItem("theme");
-          var systemDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
-          root.dataset.theme = storedTheme || (systemDark ? "dark" : "light");
-          var fontSize = localStorage.getItem("fontSize");
-          root.dataset.fontSize = (fontSize === "s" || fontSize === "m" || fontSize === "l") ? fontSize : "m";
-        } catch (_) {
-          root.dataset.theme = "light";
-          root.dataset.fontSize = "m";
-        }
-        var isDark = root.dataset.theme === "dark";
-        var light = document.getElementById("chroma-light");
-        var dark = document.getElementById("chroma-dark");
-        if (light && dark) { light.disabled = isDark; dark.disabled = !isDark; }
-      })();
-    </script>
   </head>
   <body>
-    <NavBar breadcrumbPath={breadcrumbPath} />
-    <div class="layout-body">
-      <div class="layout-vscode">
-        <aside class="layout-sidebar" id="layout-sidebar">
-          <Sidebar blogEntries={blogEntries} mainEntry={mainForSidebar} aboutEntry={aboutForSidebar} />
-        </aside>
-        <div class="layout-content-col">
-          <main class="site-main layout-main">
+    <div class="app-layout">
+      <NavBar breadcrumbPath={breadcrumbPath} />
+      <div class="main-container">
+        <div class="main-grid">
+          <aside id="layout-sidebar">
+            <Sidebar blogEntries={blogEntries} mainEntry={mainForSidebar} aboutEntry={aboutForSidebar} />
+          </aside>
+          <main>
             <slot />
           </main>
-          <Footer />
         </div>
+        <Footer />
       </div>
     </div>
 

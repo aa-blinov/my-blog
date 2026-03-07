@@ -20,13 +20,14 @@ const description = SECTION_DESCRIPTIONS[section] ?? '';
 ---
 
 <Layout title={title}>
-  <section class="layout-main-single hero-layout list-flat">
-    <p class="terminal-prompt" aria-hidden="true">blog/{section} &gt;</p>
+  <article>
     <header>
-      <h1>{title}</h1>
-      {description && <div class="prose"><p>{description}</p></div>}
+      <hgroup>
+        <h1>{title}</h1>
+        {description && <p>{description}</p>}
+      </hgroup>
     </header>
     <h2>Свежие статьи</h2>
     <PostList posts={posts} sectionTitle={title} />
-  </section>
+  </article>
 </Layout>
