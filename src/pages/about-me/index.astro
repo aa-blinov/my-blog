@@ -27,7 +27,8 @@ if (aboutEntry) {
 
 {Content && entryData ? (
   <Layout title={entryData.title} description={entryData.summary}>
-    <section class="layout-main-single">
+    <section class="layout-main-single hero-layout">
+      <p class="terminal-prompt" aria-hidden="true">about-me &gt;</p>
       <article class="prose flat-article single-pane">
         <header>
           <p class="meta">{formatDate(entryData.date)} · {entryData.section}</p>
@@ -41,7 +42,8 @@ if (aboutEntry) {
   </Layout>
 ) : (
   <Layout title="Обо мне">
-    <section class="layout-main-single">
+    <section class="layout-main-single hero-layout">
+      <p class="terminal-prompt" aria-hidden="true">about-me &gt;</p>
       <article class="prose flat-article single-pane">
         <header>
           <h1>Обо мне</h1>

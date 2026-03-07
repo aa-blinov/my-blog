@@ -26,7 +26,8 @@ const description = SECTION_DESCRIPTIONS[section];
 ---
 
 <Layout title={title}>
-  <section class="list-flat">
+  <section class="layout-main-single hero-layout list-flat">
+    <p class="terminal-prompt" aria-hidden="true">blog/{section} &gt;</p>
     <header>
       <h1>{title}</h1>
       {description && <div class="prose"><p>{description}</p></div>}

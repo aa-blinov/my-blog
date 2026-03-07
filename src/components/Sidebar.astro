@@ -16,15 +16,9 @@ function formatDate(d: Date): string {
 
 const bySection = { dev: [] as typeof blogEntries, life: [] as typeof blogEntries };
 blogEntries.forEach((e) => bySection[e.section].push(e));
-const totalFiles = (mainEntry ? 1 : 0) + (aboutEntry ? 1 : 0) + blogEntries.length;
 ---
 
 <section class="fs-panel fs-explorer" aria-label="Дерево разделов и статей">
-  <div class="fs-panel-head">
-    <strong>content/</strong>
-    <small>{totalFiles} md-файлов</small>
-  </div>
-
   <div class="fs-search-wrap">
     <div class="fs-tools">
       <input class="fs-search" type="search" placeholder="Search files..." aria-label="Поиск по файлам" />

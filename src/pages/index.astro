@@ -30,7 +30,8 @@ if (homeEntry) {
 
 {Content && entryData ? (
   <Layout title={entryData.title} description={entryData.summary}>
-    <section class="layout-main-single">
+    <section class="layout-main-single hero-layout">
+      <p class="terminal-prompt" aria-hidden="true">main &gt;</p>
       <article class="prose flat-article single-pane">
         <header>
           <p class="meta">{formatDate(entryData.date)} · {entryData.section}</p>
@@ -44,7 +45,8 @@ if (homeEntry) {
   </Layout>
 ) : (
   <Layout title="Главная">
-    <section class="layout-main-single">
+    <section class="layout-main-single hero-layout">
+      <p class="terminal-prompt" aria-hidden="true">main &gt;</p>
       <article class="prose flat-article single-pane">
         <header>
           <h1>Главная</h1>

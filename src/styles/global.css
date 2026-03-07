@@ -3,6 +3,7 @@
 [data-theme="light"],
 :root:not([data-theme="dark"]) {
   --sidebar-w: 380px;
+  --navbar-w: 52px;
   --line: #d0d7de;
   --muted: #57606a;
   --surface: #f6f8fa;
@@ -29,6 +30,7 @@
 
 [data-theme="dark"] {
   --sidebar-w: 380px;
+  --navbar-w: 52px;
   --line: #30363d;
   --muted: #8b949e;
   --surface: #161b22;
@@ -58,6 +60,7 @@
 :root {
   --profile-font-base: 15px;
   --spacing-scale: 1;
+  --top-bar-height: 40px;
   font-size: var(--profile-font-base);
   --scrollbar-track: #f0f0f0;
   --scrollbar-thumb: #c0c0c0;
@@ -140,6 +143,8 @@ body {
 
 html {
   overflow-x: hidden;
+  margin: 0;
+  padding: 0;
 }
 
 /* Скроллбар страницы под тему */
@@ -175,8 +180,9 @@ html::-webkit-scrollbar-thumb:hover {
   padding: calc(1rem * var(--spacing-scale)) calc(1rem * var(--spacing-scale));
 }
 .site-header {
-  padding-top: 0.35rem;
-  padding-bottom: 0.35rem;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  margin-top: 0;
 }
 .site-footer {
   padding-top: calc(0.8rem * var(--spacing-scale));
@@ -187,6 +193,7 @@ html::-webkit-scrollbar-thumb:hover {
   justify-content: flex-start;
   gap: 1rem;
   border-bottom: none;
+  margin-top: 0 !important;
 }
 
 .site-header .header-left {
@@ -197,15 +204,92 @@ html::-webkit-scrollbar-thumb:hover {
   margin-right: auto;
 }
 
-/* Controls (A−, A+, theme) fixed top-right, outside navbar */
-.theme-controls-fixed {
-  position: fixed;
-  top: 0.75rem;
-  right: 1rem;
-  z-index: 100;
+/* Область контента справа от вертикального навбара */
+.layout-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+  min-height: 100dvh;
+}
+
+/* GitHub-style breadcrumb bar (exploreclaudecode-like) */
+.top-bar-breadcrumb {
+  position: sticky;
+  top: 0;
+  z-index: 40;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  min-height: var(--top-bar-height);
+  padding: 0.35rem calc(1rem * var(--spacing-scale));
+  font-family: "JetBrains Mono", "Cascadia Code", Consolas, monospace;
+  font-size: 0.8rem;
+  color: var(--muted);
+  background: var(--vscode-sidebar-bg);
+  border-bottom: 1px solid var(--line);
+}
+
+.theme-controls-in-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-left: auto;
+}
+.top-bar-text {
+  color: var(--pico-color);
+  font-weight: 600;
+}
+.top-bar-sep {
+  margin: 0 0.25rem;
+  color: var(--muted);
+}
+.top-bar-path {
+  color: var(--muted);
+}
+
+/* Вертикальный навбар от верха до низа (десктоп) */
+@media (min-width: 1001px) {
+  .site-header.site-navbar-vertical {
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: var(--navbar-w);
+    height: 100dvh;
+    min-height: 100dvh;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 0.5rem 0;
+    gap: 0.75rem;
+    background: var(--vscode-sidebar-bg);
+    border-right: none;
+    z-index: 50;
+    margin-top: 0 !important;
+  }
+  .site-header.site-navbar-vertical .header-left {
+    margin-right: 0;
+  }
+  .site-header.site-navbar-vertical .header-left + .brand {
+    margin-right: 0;
+  }
+  .layout-body {
+    margin-left: var(--navbar-w);
+  }
+}
+
+/* Controls (A−, A+, theme) inside top bar, vertically centered */
+.theme-controls-in-bar .font-size-btn,
+.theme-controls-in-bar .theme-btn-icon {
+  width: 2rem;
+  height: 2rem;
+  min-width: 2rem;
+  min-height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border-radius: 4px;
 }
 
 .theme-icon {
@@ -232,11 +316,12 @@ html::-webkit-scrollbar-thumb:hover {
 }
 
 .theme-btn-icon {
-  padding: 0.4rem;
   line-height: 0;
 }
 .theme-btn-icon .theme-icon svg {
   display: block;
+  width: 1.125rem;
+  height: 1.125rem;
 }
 
 .header-right {
@@ -364,8 +449,8 @@ body.nav-open .nav-menu-btn .nav-icon svg {
   background: transparent;
   color: var(--muted);
   border-radius: 4px;
-  padding: 0.35rem 0.5rem;
-  font-size: 0.75rem;
+  padding: 0;
+  font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
   line-height: 1;
@@ -402,22 +487,44 @@ body.nav-open .nav-menu-btn .nav-icon svg {
 .layout-vscode {
   display: grid;
   grid-template-columns: var(--sidebar-w) minmax(0, 1fr);
-  gap: calc(1.2rem * var(--spacing-scale));
-  align-items: start;
+  grid-template-areas: "sidebar content";
+  gap: 0;
+  align-items: stretch;
   width: 100%;
   flex: 1;
   min-width: 0;
+  min-height: 0;
+}
+
+.layout-content-col {
+  grid-area: content;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  min-width: 0;
+}
+
+.layout-content-col .site-main {
+  flex: 1;
+}
+
+.layout-content-col .site-footer {
+  flex-shrink: 0;
 }
 
 .layout-sidebar {
+  grid-area: sidebar;
   position: sticky;
-  top: 0;
+  top: var(--top-bar-height);
   margin-top: 0;
   align-self: stretch;
-  border-right: 1px solid var(--line);
+  border-right: none;
   padding-right: calc(0.9rem * var(--spacing-scale));
   background: var(--vscode-sidebar-bg);
   scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
 }
 
 .layout-sidebar .fs-panel {
@@ -425,15 +532,33 @@ body.nav-open .nav-menu-btn .nav-icon svg {
   border: 0;
   border-radius: 0;
   background: transparent;
-  min-height: calc(100dvh - 4rem);
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.layout-sidebar .fs-explorer {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--vscode-sidebar-bg);
+  border-radius: 0;
+  border: 0;
 }
 
 .layout-main {
   width: min(940px, 92vw);
   justify-self: center;
-  transform: translateX(calc(var(--sidebar-w) * -0.5));
-  padding: calc(1.25rem * var(--spacing-scale)) calc(1.1rem * var(--spacing-scale)) calc(1rem * var(--spacing-scale));
+  padding: calc(1.5rem * var(--spacing-scale)) calc(1.1rem * var(--spacing-scale)) calc(1rem * var(--spacing-scale));
   border-top: 1px solid var(--line);
+}
+
+@media (min-width: 1001px) {
+  .layout-main {
+    padding-top: calc(4.5rem * var(--spacing-scale));
+  }
 }
 
 .layout-main-single {
@@ -449,12 +574,6 @@ body.nav-open .nav-menu-btn .nav-icon svg {
   background: color-mix(in oklab, var(--surface), transparent 10%);
   overflow: hidden;
   margin-bottom: 1.5rem;
-}
-
-.layout-sidebar .fs-explorer {
-  background: var(--vscode-sidebar-bg);
-  border-radius: 0;
-  border: 0;
 }
 
 .fs-panel-head {
@@ -544,7 +663,8 @@ body.nav-open .nav-menu-btn .nav-icon svg {
   font-size: 0.78rem;
   overflow-x: auto;
   overflow-y: auto;
-  max-height: calc(100dvh - 12rem);
+  flex: 1;
+  min-height: 0;
   scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
 }
 
@@ -942,6 +1062,30 @@ h1 {
 .flat-article h1 {
   margin-top: 0;
   margin-bottom: 0.75rem;
+}
+
+/* Hero + terminal aesthetic (exploreclaudecode-like) */
+.hero-layout .terminal-prompt {
+  font-family: "JetBrains Mono", "Cascadia Code", Consolas, monospace;
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin: 0 0 0.5rem;
+}
+.hero-layout h1 {
+  font-size: clamp(2rem, 5vw, 3rem);
+  margin-bottom: 1rem;
+}
+.hero-layout .flat-article,
+.hero-layout .prose {
+  padding-top: 0.5rem;
+}
+
+/* Code-like lines (// comment style) */
+.code-like {
+  font-family: "JetBrains Mono", "Cascadia Code", Consolas, monospace;
+  font-size: 0.9em;
+  color: var(--muted);
+  font-style: italic;
 }
 
 .flat-article .article-content > h1:first-child {
