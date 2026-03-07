@@ -1,27 +1,24 @@
 {{ define "main" }}
-<section class="list-flat">
-  <div class="layout-vscode">
-    <aside class="layout-sidebar">
-      {{ partial "fs-tree.html" . }}
-    </aside>
+<section class="layout-main-single">
+  <article class="prose flat-article single-pane">
+    <header>
+      <p class="meta">{{ partial "format-date.html" . }} · Главная</p>
+      <h1>{{ .Title }}</h1>
+    </header>
+    <div class="article-content">
+      {{ .Content }}
+    </div>
+  </article>
 
-    <section class="layout-main latest-section">
-      <section class="home-top">
-        <p class="eyebrow">Главная</p>
-        <h1>Структура блога как в файловой системе</h1>
-        <p class="lead">Публикация простая: создаешь файл в <code>content/blog/&lt;раздел&gt;/</code> и он сразу появляется в нужной ветке сайта.</p>
-      </section>
-      <h2>Свежие статьи</h2>
-      <div class="post-list">
-        {{ range first 6 (where .Site.RegularPages "Section" "blog") }}
-          <article class="card">
-            <p class="meta">{{ partial "format-date.html" . }} · {{ with .CurrentSection }}{{ .Title }}{{ end }}</p>
-            <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
-            {{ with .Summary }}<p>{{ . }}</p>{{ end }}
-          </article>
-        {{ end }}
-      </div>
-    </section>
+  <h2 class="recent-heading">Свежие статьи</h2>
+  <div class="post-list">
+    {{ range first 6 (where .Site.RegularPages "Section" "blog") }}
+      <article class="card">
+        <p class="meta">{{ partial "format-date.html" . }} · {{ with .CurrentSection }}{{ .Title }}{{ end }}</p>
+        <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
+        {{ with .Summary }}<p>{{ . }}</p>{{ end }}
+      </article>
+    {{ end }}
   </div>
 </section>
 {{ end }}

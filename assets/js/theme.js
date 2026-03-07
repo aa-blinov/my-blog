@@ -1,22 +1,18 @@
 (() => {
   const root = document.documentElement;
   const btn = document.getElementById("theme-toggle");
-  const surfaceSelect = document.getElementById("surface-select");
   const chromaLight = document.getElementById("chroma-light");
   const chromaDark = document.getElementById("chroma-dark");
+  const fontDecrease = document.getElementById("font-size-decrease");
+  const fontIncrease = document.getElementById("font-size-increase");
 
-  const SURFACES = {
-    light: [
-      { value: "paper", label: "Paper" },
-      { value: "warm", label: "Warm" },
-      { value: "mist", label: "Mist" }
-    ],
-    dark: [
-      { value: "slate", label: "Slate" },
-      { value: "graphite", label: "Graphite" },
-      { value: "midnight", label: "Midnight" },
-      { value: "oled", label: "OLED" }
-    ]
+  const FONT_SIZES = ["s", "m", "l"];
+  const getFontSize = () => (root.dataset.fontSize === "s" || root.dataset.fontSize === "l" ? root.dataset.fontSize : "m");
+  const setFontSize = (v) => {
+    root.dataset.fontSize = v;
+    try {
+      localStorage.setItem("fontSize", v);
+    } catch (_) {}
   };
 
   const storedTheme = localStorage.getItem("theme");
@@ -24,24 +20,14 @@
   const initialTheme = storedTheme || (systemDark ? "dark" : "light");
   root.dataset.theme = initialTheme;
 
-  const getSurfaceKey = (theme) => `surface_${theme}`;
-
-  const applySurfaceForTheme = (theme) => {
-    const available = SURFACES[theme];
-    const fallback = available[0].value;
-    const stored = localStorage.getItem(getSurfaceKey(theme));
-    const selected = available.some((item) => item.value === stored) ? stored : fallback;
-
-    if (surfaceSelect) {
-      surfaceSelect.innerHTML = available
-        .map((item) => `<option value="${item.value}">${item.label}</option>`)
-        .join("");
-      surfaceSelect.value = selected;
+  if (!root.dataset.fontSize) {
+    try {
+      const stored = localStorage.getItem("fontSize");
+      root.dataset.fontSize = FONT_SIZES.includes(stored) ? stored : "m";
+    } catch (_) {
+      root.dataset.fontSize = "m";
     }
-
-    root.dataset.surface = selected;
-    localStorage.setItem(getSurfaceKey(theme), selected);
-  };
+  }
 
   const applyThemeUi = (theme) => {
     root.dataset.theme = theme;
@@ -50,10 +36,6 @@
       chromaDark.disabled = !isDark;
       chromaLight.disabled = isDark;
     }
-    if (btn) {
-      btn.textContent = theme === "dark" ? "Dark" : "Light";
-    }
-    applySurfaceForTheme(theme);
   };
 
   const copyToClipboard = async (text) => {
@@ -246,12 +228,20 @@
     });
   }
 
-  if (surfaceSelect) {
-    surfaceSelect.addEventListener("change", (event) => {
-      const activeTheme = root.dataset.theme === "dark" ? "dark" : "light";
-      const selected = event.target.value;
-      localStorage.setItem(getSurfaceKey(activeTheme), selected);
-      root.dataset.surface = selected;
+  if (fontDecrease) {
+    fontDecrease.addEventListener("click", () => {
+      const cur = getFontSize();
+      const idx = FONT_SIZES.indexOf(cur);
+      if (idx <= 0) return;
+      setFontSize(FONT_SIZES[idx - 1]);
+    });
+  }
+  if (fontIncrease) {
+    fontIncrease.addEventListener("click", () => {
+      const cur = getFontSize();
+      const idx = FONT_SIZES.indexOf(cur);
+      if (idx >= FONT_SIZES.length - 1) return;
+      setFontSize(FONT_SIZES[idx + 1]);
     });
   }
 })();
