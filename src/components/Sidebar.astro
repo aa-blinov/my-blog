@@ -39,28 +39,37 @@ const totalFiles = (mainEntry ? 1 : 0) + (aboutEntry ? 1 : 0) + blogEntries.leng
   <ul class="fs-tree">
     {mainEntry && (
       <li class="fs-file-item" data-name="main" data-date={Math.floor(mainEntry.date.getTime() / 1000)}>
+        <span class="fs-icon fs-icon-file" aria-hidden="true"></span>
         <a class="fs-file-link" href={BASE} title="main.md">main.md</a>
         <span class="fs-meta">{formatDate(mainEntry.date)}</span>
       </li>
     )}
     {aboutEntry && (
       <li class="fs-file-item" data-name="about-me" data-date={Math.floor(aboutEntry.date.getTime() / 1000)}>
+        <span class="fs-icon fs-icon-file" aria-hidden="true"></span>
         <a class="fs-file-link" href={`${BASE}about-me/`} title="about-me.md">about-me.md</a>
         <span class="fs-meta">{formatDate(aboutEntry.date)}</span>
       </li>
     )}
-    <li>
+    <li class="fs-folder-root">
+      <span class="fs-icon fs-icon-folder" aria-hidden="true"></span>
       <span class="fs-folder">blog/</span>
       <ul>
         {(['dev', 'life'] as const).map((section) => (
           <li class="fs-section" data-section={`${BASE}blog/${section}/`}>
-            <button class="fs-toggle" type="button" aria-expanded="true" aria-label={`Свернуть раздел ${SECTION_TITLES[section]}`}>▾</button>
-            <a class="fs-folder-link" href={`${BASE}blog/${section}/`}>{section}/</a>
+            <div class="fs-section-row">
+              <button class="fs-toggle" type="button" aria-expanded="true" aria-label={`Свернуть раздел ${SECTION_TITLES[section]}`}>
+                <span class="fs-toggle-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="14" height="14" fill="currentColor"><path d="M4 6l4 4 4-4"/></svg></span>
+              </button>
+              <span class="fs-icon fs-icon-folder fs-icon-folder-open" aria-hidden="true"></span>
+              <a class="fs-folder-link" href={`${BASE}blog/${section}/`}>{section}/</a>
+            </div>
             <ul class="fs-files">
               {bySection[section]
                 .sort((a, b) => b.date.getTime() - a.date.getTime())
                 .map((entry) => (
                   <li class="fs-file-item" data-name={entry.title.toLowerCase()} data-date={Math.floor(entry.date.getTime() / 1000)}>
+                    <span class="fs-icon fs-icon-file" aria-hidden="true"></span>
                     <a class="fs-file-link" href={`${BASE}blog/${entry.section}/${entry.slug}/`} title={entry.title}>{entry.title}</a>
                     <span class="fs-meta">{formatDate(entry.date)}</span>
                   </li>

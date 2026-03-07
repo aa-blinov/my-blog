@@ -143,7 +143,7 @@
         sectionNodes.forEach((section) => {
           const sectionId = section.dataset.section || "";
           const files = section.querySelector(":scope > .fs-files");
-          const toggle = section.querySelector(":scope > .fs-toggle");
+          const toggle = section.querySelector(".fs-toggle");
           const collapsed = Boolean(collapsedState[sectionId]);
           const shouldCollapse = collapsed && !hasQuery;
 
@@ -151,7 +151,6 @@
           section.classList.toggle("is-collapsed", shouldCollapse);
 
           if (toggle) {
-            toggle.textContent = shouldCollapse ? "▸" : "▾";
             toggle.setAttribute("aria-expanded", String(!shouldCollapse));
           }
         });
@@ -190,7 +189,7 @@
           collapsedState[sectionId] = false;
         }
 
-        const toggle = section.querySelector(":scope > .fs-toggle");
+        const toggle = section.querySelector(".fs-toggle");
         if (!toggle) return;
 
         toggle.addEventListener("click", () => {
@@ -222,6 +221,19 @@
   applyThemeUi(initialTheme);
   enhanceCodeBlocks();
   enhanceExplorerSearch();
+
+  /* Подсветка текущего файла/папки в сайдбаре как в VS Code */
+  const sidebar = document.getElementById("layout-sidebar");
+  if (sidebar) {
+    const pathname = window.location.pathname.replace(/\/$/, "") || "/";
+    sidebar.querySelectorAll(".fs-file-link, .fs-folder-link").forEach((link) => {
+      const href = link.getAttribute("href") || "";
+      const linkPath = href.replace(/\/$/, "") || "/";
+      const isFolder = link.classList.contains("fs-folder-link");
+      const isActive = isFolder ? pathname === linkPath || pathname.startsWith(linkPath + "/") : pathname === linkPath;
+      if (isActive) link.classList.add("is-active");
+    });
+  }
 
   if (btn) {
     btn.addEventListener("click", () => {

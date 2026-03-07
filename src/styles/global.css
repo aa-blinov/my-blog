@@ -9,8 +9,17 @@
   --accent: #656d76;
   --github-green: #2da44e;
   --telegram-blue: #229ed9;
+  /* VS Code–style explorer */
+  --vscode-sidebar-bg: #f3f4f6;
+  --vscode-sidebar-hover: rgba(0, 0, 0, 0.06);
+  --vscode-sidebar-active: rgba(0, 0, 0, 0.08);
+  --vscode-folder: #d4a024;
+  --vscode-file: #519aba;
   /* GitHub light: override Pico for page/sidebar */
   --pico-background-color: #ffffff;
+  --scrollbar-track: #f0f0f0;
+  --scrollbar-thumb: #c0c0c0;
+  --scrollbar-thumb-hover: #a0a0a0;
   --pico-color: #1f2328;
   --pico-muted-color: var(--muted);
   --pico-primary: #656d76;
@@ -26,8 +35,17 @@
   --accent: #8b949e;
   --github-green: #3fb950;
   --telegram-blue: #2aabee;
+  /* VS Code–style explorer */
+  --vscode-sidebar-bg: #1e1e1e;
+  --vscode-sidebar-hover: rgba(255, 255, 255, 0.06);
+  --vscode-sidebar-active: rgba(255, 255, 255, 0.1);
+  --vscode-folder: #dcb67a;
+  --vscode-file: #519aba;
   /* GitHub dark */
   --pico-background-color: #0d1117;
+  --scrollbar-track: #1e1e1e;
+  --scrollbar-thumb: #424242;
+  --scrollbar-thumb-hover: #4e4e4e;
   --pico-color: #e6edf3;
   --pico-muted-color: var(--muted);
   --pico-primary: #8b949e;
@@ -41,6 +59,9 @@
   --profile-font-base: 15px;
   --spacing-scale: 1;
   font-size: var(--profile-font-base);
+  --scrollbar-track: #f0f0f0;
+  --scrollbar-thumb: #c0c0c0;
+  --scrollbar-thumb-hover: #a0a0a0;
 }
 
 /* Профили по разрешению: размер шрифта и отступы */
@@ -107,16 +128,37 @@
 }
 
 body {
-  font-family: "Source Serif 4", Georgia, serif;
+  font-family: "JetBrains Mono", "Cascadia Code", Consolas, "Liberation Mono", monospace;
   font-size: 1rem;
   line-height: 1.6;
   min-height: 100dvh;
   display: flex;
   flex-direction: column;
+  margin: 0;
+  padding: 0;
 }
 
 html {
   overflow-x: hidden;
+}
+
+/* Скроллбар страницы под тему */
+html::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+html::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+}
+html::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: 12px;
+  border: 3px solid transparent;
+  background-clip: padding-box;
+}
+html::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover);
+  background-clip: padding-box;
 }
 
 .wrap {
@@ -130,11 +172,29 @@ html {
   align-items: center;
   justify-content: space-between;
   gap: calc(1rem * var(--spacing-scale));
-  padding: calc(1rem * var(--spacing-scale)) 0;
+  padding: calc(1rem * var(--spacing-scale)) calc(1rem * var(--spacing-scale));
+}
+.site-header {
+  padding-top: 0.35rem;
+  padding-bottom: 0.35rem;
+}
+.site-footer {
+  padding-top: calc(0.8rem * var(--spacing-scale));
+  padding-bottom: calc(1rem * var(--spacing-scale));
 }
 
 .site-header {
-  border-bottom: 1px solid var(--line);
+  justify-content: flex-start;
+  gap: 1rem;
+  border-bottom: none;
+}
+
+.site-header .header-left {
+  display: flex;
+  align-items: center;
+}
+.site-header .header-left + .brand {
+  margin-right: auto;
 }
 
 /* Controls (A−, A+, theme) fixed top-right, outside navbar */
@@ -232,7 +292,7 @@ html {
 .site-nav a,
 .theme-btn,
 h1, h2, h3 {
-  font-family: "Inter", "Segoe UI", sans-serif;
+  font-family: "JetBrains Mono", "Cascadia Code", Consolas, monospace;
 }
 
 .brand {
@@ -258,7 +318,7 @@ h1, h2, h3 {
   font-weight: 600;
 }
 
-/* Hamburger: visible on narrow only; toggles sidebar (nav) */
+/* Кнопка меню: стрелка вправо (открыть), при открытом меню — поворот на 180° влево (закрыть) */
 .nav-menu-btn {
   display: flex;
   align-items: center;
@@ -287,15 +347,10 @@ h1, h2, h3 {
   display: block;
   width: 20px;
   height: 20px;
+  transition: transform 0.2s ease;
 }
-.nav-icon-close {
-  display: none;
-}
-body.nav-open .nav-icon-bars {
-  display: none;
-}
-body.nav-open .nav-icon-close {
-  display: block;
+body.nav-open .nav-menu-btn .nav-icon svg {
+  transform: rotate(180deg);
 }
 
 .font-size-controls {
@@ -361,6 +416,8 @@ body.nav-open .nav-icon-close {
   align-self: stretch;
   border-right: 1px solid var(--line);
   padding-right: calc(0.9rem * var(--spacing-scale));
+  background: var(--vscode-sidebar-bg);
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
 }
 
 .layout-sidebar .fs-panel {
@@ -368,14 +425,15 @@ body.nav-open .nav-icon-close {
   border: 0;
   border-radius: 0;
   background: transparent;
-  min-height: calc(100dvh - 8.8rem);
+  min-height: calc(100dvh - 4rem);
 }
 
 .layout-main {
   width: min(940px, 92vw);
   justify-self: center;
   transform: translateX(calc(var(--sidebar-w) * -0.5));
-  padding-right: 0;
+  padding: calc(1.25rem * var(--spacing-scale)) calc(1.1rem * var(--spacing-scale)) calc(1rem * var(--spacing-scale));
+  border-top: 1px solid var(--line);
 }
 
 .layout-main-single {
@@ -393,6 +451,12 @@ body.nav-open .nav-icon-close {
   margin-bottom: 1.5rem;
 }
 
+.layout-sidebar .fs-explorer {
+  background: var(--vscode-sidebar-bg);
+  border-radius: 0;
+  border: 0;
+}
+
 .fs-panel-head {
   display: flex;
   align-items: center;
@@ -400,7 +464,6 @@ body.nav-open .nav-icon-close {
   gap: calc(1rem * var(--spacing-scale));
   border-bottom: 1px solid var(--line);
   padding: calc(0.5rem * var(--spacing-scale)) calc(0.75rem * var(--spacing-scale));
-  font-family: "Inter", "Segoe UI", sans-serif;
   font-size: 0.8rem;
 }
 
@@ -418,6 +481,7 @@ body.nav-open .nav-icon-close {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   gap: 0.35rem;
+  align-items: stretch;
 }
 
 @media (max-width: 1200px) {
@@ -432,13 +496,14 @@ body.nav-open .nav-icon-close {
   background: var(--surface);
   color: var(--pico-color);
   border-radius: 4px;
-  padding: 0.15rem 0.5rem 0.15rem 0.4rem;
-  font-family: "Inter", "Segoe UI", sans-serif;
+  padding: 0 0.5rem 0 0.4rem;
+  font-family: "JetBrains Mono", "Cascadia Code", Consolas, monospace;
   font-size: 0.7rem;
-  line-height: 1.25;
-  height: 22px !important;
-  min-height: 22px !important;
+  line-height: 1;
+  height: 28px !important;
+  min-height: 28px !important;
   box-sizing: border-box;
+  margin: 0;
 }
 .fs-search::placeholder {
   color: var(--muted);
@@ -447,18 +512,22 @@ body.nav-open .nav-icon-close {
 .fs-sort {
   border-radius: 4px;
   padding: 0 0.6rem 0 0.35rem;
-  font-family: "Inter", "Segoe UI", sans-serif;
+  font-family: "JetBrains Mono", "Cascadia Code", Consolas, monospace;
   font-size: 0.7rem;
-  height: 22px !important;
-  min-height: 22px !important;
-  line-height: 22px;
+  height: 28px !important;
+  min-height: 28px !important;
+  line-height: 1;
   box-sizing: border-box;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--pico-color);
+  margin: 0;
 }
 
 .fs-empty {
   margin: 0.35rem 0.1rem 0.25rem;
   color: var(--muted);
-  font-family: "Inter", "Segoe UI", sans-serif;
+  font-family: "JetBrains Mono", "Cascadia Code", Consolas, monospace;
   font-size: 0.72rem;
 }
 
@@ -471,9 +540,66 @@ body.nav-open .nav-icon-close {
 
 .fs-tree {
   padding: calc(0.5rem * var(--spacing-scale)) calc(0.75rem * var(--spacing-scale)) calc(0.75rem * var(--spacing-scale));
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-family: "JetBrains Mono", "Cascadia Code", Consolas, monospace;
   font-size: 0.78rem;
   overflow-x: auto;
+  overflow-y: auto;
+  max-height: calc(100dvh - 12rem);
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+}
+
+.fs-tree::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+.fs-tree::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+}
+.fs-tree::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: 10px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+.fs-tree::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover);
+  background-clip: padding-box;
+}
+
+/* Скроллбар сайдбара под тему (в т.ч. мобильный .layout-sidebar) */
+.layout-sidebar::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+.layout-sidebar::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+}
+.layout-sidebar::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: 10px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+.layout-sidebar::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover);
+  background-clip: padding-box;
+}
+
+[data-theme="dark"] .fs-tree::-webkit-scrollbar-track,
+[data-theme="dark"] .layout-sidebar::-webkit-scrollbar-track {
+  background: #1e1e1e;
+}
+[data-theme="dark"] .fs-tree::-webkit-scrollbar-thumb,
+[data-theme="dark"] .layout-sidebar::-webkit-scrollbar-thumb {
+  background: #424242;
+}
+[data-theme="dark"] .fs-tree::-webkit-scrollbar-thumb:hover,
+[data-theme="dark"] .layout-sidebar::-webkit-scrollbar-thumb:hover {
+  background: #4e4e4e;
+}
+[data-theme="dark"] .fs-tree,
+[data-theme="dark"] .layout-sidebar {
+  scrollbar-color: #424242 #1e1e1e;
 }
 
 .fs-tree li {
@@ -504,6 +630,27 @@ body.nav-open .nav-icon-close {
   bottom: 0.8em;
 }
 
+/* VS Code–style icons (mask + background-color) */
+.fs-icon {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  flex-shrink: 0;
+  margin-right: 0.35em;
+  vertical-align: middle;
+}
+.fs-icon-file {
+  background-color: var(--vscode-file);
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='black' d='M2 1a1 1 0 0 1 1-1h5.586a1 1 0 0 1 .707.293l4 4A1 1 0 0 1 14 5.414V15a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V1zm9.586 0H3v14h10V5.414L11.586 1zM9 2v3h3l-3-3z'/%3E%3C/svg%3E") no-repeat center / contain;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='black' d='M2 1a1 1 0 0 1 1-1h5.586a1 1 0 0 1 .707.293l4 4A1 1 0 0 1 14 5.414V15a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V1zm9.586 0H3v14h10V5.414L11.586 1zM9 2v3h3l-3-3z'/%3E%3C/svg%3E") no-repeat center / contain;
+}
+.fs-icon-folder,
+.fs-icon-folder-open {
+  background-color: var(--vscode-folder);
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='black' d='M2 2a1 1 0 0 1 1-1h3.586a1 1 0 0 1 .707.293L8.414 4H14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2zm2 1v10h10V6H7.414L4.586 4H4z'/%3E%3C/svg%3E") no-repeat center / contain;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='black' d='M2 2a1 1 0 0 1 1-1h3.586a1 1 0 0 1 .707.293L8.414 4H14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2zm2 1v10h10V6H7.414L4.586 4H4z'/%3E%3C/svg%3E") no-repeat center / contain;
+}
+
 .fs-folder,
 .fs-folder-link {
   color: var(--pico-color);
@@ -527,19 +674,44 @@ body.nav-open .nav-icon-close {
   font-weight: 700;
 }
 
-.fs-section > .fs-toggle {
+.fs-section .fs-toggle {
   border: 0;
-  background: transparent;
+  background: transparent !important;
+  background-color: transparent !important;
   color: var(--muted);
-  padding: 0 0.15rem;
+  padding: 0;
   margin: 0 0.2rem 0 0;
   width: 1.25rem;
   min-width: 1.25rem;
-  font-family: "Inter", "Segoe UI", sans-serif;
-  font-size: 1rem;
-  line-height: 1;
+  height: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
   flex-shrink: 0;
+  border-radius: 0;
+  appearance: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.fs-section .fs-toggle:hover,
+.fs-section .fs-toggle:active {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+.fs-section .fs-toggle:focus,
+.fs-section .fs-toggle:focus-visible {
+  outline: none;
+  box-shadow: none;
+  background: transparent !important;
+  background-color: transparent !important;
+}
+.fs-section .fs-toggle .fs-toggle-icon {
+  display: block;
+  line-height: 0;
+  transition: transform 0.15s ease;
+}
+.fs-section.is-collapsed .fs-section-row .fs-toggle .fs-toggle-icon {
+  transform: rotate(-90deg);
 }
 
 .fs-section {
@@ -552,13 +724,41 @@ body.nav-open .nav-icon-close {
   flex-shrink: 0;
 }
 
-.fs-section > .fs-toggle:hover {
+.fs-section .fs-toggle:hover {
   color: var(--pico-color);
 }
 
 .fs-section > .fs-files {
   flex-basis: 100%;
   margin-top: 0.08rem;
+}
+
+.fs-section-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: 0.15rem;
+  margin: 0 -0.25rem;
+  padding: 0.1rem 0.25rem;
+  border-radius: 4px;
+}
+.fs-section-row:hover {
+  background: var(--vscode-sidebar-hover);
+}
+.layout-sidebar .fs-file-link.is-active,
+.layout-sidebar .fs-folder-link.is-active {
+  background: var(--vscode-sidebar-active);
+  border-radius: 4px;
+}
+.layout-sidebar .fs-section-row .fs-folder-link.is-active {
+  padding: 0.1rem 0.25rem;
+  margin: 0 -0.25rem;
+}
+.layout-sidebar .fs-file-item a.is-active {
+  background: var(--vscode-sidebar-active);
+  border-radius: 4px;
+  padding: 0.1rem 0.25rem;
+  margin: 0 -0.25rem;
 }
 
 .fs-folder-link:hover,
@@ -571,24 +771,51 @@ body.nav-open .nav-icon-close {
   margin-top: 0.05rem;
   margin-left: 0;
   color: var(--muted);
-  font-family: "Inter", "Segoe UI", sans-serif;
+  font-family: "JetBrains Mono", "Cascadia Code", Consolas, monospace;
   font-size: 0.7rem;
   white-space: nowrap;
 }
 
 .fs-file-item {
-  display: block;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
   width: 100%;
-  padding-right: 0.2rem;
+  margin: 0 -0.25rem;
+  padding: 0.1rem 0.25rem;
+  border-radius: 4px;
+  gap: 0 0.25rem;
+}
+.fs-file-item:hover {
+  background: var(--vscode-sidebar-hover);
+}
+.fs-file-item .fs-file-link {
+  flex: 1;
+  min-width: 0;
+}
+.fs-file-item .fs-meta {
+  margin-top: 0;
 }
 
 .fs-file-item + .fs-file-item {
-  margin-top: 0.2rem;
+  margin-top: 0.05rem;
+}
+
+.fs-folder-root {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.fs-folder-root > .fs-icon {
+  margin-right: 0.35em;
+}
+.fs-folder-root > .fs-folder {
+  flex-shrink: 0;
 }
 
 /* Home and lists */
 .home-top {
-  padding: 2.2rem 0 1rem;
+  padding: 1.5rem 0 1rem;
 }
 
 .eyebrow {
@@ -693,7 +920,7 @@ h1 {
 }
 
 .flat-article {
-  margin: calc(1rem * var(--spacing-scale)) 0;
+  margin: 0 0 calc(1.5rem * var(--spacing-scale));
   font-size: var(--font-size-base);
 }
 
@@ -705,6 +932,7 @@ h1 {
 .single-pane {
   max-width: 840px;
   margin-inline: auto;
+  padding-inline: 0.5rem;
 }
 
 .list-flat {
@@ -712,8 +940,8 @@ h1 {
 }
 
 .flat-article h1 {
-  margin-top: 0.4rem;
-  margin-bottom: 1rem;
+  margin-top: 0;
+  margin-bottom: 0.75rem;
 }
 
 .flat-article .article-content > h1:first-child {
@@ -721,7 +949,7 @@ h1 {
 }
 
 .prose :not(pre) > code {
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-family: "JetBrains Mono", "Cascadia Code", Consolas, monospace;
   background: color-mix(in oklab, var(--line), transparent 45%);
   padding: 0.15rem 0.35rem;
   border-radius: 6px;
@@ -753,7 +981,7 @@ h1 {
   color: var(--muted);
   border-radius: 9px;
   padding: 0.25rem 0.55rem;
-  font-family: "Inter", "Segoe UI", sans-serif;
+  font-family: "JetBrains Mono", "Cascadia Code", Consolas, monospace;
   font-size: 0.8rem;
   font-weight: 600;
   line-height: 1;
@@ -795,7 +1023,7 @@ h1 {
     transform: translateX(-100%);
     transition: transform 0.2s ease;
     padding-right: 0.9rem;
-    padding-top: 5rem;
+    padding-top: 3rem;
     margin: 0;
     box-shadow: 4px 0 20px rgba(0, 0, 0, 0.15);
   }
@@ -844,8 +1072,10 @@ h1 {
     -webkit-box-orient: vertical;
   }
 
-  /* Header: space for fixed theme controls */
+  /* Header: surface above sidebar so burger stays visible and clickable */
   .site-header {
+    position: relative;
+    z-index: 60;
     padding-right: 5rem;
   }
 }
