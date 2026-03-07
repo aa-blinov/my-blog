@@ -1,0 +1,862 @@
+/* Overrides and layout on top of Pico CSS. GitHub-style light/dark themes via data-theme. */
+
+[data-theme="light"],
+:root:not([data-theme="dark"]) {
+  --sidebar-w: 380px;
+  --line: #d0d7de;
+  --muted: #57606a;
+  --surface: #f6f8fa;
+  --accent: #656d76;
+  --github-green: #2da44e;
+  --telegram-blue: #229ed9;
+  /* GitHub light: override Pico for page/sidebar */
+  --pico-background-color: #ffffff;
+  --pico-color: #1f2328;
+  --pico-muted-color: var(--muted);
+  --pico-primary: #656d76;
+  --pico-primary-hover: #424a53;
+  --pico-primary-focus: rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="dark"] {
+  --sidebar-w: 380px;
+  --line: #30363d;
+  --muted: #8b949e;
+  --surface: #161b22;
+  --accent: #8b949e;
+  --github-green: #3fb950;
+  --telegram-blue: #2aabee;
+  /* GitHub dark */
+  --pico-background-color: #0d1117;
+  --pico-color: #e6edf3;
+  --pico-muted-color: var(--muted);
+  --pico-primary: #8b949e;
+  --pico-primary-hover: #a0aec0;
+  --pico-primary-focus: rgba(255, 255, 255, 0.06);
+}
+
+/* Font size: s / m / l (stored in localStorage, applied via data-font-size).
+   Profiles by viewport (MacBook, Full HD, 2K, 4K) set --profile-font-base and --spacing-scale. */
+:root {
+  --profile-font-base: 15px;
+  --spacing-scale: 1;
+  font-size: var(--profile-font-base);
+}
+
+/* Профили по разрешению: размер шрифта и отступы */
+/* MacBook Air 13" (1440×900) — без изменений */
+@media (min-width: 1440px) {
+  :root {
+    --profile-font-base: 15px;
+    --spacing-scale: 1;
+  }
+}
+
+/* MacBook Pro 14" (1512×982) */
+@media (min-width: 1512px) {
+  :root {
+    --profile-font-base: 15.5px;
+    --spacing-scale: 1.02;
+  }
+}
+
+/* MacBook Pro 16" (1728×1117) */
+@media (min-width: 1728px) {
+  :root {
+    --profile-font-base: 16px;
+    --spacing-scale: 1.05;
+  }
+}
+
+/* Full HD (1920×1080) */
+@media (min-width: 1920px) {
+  :root {
+    --profile-font-base: 16px;
+    --spacing-scale: 1.08;
+  }
+}
+
+/* 2K / QHD (2560×1440) */
+@media (min-width: 2560px) {
+  :root {
+    --profile-font-base: 16.5px;
+    --spacing-scale: 1.12;
+  }
+}
+
+/* 4K (3840×2160) */
+@media (min-width: 3840px) {
+  :root {
+    --profile-font-base: 17px;
+    --spacing-scale: 1.15;
+    --sidebar-w: 420px;
+  }
+}
+
+[data-font-size="s"] {
+  font-size: calc(var(--profile-font-base) * 0.933);
+  --font-size-base: 0.875rem;
+}
+[data-font-size="m"] {
+  font-size: var(--profile-font-base);
+  --font-size-base: 0.9375rem;
+}
+[data-font-size="l"] {
+  font-size: calc(var(--profile-font-base) * 1.067);
+  --font-size-base: 1rem;
+}
+
+body {
+  font-family: "Source Serif 4", Georgia, serif;
+  font-size: 1rem;
+  line-height: 1.6;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+html {
+  overflow-x: hidden;
+}
+
+.wrap {
+  width: min(940px, 92vw);
+  margin-inline: auto;
+}
+
+.site-header,
+.site-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: calc(1rem * var(--spacing-scale));
+  padding: calc(1rem * var(--spacing-scale)) 0;
+}
+
+.site-header {
+  border-bottom: 1px solid var(--line);
+}
+
+/* Controls (A−, A+, theme) fixed top-right, outside navbar */
+.theme-controls-fixed {
+  position: fixed;
+  top: 0.75rem;
+  right: 1rem;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.theme-icon {
+  display: block;
+  line-height: 0;
+  color: var(--muted);
+}
+.theme-icon-moon {
+  display: none;
+}
+[data-theme="light"] .theme-icon-sun,
+:root:not([data-theme="dark"]) .theme-icon-sun {
+  display: block;
+}
+[data-theme="light"] .theme-icon-moon,
+:root:not([data-theme="dark"]) .theme-icon-moon {
+  display: none;
+}
+[data-theme="dark"] .theme-icon-sun {
+  display: none;
+}
+[data-theme="dark"] .theme-icon-moon {
+  display: block;
+}
+
+.theme-btn-icon {
+  padding: 0.4rem;
+  line-height: 0;
+}
+.theme-btn-icon .theme-icon svg {
+  display: block;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  position: relative;
+}
+
+.site-footer {
+  border-top: 1px solid var(--line);
+  margin-top: calc(1.5rem * var(--spacing-scale));
+  padding-top: calc(0.8rem * var(--spacing-scale));
+  padding-bottom: calc(1.2rem * var(--spacing-scale));
+  color: var(--muted);
+}
+
+.site-footer .social-link {
+  text-decoration: none;
+}
+
+.site-footer .social-link:hover {
+  text-decoration: underline;
+}
+
+.site-footer .social-link-github {
+  color: var(--github-green);
+}
+
+.site-footer .social-link-telegram {
+  color: var(--telegram-blue);
+}
+
+.site-footer .social-link-github:hover {
+  text-decoration-color: color-mix(in oklab, var(--github-green), transparent 25%);
+}
+
+.site-footer .social-link-telegram:hover {
+  text-decoration-color: color-mix(in oklab, var(--telegram-blue), transparent 25%);
+}
+
+.site-main {
+  flex: 1;
+}
+
+.brand,
+.site-nav a,
+.theme-btn,
+h1, h2, h3 {
+  font-family: "Inter", "Segoe UI", sans-serif;
+}
+
+.brand {
+  text-decoration: none;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
+
+.brand.brand-icon-only {
+  display: block;
+  min-width: 2rem;
+  min-height: 1.5rem;
+}
+
+.site-nav {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.site-nav a {
+  text-decoration: none;
+  font-weight: 600;
+}
+
+/* Hamburger: visible on narrow only; toggles sidebar (nav) */
+.nav-menu-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: transparent;
+  color: var(--muted);
+  border-radius: 4px;
+  padding: 0.4rem;
+  cursor: pointer;
+  line-height: 0;
+}
+.nav-menu-btn:hover {
+  color: var(--pico-color);
+}
+.nav-menu-btn:focus,
+.nav-menu-btn:focus-visible {
+  outline: none;
+  box-shadow: none;
+}
+.nav-menu-btn .nav-icon {
+  display: block;
+  line-height: 0;
+}
+.nav-menu-btn .nav-icon svg {
+  display: block;
+  width: 20px;
+  height: 20px;
+}
+.nav-icon-close {
+  display: none;
+}
+body.nav-open .nav-icon-bars {
+  display: none;
+}
+body.nav-open .nav-icon-close {
+  display: block;
+}
+
+.font-size-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.15rem;
+}
+
+.font-size-btn {
+  border: none;
+  background: transparent;
+  color: var(--muted);
+  border-radius: 4px;
+  padding: 0.35rem 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  line-height: 1;
+}
+.font-size-btn:hover {
+  color: var(--pico-color);
+}
+.font-size-btn:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.theme-btn {
+  border: none;
+  background: transparent;
+  color: var(--muted);
+  border-radius: 4px;
+  padding: 0.4rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  cursor: pointer;
+  line-height: 0;
+}
+.theme-btn:hover {
+  color: var(--pico-color);
+}
+.theme-btn:focus,
+.theme-btn:focus-visible {
+  outline: none;
+  box-shadow: none;
+}
+
+/* Layout: sidebar + main (in baseof). 100% вместо 100vw — убирает горизонтальный скролл из-за ширины полосы прокрутки. */
+.layout-vscode {
+  display: grid;
+  grid-template-columns: var(--sidebar-w) minmax(0, 1fr);
+  gap: calc(1.2rem * var(--spacing-scale));
+  align-items: start;
+  width: 100%;
+  flex: 1;
+  min-width: 0;
+}
+
+.layout-sidebar {
+  position: sticky;
+  top: 0;
+  margin-top: 0;
+  align-self: stretch;
+  border-right: 1px solid var(--line);
+  padding-right: calc(0.9rem * var(--spacing-scale));
+}
+
+.layout-sidebar .fs-panel {
+  margin-bottom: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  min-height: calc(100dvh - 8.8rem);
+}
+
+.layout-main {
+  width: min(940px, 92vw);
+  justify-self: center;
+  transform: translateX(calc(var(--sidebar-w) * -0.5));
+  padding-right: 0;
+}
+
+.layout-main-single {
+  width: min(940px, 100%);
+  max-width: 840px;
+  margin-inline: auto;
+}
+
+/* File tree */
+.fs-panel {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: color-mix(in oklab, var(--surface), transparent 10%);
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+}
+
+.fs-panel-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: calc(1rem * var(--spacing-scale));
+  border-bottom: 1px solid var(--line);
+  padding: calc(0.5rem * var(--spacing-scale)) calc(0.75rem * var(--spacing-scale));
+  font-family: "Inter", "Segoe UI", sans-serif;
+  font-size: 0.8rem;
+}
+
+.fs-panel-head small {
+  color: var(--muted);
+  font-size: 0.7rem;
+}
+
+.fs-search-wrap {
+  padding: 0.25rem 0.6rem 0.2rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.fs-tools {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.35rem;
+}
+
+@media (max-width: 1200px) {
+  .fs-tools {
+    grid-template-columns: 1fr;
+  }
+}
+
+.fs-search {
+  width: 100%;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--pico-color);
+  border-radius: 4px;
+  padding: 0.15rem 0.5rem 0.15rem 0.4rem;
+  font-family: "Inter", "Segoe UI", sans-serif;
+  font-size: 0.7rem;
+  line-height: 1.25;
+  height: 22px !important;
+  min-height: 22px !important;
+  box-sizing: border-box;
+}
+.fs-search::placeholder {
+  color: var(--muted);
+}
+
+.fs-sort {
+  border-radius: 4px;
+  padding: 0 0.6rem 0 0.35rem;
+  font-family: "Inter", "Segoe UI", sans-serif;
+  font-size: 0.7rem;
+  height: 22px !important;
+  min-height: 22px !important;
+  line-height: 22px;
+  box-sizing: border-box;
+}
+
+.fs-empty {
+  margin: 0.35rem 0.1rem 0.25rem;
+  color: var(--muted);
+  font-family: "Inter", "Segoe UI", sans-serif;
+  font-size: 0.72rem;
+}
+
+.fs-tree,
+.fs-tree ul {
+  list-style: none;
+  margin: 0;
+  padding-left: 1.1rem;
+}
+
+.fs-tree {
+  padding: calc(0.5rem * var(--spacing-scale)) calc(0.75rem * var(--spacing-scale)) calc(0.75rem * var(--spacing-scale));
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.78rem;
+  overflow-x: auto;
+}
+
+.fs-tree li {
+  position: relative;
+  padding-left: 0.9rem;
+  margin: 0.22rem 0;
+}
+
+.fs-tree li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.8em;
+  width: 0.6rem;
+  border-top: 1px solid var(--line);
+}
+
+.fs-tree li::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: -0.45rem;
+  bottom: -0.45rem;
+  border-left: 1px solid var(--line);
+}
+
+.fs-tree li:last-child::after {
+  bottom: 0.8em;
+}
+
+.fs-folder,
+.fs-folder-link {
+  color: var(--pico-color);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.fs-file-link {
+  color: var(--pico-color);
+  text-decoration: none;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  line-height: 1.35;
+}
+
+.fs-folder {
+  font-weight: 700;
+}
+
+.fs-folder-link {
+  font-weight: 700;
+}
+
+.fs-section > .fs-toggle {
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  padding: 0 0.15rem;
+  margin: 0 0.2rem 0 0;
+  width: 1.25rem;
+  min-width: 1.25rem;
+  font-family: "Inter", "Segoe UI", sans-serif;
+  font-size: 1rem;
+  line-height: 1;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.fs-section {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.fs-section > .fs-folder-link {
+  flex-shrink: 0;
+}
+
+.fs-section > .fs-toggle:hover {
+  color: var(--pico-color);
+}
+
+.fs-section > .fs-files {
+  flex-basis: 100%;
+  margin-top: 0.08rem;
+}
+
+.fs-folder-link:hover,
+.fs-file-link:hover {
+  color: var(--accent);
+}
+
+.fs-meta {
+  display: block;
+  margin-top: 0.05rem;
+  margin-left: 0;
+  color: var(--muted);
+  font-family: "Inter", "Segoe UI", sans-serif;
+  font-size: 0.7rem;
+  white-space: nowrap;
+}
+
+.fs-file-item {
+  display: block;
+  width: 100%;
+  padding-right: 0.2rem;
+}
+
+.fs-file-item + .fs-file-item {
+  margin-top: 0.2rem;
+}
+
+/* Home and lists */
+.home-top {
+  padding: 2.2rem 0 1rem;
+}
+
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+h1 {
+  line-height: 1.2;
+  font-size: clamp(1.5rem, 4vw, 2.25rem);
+  margin: 0.2rem 0 0.5rem;
+}
+
+.lead {
+  font-size: 1rem;
+  color: var(--muted);
+  max-width: 60ch;
+}
+
+.post-list {
+  display: flex;
+  flex-direction: column;
+  gap: calc(1.5rem * var(--spacing-scale));
+}
+
+/* Список статей без подложки — только типографика и отступы */
+.post-list .card,
+.post-list article.card {
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  margin-bottom: 0;
+  background: transparent;
+}
+
+.post-list .card:last-child,
+.post-list article.card:last-child {
+  padding-bottom: 0;
+}
+
+.post-list .card h2,
+.post-list .card h3,
+.post-list article.card h2,
+.post-list article.card h3 {
+  margin: 0.2rem 0 0.35rem;
+}
+
+.recent-heading {
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.card {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: calc(1rem * var(--spacing-scale));
+  background: color-mix(in oklab, var(--surface), transparent 22%);
+}
+
+.card h2,
+.card h3 {
+  margin: 0.35rem 0;
+}
+
+.card a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.meta {
+  color: var(--muted);
+  font-size: 0.8125rem;
+  margin: 0;
+}
+
+.prose h1,
+.prose h2,
+.prose h3 {
+  line-height: 1.3;
+}
+
+/* Article: no card/substrate – content on page background */
+.flat-article,
+.site-main article.flat-article {
+  background: transparent !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  margin-bottom: 0;
+}
+
+.flat-article header,
+.site-main article.flat-article header {
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  border: none;
+}
+
+.flat-article {
+  margin: calc(1rem * var(--spacing-scale)) 0;
+  font-size: var(--font-size-base);
+}
+
+.flat-article .article-content,
+.flat-article .prose {
+  font-size: var(--font-size-base);
+}
+
+.single-pane {
+  max-width: 840px;
+  margin-inline: auto;
+}
+
+.list-flat {
+  margin: 0.55rem 0 1.2rem;
+}
+
+.flat-article h1 {
+  margin-top: 0.4rem;
+  margin-bottom: 1rem;
+}
+
+.flat-article .article-content > h1:first-child {
+  display: none;
+}
+
+.prose :not(pre) > code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  background: color-mix(in oklab, var(--line), transparent 45%);
+  padding: 0.15rem 0.35rem;
+  border-radius: 6px;
+}
+
+.prose pre {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: calc(0.9rem * var(--spacing-scale)) calc(1rem * var(--spacing-scale));
+  overflow-x: auto;
+}
+
+.prose pre code {
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+}
+
+.highlight {
+  position: relative;
+}
+
+.code-copy-btn {
+  position: absolute;
+  top: 0.55rem;
+  right: 0.55rem;
+  border: 1px solid var(--line);
+  background: color-mix(in oklab, var(--pico-background-color), transparent 8%);
+  color: var(--muted);
+  border-radius: 9px;
+  padding: 0.25rem 0.55rem;
+  font-family: "Inter", "Segoe UI", sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.code-copy-btn:hover {
+  color: var(--pico-color);
+}
+
+.code-copy-btn.copied {
+  color: var(--accent);
+}
+
+@media (min-width: 1001px) {
+  .nav-menu-btn {
+    display: none;
+  }
+}
+
+@media (max-width: 1000px) {
+  .layout-vscode {
+    width: 100%;
+    margin-left: 0;
+    grid-template-columns: 1fr;
+  }
+
+  /* На узком экране сайдбар скрыт; по бургеру открывается как навигация */
+  .layout-sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: min(280px, 85vw);
+    height: 100%;
+    z-index: 50;
+    background: var(--pico-background-color);
+    border-right: 1px solid var(--line);
+    overflow-y: auto;
+    transform: translateX(-100%);
+    transition: transform 0.2s ease;
+    padding-right: 0.9rem;
+    padding-top: 5rem;
+    margin: 0;
+    box-shadow: 4px 0 20px rgba(0, 0, 0, 0.15);
+  }
+  [data-theme="dark"] .layout-sidebar {
+    box-shadow: 4px 0 20px rgba(0, 0, 0, 0.4);
+  }
+  body.nav-open .layout-sidebar {
+    transform: translateX(0);
+  }
+
+  .layout-sidebar .fs-panel {
+    border: 0;
+    border-radius: 0;
+    min-height: auto;
+    background: transparent;
+  }
+
+  .layout-main {
+    width: auto;
+    transform: none;
+    justify-self: stretch;
+  }
+
+  .nav-menu-btn {
+    display: flex;
+  }
+
+  /* Sidebar: search + sort stack vertically */
+  .fs-tools {
+    grid-template-columns: 1fr;
+  }
+
+  .fs-panel-head {
+    flex-wrap: wrap;
+  }
+  .fs-panel-head small {
+    min-width: 0;
+  }
+
+  .fs-meta {
+    white-space: normal;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+
+  /* Header: space for fixed theme controls */
+  .site-header {
+    padding-right: 5rem;
+  }
+}
+
+@media (max-width: 700px) {
+  .site-header,
+  .header-right {
+    flex-wrap: wrap;
+  }
+
+  .site-nav {
+    gap: 0.8rem;
+  }
+}

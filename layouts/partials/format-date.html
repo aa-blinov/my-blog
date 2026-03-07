@@ -1,4 +1,0 @@
-{{ $p := . }}
-{{ $d := $p.Date }}
-{{ if $d.IsZero }}{{ $d = $p.Lastmod }}{{ end }}
-{{ if not $d.IsZero }}{{ $d.Format "02 Jan 2006" }}{{ else }}—{{ end }}

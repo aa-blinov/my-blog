@@ -1,0 +1,45 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+import { SECTION_TITLES, SECTION_DESCRIPTIONS } from '../../../config';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('blog');
+  const sections = [...new Set(entries.map((e) => e.data.section).filter((s) => s === 'dev' || s === 'life'))];
+  return sections.map((section) => ({ params: { section } }));
+}
+
+const { section } = Astro.params;
+if (!section) throw new Error('section is required');
+
+const posts = (await getCollection('blog'))
+  .filter((p) => !p.data.draft && p.data.section === section)
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+
+function formatDate(d: Date): string {
+  return d.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+}
+
+const BASE = import.meta.env.BASE_URL;
+const title = SECTION_TITLES[section] ?? section;
+const description = SECTION_DESCRIPTIONS[section];
+---
+
+<Layout title={title}>
+  <section class="list-flat">
+    <header>
+      <h1>{title}</h1>
+      {description && <div class="prose"><p>{description}</p></div>}
+    </header>
+    <h2>Свежие статьи</h2>
+    <div class="post-list">
+      {posts.map((entry) => (
+        <article class="card">
+          <p class="meta">{formatDate(entry.data.date)} · {title}</p>
+          <h3><a href={`${BASE}blog/${entry.data.section}/${entry.slug}/`}>{entry.data.title}</a></h3>
+          {entry.data.summary && <p>{entry.data.summary}</p>}
+        </article>
+      ))}
+    </div>
+  </section>
+</Layout>

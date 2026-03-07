@@ -1,0 +1,34 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog'))
+  .filter((p) => !p.data.draft)
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+  .slice(0, 9);
+
+function formatDate(d: Date): string {
+  return d.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+}
+
+const BASE = import.meta.env.BASE_URL;
+---
+
+<Layout title="Блог">
+  <section class="list-flat">
+    <header>
+      <h1>Блог</h1>
+      <div class="prose"><p>Статьи сгруппированы по разделам.</p></div>
+    </header>
+    <h2>Свежие статьи</h2>
+    <div class="post-list">
+      {posts.map((entry) => (
+        <article class="card">
+          <p class="meta">{formatDate(entry.data.date)} · {entry.data.section === 'dev' ? 'Dev' : 'Life'}</p>
+          <h3><a href={`${BASE}blog/${entry.data.section}/${entry.slug}/`}>{entry.data.title}</a></h3>
+          {entry.data.summary && <p>{entry.data.summary}</p>}
+        </article>
+      ))}
+    </div>
+  </section>
+</Layout>
