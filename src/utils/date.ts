@@ -1,5 +1,5 @@
 export function formatDate(d: Date): string {
-  return d.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+  return d.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric' }).replace(/\//g, '-');
 }
 
 export function sortByDateDesc<T extends { data: { date: Date } }>(entries: T[]): T[] {
