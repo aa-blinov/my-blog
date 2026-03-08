@@ -4,7 +4,8 @@ export const SITE = {
   author: 'Александр Блинов',
   github: 'https://github.com/aa-blinov',
   telegram: 'https://t.me/ahsasmi',
-  url: 'https://example.org',
+  linkedin: 'https://www.linkedin.com/in/alexander-blinov-31262b264/',
+  url: 'https://blinov.monster',
 } as const;
 
 export const BASE = import.meta.env.BASE_URL;
