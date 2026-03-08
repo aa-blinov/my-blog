@@ -46,25 +46,34 @@ const folderIcon = `
       </li>
     )}
     
-    {(['dev', 'life'] as const).map((section) => (
-      <li>
-        <details open>
-          <summary class="contrast">
-            <span class="folder-icon" set:html={folderIcon}></span> {section}/
-          </summary>
-          <ul>
-            {bySection[section].map((entry) => (
-              <li>
-                <a href={`${BASE}blog/${entry.section}/${entry.slug}/`}>
-                  <span class="file-icon" set:html={docIcon}></span>
-                  {entry.slug}.md <span class="file-date">{formatDate(entry.date)}</span>
-                </a>
-              </li>
-            ))}
-          </ul>
-        </details>
-      </li>
-    ))}
+    <li>
+      <details open>
+        <summary class="contrast">
+          <span class="folder-icon" set:html={folderIcon}></span> blog/
+        </summary>
+        <ul>
+          {(['dev', 'life'] as const).map((section) => (
+            <li>
+              <details open>
+                <summary class="contrast">
+                  <span class="folder-icon" set:html={folderIcon}></span> {section}/
+                </summary>
+                <ul>
+                  {bySection[section].map((entry) => (
+                    <li>
+                      <a href={`${BASE}blog/${entry.section}/${entry.slug}/`}>
+                        <span class="file-icon" set:html={docIcon}></span>
+                        {entry.slug}.md <span class="file-date">{formatDate(entry.date)}</span>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </details>
+            </li>
+          ))}
+        </ul>
+      </details>
+    </li>
   </ul>
 </nav>
 

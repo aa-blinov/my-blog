@@ -1,20 +1,18 @@
 ---
 import PageFromEntry from '../../components/PageFromEntry.astro';
 import { getCollection } from 'astro:content';
-import { SECTION_TITLES } from '../../config';
-
 const pages = (await getCollection('pages')).filter((e) => !e.data.draft);
 const aboutEntry = pages.find((e) => e.slug === 'about-me');
 
 let Content: import('astro').ContentComponent | null = null;
-let entryData: { data: { title: string; date: Date; summary?: string }; sectionLabel: string } | null = null;
+let entryData: { data: { title: string; date: Date; summary?: string }; fileLabel: string } | null = null;
 
 if (aboutEntry) {
   const rendered = await aboutEntry.render();
   Content = rendered.Content;
   entryData = {
     data: aboutEntry.data,
-    sectionLabel: SECTION_TITLES['about'] ?? 'Обо мне',
+    fileLabel: 'about-me.md',
   };
 }
 ---

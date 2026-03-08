@@ -137,6 +137,13 @@ html[data-theme="light"] #moon-icon {
   text-decoration: underline;
 }
 
+/* Разделитель между заголовком и телом статьи */
+article header {
+  border-bottom: 1px solid var(--pico-muted-border-color);
+  padding-bottom: 1rem;
+  margin-bottom: 1.5rem;
+}
+
 .meta {
   color: var(--pico-muted-color);
   font-size: 0.9rem;

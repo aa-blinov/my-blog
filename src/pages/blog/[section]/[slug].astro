@@ -23,7 +23,7 @@ const { Content } = await entry.render();
 <Layout title={entry.data.title} description={entry.data.summary}>
   <article>
     <header>
-      <p class="meta">{formatDate(entry.data.date)} · blog/{entry.data.section}</p>
+      <p class="meta">{formatDate(entry.data.date)} · blog/{entry.data.section}/{entry.slug}.md</p>
       <h1>{entry.data.title}</h1>
     </header>
     <div class="content">

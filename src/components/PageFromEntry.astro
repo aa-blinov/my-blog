@@ -3,7 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import { formatDate } from '../utils/date';
 
 interface Props {
-  entry: { data: { title: string; date: Date; summary?: string }; sectionLabel: string } | null;
+  entry: { data: { title: string; date: Date; summary?: string }; fileLabel: string } | null;
   fallbackTitle: string;
   fallbackH1: string;
   prompt: string;
@@ -18,7 +18,7 @@ const hasEntry = !!entry;
     <header>
       {hasEntry ? (
         <>
-          <p class="meta">{formatDate(entry.data.date)} · {entry.sectionLabel}</p>
+          <p class="meta">{formatDate(entry.data.date)} · {entry.fileLabel}</p>
           <hgroup>
             <h1>{entry.data.title}</h1>
             {entry.data.summary && <p>{entry.data.summary}</p>}
