@@ -9,6 +9,19 @@ const { breadcrumbPath } = Astro.props;
 ---
 <nav class="vertical-navbar">
   <ul>
+    <!-- Sidebar toggle: only visible on mobile -->
+    <li class="mobile-only">
+      <button id="sidebar-toggle" class="outline contrast" aria-label="Toggle sidebar" style="border: none; background: transparent; padding: 0; margin: 0; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;">
+        <!-- Heroicons: Bars 3 (hamburger) -->
+        <svg id="sidebar-open-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="24" height="24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+        </svg>
+        <!-- Heroicons: X Mark (close) -->
+        <svg id="sidebar-close-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="24" height="24" style="display:none">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </li>
     <li>
       <a href={BASE} class="contrast" aria-label="Home">
         <!-- Heroicons: Home (Outline) -->
@@ -17,8 +30,10 @@ const { breadcrumbPath } = Astro.props;
         </svg>
       </a>
     </li>
+
   </ul>
-  
+
+  <!-- Theme toggle: top-right on mobile (via CSS), bottom on desktop -->
   <ul style="margin-top: auto">
     <li>
       <button id="theme-toggle" class="outline contrast" aria-label="Toggle theme" style="border: none; background: transparent; padding: 0; margin: 0; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;">
@@ -34,6 +49,31 @@ const { breadcrumbPath } = Astro.props;
     </li>
   </ul>
 </nav>
+
+<script>
+  const sidebarToggle = document.getElementById('sidebar-toggle');
+  const sidebar = document.getElementById('layout-sidebar');
+  const openIcon = document.getElementById('sidebar-open-icon');
+  const closeIcon = document.getElementById('sidebar-close-icon');
+
+  function syncIcons() {
+    const isHidden = sidebar?.classList.contains('sidebar-hidden');
+    if (openIcon && closeIcon) {
+      // ☰ shown when sidebar is hidden (click will open)
+      openIcon.style.display = isHidden ? 'block' : 'none';
+      // ✕ shown when sidebar is visible (click will close)
+      closeIcon.style.display = isHidden ? 'none' : 'block';
+    }
+  }
+
+  // Init icons: sidebar visible by default → show ✕
+  syncIcons();
+
+  sidebarToggle?.addEventListener('click', () => {
+    sidebar?.classList.toggle('sidebar-hidden');
+    syncIcons();
+  });
+</script>
 
 <style>
   /* Local styling only for vertical-navbar list resets */
