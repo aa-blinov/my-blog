@@ -1,20 +1,21 @@
 ---
-import { BASE, SECTION_TITLES } from '../config';
+import { BASE, SECTION_TITLES, BLOG_SECTIONS, type BlogSection } from '../config';
 import { formatDate } from '../utils/date';
 
 interface Props {
-  blogEntries: { slug: string; title: string; date: Date; section: 'dev' | 'life' }[];
+  blogEntries: { slug: string; title: string; date: Date; section: BlogSection }[];
   mainEntry?: { slug: string; title: string; date: Date } | null;
   aboutEntry?: { slug: string; title: string; date: Date } | null;
 }
 
 const { blogEntries, mainEntry, aboutEntry } = Astro.props;
 
-const bySection = { dev: [] as typeof blogEntries, life: [] as typeof blogEntries };
+const bySection = {} as Record<BlogSection, typeof blogEntries>;
+BLOG_SECTIONS.forEach((s) => (bySection[s] = []));
 blogEntries.forEach((e) => bySection[e.section].push(e));
 
 // Расчет дат для папок (нужно для сортировки самих папок)
-const getSectionStats = (section: 'dev' | 'life') => {
+const getSectionStats = (section: BlogSection) => {
   const dates = bySection[section].map(e => e.date.getTime());
   return {
     min: dates.length ? new Date(Math.min(...dates)).toISOString() : new Date(0).toISOString(),
@@ -22,11 +23,11 @@ const getSectionStats = (section: 'dev' | 'life') => {
   };
 };
 
-const devStats = getSectionStats('dev');
-const lifeStats = getSectionStats('life');
+const allStats = BLOG_SECTIONS.map(getSectionStats);
+const validStats = allStats.filter(s => s.min !== new Date(0).toISOString());
 const blogStats = {
-  min: new Date(Math.min(new Date(devStats.min).getTime(), new Date(lifeStats.min).getTime())).toISOString(),
-  max: new Date(Math.max(new Date(devStats.max).getTime(), new Date(lifeStats.max).getTime())).toISOString()
+  min: validStats.length ? new Date(Math.min(...validStats.map(s => new Date(s.min).getTime()))).toISOString() : new Date(0).toISOString(),
+  max: validStats.length ? new Date(Math.max(...validStats.map(s => new Date(s.max).getTime()))).toISOString() : new Date(0).toISOString()
 };
 
 // Determine active path
@@ -81,8 +82,8 @@ function isActive(href: string): boolean {
           <span class="ascii-icon folder">▸</span> blog/
         </summary>
         <ul class="sortable-list">
-          {(['dev', 'life'] as const).map((section) => {
-            const stats = section === 'dev' ? devStats : lifeStats;
+          {BLOG_SECTIONS.map((section) => {
+            const stats = getSectionStats(section);
             return (
               <li class="folder-item sortable-item" data-date-min={stats.min} data-date-max={stats.max}>
                 <details open>

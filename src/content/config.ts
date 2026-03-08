@@ -7,7 +7,7 @@ const blog = defineCollection({
     date: z.coerce.date(),
     draft: z.boolean().optional().default(false),
     summary: z.string().optional(),
-    section: z.enum(['dev', 'life']),
+    section: z.enum(['dev', 'life', 'mgmt', 'ideas', 'knowledge', 'science']),
   }),
 });
 
