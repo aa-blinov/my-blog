@@ -32,17 +32,17 @@ const folderIcon = `
     {mainEntry && (
       <li>
         <a href={BASE} class="contrast">
-          <span class="file-icon" set:html={docIcon}></span> main.md
+          <span class="file-icon" set:html={docIcon}></span>
+          main.md <span class="file-date">{formatDate(mainEntry.date)}</span>
         </a>
-        <div class="file-date">{formatDate(mainEntry.date)}</div>
       </li>
     )}
     {aboutEntry && (
       <li>
         <a href={`${BASE}about-me/`} class="contrast">
-          <span class="file-icon" set:html={docIcon}></span> about-me.md
+          <span class="file-icon" set:html={docIcon}></span>
+          about-me.md <span class="file-date">{formatDate(aboutEntry.date)}</span>
         </a>
-        <div class="file-date">{formatDate(aboutEntry.date)}</div>
       </li>
     )}
     
@@ -56,9 +56,9 @@ const folderIcon = `
             {bySection[section].map((entry) => (
               <li>
                 <a href={`${BASE}blog/${entry.section}/${entry.slug}/`}>
-                  <span class="file-icon" set:html={docIcon}></span> {entry.slug}.md
+                  <span class="file-icon" set:html={docIcon}></span>
+                  {entry.slug}.md <span class="file-date">{formatDate(entry.date)}</span>
                 </a>
-                <div class="file-date">{formatDate(entry.date)}</div>
               </li>
             ))}
           </ul>
@@ -76,14 +76,15 @@ const folderIcon = `
   }
   
   .sidebar-nav li {
-    margin-bottom: 0.25rem;
+    margin-bottom: 0;
+    line-height: 1.25;
   }
   
   .sidebar-nav summary {
     cursor: pointer;
     font-size: 0.95rem;
     font-weight: bold;
-    margin-bottom: 0.25rem;
+    margin-bottom: 0;
     display: flex;
     align-items: center;
   }
@@ -104,11 +105,9 @@ const folderIcon = `
   }
 
   .file-date {
-    font-size: 0.7rem;
+    font-size: 0.65rem;
     opacity: 0.5;
-    margin-left: 2rem;
-    margin-top: -0.2rem;
-    margin-bottom: 0.5rem;
+    margin-left: 0.4rem;
   }
 
   .file-icon, .folder-icon {
@@ -122,8 +121,10 @@ const folderIcon = `
 
   /* Indentation for nested items */
   details ul {
-    padding-left: 1rem !important;
+    padding-left: 0.75rem !important;
     border-left: 1px solid var(--pico-muted-border-color);
     margin-left: 0.5rem !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
   }
 </style>

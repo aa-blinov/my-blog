@@ -2,6 +2,10 @@
   --font-family: 'JetBrains Mono', 'Cascadia Code', Consolas, monospace;
 }
 
+html {
+  font-size: 90%; /* 15.2px base — пропорционально меньше (было 16px) */
+}
+
 body {
   font-family: var(--font-family);
   line-height: 1.6;
@@ -121,7 +125,7 @@ html[data-theme="light"] #moon-icon {
 }
 
 .sidebar-nav li {
-  margin-bottom: 0.5rem;
+  margin-bottom: 0;
 }
 
 .sidebar-nav a {
