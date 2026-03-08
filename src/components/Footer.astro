@@ -2,12 +2,14 @@
 import { SITE } from '../config';
 const year = new Date().getFullYear();
 ---
-<footer class="container" style="border-top: 1px solid var(--pico-muted-border-color); padding-top: 2rem; margin-top: 3rem">
+<footer class="site-footer">
   <small>
     {year} © {SITE.author}
     {' · '}
     <a href={SITE.github} target="_blank" rel="noopener noreferrer">GitHub</a>
     {' | '}
     <a href={SITE.telegram} target="_blank" rel="noopener noreferrer">Telegram</a>
+    {' | '}
+    <a href={SITE.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>
   </small>
 </footer>
