@@ -144,8 +144,8 @@ html[data-theme="light"] #moon-icon {
 }
 
 .sidebar-nav .active {
+  color: var(--pico-primary) !important;
   font-weight: bold;
-  text-decoration: underline;
 }
 
 /* Разделитель между заголовком и телом статьи */

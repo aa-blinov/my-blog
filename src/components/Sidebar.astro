@@ -13,60 +13,67 @@ const { blogEntries, mainEntry, aboutEntry } = Astro.props;
 const bySection = { dev: [] as typeof blogEntries, life: [] as typeof blogEntries };
 blogEntries.forEach((e) => bySection[e.section].push(e));
 
-// Heroicons constants
-const docIcon = `
-<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="18" height="18">
-  <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
-</svg>
-`;
+// Determine active path
+const currentPath = Astro.url.pathname;
 
-const folderIcon = `
-<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="18" height="18">
-  <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12.75V12A2.25 2.25 0 0 1 4.5 9.75h15A2.25 2.25 0 0 1 21.75 12v.75m-8.69-6.44-2.12-2.12a1.5 1.5 0 0 0-1.06-.44H4.5A2.25 2.25 0 0 0 2.25 6v12a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9a2.25 2.25 0 0 0-2.25-2.25h-5.31c-.191 0-.372-.072-.51-.21l-2.12-2.12a1.5 1.5 0 0 0-1.06-.44H4.5A2.25 2.25 0 0 0 2.25 6v12a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9a2.25 2.25 0 0 0-2.25-2.25h-5.31c-.191 0-.372-.072-.51-.21Z" />
-</svg>
-`;
+function isActive(href: string): boolean {
+  const normalize = (p: string) => p.endsWith('/') ? p : p + '/';
+  return normalize(currentPath) === normalize(href);
+}
 ---
 
 <nav class="sidebar-nav">
   <ul>
     {mainEntry && (
       <li>
-        <a href={BASE} class="contrast">
-          <span class="file-icon" set:html={docIcon}></span>
-          main.md <span class="file-date">{formatDate(mainEntry.date)}</span>
-        </a>
+        <span class="file-link-wrapper">
+          <a href={BASE} class:list={['file-link', { active: isActive(BASE) }]}>
+            <span class="ascii-icon">~</span> main.md
+          </a>
+          <span class="file-tooltip">main.md</span>
+        </span>
+        <span class="file-date">{formatDate(mainEntry.date)}</span>
       </li>
     )}
     {aboutEntry && (
       <li>
-        <a href={`${BASE}about-me/`} class="contrast">
-          <span class="file-icon" set:html={docIcon}></span>
-          about-me.md <span class="file-date">{formatDate(aboutEntry.date)}</span>
-        </a>
+        <span class="file-link-wrapper">
+          <a href={`${BASE}about-me/`} class:list={['file-link', { active: isActive(`${BASE}about-me/`) }]}>
+            <span class="ascii-icon">~</span> about-me.md
+          </a>
+          <span class="file-tooltip">about-me.md</span>
+        </span>
+        <span class="file-date">{formatDate(aboutEntry.date)}</span>
       </li>
     )}
     
     <li>
       <details open>
         <summary class="contrast">
-          <span class="folder-icon" set:html={folderIcon}></span> blog/
+          <span class="ascii-icon folder">▸</span> blog/
         </summary>
         <ul>
           {(['dev', 'life'] as const).map((section) => (
             <li>
               <details open>
                 <summary class="contrast">
-                  <span class="folder-icon" set:html={folderIcon}></span> {section}/
+                  <span class="ascii-icon folder">▸</span> {section}/
                 </summary>
                 <ul>
-                  {bySection[section].map((entry) => (
-                    <li>
-                      <a href={`${BASE}blog/${entry.section}/${entry.slug}/`}>
-                        <span class="file-icon" set:html={docIcon}></span>
-                        {entry.slug}.md <span class="file-date">{formatDate(entry.date)}</span>
-                      </a>
-                    </li>
-                  ))}
+                  {bySection[section].map((entry) => {
+                    const href = `${BASE}blog/${entry.section}/${entry.slug}/`;
+                    return (
+                      <li>
+                        <span class="file-link-wrapper">
+                          <a href={href} class:list={['file-link', { active: isActive(href) }]}>
+                            <span class="ascii-icon">~</span> {entry.slug}.md
+                          </a>
+                          <span class="file-tooltip">{entry.slug}.md</span>
+                        </span>
+                        <span class="file-date">{formatDate(entry.date)}</span>
+                      </li>
+                    );
+                  })}
                 </ul>
               </details>
             </li>
@@ -78,74 +85,147 @@ const folderIcon = `
 </nav>
 
 <style>
+  .sidebar-nav {
+    position: relative;
+    font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', 'Consolas', monospace;
+    font-size: 0.8rem;
+  }
+
   .sidebar-nav ul {
     list-style: none;
     margin: 0;
     padding: 0;
   }
-  
+
   .sidebar-nav li {
     margin-bottom: 0;
-    line-height: 1.25;
+    line-height: 1;
+    padding: 1px 0;
   }
-  
+
   .sidebar-nav summary {
     cursor: pointer;
-    font-size: 0.95rem;
+    font-size: 0.8rem;
     font-weight: bold;
     margin-bottom: 0;
-    display: flex;
-    align-items: center;
+    line-height: 1;
+    padding: 1px 0 !important;
   }
-  
+
   .sidebar-nav summary::after {
     display: none !important;
   }
 
-  .sidebar-nav a {
-    text-decoration: none;
-    font-size: 0.9rem;
+  /* ASCII-иконки — чистый текст, идеально на одной строке */
+  .ascii-icon {
+    color: var(--pico-muted-color);
+    margin-right: 0.15rem;
+  }
+
+  .ascii-icon.folder {
+    color: var(--pico-primary);
+  }
+
+  /* Ссылки */
+  .sidebar-nav a.file-link {
+    text-decoration: none !important;
+    color: var(--pico-contrast) !important;
+    transition: color 0.15s ease;
+  }
+
+  .sidebar-nav a.file-link:hover {
+    color: var(--pico-primary) !important;
+  }
+
+  .sidebar-nav a.file-link.active {
+    color: var(--pico-primary) !important;
+    font-weight: bold;
+  }
+
+  /* Тултип */
+  .file-tooltip {
+    position: absolute;
+    left: 0;
+    bottom: calc(100% + 4px);
+    background: var(--pico-card-background-color);
+    color: var(--pico-color);
+    border: 1px solid var(--pico-muted-border-color);
+    border-radius: 4px;
+    padding: 0.2rem 0.5rem;
+    font-size: 0.75rem;
+    font-weight: normal;
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    transform: translateY(4px);
+    transition: opacity 0.15s ease, transform 0.15s ease;
+    z-index: 10;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  }
+
+  .file-link-wrapper:hover .file-tooltip {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Обёртка: ссылка + тултип */
+  .file-link-wrapper {
+    position: relative;
+    flex: 1;
+    min-width: 0;
+    margin-right: 4.5rem;
+  }
+
+  /* li с файлами — flex для выравнивания */
+  .sidebar-nav li:has(> .file-link-wrapper) {
     display: flex;
-    align-items: center;
+    align-items: baseline;
   }
 
-  .sidebar-nav a:hover {
-    text-decoration: underline;
-  }
-
-  .file-date {
-    font-size: 0.65rem;
-    opacity: 0.5;
-    margin-left: 0.4rem;
+  /* Обрезка длинных имён */
+  .sidebar-nav .file-link {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
     white-space: nowrap;
   }
 
-  .file-icon, .folder-icon {
-    margin-right: 0.5rem;
-    width: 18px;
-    height: 18px;
-    display: flex;
-    align-items: center;
-    color: var(--pico-muted-color);
+  /* Дата — абсолютно к sidebar-nav */
+  .file-date {
+    font-size: 0.7rem;
+    opacity: 0.45;
+    white-space: nowrap;
+    position: absolute;
+    right: 0;
+    line-height: 1.0;
   }
 
-  /* Indentation for nested items */
+  /* Отступы вложенности — компактно как в IDE */
   details ul {
     padding-left: 0.75rem !important;
     border-left: 1px solid var(--pico-muted-border-color);
-    margin-left: 0.5rem !important;
+    margin-left: 0.2rem !important;
     margin-top: 0 !important;
     margin-bottom: 0 !important;
   }
 
-  /* Убираем лишние отступы Pico у details/summary */
+  /* Убираем Pico-отступы */
   .sidebar-nav details {
     margin: 0 !important;
     padding: 0 !important;
+    position: static !important;
+    border: none !important;
   }
 
   .sidebar-nav details summary {
     margin: 0 !important;
     padding: 0 !important;
+    padding-bottom: 0 !important;
+    border: none !important;
+  }
+
+  .sidebar-nav details > ul {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
   }
 </style>
