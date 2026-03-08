@@ -58,8 +58,7 @@
     });
   };
 
-  applyThemeUi(initialTheme);
-  enhanceCodeBlocks();
+  // removed duplicate theme block
 
   if (btn) {
     btn.addEventListener("click", () => {
@@ -68,4 +67,33 @@
       applyThemeUi(next);
     });
   }
+
+  // === Font Size Logic ===
+  const fontBtn = document.getElementById("font-toggle");
+  const fontSizes = ["sm", "md", "lg"];
+  
+  // Default to 'md' if nothing is stored
+  const storedFont = localStorage.getItem("font-size");
+  const initialFont = fontSizes.includes(storedFont) ? storedFont : "md";
+  
+  const applyFontUi = (size) => {
+    root.dataset.font = size;
+  };
+
+  applyFontUi(initialFont);
+
+  if (fontBtn) {
+    fontBtn.addEventListener("click", () => {
+      const currentSize = root.dataset.font || "md";
+      const currentIndex = fontSizes.indexOf(currentSize);
+      const nextIndex = (currentIndex + 1) % fontSizes.length;
+      const nextSize = fontSizes[nextIndex];
+      
+      localStorage.setItem("font-size", nextSize);
+      applyFontUi(nextSize);
+    });
+  }
+
+  // === Code Blocks Logic ===
+  enhanceCodeBlocks();
 })();

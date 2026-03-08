@@ -47,6 +47,14 @@ const breadcrumbPath = getBreadcrumb(Astro.url.pathname);
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700&display=swap" rel="stylesheet" />
     <link id="chroma-light" rel="stylesheet" href={`${BASE}css/chroma-github.css`} />
     <link id="chroma-dark" rel="stylesheet" href={`${BASE}css/chroma-github-dark.css`} disabled />
+    
+    <script is:inline>
+      const theme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      document.documentElement.dataset.theme = theme;
+      
+      const font = localStorage.getItem('font-size') || 'md';
+      document.documentElement.dataset.font = font;
+    </script>
   </head>
   <body>
     <div class="app-layout">

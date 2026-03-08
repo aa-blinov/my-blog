@@ -46,12 +46,18 @@ code {
 }
 
 .vertical-navbar ul {
+  display: flex;
   flex-direction: column;
   align-items: center;
   gap: 1.5rem;
   margin: 0;
   padding: 0;
   list-style: none;
+}
+
+.vertical-navbar .bottom-nav {
+  margin-top: auto;
+  gap: 0.5rem;
 }
 
 .vertical-navbar a,
@@ -63,6 +69,30 @@ code {
   height: 40px;
   padding: 0;
   margin: 0;
+}
+
+.vertical-navbar a,
+.vertical-navbar button {
+  border: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  color: var(--pico-muted-color) !important;
+  opacity: 0.7;
+  cursor: pointer;
+  transition: opacity 0.2s, color 0.2s;
+  text-decoration: none;
+}
+
+.vertical-navbar a svg,
+.vertical-navbar button svg {
+  color: inherit !important;
+  stroke: currentColor !important;
+}
+
+.vertical-navbar a:hover,
+.vertical-navbar button:hover {
+  opacity: 1;
+  color: var(--pico-primary) !important;
 }
 
 .main-container {
@@ -95,6 +125,17 @@ article > * {
   box-shadow: none !important;
 }
 
+/* Article Typography Sizes (controlled by JS toggle) */
+html[data-font="sm"] main article {
+  font-size: 0.9rem;
+}
+html[data-font="md"] main article {
+  font-size: 1rem;
+}
+html[data-font="lg"] main article {
+  font-size: 1.15rem;
+}
+
 /* Restore article header separator line */
 article header {
   border-bottom: 1px solid var(--pico-muted-border-color) !important;
@@ -117,7 +158,7 @@ article header {
 
   .main-grid {
     display: grid;
-    grid-template-columns: 320px 1fr;
+    grid-template-columns: 320px minmax(0, 1fr);
     gap: 0;
     padding: 2rem;
   }
@@ -264,4 +305,17 @@ article header {
   justify-content: center;
   background: var(--pico-background-color); /* перекрываем градиент линии */
   position: relative; /* создаём контекст для перекрытия */
+}
+
+.highlight pre {
+  overflow-x: auto !important;
+  max-width: 100%;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  overflow-x: hidden;
 }
