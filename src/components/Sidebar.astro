@@ -23,9 +23,22 @@ function isActive(href: string): boolean {
 ---
 
 <nav class="sidebar-nav">
-  <ul>
+  <!-- Панель поиска и сортировки -->
+  <div class="sidebar-controls">
+    <input
+      type="text"
+      id="sidebar-search"
+      placeholder="search..."
+      autocomplete="off"
+    />
+    <button id="sort-date-btn" class="sort-btn" title="Сортировка по дате">
+      <span class="sort-icon">↕</span>
+    </button>
+  </div>
+
+  <ul id="sidebar-tree">
     {mainEntry && (
-      <li>
+      <li data-filename="main.md" data-date={mainEntry.date.toISOString()}>
         <span class="file-link-wrapper">
           <a href={BASE} class:list={['file-link', { active: isActive(BASE) }]}>
             <span class="ascii-icon">~</span> main.md
@@ -36,7 +49,7 @@ function isActive(href: string): boolean {
       </li>
     )}
     {aboutEntry && (
-      <li>
+      <li data-filename="about-me.md" data-date={aboutEntry.date.toISOString()}>
         <span class="file-link-wrapper">
           <a href={`${BASE}about-me/`} class:list={['file-link', { active: isActive(`${BASE}about-me/`) }]}>
             <span class="ascii-icon">~</span> about-me.md
@@ -47,23 +60,23 @@ function isActive(href: string): boolean {
       </li>
     )}
     
-    <li>
+    <li class="folder-item">
       <details open>
         <summary class="contrast">
           <span class="ascii-icon folder">▸</span> blog/
         </summary>
         <ul>
           {(['dev', 'life'] as const).map((section) => (
-            <li>
+            <li class="folder-item">
               <details open>
                 <summary class="contrast">
                   <span class="ascii-icon folder">▸</span> {section}/
                 </summary>
-                <ul>
+                <ul class="sortable-list">
                   {bySection[section].map((entry) => {
                     const href = `${BASE}blog/${entry.section}/${entry.slug}/`;
                     return (
-                      <li>
+                      <li data-filename={`${entry.slug}.md`} data-date={entry.date.toISOString()}>
                         <span class="file-link-wrapper">
                           <a href={href} class:list={['file-link', { active: isActive(href) }]}>
                             <span class="ascii-icon">~</span> {entry.slug}.md
@@ -84,7 +97,199 @@ function isActive(href: string): boolean {
   </ul>
 </nav>
 
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const searchInput = document.getElementById('sidebar-search') as HTMLInputElement;
+    const sortBtn = document.getElementById('sort-date-btn');
+    const tree = document.getElementById('sidebar-tree');
+    if (!searchInput || !sortBtn || !tree) return;
+
+    // --- Транслитерация RU → EN ---
+    const ruToEn: Record<string, string> = {
+      'а':'a','б':'b','в':'v','г':'g','д':'d','е':'e','ё':'yo',
+      'ж':'zh','з':'z','и':'i','й':'y','к':'k','л':'l','м':'m',
+      'н':'n','о':'o','п':'p','р':'r','с':'s','т':'t','у':'u',
+      'ф':'f','х':'kh','ц':'ts','ч':'ch','ш':'sh','щ':'shch',
+      'ъ':'','ы':'y','ь':'','э':'e','ю':'yu','я':'ya',
+      ' ':'-'
+    };
+
+    function transliterate(text: string): string {
+      return text.split('').map(c => ruToEn[c] ?? c).join('');
+    }
+
+    function hasRussian(text: string): boolean {
+      return /[а-яё]/i.test(text);
+    }
+
+    // --- Поиск ---
+    searchInput.addEventListener('input', () => {
+      const raw = searchInput.value.toLowerCase().trim();
+      const allFileItems = tree.querySelectorAll<HTMLLIElement>('li[data-filename]');
+      const allFolderItems = tree.querySelectorAll<HTMLLIElement>('li.folder-item');
+
+      if (!raw) {
+        allFileItems.forEach(li => li.style.display = '');
+        allFolderItems.forEach(li => li.style.display = '');
+        return;
+      }
+
+      // Подготовить варианты запроса: оригинал + транслит (если русский)
+      const queries = [raw];
+      if (hasRussian(raw)) {
+        queries.push(transliterate(raw));
+      }
+
+      allFileItems.forEach(li => {
+        const name = (li.getAttribute('data-filename') || '').toLowerCase();
+        const match = queries.some(q => name.includes(q));
+        li.style.display = match ? '' : 'none';
+      });
+
+      allFolderItems.forEach(folder => {
+        const visibleFiles = folder.querySelectorAll<HTMLLIElement>('li[data-filename]:not([style*="display: none"])');
+        folder.style.display = visibleFiles.length > 0 ? '' : 'none';
+      });
+    });
+
+    // --- Сортировка ---
+    type SortOrder = 'none' | 'desc' | 'asc';
+    let sortOrder: SortOrder = 'none';
+    const sortIcon = sortBtn.querySelector('.sort-icon') as HTMLSpanElement;
+
+    const sortStates: Record<SortOrder, { icon: string; title: string; label: string }> = {
+      'none': { icon: '↕', title: 'Сортировка по дате', label: '' },
+      'desc': { icon: '↓', title: 'Новые сверху (клик — старые сверху)', label: 'new' },
+      'asc':  { icon: '↑', title: 'Старые сверху (клик — сброс)', label: 'old' },
+    };
+
+    function updateSortUI() {
+      const state = sortStates[sortOrder];
+      sortIcon.textContent = state.icon;
+      sortBtn.setAttribute('title', state.title);
+      if (sortOrder === 'none') {
+        sortBtn.classList.remove('active');
+        sortBtn.removeAttribute('data-label');
+      } else {
+        sortBtn.classList.add('active');
+        sortBtn.setAttribute('data-label', state.label);
+      }
+    }
+
+    sortBtn.addEventListener('click', () => {
+      if (sortOrder === 'none') sortOrder = 'desc';
+      else if (sortOrder === 'desc') sortOrder = 'asc';
+      else sortOrder = 'none';
+
+      updateSortUI();
+
+      const sortableLists = tree.querySelectorAll<HTMLUListElement>('ul.sortable-list');
+      sortableLists.forEach(ul => {
+        const items = Array.from(ul.querySelectorAll<HTMLLIElement>(':scope > li[data-date]'));
+        if (sortOrder === 'none') {
+          items
+            .sort((a, b) => {
+              const ia = parseInt(a.getAttribute('data-original-index') || '0');
+              const ib = parseInt(b.getAttribute('data-original-index') || '0');
+              return ia - ib;
+            })
+            .forEach(li => ul.appendChild(li));
+        } else {
+          items
+            .sort((a, b) => {
+              const da = new Date(a.getAttribute('data-date') || 0).getTime();
+              const db = new Date(b.getAttribute('data-date') || 0).getTime();
+              return sortOrder === 'asc' ? da - db : db - da;
+            })
+            .forEach(li => ul.appendChild(li));
+        }
+      });
+    });
+
+    // Сохранить оригинальный порядок
+    tree.querySelectorAll<HTMLLIElement>('li[data-date]').forEach((li, i) => {
+      li.setAttribute('data-original-index', String(i));
+    });
+  });
+</script>
+
 <style>
+  /* --- Панель поиска и сортировки --- */
+  .sidebar-controls {
+    display: flex;
+    align-items: stretch;
+    gap: 0.3rem;
+    margin-bottom: 0.4rem;
+    font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', 'Consolas', monospace;
+  }
+
+  .sidebar-controls input {
+    flex: 1;
+    font-size: 0.75rem;
+    font-family: inherit;
+    padding: 0.2rem 0.4rem;
+    border: 1px solid var(--pico-muted-border-color);
+    border-radius: 3px;
+    background: transparent;
+    color: var(--pico-color);
+    outline: none;
+    margin: 0;
+    line-height: 1;
+    height: auto;
+    box-sizing: border-box;
+  }
+
+  .sidebar-controls input::placeholder {
+    color: var(--pico-muted-color);
+    opacity: 0.6;
+  }
+
+  .sidebar-controls input:focus {
+    border-color: var(--pico-primary);
+  }
+
+  .sort-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent !important;
+    background-color: transparent !important;
+    border: 1px solid var(--pico-muted-border-color) !important;
+    border-radius: 3px !important;
+    color: var(--pico-muted-color) !important;
+    cursor: pointer;
+    padding: 0 0.35rem !important;
+    font-size: 0.75rem !important;
+    line-height: 1 !important;
+    transition: color 0.15s ease, border-color 0.15s ease;
+    margin: 0 !important;
+    height: auto !important;
+    width: auto !important;
+    font-family: inherit;
+    box-shadow: none !important;
+    box-sizing: border-box !important;
+  }
+
+  .sort-btn:hover {
+    color: var(--pico-primary) !important;
+    border-color: var(--pico-primary) !important;
+    background: transparent !important;
+  }
+
+  .sort-btn.active {
+    color: var(--pico-primary) !important;
+    border-color: var(--pico-primary) !important;
+    background: transparent !important;
+  }
+
+  .sort-btn[data-label]::after {
+    content: attr(data-label);
+    margin-left: 0.15rem;
+    font-size: 0.6rem;
+    opacity: 0.8;
+  }
+
+  /* --- Дерево файлов --- */
   .sidebar-nav {
     position: relative;
     font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', 'Consolas', monospace;
@@ -116,7 +321,7 @@ function isActive(href: string): boolean {
     display: none !important;
   }
 
-  /* ASCII-иконки — чистый текст, идеально на одной строке */
+  /* ASCII-иконки */
   .ascii-icon {
     color: var(--pico-muted-color);
     margin-right: 0.15rem;
