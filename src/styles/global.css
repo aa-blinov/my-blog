@@ -346,8 +346,12 @@ article header {
 
 .highlight pre,
 .highlight-wrapper pre,
-.code-block-container pre {
-  overflow-x: auto !important;
+.code-block-container pre,
+.code-block-container pre code,
+.code-block-container pre code * {
+  white-space: pre-wrap !important;
+  word-wrap: break-word !important;
+  word-break: break-all !important; /* Force breaks inside long strings */
   max-width: 100%;
 }
 
