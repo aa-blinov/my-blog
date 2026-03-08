@@ -24,7 +24,10 @@ const { Content } = await entry.render();
   <article>
     <header>
       <p class="meta">{formatDate(entry.data.date)} · blog/{entry.data.section}/{entry.slug}.md</p>
-      <h1>{entry.data.title}</h1>
+      <hgroup>
+        <h1>{entry.data.title}</h1>
+        {entry.data.summary && <p class="summary">{entry.data.summary}</p>}
+      </hgroup>
     </header>
     <div class="content">
       <Content />

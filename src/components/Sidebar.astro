@@ -13,6 +13,22 @@ const { blogEntries, mainEntry, aboutEntry } = Astro.props;
 const bySection = { dev: [] as typeof blogEntries, life: [] as typeof blogEntries };
 blogEntries.forEach((e) => bySection[e.section].push(e));
 
+// Расчет дат для папок (нужно для сортировки самих папок)
+const getSectionStats = (section: 'dev' | 'life') => {
+  const dates = bySection[section].map(e => e.date.getTime());
+  return {
+    min: dates.length ? new Date(Math.min(...dates)).toISOString() : new Date(0).toISOString(),
+    max: dates.length ? new Date(Math.max(...dates)).toISOString() : new Date(0).toISOString()
+  };
+};
+
+const devStats = getSectionStats('dev');
+const lifeStats = getSectionStats('life');
+const blogStats = {
+  min: new Date(Math.min(new Date(devStats.min).getTime(), new Date(lifeStats.min).getTime())).toISOString(),
+  max: new Date(Math.max(new Date(devStats.max).getTime(), new Date(lifeStats.max).getTime())).toISOString()
+};
+
 // Determine active path
 const currentPath = Astro.url.pathname;
 
@@ -23,7 +39,6 @@ function isActive(href: string): boolean {
 ---
 
 <nav class="sidebar-nav">
-  <!-- Панель поиска и сортировки -->
   <div class="sidebar-controls">
     <input
       type="text"
@@ -36,7 +51,7 @@ function isActive(href: string): boolean {
     </button>
   </div>
 
-  <ul id="sidebar-tree">
+  <ul id="sidebar-tree" class="sortable-list">
     {mainEntry && (
       <li data-filename="main.md" data-date={mainEntry.date.toISOString()}>
         <span class="file-link-wrapper">
@@ -60,37 +75,40 @@ function isActive(href: string): boolean {
       </li>
     )}
     
-    <li class="folder-item">
+    <li class="folder-item sortable-item" data-date-min={blogStats.min} data-date-max={blogStats.max}>
       <details open>
         <summary class="contrast">
           <span class="ascii-icon folder">▸</span> blog/
         </summary>
-        <ul>
-          {(['dev', 'life'] as const).map((section) => (
-            <li class="folder-item">
-              <details open>
-                <summary class="contrast">
-                  <span class="ascii-icon folder">▸</span> {section}/
-                </summary>
-                <ul class="sortable-list">
-                  {bySection[section].map((entry) => {
-                    const href = `${BASE}blog/${entry.section}/${entry.slug}/`;
-                    return (
-                      <li data-filename={`${entry.slug}.md`} data-date={entry.date.toISOString()}>
-                        <span class="file-link-wrapper">
-                          <a href={href} class:list={['file-link', { active: isActive(href) }]}>
-                            <span class="ascii-icon">~</span> {entry.slug}.md
-                          </a>
-                          <span class="file-tooltip">{entry.slug}.md</span>
-                        </span>
-                        <span class="file-date">{formatDate(entry.date)}</span>
-                      </li>
-                    );
-                  })}
-                </ul>
-              </details>
-            </li>
-          ))}
+        <ul class="sortable-list">
+          {(['dev', 'life'] as const).map((section) => {
+            const stats = section === 'dev' ? devStats : lifeStats;
+            return (
+              <li class="folder-item sortable-item" data-date-min={stats.min} data-date-max={stats.max}>
+                <details open>
+                  <summary class="contrast">
+                    <span class="ascii-icon folder">▸</span> {section}/
+                  </summary>
+                  <ul class="sortable-list">
+                    {bySection[section].map((entry) => {
+                      const href = `${BASE}blog/${entry.section}/${entry.slug}/`;
+                      return (
+                        <li class="sortable-item" data-filename={`${entry.slug}.md`} data-date={entry.date.toISOString()}>
+                          <span class="file-link-wrapper">
+                            <a href={href} class:list={['file-link', { active: isActive(href) }]}>
+                              <span class="ascii-icon">~</span> {entry.slug}.md
+                            </a>
+                            <span class="file-tooltip">{entry.slug}.md</span>
+                          </span>
+                          <span class="file-date">{formatDate(entry.date)}</span>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </details>
+              </li>
+            );
+          })}
         </ul>
       </details>
     </li>
@@ -104,7 +122,7 @@ function isActive(href: string): boolean {
     const tree = document.getElementById('sidebar-tree');
     if (!searchInput || !sortBtn || !tree) return;
 
-    // --- Транслитерация RU → EN ---
+    // --- Транслитерация ---
     const ruToEn: Record<string, string> = {
       'а':'a','б':'b','в':'v','г':'g','д':'d','е':'e','ё':'yo',
       'ж':'zh','з':'z','и':'i','й':'y','к':'k','л':'l','м':'m',
@@ -113,54 +131,44 @@ function isActive(href: string): boolean {
       'ъ':'','ы':'y','ь':'','э':'e','ю':'yu','я':'ya',
       ' ':'-'
     };
-
-    function transliterate(text: string): string {
-      return text.split('').map(c => ruToEn[c] ?? c).join('');
-    }
-
-    function hasRussian(text: string): boolean {
-      return /[а-яё]/i.test(text);
-    }
+    function transliterate(text: string): string { return text.split('').map(c => ruToEn[c] ?? c).join(''); }
+    function hasRussian(text: string): boolean { return /[а-яё]/i.test(text); }
 
     // --- Поиск ---
-    searchInput.addEventListener('input', () => {
+    function performSearch() {
       const raw = searchInput.value.toLowerCase().trim();
       const allFileItems = tree.querySelectorAll<HTMLLIElement>('li[data-filename]');
       const allFolderItems = tree.querySelectorAll<HTMLLIElement>('li.folder-item');
+      
+      localStorage.setItem('sidebar-search', raw);
 
       if (!raw) {
         allFileItems.forEach(li => li.style.display = '');
         allFolderItems.forEach(li => li.style.display = '');
         return;
       }
-
-      // Подготовить варианты запроса: оригинал + транслит (если русский)
       const queries = [raw];
-      if (hasRussian(raw)) {
-        queries.push(transliterate(raw));
-      }
-
+      if (hasRussian(raw)) queries.push(transliterate(raw));
       allFileItems.forEach(li => {
         const name = (li.getAttribute('data-filename') || '').toLowerCase();
-        const match = queries.some(q => name.includes(q));
-        li.style.display = match ? '' : 'none';
+        li.style.display = queries.some(q => name.includes(q)) ? '' : 'none';
       });
-
       allFolderItems.forEach(folder => {
         const visibleFiles = folder.querySelectorAll<HTMLLIElement>('li[data-filename]:not([style*="display: none"])');
         folder.style.display = visibleFiles.length > 0 ? '' : 'none';
       });
-    });
+    }
+
+    searchInput.addEventListener('input', performSearch);
 
     // --- Сортировка ---
     type SortOrder = 'none' | 'desc' | 'asc';
-    let sortOrder: SortOrder = 'none';
+    let sortOrder: SortOrder = (localStorage.getItem('sidebar-sort') as SortOrder) || 'none';
     const sortIcon = sortBtn.querySelector('.sort-icon') as HTMLSpanElement;
-
     const sortStates: Record<SortOrder, { icon: string; title: string; label: string }> = {
       'none': { icon: '↕', title: 'Сортировка по дате', label: '' },
-      'desc': { icon: '↓', title: 'Новые сверху (клик — старые сверху)', label: 'new' },
-      'asc':  { icon: '↑', title: 'Старые сверху (клик — сброс)', label: 'old' },
+      'desc': { icon: '↓', title: 'Новые сверху', label: 'new' },
+      'asc':  { icon: '↑', title: 'Старые сверху', label: 'old' },
     };
 
     function updateSortUI() {
@@ -176,40 +184,55 @@ function isActive(href: string): boolean {
       }
     }
 
+    function performSort() {
+      localStorage.setItem('sidebar-sort', sortOrder);
+      const sortableLists = tree.querySelectorAll<HTMLUListElement>('ul.sortable-list');
+      sortableLists.forEach(ul => {
+        const items = Array.from(ul.querySelectorAll<HTMLLIElement>(':scope > li.sortable-item'));
+        
+        items.sort((a, b) => {
+          if (sortOrder === 'none') {
+            return parseInt(a.getAttribute('data-original-index') || '0') - parseInt(b.getAttribute('data-original-index') || '0');
+          }
+          const getTime = (el: HTMLLIElement) => {
+            if (el.hasAttribute('data-date')) return new Date(el.getAttribute('data-date')!).getTime();
+            const attr = sortOrder === 'asc' ? 'data-date-min' : 'data-date-max';
+            return new Date(el.getAttribute(attr) || 0).getTime();
+          };
+          const ta = getTime(a);
+          const tb = getTime(b);
+          return sortOrder === 'asc' ? ta - tb : tb - ta;
+        });
+
+        items.forEach(li => ul.appendChild(li));
+      });
+    }
+
     sortBtn.addEventListener('click', () => {
       if (sortOrder === 'none') sortOrder = 'desc';
       else if (sortOrder === 'desc') sortOrder = 'asc';
       else sortOrder = 'none';
-
       updateSortUI();
-
-      const sortableLists = tree.querySelectorAll<HTMLUListElement>('ul.sortable-list');
-      sortableLists.forEach(ul => {
-        const items = Array.from(ul.querySelectorAll<HTMLLIElement>(':scope > li[data-date]'));
-        if (sortOrder === 'none') {
-          items
-            .sort((a, b) => {
-              const ia = parseInt(a.getAttribute('data-original-index') || '0');
-              const ib = parseInt(b.getAttribute('data-original-index') || '0');
-              return ia - ib;
-            })
-            .forEach(li => ul.appendChild(li));
-        } else {
-          items
-            .sort((a, b) => {
-              const da = new Date(a.getAttribute('data-date') || 0).getTime();
-              const db = new Date(b.getAttribute('data-date') || 0).getTime();
-              return sortOrder === 'asc' ? da - db : db - da;
-            })
-            .forEach(li => ul.appendChild(li));
-        }
-      });
+      performSort();
     });
 
-    // Сохранить оригинальный порядок
-    tree.querySelectorAll<HTMLLIElement>('li[data-date]').forEach((li, i) => {
+    // --- Сброс индекса и восстановление состояния ---
+    tree.querySelectorAll<HTMLLIElement>('li.sortable-item').forEach((li, i) => {
       li.setAttribute('data-original-index', String(i));
     });
+
+    // Восстановить поиск если был
+    const savedSearch = localStorage.getItem('sidebar-search');
+    if (savedSearch) {
+      searchInput.value = savedSearch;
+      performSearch();
+    }
+
+    // Восстановить сортировку если была
+    if (sortOrder !== 'none') {
+      updateSortUI();
+      performSort();
+    }
   });
 </script>
 
@@ -321,7 +344,6 @@ function isActive(href: string): boolean {
     display: none !important;
   }
 
-  /* ASCII-иконки */
   .ascii-icon {
     color: var(--pico-muted-color);
     margin-right: 0.15rem;
@@ -331,7 +353,6 @@ function isActive(href: string): boolean {
     color: var(--pico-primary);
   }
 
-  /* Ссылки */
   .sidebar-nav a.file-link {
     text-decoration: none !important;
     color: var(--pico-contrast) !important;
@@ -347,7 +368,6 @@ function isActive(href: string): boolean {
     font-weight: bold;
   }
 
-  /* Тултип */
   .file-tooltip {
     position: absolute;
     left: 0;
@@ -373,7 +393,6 @@ function isActive(href: string): boolean {
     transform: translateY(0);
   }
 
-  /* Обёртка: ссылка + тултип */
   .file-link-wrapper {
     position: relative;
     flex: 1;
@@ -381,13 +400,11 @@ function isActive(href: string): boolean {
     margin-right: 4.5rem;
   }
 
-  /* li с файлами — flex для выравнивания */
   .sidebar-nav li:has(> .file-link-wrapper) {
     display: flex;
     align-items: baseline;
   }
 
-  /* Обрезка длинных имён */
   .sidebar-nav .file-link {
     display: block;
     overflow: hidden;
@@ -395,7 +412,6 @@ function isActive(href: string): boolean {
     white-space: nowrap;
   }
 
-  /* Дата — абсолютно к sidebar-nav */
   .file-date {
     font-size: 0.7rem;
     opacity: 0.45;
@@ -405,7 +421,6 @@ function isActive(href: string): boolean {
     line-height: 1.0;
   }
 
-  /* Отступы вложенности — компактно как в IDE */
   details ul {
     padding-left: 0.75rem !important;
     border-left: 1px solid var(--pico-muted-border-color);
@@ -414,7 +429,6 @@ function isActive(href: string): boolean {
     margin-bottom: 0 !important;
   }
 
-  /* Убираем Pico-отступы */
   .sidebar-nav details {
     margin: 0 !important;
     padding: 0 !important;
