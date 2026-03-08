@@ -277,22 +277,59 @@ article header {
   margin-bottom: 0.5rem;
 }
 
-.highlight {
+.highlight,
+.highlight-wrapper,
+.code-block-container {
   position: relative;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
 }
 
 .code-copy-btn {
   position: absolute;
   top: 0.5rem;
   right: 0.5rem;
-  font-size: 0.7rem;
-  padding: 0.2rem 0.5rem;
-  opacity: 0.6;
+  z-index: 10;
+  
+  /* Reset Pico button defaults */
+  font-size: 0.75rem !important;
+  padding: 0.25rem 0.6rem !important;
+  width: auto !important;
+  margin: 0 !important;
+  line-height: 1.4 !important;
+  min-height: 0 !important;
+  
+  /* Explicit translucent styling because code blocks are dark */
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  color: #e5e7eb !important; 
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  border-radius: 4px !important;
+  box-shadow: none !important;
+  text-transform: none !important;
+  font-weight: 500 !important;
+  
+  /* Make button visually distinct */
+  opacity: 0.7;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+.code-block-container:hover .code-copy-btn,
+.highlight:hover .code-copy-btn,
+.highlight-wrapper:hover .code-copy-btn {
+  opacity: 1;
 }
 
 .code-copy-btn:hover {
+  background-color: rgba(255, 255, 255, 0.2) !important;
+  border-color: rgba(255, 255, 255, 0.5) !important;
+  color: #ffffff !important;
+}
+
+.code-copy-btn.copied {
   opacity: 1;
+  background-color: var(--pico-primary) !important;
+  border-color: var(--pico-primary) !important;
+  color: var(--pico-primary-inverse, #fff) !important;
 }
 
 .site-footer {
@@ -307,7 +344,9 @@ article header {
   position: relative; /* создаём контекст для перекрытия */
 }
 
-.highlight pre {
+.highlight pre,
+.highlight-wrapper pre,
+.code-block-container pre {
   overflow-x: auto !important;
   max-width: 100%;
 }
