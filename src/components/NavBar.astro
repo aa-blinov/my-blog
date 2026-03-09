@@ -35,15 +35,24 @@ const { breadcrumbPath } = Astro.props;
 
   <!-- Theme toggle: top-right on mobile (via CSS), bottom on desktop -->
   <ul class="bottom-nav">
-    <!-- Font Size Toggle -->
+    <!-- Font Size Controls -->
     <li>
-      <button id="font-toggle" class="contrast" aria-label="Toggle font size" style="color: inherit;">
-        <!-- Typography Icon ('A') -->
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="22" height="22">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M6 20 12 4l6 16M8.5 14h7" />
+      <button id="font-increase" class="contrast" aria-label="Increase font size" style="color: inherit;">
+        <!-- Plus Icon -->
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" width="20" height="20">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
         </svg>
       </button>
     </li>
+    <li>
+      <button id="font-decrease" class="contrast" aria-label="Decrease font size" style="color: inherit;">
+        <!-- Minus Icon -->
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" width="20" height="20">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14" />
+        </svg>
+      </button>
+    </li>
+
     <!-- Theme Toggle -->
     <li>
       <button id="theme-toggle" class="contrast" aria-label="Toggle theme" style="color: inherit;">
@@ -65,22 +74,38 @@ const { breadcrumbPath } = Astro.props;
   const sidebar = document.getElementById('layout-sidebar');
   const openIcon = document.getElementById('sidebar-open-icon');
   const closeIcon = document.getElementById('sidebar-close-icon');
-
+  const nav = document.querySelector('.vertical-navbar');
+ 
   function syncIcons() {
-    const isHidden = sidebar?.classList.contains('sidebar-hidden');
+    const isShown = sidebar?.classList.contains('sidebar-shown');
+    const isMobile = window.innerWidth < 992;
+    
     if (openIcon && closeIcon) {
-      // ☰ shown when sidebar is hidden (click will open)
-      openIcon.style.display = isHidden ? 'block' : 'none';
-      // ✕ shown when sidebar is visible (click will close)
-      closeIcon.style.display = isHidden ? 'none' : 'block';
+      if (isMobile) {
+        // Mobile: ☰ shown when NOT SHOWN (click will open), X shown when SHOWN
+        openIcon.style.display = isShown ? 'none' : 'block';
+        closeIcon.style.display = isShown ? 'block' : 'none';
+      } else {
+        // Desktop uses sidebar-hidden class
+        const isHidden = sidebar?.classList.contains('sidebar-hidden');
+        openIcon.style.display = isHidden ? 'block' : 'none';
+        closeIcon.style.display = isHidden ? 'none' : 'block';
+      }
     }
   }
 
-  // Init icons: sidebar visible by default → show ✕
+  // Init icons
   syncIcons();
+  window.addEventListener('resize', syncIcons);
+  window.addEventListener('sidebar-state-changed', syncIcons);
 
   sidebarToggle?.addEventListener('click', () => {
-    sidebar?.classList.toggle('sidebar-hidden');
+    const isMobile = window.innerWidth < 992;
+    if (isMobile) {
+      sidebar?.classList.toggle('sidebar-shown');
+    } else {
+      sidebar?.classList.toggle('sidebar-hidden');
+    }
     syncIcons();
   });
 </script>

@@ -133,9 +133,24 @@ function getFolderHref(fullPath: string) {
     {/* Рекурсивный рендеринг дерева */}
     {function renderTree(node: TreeNode) {
       const childrenArr = Object.values(node.children || {}).sort((a, b) => a.name.localeCompare(b.name));
+      
+      // Calculate order values for CSS. 
+      // We use timestamps in seconds to keep them within safe integer range for CSS.
+      // desc: higher date = smaller order value
+      // asc: lower date = smaller order value
+      const dateVal = node.entry?.date.getTime() || 0;
+      const minDateVal = node.minDate?.getTime() || 0;
+      const maxDateVal = node.maxDate?.getTime() || 0;
+      
+      // Base for "none" (alphabetical) is provided by the loop index or just let it be 0
+      
       return (
         <li 
           class:list={[{ 'folder-item': node.kind === 'folder', 'sortable-item': true }]} 
+          style={{
+            '--order-desc': node.kind === 'file' ? -Math.floor(dateVal / 100000) : -Math.floor(maxDateVal / 100000),
+            '--order-asc': node.kind === 'file' ? Math.floor(dateVal / 100000) : Math.floor(minDateVal / 100000)
+          }}
           data-date-min={node.minDate?.toISOString()} 
           data-date-max={node.maxDate?.toISOString()}
           {...(node.kind === 'file' ? { 
@@ -172,6 +187,74 @@ function getFolderHref(fullPath: string) {
       );
     }(root)}
   </ul>
+
+  <!-- Synchronous state restoration to prevent blinking -->
+  <script is:inline>
+    (function() {
+      const tree = document.getElementById('sidebar-tree');
+      const sortBtn = document.getElementById('sort-date-btn');
+      const searchInput = document.getElementById('sidebar-search');
+      if (!tree || !sortBtn || !searchInput) return;
+
+      try {
+        // --- Restore Sort State ---
+        const sortOrder = localStorage.getItem('sidebar-sort') || 'none';
+        if (sortOrder !== 'none') {
+          tree.setAttribute('data-sort', sortOrder);
+          const icon = sortBtn.querySelector('.sort-icon');
+          if (icon) {
+            if (sortOrder === 'desc') {
+              icon.textContent = '↓';
+              sortBtn.setAttribute('title', 'Новые сверху');
+              sortBtn.classList.add('active');
+              sortBtn.setAttribute('data-label', 'new');
+            } else if (sortOrder === 'asc') {
+              icon.textContent = '↑';
+              sortBtn.setAttribute('title', 'Старые сверху');
+              sortBtn.classList.add('active');
+              sortBtn.setAttribute('data-label', 'old');
+            }
+          }
+        }
+
+        // --- Restore Search State ---
+        const searchRaw = localStorage.getItem('sidebar-search');
+        if (searchRaw) {
+          const raw = searchRaw.toLowerCase().trim();
+          searchInput.value = searchRaw; // Restore input value
+          if (raw) {
+            const ruToEn = {
+              'а':'a','б':'b','в':'v','г':'g','д':'d','е':'e','ё':'yo',
+              'ж':'zh','з':'z','и':'i','й':'y','к':'k','л':'l','м':'m',
+              'н':'n','о':'o','п':'p','р':'r','с':'s','т':'t','у':'u',
+              'ф':'f','х':'kh','ц':'ts','ч':'ch','ш':'sh','щ':'shch',
+              'ъ':'','ы':'y','ь':'','э':'e','ю':'yu','я':'ya',
+              ' ':'-'
+            };
+            const transliterate = (text) => text.split('').map(c => ruToEn[c] ?? c).join('');
+            const hasRussian = (text) => /[а-яё]/i.test(text);
+
+            const allFileItems = tree.querySelectorAll('li[data-filename]');
+            const allFolderItems = tree.querySelectorAll('li.folder-item');
+            
+            const queries = [raw];
+            if (hasRussian(raw)) queries.push(transliterate(raw));
+            
+            allFileItems.forEach(li => {
+              const name = (li.getAttribute('data-filename') || '').toLowerCase();
+              li.style.display = queries.some(q => name.includes(q)) ? '' : 'none';
+            });
+            allFolderItems.forEach(folder => {
+              const visibleFiles = folder.querySelectorAll('li[data-filename]:not([style*="display: none"])');
+              folder.style.display = visibleFiles.length > 0 ? '' : 'none';
+            });
+          }
+        }
+      } catch (e) {
+        // Ignore localStorage or other early errors
+      }
+    })();
+  </script>
 </nav>
 
 <script>
@@ -182,15 +265,13 @@ function getFolderHref(fullPath: string) {
     if (!searchInput || !sortBtn || !tree) return;
 
     // --- Folder link handling (prevent toggle on name click) ---
-    // Use capture phase to stop propagation before it reaches the <summary> element
     tree.addEventListener('click', (e) => {
       const target = e.target as HTMLElement;
       const folderLink = target.closest('.folder-link');
       if (folderLink) {
-        // Stop propagation prevents the <summary>/<details> from toggling
         e.stopPropagation();
       }
-    }, true); // true = use capture phase
+    }, true);
 
     // --- Транслитерация ---
     const ruToEn: Record<string, string> = {
@@ -207,8 +288,8 @@ function getFolderHref(fullPath: string) {
     // --- Поиск ---
     function performSearch() {
       const raw = searchInput.value.toLowerCase().trim();
-      const allFileItems = tree.querySelectorAll<HTMLLIElement>('li[data-filename]');
-      const allFolderItems = tree.querySelectorAll<HTMLLIElement>('li.folder-item');
+      const allFileItems = tree!.querySelectorAll<HTMLLIElement>('li[data-filename]');
+      const allFolderItems = tree!.querySelectorAll<HTMLLIElement>('li.folder-item');
       
       localStorage.setItem('sidebar-search', raw);
 
@@ -231,6 +312,19 @@ function getFolderHref(fullPath: string) {
 
     searchInput.addEventListener('input', performSearch);
 
+    // --- Закрытие сайдбара при клике на мобилках ---
+    tree.addEventListener('click', (e) => {
+      const target = e.target as HTMLElement;
+      const link = target.closest('a');
+      if (link && window.innerWidth < 992) {
+        const sidebar = document.getElementById('layout-sidebar');
+        if (sidebar && sidebar.classList.contains('sidebar-shown')) {
+          sidebar.classList.remove('sidebar-shown');
+          window.dispatchEvent(new CustomEvent('sidebar-state-changed'));
+        }
+      }
+    });
+
     // --- Сортировка ---
     type SortOrder = 'none' | 'desc' | 'asc';
     let sortOrder: SortOrder = (localStorage.getItem('sidebar-sort') as SortOrder) || 'none';
@@ -244,65 +338,26 @@ function getFolderHref(fullPath: string) {
     function updateSortUI() {
       const state = sortStates[sortOrder];
       sortIcon.textContent = state.icon;
-      sortBtn.setAttribute('title', state.title);
+      sortBtn!.setAttribute('title', state.title);
       if (sortOrder === 'none') {
-        sortBtn.classList.remove('active');
-        sortBtn.removeAttribute('data-label');
+        sortBtn!.classList.remove('active');
+        sortBtn!.removeAttribute('data-label');
       } else {
-        sortBtn.classList.add('active');
-        sortBtn.setAttribute('data-label', state.label);
+        sortBtn!.classList.add('active');
+        sortBtn!.setAttribute('data-label', state.label);
       }
-    }
-
-    function performSort() {
-      localStorage.setItem('sidebar-sort', sortOrder);
-      const sortableLists = tree.querySelectorAll<HTMLUListElement>('ul.sortable-list');
-      sortableLists.forEach(ul => {
-        const items = Array.from(ul.querySelectorAll<HTMLLIElement>(':scope > li.sortable-item'));
-        
-        items.sort((a, b) => {
-          if (sortOrder === 'none') {
-            return parseInt(a.getAttribute('data-original-index') || '0') - parseInt(b.getAttribute('data-original-index') || '0');
-          }
-          const getTime = (el: HTMLLIElement) => {
-            if (el.hasAttribute('data-date')) return new Date(el.getAttribute('data-date')!).getTime();
-            const attr = sortOrder === 'asc' ? 'data-date-min' : 'data-date-max';
-            return new Date(el.getAttribute(attr) || 0).getTime();
-          };
-          const ta = getTime(a);
-          const tb = getTime(b);
-          return sortOrder === 'asc' ? ta - tb : tb - ta;
-        });
-
-        items.forEach(li => ul.appendChild(li));
-      });
+      
+      // Update global sort attribute on the list for CSS sorting
+      tree!.setAttribute('data-sort', sortOrder);
     }
 
     sortBtn.addEventListener('click', () => {
       if (sortOrder === 'none') sortOrder = 'desc';
       else if (sortOrder === 'desc') sortOrder = 'asc';
       else sortOrder = 'none';
+      localStorage.setItem('sidebar-sort', sortOrder);
       updateSortUI();
-      performSort();
     });
-
-    // --- Сброс индекса и восстановление состояния ---
-    tree.querySelectorAll<HTMLLIElement>('li.sortable-item').forEach((li, i) => {
-      li.setAttribute('data-original-index', String(i));
-    });
-
-    // Восстановить поиск если был
-    const savedSearch = localStorage.getItem('sidebar-search');
-    if (savedSearch) {
-      searchInput.value = savedSearch;
-      performSearch();
-    }
-
-    // Восстановить сортировку если была
-    if (sortOrder !== 'none') {
-      updateSortUI();
-      performSort();
-    }
   });
 </script>
 
@@ -393,6 +448,15 @@ function getFolderHref(fullPath: string) {
     list-style: none;
     margin: 0;
     padding: 0;
+    display: grid;
+  }
+  
+  /* CSS-based sorting logic */
+  .sortable-list[data-sort="desc"] > .sortable-item {
+    order: var(--order-desc, 0);
+  }
+  .sortable-list[data-sort="asc"] > .sortable-item {
+    order: var(--order-asc, 0);
   }
 
   .sidebar-nav li {
@@ -528,5 +592,30 @@ function getFolderHref(fullPath: string) {
   .sidebar-nav details > ul {
     margin-top: 0 !important;
     padding-top: 0 !important;
+  }
+
+  @media (max-width: 991px) {
+    .sidebar-nav {
+      font-size: 1rem;
+    }
+    .sidebar-controls input {
+      font-size: 0.9rem;
+      padding: 0.6rem 0.8rem;
+      height: 44px; /* Larger tap target */
+    }
+    .sort-btn {
+      height: 44px !important;
+      width: 44px !important;
+      font-size: 1.1rem !important;
+    }
+    .sidebar-nav a.file-link, 
+    .sidebar-nav a.folder-link, 
+    .sidebar-nav summary {
+      font-size: 1rem;
+      padding: 6px 4px;
+    }
+    .file-date {
+      font-size: 1rem;
+    }
   }
 </style>

@@ -77,7 +77,8 @@
   }
 
   // === Font Size Logic ===
-  const fontBtn = document.getElementById("font-toggle");
+  const fontIncreaseBtn = document.getElementById("font-increase");
+  const fontDecreaseBtn = document.getElementById("font-decrease");
   const fontSizes = ["xs", "sm", "md", "lg", "xl"];
   
   // Default to 'md' if nothing is stored
@@ -86,19 +87,36 @@
   
   const applyFontUi = (size) => {
     root.dataset.font = size;
+    const index = fontSizes.indexOf(size);
+    
+    // Update button states (optional: visual feedback when limits reached)
+    if (fontDecreaseBtn) fontDecreaseBtn.style.opacity = index === 0 ? "0.3" : "0.7";
+    if (fontIncreaseBtn) fontIncreaseBtn.style.opacity = index === fontSizes.length - 1 ? "0.3" : "0.7";
   };
 
   applyFontUi(initialFont);
 
-  if (fontBtn) {
-    fontBtn.addEventListener("click", () => {
+  if (fontIncreaseBtn) {
+    fontIncreaseBtn.addEventListener("click", () => {
       const currentSize = root.dataset.font || "md";
       const currentIndex = fontSizes.indexOf(currentSize);
-      const nextIndex = (currentIndex + 1) % fontSizes.length;
-      const nextSize = fontSizes[nextIndex];
-      
-      localStorage.setItem("font-size", nextSize);
-      applyFontUi(nextSize);
+      if (currentIndex < fontSizes.length - 1) {
+        const nextSize = fontSizes[currentIndex + 1];
+        localStorage.setItem("font-size", nextSize);
+        applyFontUi(nextSize);
+      }
+    });
+  }
+
+  if (fontDecreaseBtn) {
+    fontDecreaseBtn.addEventListener("click", () => {
+      const currentSize = root.dataset.font || "md";
+      const currentIndex = fontSizes.indexOf(currentSize);
+      if (currentIndex > 0) {
+        const nextSize = fontSizes[currentIndex - 1];
+        localStorage.setItem("font-size", nextSize);
+        applyFontUi(nextSize);
+      }
     });
   }
 
