@@ -49,11 +49,26 @@ const breadcrumbPath = getBreadcrumb(Astro.url.pathname);
     <link id="chroma-dark" rel="stylesheet" href={`${BASE}css/chroma-github-dark.css`} disabled />
     
     <script is:inline>
-      const theme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-      document.documentElement.dataset.theme = theme;
-      
-      const font = localStorage.getItem('font-size') || 'md';
-      document.documentElement.dataset.font = font;
+      (function() {
+        const theme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        document.documentElement.dataset.theme = theme;
+        
+        const font = localStorage.getItem('font-size') || 'md';
+        document.documentElement.dataset.font = font;
+
+        const viewport = document.querySelector('meta[name="viewport"]');
+        if (viewport) {
+          const updateViewport = () => {
+            if (window.innerWidth < 992) {
+              viewport.setAttribute('content', 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no');
+            } else {
+              viewport.setAttribute('content', 'width=device-width, initial-scale=1');
+            }
+          };
+          updateViewport();
+          window.addEventListener('resize', updateViewport);
+        }
+      })();
     </script>
   </head>
   <body>

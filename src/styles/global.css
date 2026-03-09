@@ -126,6 +126,9 @@ article > * {
 }
 
 /* Article Typography Sizes (controlled by JS toggle) */
+html[data-font="xs"] main article {
+  font-size: 0.8rem;
+}
 html[data-font="sm"] main article {
   font-size: 0.9rem;
 }
@@ -134,6 +137,9 @@ html[data-font="md"] main article {
 }
 html[data-font="lg"] main article {
   font-size: 1.15rem;
+}
+html[data-font="xl"] main article {
+  font-size: 1.3rem;
 }
 
 /* Restore article header separator line */

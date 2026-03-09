@@ -78,7 +78,7 @@
 
   // === Font Size Logic ===
   const fontBtn = document.getElementById("font-toggle");
-  const fontSizes = ["sm", "md", "lg"];
+  const fontSizes = ["xs", "sm", "md", "lg", "xl"];
   
   // Default to 'md' if nothing is stored
   const storedFont = localStorage.getItem("font-size");
