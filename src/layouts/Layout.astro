@@ -15,12 +15,15 @@ interface Props {
 
 const { title, description } = Astro.props;
 
-const blogEntries = sortByDateDesc((await getCollection('blog')).filter((e) => !e.data.draft)).map((entry) => ({
-    slug: entry.slug,
+const blogEntries = sortByDateDesc((await getCollection('blog')).filter((e) => !e.data.draft)).map((entry) => {
+  return {
+    id: entry.id, // Full path like 'science/human-body/article.md'
+    slug: entry.slug, // Full slug like 'science/human-body/article'
     title: entry.data.title,
     date: entry.data.date,
-    section: entry.data.section as 'dev' | 'life',
-  }));
+    section: entry.data.section, // Still support frontmatter override
+  };
+});
 
 const pages = (await getCollection('pages')).filter((e) => !e.data.draft);
 const mainEntry = pages.find((e) => e.slug === 'main');

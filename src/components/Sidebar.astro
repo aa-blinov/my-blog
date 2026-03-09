@@ -1,38 +1,87 @@
 ---
-import { BASE, SECTION_TITLES, BLOG_SECTIONS, type BlogSection } from '../config';
+import { BASE, type BlogSection } from '../config';
 import { formatDate } from '../utils/date';
 
+interface BlogEntry {
+  id: string;
+  slug: string;
+  title: string;
+  date: Date;
+  section?: string;
+}
+
 interface Props {
-  blogEntries: { slug: string; title: string; date: Date; section: BlogSection }[];
+  blogEntries: BlogEntry[];
   mainEntry?: { slug: string; title: string; date: Date } | null;
   aboutEntry?: { slug: string; title: string; date: Date } | null;
 }
 
 const { blogEntries, mainEntry, aboutEntry } = Astro.props;
 
-const bySection = {} as Record<BlogSection, typeof blogEntries>;
-BLOG_SECTIONS.forEach((s) => (bySection[s] = []));
-blogEntries.forEach((e) => bySection[e.section].push(e));
+// --- Tree Building ---
+interface TreeNode {
+  name: string;
+  kind: 'file' | 'folder';
+  children?: Record<string, TreeNode>;
+  entry?: BlogEntry;
+  minDate?: Date;
+  maxDate?: Date;
+}
 
-// Расчет дат для папок (нужно для сортировки самих папок)
-const getSectionStats = (section: BlogSection) => {
-  const dates = bySection[section].map(e => e.date.getTime());
-  return {
-    min: dates.length ? new Date(Math.min(...dates)).toISOString() : new Date(0).toISOString(),
-    max: dates.length ? new Date(Math.max(...dates)).toISOString() : new Date(0).toISOString()
-  };
-};
+const root: TreeNode = { name: 'blog', kind: 'folder', children: {} };
 
-const allStats = BLOG_SECTIONS.map(getSectionStats);
-const validStats = allStats.filter(s => s.min !== new Date(0).toISOString());
-const blogStats = {
-  min: validStats.length ? new Date(Math.min(...validStats.map(s => new Date(s.min).getTime()))).toISOString() : new Date(0).toISOString(),
-  max: validStats.length ? new Date(Math.max(...validStats.map(s => new Date(s.max).getTime()))).toISOString() : new Date(0).toISOString()
-};
+blogEntries.forEach((entry) => {
+  // Use frontmatter section as virtual path or fall back to physical path
+  const path = entry.section ? `${entry.section}/${entry.id.split('/').pop()}` : entry.id;
+  const parts = path.split('/');
+  let current = root;
+
+  parts.forEach((part, i) => {
+    if (i === parts.length - 1) {
+      // It's a file
+      current.children![part] = { name: part, kind: 'file', entry };
+    } else {
+      // It's a folder
+      if (!current.children![part]) {
+        current.children![part] = { name: part, kind: 'folder', children: {} };
+      }
+      current = current.children![part];
+    }
+  });
+});
+
+// --- Recursive Stats Calculation ---
+function calculateStats(node: TreeNode) {
+  if (node.kind === 'file') {
+    node.minDate = node.entry?.date;
+    node.maxDate = node.entry?.date;
+    return;
+  }
+
+  let min: number | null = null;
+  let max: number | null = null;
+
+  Object.values(node.children || {}).forEach((child) => {
+    calculateStats(child);
+    if (child.minDate) {
+      const t = child.minDate.getTime();
+      if (min === null || t < min) min = t;
+      if (max === null || t > max) max = t;
+    }
+    if (child.maxDate) {
+      const t = child.maxDate.getTime();
+      if (min === null || t < min) min = t;
+      if (max === null || t > max) max = t;
+    }
+  });
+
+  if (min !== null) node.minDate = new Date(min);
+  if (max !== null) node.maxDate = new Date(max);
+}
+calculateStats(root);
 
 // Determine active path
 const currentPath = Astro.url.pathname;
-
 function isActive(href: string): boolean {
   const normalize = (p: string) => p.endsWith('/') ? p : p + '/';
   return normalize(currentPath) === normalize(href);
@@ -76,43 +125,42 @@ function isActive(href: string): boolean {
       </li>
     )}
     
-    <li class="folder-item sortable-item" data-date-min={blogStats.min} data-date-max={blogStats.max}>
-      <details open>
-        <summary class="contrast">
-          <span class="ascii-icon folder">▸</span> blog/
-        </summary>
-        <ul class="sortable-list">
-          {BLOG_SECTIONS.map((section) => {
-            const stats = getSectionStats(section);
-            return (
-              <li class="folder-item sortable-item" data-date-min={stats.min} data-date-max={stats.max}>
-                <details open>
-                  <summary class="contrast">
-                    <span class="ascii-icon folder">▸</span> {section}/
-                  </summary>
-                  <ul class="sortable-list">
-                    {bySection[section].map((entry) => {
-                      const href = `${BASE}blog/${entry.section}/${entry.slug}/`;
-                      return (
-                        <li class="sortable-item" data-filename={`${entry.slug}.md`} data-date={entry.date.toISOString()}>
-                          <span class="file-link-wrapper">
-                            <a href={href} class:list={['file-link', { active: isActive(href) }]}>
-                              <span class="ascii-icon">~</span> {entry.slug}.md
-                            </a>
-                            <span class="file-tooltip">{entry.slug}.md</span>
-                          </span>
-                          <span class="file-date">{formatDate(entry.date)}</span>
-                        </li>
-                      );
-                    })}
-                  </ul>
-                </details>
-              </li>
-            );
-          })}
-        </ul>
-      </details>
-    </li>
+    {/* Рекурсивный рендеринг дерева */}
+    {function renderTree(node: TreeNode) {
+      const childrenArr = Object.values(node.children || {}).sort((a, b) => a.name.localeCompare(b.name));
+      return (
+        <li 
+          class:list={[{ 'folder-item': node.kind === 'folder', 'sortable-item': true }]} 
+          data-date-min={node.minDate?.toISOString()} 
+          data-date-max={node.maxDate?.toISOString()}
+          {...(node.kind === 'file' ? { 
+            'data-filename': node.name, 
+            'data-date': node.entry?.date.toISOString() 
+          } : {})}
+        >
+          {node.kind === 'folder' ? (
+            <details open>
+              <summary class="contrast">
+                <span class="ascii-icon folder">▸</span> {node.name}/
+              </summary>
+              <ul class="sortable-list">
+                {childrenArr.map(child => renderTree(child))}
+              </ul>
+            </details>
+          ) : (
+            <>
+              <span class="file-link-wrapper">
+                <a href={`${BASE}blog/${node.entry?.slug}/`} class:list={['file-link', { active: isActive(`${BASE}blog/${node.entry?.slug}/`) }]}>
+                  <span class="ascii-icon">~</span> {node.name}
+                </a>
+                <span class="file-tooltip">{node.name}</span>
+              </span>
+              <span class="file-date">{formatDate(node.entry!.date)}</span>
+            </>
+          )}
+        </li>
+      );
+    }(root)}
   </ul>
 </nav>
 
