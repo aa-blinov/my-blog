@@ -115,8 +115,12 @@
 
       mermaid.initialize({
         startOnLoad: false,
-        theme: "dark", // Always use dark theme to match code blocks
+        theme: "forest",
         fontFamily: "var(--font-family)",
+        flowchart: {
+          useMaxWidth: true,
+          htmlLabels: true
+        }
       });
 
       mermaidPres.forEach((el, index) => {
@@ -126,7 +130,6 @@
         if (pre.dataset.mermaidProcessed) return;
         pre.dataset.mermaidProcessed = "true";
 
-        // Try to find if enhanceCodeBlocks already wrapped it (if logic changes in future)
         const existingContainer = pre.closest(".code-block-container");
         const nodeToWrap = existingContainer || pre;
         
@@ -136,7 +139,7 @@
         nodeToWrap.parentNode.insertBefore(toggleWrapper, nodeToWrap);
         
         const diagramWrapper = document.createElement("div");
-        diagramWrapper.className = "mermaid-wrapper highlight"; // Re-use highlight for relative positioning and hover effects
+        diagramWrapper.className = "mermaid-wrapper highlight";
         diagramWrapper.style.display = "flex";
         diagramWrapper.style.justifyContent = "center";
         diagramWrapper.style.alignItems = "center";

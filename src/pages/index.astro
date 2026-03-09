@@ -1,8 +1,16 @@
 ---
 import PageFromEntry from '../components/PageFromEntry.astro';
+import PostList from '../components/PostList.astro';
 import { getCollection } from 'astro:content';
+import { RECENT_POSTS_LIMIT } from '../config';
+import { sortByDateDesc } from '../utils/date';
+
 const pages = (await getCollection('pages')).filter((e) => !e.data.draft);
 const homeEntry = pages.find((e) => e.slug === 'main');
+
+const posts = sortByDateDesc(
+  (await getCollection('blog')).filter((p) => !p.data.draft)
+).slice(0, 3); // Show only top 3 on home page for compactness
 
 let Content: import('astro').ContentComponent | null = null;
 let entryData: { data: { title: string; date: Date; summary?: string }; fileLabel: string } | null = null;
@@ -19,4 +27,20 @@ if (homeEntry) {
 
 <PageFromEntry entry={entryData} fallbackTitle="Главная" fallbackH1="Главная" prompt="main &gt;">
   {Content ? <Content /> : <p>Добавь в <code>content/pages/</code> файл <code>main.md</code> с frontmatter: <code>title</code>, <code>date</code>.</p>}
+  
+  <div style="margin-top: 4rem; border-top: 1px solid var(--pico-muted-border-color); padding-top: 2rem;">
+    <h2 style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 2rem;">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" style="width: 1.75rem; height: 1.75rem; color: var(--pico-primary);">
+        <path d="M11.25 4.533A9.707 9.707 0 0 0 6 3a9.735 9.735 0 0 0-3.25.555.75.75 0 0 0-.5.707v14.25a.75.75 0 0 0 1 .707A8.237 8.237 0 0 1 6 18.75c1.995 0 3.823.707 5.25 1.886V4.533ZM12.75 20.636A8.214 8.214 0 0 1 18 18.75c1.057 0 2.056.2 2.964.562a.75.75 0 0 0 1-.707V4.356a.75.75 0 0 0-.5-.707A9.735 9.735 0 0 0 18 3a9.707 9.707 0 0 0-5.25 1.533v16.103Z" />
+      </svg>
+      Свежие статьи
+    </h2>
+    <PostList posts={posts} />
+    
+    <div style="margin-top: 1.5rem; text-align: left;">
+      <a href="/blog/" class="contrast" style="display: inline-flex; align-items: center; padding: 0.1rem 0.5rem; background: var(--pico-code-background-color); border: 1px solid var(--pico-muted-border-color); border-radius: 4px; font-size: 0.9em; text-decoration: none;">
+        Смотреть все статьи &rarr;
+      </a>
+    </div>
+  </div>
 </PageFromEntry>

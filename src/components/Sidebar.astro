@@ -26,9 +26,10 @@ interface TreeNode {
   entry?: BlogEntry;
   minDate?: Date;
   maxDate?: Date;
+  fullPath?: string;
 }
 
-const root: TreeNode = { name: 'blog', kind: 'folder', children: {} };
+const root: TreeNode = { name: 'blog', kind: 'folder', children: {}, fullPath: '' };
 
 blogEntries.forEach((entry) => {
   // Use frontmatter section as virtual path or fall back to physical path
@@ -43,7 +44,8 @@ blogEntries.forEach((entry) => {
     } else {
       // It's a folder
       if (!current.children![part]) {
-        current.children![part] = { name: part, kind: 'folder', children: {} };
+        const folderPath = parts.slice(0, i + 1).join('/');
+        current.children![part] = { name: part, kind: 'folder', children: {}, fullPath: folderPath };
       }
       current = current.children![part];
     }
@@ -86,6 +88,11 @@ function isActive(href: string): boolean {
   const normalize = (p: string) => p.endsWith('/') ? p : p + '/';
   return normalize(currentPath) === normalize(href);
 }
+
+function getFolderHref(fullPath: string) {
+  const cleanPath = fullPath ? `${fullPath}/` : '';
+  return `${BASE}blog/${cleanPath}`;
+}
 ---
 
 <nav class="sidebar-nav">
@@ -108,7 +115,6 @@ function isActive(href: string): boolean {
           <a href={BASE} class:list={['file-link', { active: isActive(BASE) }]}>
             <span class="ascii-icon">~</span> main.md
           </a>
-          <span class="file-tooltip">main.md</span>
         </span>
         <span class="file-date">{formatDate(mainEntry.date)}</span>
       </li>
@@ -119,7 +125,6 @@ function isActive(href: string): boolean {
           <a href={`${BASE}about-me/`} class:list={['file-link', { active: isActive(`${BASE}about-me/`) }]}>
             <span class="ascii-icon">~</span> about-me.md
           </a>
-          <span class="file-tooltip">about-me.md</span>
         </span>
         <span class="file-date">{formatDate(aboutEntry.date)}</span>
       </li>
@@ -141,7 +146,13 @@ function isActive(href: string): boolean {
           {node.kind === 'folder' ? (
             <details open>
               <summary class="contrast">
-                <span class="ascii-icon folder">▸</span> {node.name}/
+                <span class="ascii-icon folder">▸</span>
+                <a 
+                  href={getFolderHref(node.fullPath || '')} 
+                  class:list={['folder-link', { active: isActive(getFolderHref(node.fullPath || '')) }]}
+                >
+                  {node.name}/
+                </a>
               </summary>
               <ul class="sortable-list">
                 {childrenArr.map(child => renderTree(child))}
@@ -153,7 +164,6 @@ function isActive(href: string): boolean {
                 <a href={`${BASE}blog/${node.entry?.slug}/`} class:list={['file-link', { active: isActive(`${BASE}blog/${node.entry?.slug}/`) }]}>
                   <span class="ascii-icon">~</span> {node.name}
                 </a>
-                <span class="file-tooltip">{node.name}</span>
               </span>
               <span class="file-date">{formatDate(node.entry!.date)}</span>
             </>
@@ -170,6 +180,17 @@ function isActive(href: string): boolean {
     const sortBtn = document.getElementById('sort-date-btn');
     const tree = document.getElementById('sidebar-tree');
     if (!searchInput || !sortBtn || !tree) return;
+
+    // --- Folder link handling (prevent toggle on name click) ---
+    // Use capture phase to stop propagation before it reaches the <summary> element
+    tree.addEventListener('click', (e) => {
+      const target = e.target as HTMLElement;
+      const folderLink = target.closest('.folder-link');
+      if (folderLink) {
+        // Stop propagation prevents the <summary>/<details> from toggling
+        e.stopPropagation();
+      }
+    }, true); // true = use capture phase
 
     // --- Транслитерация ---
     const ruToEn: Record<string, string> = {
@@ -395,58 +416,70 @@ function isActive(href: string): boolean {
 
   .ascii-icon {
     color: var(--pico-muted-color);
-    margin-right: 0.15rem;
+    margin-right: 0.2rem;
+    flex-shrink: 0;
   }
 
   .ascii-icon.folder {
     color: var(--pico-primary);
+    padding: 0 0.1rem;
+    cursor: pointer;
   }
 
   .sidebar-nav a.file-link {
     text-decoration: none !important;
     color: var(--pico-contrast) !important;
-    transition: color 0.15s ease;
+    transition: all 0.15s ease;
+    display: flex;
+    align-items: center;
+    padding: 2px 4px;
+    margin: 0 -4px;
+    border-radius: 3px;
+  }
+
+  .sidebar-nav first-child a.file-link {
+    margin-left: 0;
   }
 
   .sidebar-nav a.file-link:hover {
     color: var(--pico-primary) !important;
+    background-color: var(--pico-code-background-color) !important;
   }
 
   .sidebar-nav a.file-link.active {
     color: var(--pico-primary) !important;
     font-weight: bold;
+    background-color: rgba(var(--pico-primary-rgb), 0.1) !important;
   }
 
-  .file-tooltip {
-    position: absolute;
-    left: 0;
-    bottom: calc(100% + 4px);
-    background: var(--pico-card-background-color);
-    color: var(--pico-color);
-    border: 1px solid var(--pico-muted-border-color);
-    border-radius: 4px;
-    padding: 0.2rem 0.5rem;
-    font-size: 0.75rem;
-    font-weight: normal;
-    white-space: nowrap;
-    pointer-events: none;
-    opacity: 0;
-    transform: translateY(4px);
-    transition: opacity 0.15s ease, transform 0.15s ease;
-    z-index: 10;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  /* --- Folder Links --- */
+  .sidebar-nav a.folder-link {
+    text-decoration: none !important;
+    color: inherit !important;
+    transition: all 0.15s ease;
+    display: inline-flex;
+    align-items: center;
+    padding: 2px 4px;
+    margin: 0 -4px;
+    border-radius: 3px;
+    width: auto;
   }
 
-  .file-link-wrapper:hover .file-tooltip {
-    opacity: 1;
-    transform: translateY(0);
+  .sidebar-nav a.folder-link:hover {
+    color: var(--pico-primary) !important;
+    background-color: var(--pico-code-background-color) !important;
+  }
+
+  .sidebar-nav a.folder-link.active {
+    color: var(--pico-primary) !important;
+    font-weight: bold;
+    background-color: rgba(var(--pico-primary-rgb), 0.1) !important;
   }
 
   .file-link-wrapper {
     position: relative;
     flex: 1;
     min-width: 0;
-    margin-right: 4.5rem;
   }
 
   .sidebar-nav li:has(> .file-link-wrapper) {
@@ -467,7 +500,7 @@ function isActive(href: string): boolean {
     white-space: nowrap;
     position: absolute;
     right: 0;
-    line-height: 1.0;
+    line-height: 1.7;
   }
 
   details ul {
