@@ -116,25 +116,25 @@ draft: false
 
 ## Список источников
 
-1. International Air Transport Association (IATA). Pricing transparency and duty-free value gap. Referenced in: *Are Airport Shopping Duty-free Prices Really Cheaper—or Just Psychological Spending*. Alibaba Market Insights, 2024. https://www.alibaba.com/product-insights/are-airport-shopping-duty-free-prices-really-cheaper-or-just-psychological-spending.html
+1. International Air Transport Association (IATA). Pricing transparency and duty-free value gap. Referenced in: *Are Airport Shopping Duty-free Prices Really Cheaper—or Just Psychological Spending*. Alibaba Market Insights, 2024. <https://www.alibaba.com/product-insights/are-airport-shopping-duty-free-prices-really-cheaper-or-just-psychological-spending.html>
 
-2. Thaler R.H. Mental Accounting Matters. *Journal of Behavioral Decision Making*, 1999; 12(3): 183–206. https://onlinelibrary.wiley.com/doi/abs/10.1002/(SICI)1099-0771(199909)12:3%3C183::AID-BDM318%3E3.0.CO;2-F
+2. Thaler R.H. Mental Accounting Matters. *Journal of Behavioral Decision Making*, 1999; 12(3): 183–206. <https://onlinelibrary.wiley.com/doi/abs/10.1002/(SICI)1099-0771(199909)12:3%3C183::AID-BDM318%3E3.0.CO;2-F>
 
-3. The Decision Lab. Mental Accounting — Reference Guide. (Thaler movie ticket experiment cited.) https://thedecisionlab.com/reference-guide/psychology/mental-accounting
+3. The Decision Lab. Mental Accounting — Reference Guide. (Thaler movie ticket experiment cited.) <https://thedecisionlab.com/reference-guide/psychology/mental-accounting>
 
-4. Heath C., Soll J.B. Mental Budgeting and Consumer Decisions. *Journal of Consumer Research*, 1996; 23(1): 40–52. https://bear.warrington.ufl.edu/brenner/mar7588/Papers/heath-soll-jcr1996.pdf
+4. Heath C., Soll J.B. Mental Budgeting and Consumer Decisions. *Journal of Consumer Research*, 1996; 23(1): 40–52. <https://bear.warrington.ufl.edu/brenner/mar7588/Papers/heath-soll-jcr1996.pdf>
 
-5. Turner V. The Ritual Process: Structure and Anti-Structure. Aldine, 1969. Cited in: van Gennep A. The Rites of Passage. University of Chicago Press, 1960. Referenced in: PsychMechanics (Liminality overview). https://www.psychmechanics.com/liminal-space/
+5. Turner V. The Ritual Process: Structure and Anti-Structure. Aldine, 1969. Cited in: van Gennep A. The Rites of Passage. University of Chicago Press, 1960. Referenced in: PsychMechanics (Liminality overview). <https://www.psychmechanics.com/liminal-space/>
 
-6. Wang S. et al. Airports as Liminal Space. *Journal of Hospitality and Tourism Management*, 2018; 35: 1–9. https://www.sciencedirect.com/science/article/abs/pii/S1447677016300936 ; Academia.edu version: https://www.academia.edu/36484662/Airports_as_liminal_space
+6. Wang S. et al. Airports as Liminal Space. *Journal of Hospitality and Tourism Management*, 2018; 35: 1–9. <https://www.sciencedirect.com/science/article/abs/pii/S1447677016300936> ; Academia.edu version: <https://www.academia.edu/36484662/Airports_as_liminal_space>
 
 7. Baumeister R.F. et al. Ego Depletion: Is the Active Self a Limited Resource? *Journal of Personality and Social Psychology*, 1998; 74(5): 1252–1265. Referenced in: consumer behavior literature on decision fatigue.
 
-8. Ünder U., Atalık Ö. Investigating Airport Shoppers' Buying Behaviors and Satisfaction at Duty Free Shops. *Research Gate / Journal of Air Transport Management*, 2020. https://www.researchgate.net/publication/348917246
+8. Ünder U., Atalık Ö. Investigating Airport Shoppers' Buying Behaviors and Satisfaction at Duty Free Shops. *Research Gate / Journal of Air Transport Management*, 2020. <https://www.researchgate.net/publication/348917246>
 
-9. Davidovitch L., Milgrom E. Analyzing the Antecedents of Duty Free Consumption Behavior. *Advances in Social Sciences Research Journal*, 2019; 6(7). https://journals.scholarpublishing.org/index.php/ASSRJ/article/view/5897
+9. Davidovitch L., Milgrom E. Analyzing the Antecedents of Duty Free Consumption Behavior. *Advances in Social Sciences Research Journal*, 2019; 6(7). <https://journals.scholarpublishing.org/index.php/ASSRJ/article/view/5897>
 
-10. Han H. et al. Investigating Travellers' Multi-Impulse Buying Behavior in Airport Duty-Free Shopping for Chinese Traveler: Intrinsic and Extrinsic Motivations. *Journal of Air Transport Management*, 2021; 92. https://www.sciencedirect.com/science/article/abs/pii/S0969699721000065
+10. Han H. et al. Investigating Travellers' Multi-Impulse Buying Behavior in Airport Duty-Free Shopping for Chinese Traveler: Intrinsic and Extrinsic Motivations. *Journal of Air Transport Management*, 2021; 92. <https://www.sciencedirect.com/science/article/abs/pii/S0969699721000065>
 
 11. Lin Y.-H., Chen C.-F. Passengers' Shopping Motivations and Commercial Activities at Airports — The Moderating Effects of Time Pressure and Impulse Buying Tendency. *Tourism Management*, 2013; 36: 426–434.
 
