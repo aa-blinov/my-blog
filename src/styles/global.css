@@ -114,6 +114,11 @@ body {
   overflow-x: clip;
 }
 
+html,
+body {
+  overscroll-behavior-y: none;
+}
+
 /* --- Scrollbar (WebKit) --- */
 html::-webkit-scrollbar {
   width: var(--app-scrollbar-size);
@@ -254,19 +259,28 @@ pre, code {
 @media (max-width: 991px) {
   .app-layout {
     display: block;
-    min-height: 0;
+    min-height: 100dvh;
+    background-color: var(--pico-background-color);
   }
   .main-container {
     display: block;
     flex: none;
     min-height: auto;
     padding-top: var(--app-content-padding-top-mobile);
+    background-color: var(--pico-background-color);
   }
   .main-grid {
     flex: none;
     min-height: auto;
     padding: var(--app-spacing);
     display: block;
+    background-color: var(--pico-background-color);
+  }
+  main,
+  article,
+  article .entry-header,
+  main article .content {
+    background-color: var(--pico-background-color);
   }
   #layout-sidebar.sidebar-hidden,
   #layout-sidebar:not(.sidebar-shown) {
@@ -381,6 +395,12 @@ pre, code {
   justify-content: center;
   background: var(--pico-background-color);
   position: relative;
+}
+
+@media (max-width: 991px) {
+  .site-footer {
+    padding-bottom: calc(var(--app-spacing-lg) + env(safe-area-inset-bottom, 0px));
+  }
 }
 
 .highlight pre,
