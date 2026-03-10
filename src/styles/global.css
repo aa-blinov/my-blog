@@ -114,6 +114,12 @@ body {
   overflow-x: hidden;
 }
 
+html.sidebar-open,
+body.sidebar-open {
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+
 /* --- Scrollbar (WebKit) --- */
 html::-webkit-scrollbar {
   width: var(--app-scrollbar-size);
@@ -388,12 +394,15 @@ pre, code {
     position: fixed;
     top: var(--app-navbar-mobile-height);
     left: 0;
-    width: 100%;
-    height: calc(100vh - var(--app-navbar-mobile-height));
+    right: 0;
+    bottom: 0;
     background: var(--pico-background-color);
     z-index: var(--app-z-sidebar-overlay);
     padding: var(--app-spacing);
     overflow-y: auto;
+    overscroll-behavior-y: contain;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-y;
     border-bottom: 1px solid var(--pico-muted-border-color);
     margin: 0;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);

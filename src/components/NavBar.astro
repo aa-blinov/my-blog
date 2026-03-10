@@ -74,19 +74,59 @@ const { breadcrumbPath } = Astro.props;
   const sidebar = document.getElementById('layout-sidebar');
   const openIcon = document.getElementById('sidebar-open-icon');
   const closeIcon = document.getElementById('sidebar-close-icon');
-  const nav = document.querySelector('.vertical-navbar');
+  const root = document.documentElement;
+  const body = document.body;
+  const mobileBreakpoint = 992;
+  let lockedScrollY = 0;
+
+  function isMobileViewport() {
+    return window.innerWidth < mobileBreakpoint;
+  }
+
+  function lockPageScroll() {
+    if (!body || body.dataset.sidebarScrollLocked === 'true') return;
+
+    lockedScrollY = window.scrollY;
+    body.dataset.sidebarScrollLocked = 'true';
+    root.classList.add('sidebar-open');
+    body.classList.add('sidebar-open');
+    body.style.position = 'fixed';
+    body.style.top = `-${lockedScrollY}px`;
+    body.style.left = '0';
+    body.style.right = '0';
+    body.style.width = '100%';
+  }
+
+  function unlockPageScroll() {
+    if (!body) return;
+
+    const wasLocked = body.dataset.sidebarScrollLocked === 'true';
+    const offsetTop = body.style.top;
+
+    delete body.dataset.sidebarScrollLocked;
+    root.classList.remove('sidebar-open');
+    body.classList.remove('sidebar-open');
+    body.style.position = '';
+    body.style.top = '';
+    body.style.left = '';
+    body.style.right = '';
+    body.style.width = '';
+
+    if (wasLocked) {
+      const restoreY = offsetTop ? Math.abs(parseInt(offsetTop, 10)) || lockedScrollY : lockedScrollY;
+      window.scrollTo(0, restoreY);
+    }
+  }
  
   function syncIcons() {
     const isShown = sidebar?.classList.contains('sidebar-shown');
-    const isMobile = window.innerWidth < 992;
+    const isMobile = isMobileViewport();
     
     if (openIcon && closeIcon) {
       if (isMobile) {
-        // Mobile: ☰ shown when NOT SHOWN (click will open), X shown when SHOWN
         openIcon.style.display = isShown ? 'none' : 'block';
         closeIcon.style.display = isShown ? 'block' : 'none';
       } else {
-        // Desktop uses sidebar-hidden class
         const isHidden = sidebar?.classList.contains('sidebar-hidden');
         openIcon.style.display = isHidden ? 'block' : 'none';
         closeIcon.style.display = isHidden ? 'none' : 'block';
@@ -94,19 +134,42 @@ const { breadcrumbPath } = Astro.props;
     }
   }
 
-  // Init icons
-  syncIcons();
-  window.addEventListener('resize', syncIcons);
-  window.addEventListener('sidebar-state-changed', syncIcons);
+  function syncMobileSidebarState() {
+    if (!sidebar) return;
+
+    if (!isMobileViewport()) {
+      sidebar.classList.remove('sidebar-shown');
+      unlockPageScroll();
+      syncIcons();
+      return;
+    }
+
+    sidebar.classList.remove('sidebar-hidden');
+
+    if (sidebar.classList.contains('sidebar-shown')) lockPageScroll();
+    else unlockPageScroll();
+
+    syncIcons();
+  }
+
+  function notifySidebarStateChanged() {
+    window.dispatchEvent(new CustomEvent('sidebar-state-changed'));
+  }
+
+  syncMobileSidebarState();
+  window.addEventListener('resize', syncMobileSidebarState);
+  window.addEventListener('sidebar-state-changed', syncMobileSidebarState);
 
   sidebarToggle?.addEventListener('click', () => {
-    const isMobile = window.innerWidth < 992;
+    const isMobile = isMobileViewport();
     if (isMobile) {
+      sidebar?.classList.remove('sidebar-hidden');
       sidebar?.classList.toggle('sidebar-shown');
     } else {
+      sidebar?.classList.remove('sidebar-shown');
       sidebar?.classList.toggle('sidebar-hidden');
     }
-    syncIcons();
+    notifySidebarStateChanged();
   });
 </script>
 
