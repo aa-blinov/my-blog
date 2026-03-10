@@ -253,9 +253,18 @@ pre, code {
 
 @media (max-width: 991px) {
   .app-layout {
-    flex-direction: column;
+    display: block;
+    min-height: 0;
+  }
+  .main-container {
+    display: block;
+    flex: none;
+    min-height: auto;
+    padding-top: var(--app-content-padding-top-mobile);
   }
   .main-grid {
+    flex: none;
+    min-height: auto;
     padding: var(--app-spacing);
     display: block;
   }
@@ -280,9 +289,6 @@ pre, code {
     border-bottom: 1px solid var(--pico-muted-border-color);
     margin: 0;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  }
-  .main-container {
-    padding-top: var(--app-content-padding-top-mobile);
   }
 }
 
