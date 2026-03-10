@@ -1,89 +1,139 @@
+/* ==========================================================================
+   Breakpoint: desktop 992px, mobile max 991px (CSS vars cannot be used in @media)
+   ========================================================================== */
+
 :root {
+  /* --- Design tokens (app- prefix to avoid Pico collisions) --- */
+
+  /* Brand primary colors */
+  --app-primary: #95d600;
+  --app-primary-rgb: 149, 214, 0;
+  --app-primary-hover-light: #7ab800;
+  --app-primary-hover-dark: #a8e00a;
+  --app-primary-inverse: #fff;
+  --app-primary-underline-opacity: 0.5;
+  --app-primary-focus-opacity-light: 0.25;
+  --app-primary-focus-opacity-dark: 0.375;
+  --app-primary-selection-opacity-light: 0.25;
+  --app-primary-selection-opacity-dark: 0.2;
+
+  /* Layout */
+  --app-navbar-desktop-width: 64px;
+  --app-navbar-desktop-button: 40px;
+  --app-navbar-mobile-height: 46px;
+  --app-navbar-mobile-button: 28px;
+  --app-sidebar-width: 320px;
+  --app-main-max-width: 130ch;
+  --app-content-padding-top-mobile: 50px;
+
+  /* Spacing */
+  --app-spacing-xs: 0.15rem;
+  --app-spacing-sm: 0.25rem;
+  --app-spacing-md: 0.5rem;
+  --app-spacing: 1rem;
+  --app-spacing-lg: 1.5rem;
+  --app-spacing-xl: 2rem;
+  --app-spacing-page: 2rem;
+
+  /* Article content font scale */
+  --app-font-xs: 0.8rem;
+  --app-font-sm: 0.9rem;
+  --app-font-md: 1rem;
+  --app-font-lg: 1.15rem;
+  --app-font-xl: 1.3rem;
+
+  /* Scrollbar, radius, z-index, transition */
+  --app-scrollbar-size: 10px;
+  --app-scrollbar-thumb-radius: 5px;
+  --app-radius-sm: 4px;
+  --app-z-navbar: 1000;
+  --app-z-sidebar-overlay: 999;
+  --app-z-navbar-desktop: 100;
+  --app-z-code-copy: 10;
+  --app-transition: 0.2s ease;
+
+  /* Font family & Pico primary (synced from app-primary for compatibility) */
   --font-family: 'JetBrains Mono', 'Cascadia Code', Consolas, monospace;
-  --pico-primary: #95d600;
-  --pico-primary-rgb: 149, 214, 0;
+  --pico-primary: var(--app-primary);
+  --pico-primary-rgb: var(--app-primary-rgb);
 }
 
-/* Зелёный primary в светлой теме (Pico по умолчанию подставляет синий — переопределяем все primary) */
+/* --- Theme overrides: green primary in light theme --- */
 html[data-theme="light"],
 :root:not([data-theme="dark"]) {
-  --pico-primary: #95d600;
-  --pico-primary-rgb: 149, 214, 0;
-  --pico-primary-background: #95d600;
-  --pico-primary-border: #95d600;
-  --pico-primary-underline: rgba(149, 214, 0, 0.5);
-  --pico-primary-hover: #7ab800;
-  --pico-primary-hover-background: #7ab800;
-  --pico-primary-hover-border: #7ab800;
-  --pico-primary-hover-underline: #7ab800;
-  --pico-primary-focus: rgba(149, 214, 0, 0.25);
-  --pico-primary-inverse: #fff;
-  --pico-text-selection-color: rgba(149, 214, 0, 0.25);
+  --pico-primary: var(--app-primary);
+  --pico-primary-rgb: var(--app-primary-rgb);
+  --pico-primary-background: var(--app-primary);
+  --pico-primary-border: var(--app-primary);
+  --pico-primary-underline: rgba(var(--app-primary-rgb), var(--app-primary-underline-opacity));
+  --pico-primary-hover: var(--app-primary-hover-light);
+  --pico-primary-hover-background: var(--app-primary-hover-light);
+  --pico-primary-hover-border: var(--app-primary-hover-light);
+  --pico-primary-hover-underline: var(--app-primary-hover-light);
+  --pico-primary-focus: rgba(var(--app-primary-rgb), var(--app-primary-focus-opacity-light));
+  --pico-primary-inverse: var(--app-primary-inverse);
+  --pico-text-selection-color: rgba(var(--app-primary-rgb), var(--app-primary-selection-opacity-light));
 }
 
-/* Тот же зелёный primary в тёмной теме (Pico по умолчанию подставляет синий) */
+/* --- Theme overrides: green primary in dark theme --- */
 html[data-theme="dark"] {
-  --pico-primary: #95d600;
-  --pico-primary-rgb: 149, 214, 0;
-  --pico-primary-background: #95d600;
-  --pico-primary-border: #95d600;
-  --pico-primary-underline: rgba(149, 214, 0, 0.5);
-  --pico-primary-hover: #a8e00a;
-  --pico-primary-hover-background: #7ab800;
-  --pico-primary-hover-border: #7ab800;
-  --pico-primary-hover-underline: #a8e00a;
-  --pico-primary-focus: rgba(149, 214, 0, 0.375);
-  --pico-primary-inverse: #fff;
-  --pico-text-selection-color: rgba(149, 214, 0, 0.2);
+  --pico-primary: var(--app-primary);
+  --pico-primary-rgb: var(--app-primary-rgb);
+  --pico-primary-background: var(--app-primary);
+  --pico-primary-border: var(--app-primary);
+  --pico-primary-underline: rgba(var(--app-primary-rgb), var(--app-primary-underline-opacity));
+  --pico-primary-hover: var(--app-primary-hover-dark);
+  --pico-primary-hover-background: var(--app-primary-hover-light);
+  --pico-primary-hover-border: var(--app-primary-hover-light);
+  --pico-primary-hover-underline: var(--app-primary-hover-dark);
+  --pico-primary-focus: rgba(var(--app-primary-rgb), var(--app-primary-focus-opacity-dark));
+  --pico-primary-inverse: var(--app-primary-inverse);
+  --pico-text-selection-color: rgba(var(--app-primary-rgb), var(--app-primary-selection-opacity-dark));
+}
+
+/* ==========================================================================
+   Base: html, body, box-sizing, overflow
+   ========================================================================== */
+
+* {
+  box-sizing: border-box;
 }
 
 html {
   font-size: 90%;
-  /* 15.2px base — пропорционально меньше (было 16px) */
   overflow-x: hidden;
   background-color: var(--pico-background-color);
-  /* Scrollbar follows theme (thumb = muted border, track = background) */
   scrollbar-width: thin;
   scrollbar-color: var(--pico-muted-border-color) var(--pico-background-color);
-}
-
-/* WebKit scrollbar (Chrome, Safari, Edge) — same theme colors */
-html::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
-}
-html::-webkit-scrollbar-track {
-  background: var(--pico-background-color);
-}
-html::-webkit-scrollbar-thumb {
-  background: var(--pico-muted-border-color);
-  border-radius: 5px;
-}
-html::-webkit-scrollbar-thumb:hover {
-  background: var(--pico-muted-color);
 }
 
 body {
   font-family: var(--font-family);
   line-height: 1.6;
   background-color: var(--pico-background-color);
+  overflow-x: hidden;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-family: var(--font-family);
+/* --- Scrollbar (WebKit) --- */
+html::-webkit-scrollbar {
+  width: var(--app-scrollbar-size);
+  height: var(--app-scrollbar-size);
+}
+html::-webkit-scrollbar-track {
+  background: var(--pico-background-color);
+}
+html::-webkit-scrollbar-thumb {
+  background: var(--pico-muted-border-color);
+  border-radius: var(--app-scrollbar-thumb-radius);
+}
+html::-webkit-scrollbar-thumb:hover {
+  background: var(--pico-muted-color);
 }
 
-pre,
-code {
-  font-family: var(--font-family);
-}
+/* ==========================================================================
+   Layout: app-layout, main-container, main-grid, main
+   ========================================================================== */
 
-/* Vertical Layout */
 .app-layout {
   display: flex;
   min-height: 100vh;
@@ -91,70 +141,6 @@ code {
   overflow-x: hidden;
   width: 100%;
   background-color: var(--pico-background-color);
-}
-
-.vertical-navbar {
-  width: 64px;
-  background: transparent;
-  border-right: 1px solid var(--pico-muted-border-color);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 1rem 0;
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  z-index: 100;
-}
-
-.vertical-navbar ul {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1.5rem;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.vertical-navbar .bottom-nav {
-  margin-top: auto;
-  gap: 0.5rem;
-}
-
-.vertical-navbar a,
-.vertical-navbar button {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 40px;
-  height: 40px;
-  padding: 0;
-  margin: 0;
-}
-
-.vertical-navbar a,
-.vertical-navbar button {
-  border: none !important;
-  background: transparent !important;
-  box-shadow: none !important;
-  color: var(--pico-muted-color) !important;
-  opacity: 0.7;
-  cursor: pointer;
-  transition: opacity 0.2s, color 0.2s;
-  text-decoration: none;
-}
-
-.vertical-navbar a svg,
-.vertical-navbar button svg {
-  color: inherit !important;
-  stroke: currentColor !important;
-}
-
-.vertical-navbar a:hover,
-.vertical-navbar button:hover {
-  opacity: 1;
-  color: var(--pico-primary) !important;
 }
 
 .main-container {
@@ -173,14 +159,81 @@ code {
 }
 
 main {
-  max-width: 130ch;
+  max-width: var(--app-main-max-width);
   margin-inline: auto;
   width: 100%;
   min-width: 0;
   overflow-x: hidden;
 }
 
-/* Flat design: remove Pico card from article */
+/* ==========================================================================
+   Navbar (desktop)
+   ========================================================================== */
+
+.vertical-navbar {
+  width: var(--app-navbar-desktop-width);
+  background: transparent;
+  border-right: 1px solid var(--pico-muted-border-color);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--app-spacing) 0;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  z-index: var(--app-z-navbar-desktop);
+}
+
+.vertical-navbar ul {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--app-spacing-lg);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.vertical-navbar .bottom-nav {
+  margin-top: auto;
+  gap: var(--app-spacing-md);
+}
+
+.vertical-navbar a,
+.vertical-navbar button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: var(--app-navbar-desktop-button);
+  height: var(--app-navbar-desktop-button);
+  padding: 0;
+  margin: 0;
+  border: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  color: var(--pico-muted-color) !important;
+  opacity: 0.7;
+  cursor: pointer;
+  transition: opacity var(--app-transition), color var(--app-transition);
+  text-decoration: none;
+}
+
+.vertical-navbar a svg,
+.vertical-navbar button svg {
+  color: inherit !important;
+  stroke: currentColor !important;
+}
+
+.vertical-navbar a:hover,
+.vertical-navbar button:hover {
+  opacity: 1;
+  color: var(--pico-primary) !important;
+}
+
+/* ==========================================================================
+   Article: flat design, typography sizes, header
+   ========================================================================== */
+
 article {
   background: transparent !important;
   box-shadow: none !important;
@@ -191,82 +244,83 @@ article {
   max-width: 100%;
 }
 
-article>* {
+article > * {
   background: transparent !important;
   box-shadow: none !important;
   max-width: 100%;
 }
 
-/* Article Typography Sizes (controlled by JS toggle) */
 html[data-font="xs"] main article .content {
-  font-size: 0.8rem;
+  font-size: var(--app-font-xs);
 }
-
 html[data-font="sm"] main article .content {
-  font-size: 0.9rem;
+  font-size: var(--app-font-sm);
 }
-
 html[data-font="md"] main article .content {
-  font-size: 1rem;
+  font-size: var(--app-font-md);
 }
-
 html[data-font="lg"] main article .content {
-  font-size: 1.15rem;
+  font-size: var(--app-font-lg);
 }
-
 html[data-font="xl"] main article .content {
-  font-size: 1.3rem;
+  font-size: var(--app-font-xl);
 }
 
-/* Restore article header separator line */
 article header {
   border-bottom: 1px solid var(--pico-muted-border-color) !important;
-  padding-bottom: 1rem;
-  margin-bottom: 1.5rem;
+  padding-bottom: var(--app-spacing);
+  margin-bottom: var(--app-spacing-lg);
 }
 
-/* Simple Sidebar layout for desktop */
-@media (min-width: 992px) {
+/* Base typography */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-family);
+}
+pre, code {
+  font-family: var(--font-family);
+}
 
-  /* Full-height column divider: covers main-grid AND footer */
+/* ==========================================================================
+   Desktop media (min-width: 992px)
+   ========================================================================== */
+
+@media (min-width: 992px) {
   .main-container {
     background-image: linear-gradient(to right,
-        transparent calc(2rem + 320px),
-        var(--pico-muted-border-color) calc(2rem + 320px),
-        var(--pico-muted-border-color) calc(2rem + 320px + 1px),
-        transparent calc(2rem + 320px + 1px));
+      transparent calc(var(--app-spacing-page) + var(--app-sidebar-width)),
+      var(--pico-muted-border-color) calc(var(--app-spacing-page) + var(--app-sidebar-width)),
+      var(--pico-muted-border-color) calc(var(--app-spacing-page) + var(--app-sidebar-width) + 1px),
+      transparent calc(var(--app-spacing-page) + var(--app-sidebar-width) + 1px));
   }
-
   .main-grid {
     display: grid;
-    grid-template-columns: 320px minmax(0, 1fr);
+    grid-template-columns: var(--app-sidebar-width) minmax(0, 1fr);
     gap: 0;
-    padding: 2rem;
+    padding: var(--app-spacing-page);
   }
-
   #layout-sidebar {
-    padding-right: 2rem;
+    padding-right: var(--app-spacing-page);
   }
-
   main {
-    padding-left: 2rem;
+    padding-left: var(--app-spacing-page);
   }
 }
 
-/* Hamburger: hidden on desktop */
 .mobile-only {
   display: none;
 }
+
+/* ==========================================================================
+   Mobile (max-width: 991px)
+   ========================================================================== */
 
 @media (max-width: 991px) {
   .mobile-only {
     display: flex;
   }
-
   .app-layout {
     flex-direction: column;
   }
-
   .vertical-navbar {
     width: 100%;
     height: auto;
@@ -276,134 +330,100 @@ article header {
     top: 0;
     left: 0;
     right: 0;
-    padding: 0.15rem 0.75rem;
-    height: 46px;
-    min-height: 46px;
-    max-height: 46px;
+    padding: var(--app-spacing-xs) 0.75rem;
+    height: var(--app-navbar-mobile-height);
+    min-height: var(--app-navbar-mobile-height);
+    max-height: var(--app-navbar-mobile-height);
     background: var(--pico-background-color);
     border-bottom: 1px solid var(--pico-muted-border-color);
-    z-index: 1000;
+    z-index: var(--app-z-navbar);
     overflow: hidden;
     box-sizing: border-box;
+    max-width: 100%;
   }
-
   .vertical-navbar a,
   .vertical-navbar button {
-    width: 28px !important;
-    height: 28px !important;
-    min-height: 28px !important;
+    width: var(--app-navbar-mobile-button) !important;
+    height: var(--app-navbar-mobile-button) !important;
+    min-height: var(--app-navbar-mobile-button) !important;
     padding: 0 !important;
   }
-
-
-  /* Vertical navbar on mobile: row layout */
   .vertical-navbar ul {
     flex-direction: row;
     width: auto;
     min-width: 0;
     justify-content: flex-start;
-    gap: 0.25rem;
+    gap: var(--app-spacing-sm);
     margin-top: 0 !important;
     overflow: hidden;
     flex-shrink: 0;
   }
-
-  /* Mobile: left to right = minus, then plus, then theme */
-  .vertical-navbar .bottom-nav li:nth-child(1) {
-    order: 0;
-  }
-  .vertical-navbar .bottom-nav li:nth-child(2) {
-    order: -1;
-  }
-  .vertical-navbar .bottom-nav li:nth-child(3) {
-    order: 1;
-  }
-
-  /* Theme ul: push to the right via flex */
+  .vertical-navbar .bottom-nav li:nth-child(1) { order: 0; }
+  .vertical-navbar .bottom-nav li:nth-child(2) { order: -1; }
+  .vertical-navbar .bottom-nav li:nth-child(3) { order: 1; }
   .vertical-navbar ul:last-child {
     margin-left: auto;
   }
-
-  /* Remove absolute positioning of theme toggle */
   #theme-toggle {
     position: static;
   }
-
   .main-grid {
-    padding: 1rem;
+    padding: var(--app-spacing);
+    display: block;
   }
-
-  /* Sidebar hidden state */
-  #layout-sidebar.sidebar-hidden {
-    display: none;
-  }
-
-  /* Default state on mobile: hidden IF NOT EXPLICITLY SHOWN */
+  #layout-sidebar.sidebar-hidden,
   #layout-sidebar:not(.sidebar-shown) {
     display: none;
   }
-
-  /* Sidebar as a dropdown overlay on mobile */
   #layout-sidebar.sidebar-shown {
     display: block;
     position: fixed;
-    top: 46px;
+    top: var(--app-navbar-mobile-height);
     left: 0;
     width: 100%;
-    height: calc(100vh - 46px);
+    height: calc(100vh - var(--app-navbar-mobile-height));
     background: var(--pico-background-color);
-    z-index: 999;
-    padding: 1rem;
+    z-index: var(--app-z-sidebar-overlay);
+    padding: var(--app-spacing);
     overflow-y: auto;
     border-bottom: 1px solid var(--pico-muted-border-color);
     margin: 0;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   }
-
-  /* Ensure main content doesn't shift when sidebar opens on mobile */
-  .main-grid {
-    display: block;
-  }
-
-  /* Prevent navbar overflow and scroll (use 100% not 100vw to avoid scrollbar width) */
-  .vertical-navbar {
-    max-width: 100%;
-    overflow: hidden;
-  }
-
-  /* Offset content below fixed navbar */
   .main-container {
-    padding-top: 50px;
+    padding-top: var(--app-content-padding-top-mobile);
   }
 }
 
-/* Theme Toggle Icons */
+/* ==========================================================================
+   Theme toggle icons
+   ========================================================================== */
+
 #sun-icon,
 #moon-icon {
   display: none !important;
 }
-
 html[data-theme="dark"] #sun-icon {
   display: block !important;
 }
-
 html[data-theme="light"] #moon-icon {
   display: block !important;
 }
+
+/* ==========================================================================
+   Sidebar nav, meta, highlight/code-block
+   ========================================================================== */
 
 .sidebar-nav ul {
   list-style: none;
   padding: 0;
 }
-
 .sidebar-nav li {
   margin-bottom: 0;
 }
-
 .sidebar-nav a {
   text-decoration: none;
 }
-
 .sidebar-nav .active {
   color: var(--pico-primary) !important;
   font-weight: bold;
@@ -411,75 +431,74 @@ html[data-theme="light"] #moon-icon {
 
 .meta {
   color: var(--pico-muted-color);
-  font-size: 0.9rem;
-  margin-bottom: 0.5rem;
+  font-size: var(--app-font-sm);
+  margin-bottom: var(--app-spacing-md);
 }
 
 .highlight,
 .highlight-wrapper,
 .code-block-container {
   position: relative;
-  margin-bottom: 1.5rem;
+  margin-bottom: var(--app-spacing-lg);
 }
+
+/* ==========================================================================
+   Code copy button
+   ========================================================================== */
 
 .code-copy-btn {
   position: absolute;
-  top: 0.5rem;
-  right: 0.5rem;
-  z-index: 10;
-
-  /* Reset Pico button defaults */
+  top: var(--app-spacing-md);
+  right: var(--app-spacing-md);
+  z-index: var(--app-z-code-copy);
   font-size: 0.75rem !important;
-  padding: 0.25rem 0.6rem !important;
+  padding: var(--app-spacing-sm) 0.6rem !important;
   width: auto !important;
   margin: 0 !important;
   line-height: 1.4 !important;
   min-height: 0 !important;
-
-  /* Explicit translucent styling because code blocks are dark */
   background-color: rgba(255, 255, 255, 0.1) !important;
   color: #e5e7eb !important;
   border: 1px solid rgba(255, 255, 255, 0.2) !important;
-  border-radius: 4px !important;
+  border-radius: var(--app-radius-sm) !important;
   box-shadow: none !important;
   text-transform: none !important;
   font-weight: 500 !important;
-
-  /* Make button visually distinct */
   opacity: 0.7;
-  transition: all 0.2s ease-in-out;
+  transition: all var(--app-transition) ease-in-out;
   cursor: pointer;
 }
-
 .code-block-container:hover .code-copy-btn,
 .highlight:hover .code-copy-btn,
 .highlight-wrapper:hover .code-copy-btn {
   opacity: 1;
 }
-
 .code-copy-btn:hover {
   background-color: rgba(255, 255, 255, 0.2) !important;
   border-color: rgba(255, 255, 255, 0.5) !important;
   color: #ffffff !important;
 }
-
 .code-copy-btn.copied {
   opacity: 1;
   background-color: var(--pico-primary) !important;
   border-color: var(--pico-primary) !important;
-  color: var(--pico-primary-inverse, #fff) !important;
+  color: var(--pico-primary-inverse, var(--app-primary-inverse)) !important;
 }
+
+/* ==========================================================================
+   Footer, content links, post-title-link, all-articles-link
+   ========================================================================== */
 
 .site-footer {
   border-top: 1px solid var(--pico-muted-border-color);
-  padding: 1.5rem 1rem;
+  padding: var(--app-spacing-lg) var(--app-spacing);
   margin-top: 3rem;
   text-align: center;
   display: flex;
   align-items: center;
   justify-content: center;
   background: var(--pico-background-color);
-  position: relative; 
+  position: relative;
 }
 
 .highlight pre,
@@ -490,29 +509,26 @@ html[data-theme="light"] #moon-icon {
   white-space: pre-wrap !important;
   word-wrap: break-word !important;
   word-break: break-all !important;
-  /* Force breaks inside long strings */
   max-width: 100%;
 }
 
-/* Beautiful Internal Links (Chips) */
 .content a[href^="/"]:not(.post-title-link) {
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
-  padding: 0.1rem 0.5rem;
-  border-radius: 4px;
+  padding: 0.1rem var(--app-spacing-md);
+  border-radius: var(--app-radius-sm);
   background-color: var(--pico-code-background-color) !important;
   border: 1px solid var(--pico-muted-border-color);
   color: var(--pico-primary) !important;
   text-decoration: none !important;
   font-size: 0.9em;
   font-weight: 500;
-  transition: all 0.2s;
+  transition: all var(--app-transition);
   vertical-align: middle;
   line-height: inherit;
   margin: 0 0.1rem;
 }
-
 .content a[href^="/"]:not(.post-title-link):hover {
   background-color: var(--pico-primary-background) !important;
   border-color: var(--pico-primary);
@@ -522,17 +538,15 @@ html[data-theme="light"] #moon-icon {
 .content a[href^="http"]:not(.nav-link) {
   display: inline-flex;
   align-items: center;
-  gap: 0.25rem;
+  gap: var(--app-spacing-sm);
   color: var(--pico-primary) !important;
   text-decoration-color: var(--pico-primary) !important;
   opacity: 0.8;
-  transition: opacity 0.2s;
+  transition: opacity var(--app-transition);
 }
-
 .content a[href^="http"]:not(.nav-link):hover {
   opacity: 1;
 }
-
 .content a[href^="http"]:not(.nav-link)::after {
   content: "";
   display: inline-block;
@@ -544,7 +558,6 @@ html[data-theme="light"] #moon-icon {
   mask-size: contain;
   opacity: 0.7;
 }
-
 .content a code {
   color: inherit !important;
   background: transparent !important;
@@ -553,19 +566,10 @@ html[data-theme="light"] #moon-icon {
   font-size: inherit !important;
 }
 
-/* Prevent horizontal overflow in article content on mobile */
 main article .content {
   max-width: 100%;
   overflow-x: hidden;
   overflow-wrap: break-word;
-}
-
-* {
-  box-sizing: border-box;
-}
-
-body {
-  overflow-x: hidden;
 }
 
 .mermaid {
@@ -574,7 +578,6 @@ body {
   width: 100%;
   overflow-x: auto;
 }
-
 .mermaid svg {
   max-width: 100% !important;
   height: auto !important;
@@ -583,19 +586,16 @@ body {
 .post-title-link {
   text-decoration: none !important;
   color: var(--pico-contrast) !important;
-  transition: all 0.2s ease;
+  transition: all var(--app-transition) ease;
 }
-
 .post-title-link:hover {
   color: var(--pico-primary) !important;
   text-shadow: 0 0 8px rgba(var(--pico-primary-rgb), 0.4);
 }
-
-/* «Смотреть все статьи» — контрастный зелёный (primary) */
 a.all-articles-link.post-title-link {
   color: var(--pico-primary) !important;
 }
 a.all-articles-link.post-title-link:hover {
-  color: var(--pico-primary-hover, #7ab800) !important;
+  color: var(--pico-primary-hover, var(--app-primary-hover-light)) !important;
   text-shadow: 0 0 8px rgba(var(--pico-primary-rgb), 0.4);
 }
