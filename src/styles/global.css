@@ -252,20 +252,22 @@ article > * {
   max-width: 100%;
 }
 
-html[data-font="xs"] main article .content {
-  font-size: var(--app-font-xs);
+/* Размер шрифта статьи (заголовок, summary, контент) — переключатель в навбаре */
+html[data-font="xs"] { --app-article-font: var(--app-font-xs); }
+html[data-font="sm"] { --app-article-font: var(--app-font-sm); }
+html[data-font="md"] { --app-article-font: var(--app-font-md); }
+html[data-font="lg"] { --app-article-font: var(--app-font-lg); }
+html[data-font="xl"] { --app-article-font: var(--app-font-xl); }
+
+main article header,
+main article .content {
+  font-size: var(--app-article-font, var(--app-font-md));
 }
-html[data-font="sm"] main article .content {
-  font-size: var(--app-font-sm);
+main article header h1 {
+  font-size: 2em;
 }
-html[data-font="md"] main article .content {
-  font-size: var(--app-font-md);
-}
-html[data-font="lg"] main article .content {
-  font-size: var(--app-font-lg);
-}
-html[data-font="xl"] main article .content {
-  font-size: var(--app-font-xl);
+main article header .summary {
+  font-size: 1em;
 }
 
 article header {
