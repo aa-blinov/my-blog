@@ -174,10 +174,141 @@ const { breadcrumbPath } = Astro.props;
 </script>
 
 <style>
-  /* Local styling only for vertical-navbar list resets */
+  :global(html.sidebar-open),
+  :global(body.sidebar-open) {
+    overflow: hidden;
+    overscroll-behavior: none;
+  }
+
+  .vertical-navbar {
+    width: var(--app-navbar-desktop-width);
+    background: transparent;
+    border-right: 1px solid var(--pico-muted-border-color);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: var(--app-spacing) 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    height: 100vh;
+    z-index: var(--app-z-navbar-desktop);
+  }
+
   .vertical-navbar ul {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--app-spacing-lg);
     list-style: none !important;
     margin: 0 !important;
     padding: 0 !important;
+  }
+
+  .vertical-navbar .bottom-nav {
+    margin-top: auto;
+    gap: var(--app-spacing-md);
+  }
+
+  .vertical-navbar a,
+  .vertical-navbar button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: var(--app-navbar-desktop-button);
+    height: var(--app-navbar-desktop-button);
+    padding: 0;
+    margin: 0;
+    border: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    color: var(--pico-muted-color) !important;
+    opacity: 0.7;
+    cursor: pointer;
+    transition: opacity var(--app-transition), color var(--app-transition);
+    text-decoration: none;
+  }
+
+  .vertical-navbar a svg,
+  .vertical-navbar button svg {
+    color: inherit !important;
+    stroke: currentColor !important;
+  }
+
+  .vertical-navbar a:hover,
+  .vertical-navbar button:hover {
+    opacity: 1;
+    color: var(--pico-primary) !important;
+  }
+
+  .mobile-only {
+    display: none;
+  }
+
+  #sun-icon,
+  #moon-icon {
+    display: none !important;
+  }
+
+  :global(html[data-theme="dark"]) #sun-icon {
+    display: block !important;
+  }
+
+  :global(html[data-theme="light"]) #moon-icon {
+    display: block !important;
+  }
+
+  @media (max-width: 991px) {
+    .mobile-only {
+      display: flex;
+    }
+
+    .vertical-navbar {
+      width: 100%;
+      flex-direction: row;
+      align-items: center;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      padding: var(--app-spacing-xs) 0.75rem;
+      height: var(--app-navbar-mobile-height);
+      min-height: var(--app-navbar-mobile-height);
+      max-height: var(--app-navbar-mobile-height);
+      background: var(--pico-background-color);
+      border-right: none;
+      border-bottom: 1px solid var(--pico-muted-border-color);
+      z-index: var(--app-z-navbar);
+      overflow: hidden;
+      touch-action: manipulation;
+    }
+
+    .vertical-navbar a,
+    .vertical-navbar button {
+      width: var(--app-navbar-mobile-button) !important;
+      height: var(--app-navbar-mobile-button) !important;
+      min-height: var(--app-navbar-mobile-button) !important;
+      padding: 0 !important;
+    }
+
+    .vertical-navbar ul {
+      flex-direction: row;
+      width: auto;
+      min-width: 0;
+      justify-content: flex-start;
+      gap: var(--app-spacing-sm);
+      margin-top: 0 !important;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .vertical-navbar .bottom-nav li:nth-child(1) { order: 0; }
+    .vertical-navbar .bottom-nav li:nth-child(2) { order: -1; }
+    .vertical-navbar .bottom-nav li:nth-child(3) { order: 1; }
+
+    .vertical-navbar ul:last-child {
+      margin-left: auto;
+    }
   }
 </style>
