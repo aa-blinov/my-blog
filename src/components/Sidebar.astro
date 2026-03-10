@@ -110,7 +110,7 @@ function getFolderHref(fullPath: string) {
 
   <ul id="sidebar-tree" class="sortable-list">
     {mainEntry && (
-      <li data-filename="main.md" data-date={mainEntry.date.toISOString()}>
+      <li class="sidebar-pinned" data-filename="main.md" data-date={mainEntry.date.toISOString()}>
         <span class="file-link-wrapper">
           <a href={BASE} class:list={['file-link', { active: isActive(BASE) }]}>
             <span class="ascii-icon">~</span> main.md
@@ -120,7 +120,7 @@ function getFolderHref(fullPath: string) {
       </li>
     )}
     {aboutEntry && (
-      <li data-filename="about-me.md" data-date={aboutEntry.date.toISOString()}>
+      <li class="sidebar-pinned" data-filename="about-me.md" data-date={aboutEntry.date.toISOString()}>
         <span class="file-link-wrapper">
           <a href={`${BASE}about-me/`} class:list={['file-link', { active: isActive(`${BASE}about-me/`) }]}>
             <span class="ascii-icon">~</span> about-me.md
@@ -138,18 +138,18 @@ function getFolderHref(fullPath: string) {
       // We use timestamps in seconds to keep them within safe integer range for CSS.
       // desc: higher date = smaller order value
       // asc: lower date = smaller order value
+      const isSectionRootFile = node.kind === 'file' && node.name.startsWith('about-');
+      const orderPinTop = -9999999999; // «обзор раздела» (about-*.md) всегда сверху в своей папке
       const dateVal = node.entry?.date.getTime() || 0;
       const minDateVal = node.minDate?.getTime() || 0;
       const maxDateVal = node.maxDate?.getTime() || 0;
-      
-      // Base for "none" (alphabetical) is provided by the loop index or just let it be 0
       
       return (
         <li 
           class:list={[{ 'folder-item': node.kind === 'folder', 'sortable-item': true }]} 
           style={{
-            '--order-desc': node.kind === 'file' ? -Math.floor(dateVal / 100000) : -Math.floor(maxDateVal / 100000),
-            '--order-asc': node.kind === 'file' ? Math.floor(dateVal / 100000) : Math.floor(minDateVal / 100000)
+            '--order-desc': isSectionRootFile ? orderPinTop : (node.kind === 'file' ? -Math.floor(dateVal / 100000) : -Math.floor(maxDateVal / 100000)),
+            '--order-asc': isSectionRootFile ? orderPinTop : (node.kind === 'file' ? Math.floor(dateVal / 100000) : Math.floor(minDateVal / 100000))
           }}
           data-date-min={node.minDate?.toISOString()} 
           data-date-max={node.maxDate?.toISOString()}
@@ -451,12 +451,21 @@ function getFolderHref(fullPath: string) {
     display: grid;
   }
   
-  /* CSS-based sorting logic */
-  .sortable-list[data-sort="desc"] > .sortable-item {
+  /* Сортировка по дате: только внутри разделов; сами разделы (dev/, science/, ...) не двигаем */
+  #sidebar-tree[data-sort="desc"] > .sidebar-pinned,
+  #sidebar-tree[data-sort="asc"] > .sidebar-pinned {
+    order: -9999999999;
+  }
+  #sidebar-tree[data-sort="desc"] .sortable-list > .sortable-item {
     order: var(--order-desc, 0);
   }
-  .sortable-list[data-sort="asc"] > .sortable-item {
+  #sidebar-tree[data-sort="asc"] .sortable-list > .sortable-item {
     order: var(--order-asc, 0);
+  }
+  /* Разделы верхнего уровня (прямые дети blog/) остаются в алфавитном порядке */
+  #sidebar-tree[data-sort="desc"] > .sortable-item > details > .sortable-list > .sortable-item,
+  #sidebar-tree[data-sort="asc"] > .sortable-item > details > .sortable-list > .sortable-item {
+    order: 0;
   }
 
   .sidebar-nav li {
