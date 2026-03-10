@@ -1,6 +1,6 @@
 export const SITE = {
   title: 'Личный сайт',
-  description: 'Заметки, статьи и всякие другие вещи',
+  description: 'Заметки, статьи и прочие интересные вещи',
   author: 'Александр Блинов',
   github: 'https://github.com/aa-blinov',
   telegram: 'https://t.me/ahsasmi',
