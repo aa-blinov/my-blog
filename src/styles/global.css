@@ -4,6 +4,23 @@
   --pico-primary-rgb: 149, 214, 0;
 }
 
+/* Зелёный primary в светлой теме (Pico по умолчанию подставляет синий — переопределяем все primary) */
+html[data-theme="light"],
+:root:not([data-theme="dark"]) {
+  --pico-primary: #95d600;
+  --pico-primary-rgb: 149, 214, 0;
+  --pico-primary-background: #95d600;
+  --pico-primary-border: #95d600;
+  --pico-primary-underline: rgba(149, 214, 0, 0.5);
+  --pico-primary-hover: #7ab800;
+  --pico-primary-hover-background: #7ab800;
+  --pico-primary-hover-border: #7ab800;
+  --pico-primary-hover-underline: #7ab800;
+  --pico-primary-focus: rgba(149, 214, 0, 0.25);
+  --pico-primary-inverse: #fff;
+  --pico-text-selection-color: rgba(149, 214, 0, 0.25);
+}
+
 html {
   font-size: 90%;
   /* 15.2px base — пропорционально меньше (было 16px) */
@@ -555,5 +572,14 @@ body {
 
 .post-title-link:hover {
   color: var(--pico-primary) !important;
+  text-shadow: 0 0 8px rgba(var(--pico-primary-rgb), 0.4);
+}
+
+/* «Смотреть все статьи» — контрастный зелёный (primary) */
+a.all-articles-link.post-title-link {
+  color: var(--pico-primary) !important;
+}
+a.all-articles-link.post-title-link:hover {
+  color: var(--pico-primary-hover, #7ab800) !important;
   text-shadow: 0 0 8px rgba(var(--pico-primary-rgb), 0.4);
 }
