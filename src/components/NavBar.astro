@@ -77,7 +77,6 @@ const { breadcrumbPath } = Astro.props;
   const root = document.documentElement;
   const body = document.body;
   const mobileBreakpoint = 992;
-  let lockedScrollY = 0;
 
   function isMobileViewport() {
     return window.innerWidth < mobileBreakpoint;
@@ -86,36 +85,17 @@ const { breadcrumbPath } = Astro.props;
   function lockPageScroll() {
     if (!body || body.dataset.sidebarScrollLocked === 'true') return;
 
-    lockedScrollY = window.scrollY;
     body.dataset.sidebarScrollLocked = 'true';
     root.classList.add('sidebar-open');
     body.classList.add('sidebar-open');
-    body.style.position = 'fixed';
-    body.style.top = `-${lockedScrollY}px`;
-    body.style.left = '0';
-    body.style.right = '0';
-    body.style.width = '100%';
   }
 
   function unlockPageScroll() {
     if (!body) return;
 
-    const wasLocked = body.dataset.sidebarScrollLocked === 'true';
-    const offsetTop = body.style.top;
-
     delete body.dataset.sidebarScrollLocked;
     root.classList.remove('sidebar-open');
     body.classList.remove('sidebar-open');
-    body.style.position = '';
-    body.style.top = '';
-    body.style.left = '';
-    body.style.right = '';
-    body.style.width = '';
-
-    if (wasLocked) {
-      const restoreY = offsetTop ? Math.abs(parseInt(offsetTop, 10)) || lockedScrollY : lockedScrollY;
-      window.scrollTo(0, restoreY);
-    }
   }
  
   function syncIcons() {
@@ -281,7 +261,6 @@ const { breadcrumbPath } = Astro.props;
       border-bottom: 1px solid var(--pico-muted-border-color);
       z-index: var(--app-z-navbar);
       overflow: hidden;
-      touch-action: manipulation;
     }
 
     .vertical-navbar a,
