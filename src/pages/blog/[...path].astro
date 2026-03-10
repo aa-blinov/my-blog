@@ -84,13 +84,13 @@ const title = kind === 'file' ? entry.data.title : (path.split('/').pop() || pat
 {kind === 'file' ? (
   <Layout title={entry.data.title} description={entry.data.summary}>
     <article>
-      <header>
+      <div class="entry-header">
         <p class="meta">{formatDate(entry.data.date)} · {entry.id}</p>
         <hgroup>
           <h1>{entry.data.title}</h1>
           {entry.data.summary && <p class="summary">{entry.data.summary}</p>}
         </hgroup>
-      </header>
+      </div>
       <div class="content">
         <Content />
       </div>
@@ -99,12 +99,12 @@ const title = kind === 'file' ? entry.data.title : (path.split('/').pop() || pat
 ) : (
   <Layout title={title}>
     <article>
-      <header>
+      <div class="entry-header">
         <hgroup>
           <h1>{title}</h1>
           <p>Раздел: {path}</p>
         </hgroup>
-      </header>
+      </div>
       
       {directEntries.length > 0 && (
         <section style="margin-top: 2rem">

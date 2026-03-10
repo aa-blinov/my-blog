@@ -15,7 +15,7 @@ const hasEntry = !!entry;
 
 <Layout title={hasEntry ? entry.data.title : fallbackTitle} description={hasEntry ? entry.data.summary : undefined}>
   <article>
-    <header>
+    <div class="entry-header">
       {hasEntry ? (
         <>
           <p class="meta">{formatDate(entry.data.date)} · {entry.fileLabel}</p>
@@ -27,7 +27,7 @@ const hasEntry = !!entry;
       ) : (
         <h1>{fallbackH1}</h1>
       )}
-    </header>
+    </div>
     <div class="content">
       <slot />
     </div>

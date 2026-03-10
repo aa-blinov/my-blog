@@ -193,18 +193,18 @@ html[data-font="md"] { --app-article-font: var(--app-font-md); }
 html[data-font="lg"] { --app-article-font: var(--app-font-lg); }
 html[data-font="xl"] { --app-article-font: var(--app-font-xl); }
 
-main article header,
+main article .entry-header,
 main article .content {
   font-size: var(--app-article-font, var(--app-font-md));
 }
-main article header h1 {
+main article .entry-header h1 {
   font-size: 2em;
 }
-main article header .summary {
+main article .entry-header .summary {
   font-size: 1em;
 }
 
-article header {
+article .entry-header {
   border-bottom: 1px solid var(--pico-muted-border-color) !important;
   padding-bottom: var(--app-spacing);
   margin-bottom: var(--app-spacing-lg);
