@@ -3,7 +3,6 @@
   const btn = document.getElementById("theme-toggle");
   const chromaLight = document.getElementById("chroma-light");
   const chromaDark = document.getElementById("chroma-dark");
-  const themeColorMeta = document.getElementById("theme-color-meta");
 
   const storedTheme = localStorage.getItem("theme");
   const systemDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
@@ -11,9 +10,6 @@
   
   const applyThemeUi = (theme) => {
     root.dataset.theme = theme;
-    if (themeColorMeta) {
-      themeColorMeta.setAttribute("content", theme === "dark" ? "#13161f" : "#ffffff");
-    }
     if (chromaLight && chromaDark) {
       const isDark = theme === "dark";
       chromaDark.disabled = !isDark;

@@ -42,7 +42,6 @@ const breadcrumbPath = getBreadcrumb(Astro.url.pathname);
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <meta name="color-scheme" content="light dark" />
-    <meta id="theme-color-meta" name="theme-color" content="#13161f" />
     <link rel="icon" type="image/svg+xml" href={`${BASE}favicon.svg`} />
     <title>{fullTitle}</title>
     <meta name="description" content={desc} />
@@ -57,11 +56,6 @@ const breadcrumbPath = getBreadcrumb(Astro.url.pathname);
       (function() {
         const theme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.dataset.theme = theme;
-
-        const themeColorMeta = document.getElementById('theme-color-meta');
-        if (themeColorMeta) {
-          themeColorMeta.setAttribute('content', theme === 'dark' ? '#13161f' : '#ffffff');
-        }
         
         const font = localStorage.getItem('font-size') || 'md';
         document.documentElement.dataset.font = font;
