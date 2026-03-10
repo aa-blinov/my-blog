@@ -178,8 +178,10 @@ main {
   flex-direction: column;
   align-items: center;
   padding: var(--app-spacing) 0;
-  position: sticky;
+  position: fixed;
   top: 0;
+  left: 0;
+  bottom: 0;
   height: 100vh;
   z-index: var(--app-z-navbar-desktop);
 }
@@ -285,6 +287,9 @@ pre, code {
    ========================================================================== */
 
 @media (min-width: 992px) {
+  .app-layout {
+    padding-left: var(--app-navbar-desktop-width);
+  }
   .main-container {
     background-image: linear-gradient(to right,
       transparent calc(var(--app-spacing-page) + var(--app-sidebar-width)),
@@ -340,6 +345,7 @@ pre, code {
     overflow: hidden;
     box-sizing: border-box;
     max-width: 100%;
+    touch-action: manipulation;
   }
   .vertical-navbar a,
   .vertical-navbar button {
