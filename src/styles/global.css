@@ -21,6 +21,22 @@ html[data-theme="light"],
   --pico-text-selection-color: rgba(149, 214, 0, 0.25);
 }
 
+/* Тот же зелёный primary в тёмной теме (Pico по умолчанию подставляет синий) */
+html[data-theme="dark"] {
+  --pico-primary: #95d600;
+  --pico-primary-rgb: 149, 214, 0;
+  --pico-primary-background: #95d600;
+  --pico-primary-border: #95d600;
+  --pico-primary-underline: rgba(149, 214, 0, 0.5);
+  --pico-primary-hover: #a8e00a;
+  --pico-primary-hover-background: #7ab800;
+  --pico-primary-hover-border: #7ab800;
+  --pico-primary-hover-underline: #a8e00a;
+  --pico-primary-focus: rgba(149, 214, 0, 0.375);
+  --pico-primary-inverse: #fff;
+  --pico-text-selection-color: rgba(149, 214, 0, 0.2);
+}
+
 html {
   font-size: 90%;
   /* 15.2px base — пропорционально меньше (было 16px) */
