@@ -10,7 +10,7 @@ const homeEntry = pages.find((e) => e.slug === 'main');
 
 const posts = sortByDateDesc(
   (await getCollection('blog')).filter((p) => !p.data.draft)
-).slice(0, 3); // Show only top 3 on home page for compactness
+).slice(0, 5);
 
 let Content: import('astro').ContentComponent | null = null;
 let entryData: { data: { title: string; date: Date; summary?: string }; fileLabel: string } | null = null;

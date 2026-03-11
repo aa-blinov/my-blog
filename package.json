@@ -1,7 +1,10 @@
 {
   "name": "my-blog",
+  "private": true,
   "type": "module",
   "version": "0.0.1",
+  "description": "Personal website and blog for Alexander Blinov, built with Astro.",
+  "license": "UNLICENSED",
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
