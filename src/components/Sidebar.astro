@@ -113,7 +113,8 @@ function getFolderHref(fullPath: string) {
       <li class="sidebar-pinned" data-filename="main.md" data-date={mainEntry.date.toISOString()}>
         <span class="file-link-wrapper">
           <a href={BASE} class:list={['file-link', { active: isActive(BASE) }]}>
-            <span class="ascii-icon">~</span> main.md
+            <span class="ascii-icon">~</span>
+            <span class="file-name">main.md</span>
           </a>
         </span>
         <span class="file-date">{formatDate(mainEntry.date)}</span>
@@ -123,7 +124,8 @@ function getFolderHref(fullPath: string) {
       <li class="sidebar-pinned" data-filename="about-me.md" data-date={aboutEntry.date.toISOString()}>
         <span class="file-link-wrapper">
           <a href={`${BASE}about-me/`} class:list={['file-link', { active: isActive(`${BASE}about-me/`) }]}>
-            <span class="ascii-icon">~</span> about-me.md
+            <span class="ascii-icon">~</span>
+            <span class="file-name">about-me.md</span>
           </a>
         </span>
         <span class="file-date">{formatDate(aboutEntry.date)}</span>
@@ -177,7 +179,8 @@ function getFolderHref(fullPath: string) {
             <>
               <span class="file-link-wrapper">
                 <a href={`${BASE}blog/${node.entry?.slug}/`} class:list={['file-link', { active: isActive(`${BASE}blog/${node.entry?.slug}/`) }]}>
-                  <span class="ascii-icon">~</span> {node.name}
+                  <span class="ascii-icon">~</span>
+                  <span class="file-name">{node.name}</span>
                 </a>
               </span>
               <span class="file-date">{formatDate(node.entry!.date)}</span>
@@ -505,13 +508,11 @@ function getFolderHref(fullPath: string) {
     transition: all 0.15s ease;
     display: flex;
     align-items: center;
+    line-height: 1.2;
+    min-width: 0;
     padding: 2px 4px;
     margin: 0 -4px;
     border-radius: 3px;
-  }
-
-  .sidebar-nav first-child a.file-link {
-    margin-left: 0;
   }
 
   .sidebar-nav a.file-link:hover {
@@ -535,7 +536,6 @@ function getFolderHref(fullPath: string) {
     padding: 2px 4px;
     margin: 0 -4px;
     border-radius: 3px;
-    width: auto;
   }
 
   .sidebar-nav a.folder-link:hover {
@@ -550,7 +550,6 @@ function getFolderHref(fullPath: string) {
   }
 
   .file-link-wrapper {
-    position: relative;
     flex: 1;
     min-width: 0;
   }
@@ -558,10 +557,14 @@ function getFolderHref(fullPath: string) {
   .sidebar-nav li:has(> .file-link-wrapper) {
     display: flex;
     align-items: baseline;
+    gap: 0.75rem;
+    min-width: 0;
   }
 
-  .sidebar-nav .file-link {
+  .file-name {
     display: block;
+    min-width: 0;
+    line-height: 1.2;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -571,9 +574,9 @@ function getFolderHref(fullPath: string) {
     font-size: 0.7rem;
     opacity: 0.45;
     white-space: nowrap;
-    position: absolute;
-    right: 0;
     line-height: 1.7;
+    flex: 0 0 auto;
+    margin-left: auto;
   }
 
   details ul {
