@@ -1,0 +1,361 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-24T17:20:00Z",
+  "title": "Design System: Личный сайт Александра Блинова",
+  "extensions": {
+    "colorMeta": {
+      "monster-green": {
+        "role": "primary",
+        "displayName": "Monster Green",
+        "canonical": "#95d600",
+        "tonalRamp": [
+          "#1f2d00",
+          "#3a5400",
+          "#557a00",
+          "#70a100",
+          "#8bc700",
+          "#95d600",
+          "#b3e33f",
+          "#d1ee85",
+          "#eef9cc"
+        ]
+      },
+      "monster-green-deep": {
+        "role": "primary",
+        "displayName": "Monster Green Deep",
+        "canonical": "#7ab800"
+      },
+      "monster-green-bright": {
+        "role": "primary",
+        "displayName": "Monster Green Bright",
+        "canonical": "#a8e00a"
+      },
+      "on-accent": {
+        "role": "on-primary",
+        "displayName": "On Accent",
+        "canonical": "#ffffff"
+      },
+      "paper": {
+        "role": "neutral",
+        "displayName": "Paper",
+        "canonical": "#ffffff"
+      },
+      "paper-code": {
+        "role": "neutral",
+        "displayName": "Paper Code",
+        "canonical": "#f3f4f7"
+      },
+      "paper-rule": {
+        "role": "neutral",
+        "displayName": "Paper Rule",
+        "canonical": "#e7eaf0"
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Ink",
+        "canonical": "#373c44",
+        "tonalRamp": [
+          "#181c25",
+          "#2d3138",
+          "#373c44",
+          "#4a505a",
+          "#646b79",
+          "#8d93a0",
+          "#b5bac4",
+          "#d9dce2",
+          "#f3f4f7"
+        ]
+      },
+      "ink-heading": {
+        "role": "neutral",
+        "displayName": "Ink Heading",
+        "canonical": "#2d3138"
+      },
+      "ink-contrast": {
+        "role": "neutral",
+        "displayName": "Ink Contrast",
+        "canonical": "#181c25"
+      },
+      "ink-muted": {
+        "role": "neutral",
+        "displayName": "Ink Muted",
+        "canonical": "#646b79"
+      },
+      "night": {
+        "role": "neutral",
+        "displayName": "Night",
+        "canonical": "#13171f",
+        "tonalRamp": [
+          "#0b0e14",
+          "#13171f",
+          "#1a1e28",
+          "#202632",
+          "#3a4150",
+          "#5b6373",
+          "#7b8495",
+          "#c2c7d0",
+          "#f0f1f3"
+        ]
+      },
+      "night-code": {
+        "role": "neutral",
+        "displayName": "Night Code",
+        "canonical": "#1a1e28"
+      },
+      "night-rule": {
+        "role": "neutral",
+        "displayName": "Night Rule",
+        "canonical": "#202632"
+      },
+      "night-ink": {
+        "role": "neutral",
+        "displayName": "Night Ink",
+        "canonical": "#c2c7d0"
+      },
+      "night-heading": {
+        "role": "neutral",
+        "displayName": "Night Heading",
+        "canonical": "#f0f1f3"
+      },
+      "night-contrast": {
+        "role": "neutral",
+        "displayName": "Night Contrast",
+        "canonical": "#dfe3eb"
+      },
+      "night-muted": {
+        "role": "neutral",
+        "displayName": "Night Muted",
+        "canonical": "#7b8495"
+      },
+      "editor-block": {
+        "role": "surface",
+        "displayName": "Editor Block",
+        "canonical": "#24292e"
+      },
+      "editor-text": {
+        "role": "on-surface",
+        "displayName": "Editor Text",
+        "canonical": "#e1e4e8"
+      },
+      "monster-green-ink": {
+        "role": "primary",
+        "displayName": "Monster Green Ink",
+        "canonical": "#4d7a00"
+      },
+      "monster-green-ink-deep": {
+        "role": "primary",
+        "displayName": "Monster Green Ink Deep",
+        "canonical": "#3f6600"
+      },
+      "on-accent-night": {
+        "role": "on-primary",
+        "displayName": "On Accent Night",
+        "canonical": "#13171f"
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Заголовок статьи; масштабируется вместе с текстом от выбранного читателем размера."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Заголовки разделов на /blog/ и h2 внутри длинных статей."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Заголовки статей в списках и на главной."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Текст статьи; пять шагов 0.8/0.9/1/1.15/1.3rem по выбору читателя."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Дерево файлов, поиск, сортировка, кнопка копирования; 1rem на мобильном."
+      },
+      "caption": {
+        "displayName": "Caption",
+        "purpose": "Даты в дереве файлов, opacity 0.45."
+      },
+      "control": {
+        "displayName": "Control",
+        "purpose": "Поле поиска, сортировка, кнопка копирования, мета-строка списков; 1.15rem на мобильном, чтобы iOS не зумил поле."
+      }
+    },
+    "shadows": [],
+    "motion": [
+      {
+        "name": "transition-standard",
+        "value": "0.2s ease",
+        "purpose": "Цвет и прозрачность контролов при наведении."
+      },
+      {
+        "name": "transition-tree",
+        "value": "0.15s ease",
+        "purpose": "Строки дерева файлов и кнопка сортировки."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "desktop",
+        "value": "992px"
+      }
+    ],
+    "layout": {
+      "navbarDesktopWidth": "64px",
+      "navbarMobileHeight": "46px",
+      "sidebarWidth": "320px",
+      "mainMaxWidth": "130ch",
+      "pagePadding": "2rem",
+      "htmlFontSize": "90%"
+    },
+    "fonts": [
+      {
+        "family": "JetBrains Mono Variable",
+        "source": "@fontsource-variable/jetbrains-mono",
+        "subsetsShipped": [
+          "latin",
+          "latin-ext",
+          "cyrillic",
+          "cyrillic-ext",
+          "greek",
+          "vietnamese"
+        ],
+        "axes": {
+          "wght": "100 800"
+        },
+        "display": "swap"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Nav Button",
+      "kind": "nav",
+      "refersTo": "nav-button",
+      "description": "Кнопка панели инструментов: контурная иконка без фона, зелёная при наведении.",
+      "html": "<button class=\"ds-nav-btn\" aria-label=\"Toggle theme\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z\"/></svg></button>",
+      "css": ".ds-nav-btn { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; padding: 0; border: none; background: transparent; color: var(--pico-muted-color, #646b79); opacity: 0.7; cursor: pointer; transition: opacity 0.2s ease, color 0.2s ease; } .ds-nav-btn:hover, .ds-nav-btn:focus-visible { opacity: 1; color: #95d600; outline: none; }"
+    },
+    {
+      "name": "Search Input",
+      "kind": "input",
+      "refersTo": "search-input",
+      "description": "Поле поиска по дереву файлов: прозрачное, волосяная рамка, зелёная в фокусе.",
+      "html": "<input class=\"ds-search\" type=\"search\" placeholder=\"search...\" />",
+      "css": ".ds-search { font-family: 'JetBrains Mono Variable', 'JetBrains Mono', 'Cascadia Code', Consolas, monospace; font-size: 0.75rem; padding: 0.2rem 0.4rem; border: 1px solid var(--pico-muted-border-color, #e7eaf0); border-radius: 3px; background: transparent; color: var(--pico-color, #373c44); outline: none; line-height: 1; width: 100%; } .ds-search::placeholder { color: var(--pico-muted-color, #646b79); opacity: 0.6; } .ds-search:focus { border-color: #95d600; }"
+    },
+    {
+      "name": "Sort Button",
+      "kind": "button",
+      "refersTo": "sort-button",
+      "description": "Кнопка сортировки дерева: контур и значок, зелёные в активном состоянии.",
+      "html": "<button class=\"ds-sort\" title=\"Сортировка по дате\">↕</button>",
+      "css": ".ds-sort { display: inline-flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono Variable', 'JetBrains Mono', monospace; font-size: 0.75rem; line-height: 1; padding: 0 0.35rem; height: 1.6rem; background: transparent; border: 1px solid var(--pico-muted-border-color, #e7eaf0); border-radius: 3px; color: var(--pico-muted-color, #646b79); cursor: pointer; transition: color 0.15s ease, border-color 0.15s ease; } .ds-sort:hover, .ds-sort:focus-visible, .ds-sort.active { color: #95d600; border-color: #95d600; outline: none; }"
+    },
+    {
+      "name": "File Tree",
+      "kind": "nav",
+      "refersTo": "file-link",
+      "description": "Дерево файлов: папка с треугольником, файлы с тильдой и датой, активный файл зелёный на подложке.",
+      "html": "<nav class=\"ds-tree\"><ul><li class=\"ds-folder\"><span class=\"ds-icon ds-folder-icon\">▸</span><a href=\"#\" class=\"ds-folder-link\">dev/</a><ul><li class=\"ds-file\"><span class=\"ds-icon\">~</span><a href=\"#\" class=\"ds-file-link\">agent-loop.md</a><span class=\"ds-date\">09-10-2026</span></li><li class=\"ds-file\"><span class=\"ds-icon\">~</span><a href=\"#\" class=\"ds-file-link active\">agent-tools.md</a><span class=\"ds-date\">09-10-2026</span></li></ul></li></ul></nav>",
+      "css": ".ds-tree { font-family: 'JetBrains Mono Variable', 'JetBrains Mono', 'Cascadia Code', Consolas, monospace; font-size: 0.8rem; } .ds-tree ul { list-style: none; margin: 0; padding: 0; } .ds-tree li { line-height: 1; padding: 1px 0; } .ds-tree .ds-folder > ul { padding-left: 0.75rem; margin-left: 0.2rem; border-left: 1px solid var(--pico-muted-border-color, #e7eaf0); } .ds-icon { color: var(--pico-muted-color, #646b79); margin-right: 0.2rem; } .ds-folder-icon { color: #95d600; } .ds-folder-link { font-weight: 700; color: var(--pico-muted-color, #646b79); text-decoration: none; padding: 2px 4px; margin: 0 -4px; border-radius: 3px; } .ds-file { display: flex; align-items: baseline; gap: 0.75rem; } .ds-file-link { color: var(--pico-contrast, #181c25); text-decoration: none; line-height: 1.2; padding: 2px 4px; margin: 0 -4px; border-radius: 3px; transition: all 0.15s ease; flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; } .ds-file-link:hover, .ds-folder-link:hover { color: #95d600; background: var(--pico-code-background-color, #f3f4f7); } .ds-file-link.active { color: #95d600; font-weight: 700; background: rgba(149, 214, 0, 0.1); } .ds-date { font-size: 0.7rem; opacity: 0.45; white-space: nowrap; line-height: 1.7; margin-left: auto; }"
+    },
+    {
+      "name": "Code Block",
+      "kind": "card",
+      "refersTo": "code-block",
+      "description": "Тёмное окно редактора внутри статьи с кнопкой копирования, одинаковое в обеих темах.",
+      "html": "<div class=\"ds-code\"><button class=\"ds-copy\">Copy</button><pre><code>npx @marp-team/marp-cli presentation.md -o presentation.pdf</code></pre></div>",
+      "css": ".ds-code { position: relative; background: #24292e; color: #e1e4e8; border-radius: 4px; font-family: 'JetBrains Mono Variable', 'JetBrains Mono', 'Cascadia Code', Consolas, monospace; font-size: 0.875em; } .ds-code pre { margin: 0; padding: 1rem; white-space: pre-wrap; word-break: break-all; } .ds-copy { position: absolute; top: 0.5rem; right: 0.5rem; font-family: inherit; font-size: 0.75rem; font-weight: 500; line-height: 1.4; padding: 0.25rem 0.6rem; background: rgba(255,255,255,0.1); color: #e5e7eb; border: 1px solid rgba(255,255,255,0.2); border-radius: 4px; opacity: 0.7; cursor: pointer; transition: all 0.2s ease-in-out; } .ds-code:hover .ds-copy { opacity: 1; } .ds-copy:hover, .ds-copy:focus-visible { background: rgba(255,255,255,0.2); border-color: rgba(255,255,255,0.5); color: #fff; outline: none; } .ds-copy.copied { background: #95d600; border-color: #95d600; color: #fff; opacity: 1; }"
+    },
+    {
+      "name": "Internal Link Chip",
+      "kind": "chip",
+      "refersTo": "internal-link-chip",
+      "description": "Ссылка на другую статью блога внутри текста: чип на подложке кода, зелёный текст.",
+      "html": "<p class=\"ds-p\">Об этом я писал в <a class=\"ds-chip\" href=\"#\">статье про инструменты</a> подробнее.</p>",
+      "css": ".ds-p { font-family: 'JetBrains Mono Variable', 'JetBrains Mono', monospace; font-size: 1rem; line-height: 1.6; color: var(--pico-color, #373c44); } .ds-chip { display: inline; padding: 0.1rem 0.5rem; margin: 0 0.1rem; border-radius: 4px; background: var(--pico-code-background-color, #f3f4f7); border: 1px solid var(--pico-muted-border-color, #e7eaf0); color: #95d600; text-decoration: none; font-size: 0.9em; font-weight: 500; transition: all 0.2s ease; } .ds-chip:hover, .ds-chip:focus-visible { background: #95d600; border-color: #95d600; color: #fff; outline: none; }"
+    },
+    {
+      "name": "Post List Item",
+      "kind": "custom",
+      "refersTo": "post-title-link",
+      "description": "Статья в списке: мета-строка с датой и путём, заголовок без рамок и подложек.",
+      "html": "<div class=\"ds-post\"><p class=\"ds-meta\">09-24-2026 · ai/dead-internet.md</p><h3 class=\"ds-post-title\"><a href=\"#\">Интернет не умер. Он сменил читателя</a></h3></div>",
+      "css": ".ds-post { font-family: 'JetBrains Mono Variable', 'JetBrains Mono', 'Cascadia Code', Consolas, monospace; margin-bottom: 2rem; } .ds-meta { margin: 0 0 0.15rem; font-size: 0.75rem; color: var(--pico-muted-color, #646b79); opacity: 0.6; } .ds-post-title { margin: 0; font-size: 1.15rem; line-height: 1.3; font-weight: 700; } .ds-post-title a { color: var(--pico-contrast, #181c25); text-decoration: none; transition: color 0.2s ease; } .ds-post-title a:hover, .ds-post-title a:focus-visible { color: #95d600; outline: none; }"
+    },
+    {
+      "name": "Article Header",
+      "kind": "custom",
+      "refersTo": "post-title-link",
+      "description": "Шапка статьи: мета-строка, заголовок, волосяная линия снизу.",
+      "html": "<header class=\"ds-entry\"><p class=\"ds-entry-meta\">09-10-2026 · dev/agent-loop.md</p><h1 class=\"ds-entry-title\">Цикл, из которого сделан агент</h1></header>",
+      "css": ".ds-entry { font-family: 'JetBrains Mono Variable', 'JetBrains Mono', 'Cascadia Code', Consolas, monospace; border-bottom: 1px solid var(--pico-muted-border-color, #e7eaf0); padding-bottom: 1rem; margin-bottom: 1.5rem; } .ds-entry-meta { margin: 0 0 0.5rem; font-size: 0.9rem; color: var(--pico-muted-color, #646b79); } .ds-entry-title { margin: 0; font-size: 2em; line-height: 1.125; font-weight: 700; color: var(--pico-h1-color, #2d3138); }"
+    }
+  ],
+  "narrative": {
+    "northStar": "Открытый проект в IDE",
+    "overview": "Сайт ведёт себя как рабочее окно редактора, в котором открыт проект блога. Слева узкая вертикальная панель инструментов, за ней дерево файлов с папками-разделами и статьями в виде .md-файлов с датами, справа сам текст. Всё набрано одним моноширинным шрифтом, включая заголовки и интерфейс, и единственный цвет в системе, Monster Green, работает как подсветка синтаксиса: он метит активный файл, курсор в поиске, ссылку под наведением и ничего больше. Интерфейс не украшает чтение, он его обслуживает и уходит с дороги.\n\nПлотность высокая, но воздух есть: дерево файлов набрано мелко и плотно, как в IDE, а колонка текста широкая (до 130 символов), с межстрочным 1.6 и абзацами через строку. Поверхности плоские: страница, сайдбар и панель инструментов лежат в одной плоскости и разделены только волосяными линиями. Тёмная тема не отдельная тема, а та же система на тёмной бумаге: те же линии, тот же зелёный, те же пропорции.",
+    "keyCharacteristics": [
+      "Одно семейство шрифта на всё: JetBrains Mono для текста, заголовков, дат, кнопок и полей.",
+      "Один акцент, Monster Green, только на состояниях и метках; никаких цветных поверхностей.",
+      "Плоскость без исключений: ни теней, ни градиентов, глубина только линиями и тональными подложками.",
+      "Навигация как файловая система: папки, файлы, тильды и треугольники вместо меню.",
+      "Две темы из одной палитры: бумага и ночь, зелёный один на обе.",
+      "Читатель управляет чтением: тема, размер шрифта в пять шагов, поиск и сортировка дерева."
+    ],
+    "rules": [
+      {
+        "name": "The Single Highlight Rule",
+        "body": "Monster Green единственный хроматический цвет системы. Он появляется только как реакция на состояние (активно, наведено, в фокусе, скопировано) или как метка ссылки. Второй акцентный цвет не вводится ни под какую задачу.",
+        "section": "colors"
+      },
+      {
+        "name": "The Ink Rule",
+        "body": "Лайм #95d600 на белом даёт 2.1:1 и текстом быть не может. В светлой теме всё, что читается как текст или тонкий знак, набирается Monster Green Ink; лайм остаётся заливкам, подложкам с прозрачностью и тёмной теме. Один оттенок, две плотности, а не два цвета.",
+        "section": "colors"
+      },
+      {
+        "name": "The Dark Editor Rule",
+        "body": "Блок кода тёмный в любой теме. Он не подстраивается под светлую бумагу, потому что это окно редактора внутри документа, а не часть документа.",
+        "section": "colors"
+      },
+      {
+        "name": "The One Typeface Rule",
+        "body": "Пропорциональный шрифт не появляется нигде, ни в заголовках, ни в кнопках, ни в футере. Иерархия строится весом (400/700) и кеглем, не сменой гарнитуры.",
+        "section": "typography"
+      },
+      {
+        "name": "The Reader Scale Rule",
+        "body": "Размер текста статьи задаёт читатель, а не дизайнер: заголовок, мета и контент масштабируются от одного корневого значения, интерфейс при этом остаётся на месте.",
+        "section": "typography"
+      },
+      {
+        "name": "The Flat Rule",
+        "body": "box-shadow, text-shadow, filter: drop-shadow, backdrop-filter и любые градиенты не используются, включая состояния наведения и мобильные оверлеи. Если нужно отделить, проводится линия; если нужно выделить, кладётся подложка или меняется цвет текста.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do набирать всё JetBrains Mono, включая заголовки, кнопки, даты и футер.",
+      "Do использовать Monster Green только на состояниях и ссылках: активный файл, фокус, наведение, скопировано.",
+      "Do брать для зелёного текста в светлой теме Monster Green Ink и проверять пару на 4.5:1.",
+      "Do разделять зоны волосяной линией 1px цвета Paper Rule или Night Rule и выделять элементы подложкой Paper Code или Night Code.",
+      "Do держать блоки кода и диаграммы в тёмном окне #24292e в обеих темах.",
+      "Do показывать статьи как файлы: имя .md, дата в формате ММ-ДД-ГГГГ, путь раздела в мета-строке.",
+      "Do отдавать читателю размер текста и тему и запоминать выбор.",
+      "Do давать тап-целям на мобильном не меньше 44px."
+    ],
+    "donts": [
+      "Don't использовать тени, свечения, размытия и градиенты ни на одной поверхности и ни в одном состоянии.",
+      "Don't вводить второй акцентный цвет или заливать зелёным крупные области.",
+      "Don't писать лаймом #95d600 по белому и белым по лайму.",
+      "Don't рисовать карточки: статьи в списках это заголовок с мета-строкой, без рамок и подложек.",
+      "Don't заменять текстовые иконки ~, ▸, → на графические и добавлять эмодзи в интерфейс.",
+      "Don't добавлять пропорциональный шрифт ради «читаемости» заголовков.",
+      "Don't заставлять читателя листать код по горизонтали: длинные строки переносятся."
+    ]
+  }
+}
