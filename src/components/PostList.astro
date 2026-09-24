@@ -14,20 +14,14 @@ const { posts } = Astro.props;
     <p>Пока ничего нет.</p>
   ) : (
     posts.map((entry) => (
-      <div style="margin-bottom: 2rem;">
-        <div style="margin-bottom: 0.25rem">
-          <p class="meta" style="margin-bottom: 0.15rem; font-size: 0.75rem; opacity: 0.6;">{formatDate(entry.data.date)} · {entry.id}.md</p>
-          <h3 style="margin: 0; font-size: 1.15rem; line-height: 1.3;">
-            <a href={`${BASE}blog/${entry.id}/`} class="post-title-link">
-              {entry.data.title}
-            </a>
-          </h3>
-        </div>
-        {entry.data.summary && (
-          <p style="font-size: 0.8rem; margin-top: 0.35rem; margin-bottom: 0; opacity: 0.8; line-height: 1.4;">
-            {entry.data.summary}
-          </p>
-        )}
+      <div class="post-list-item">
+        <p class="meta">{formatDate(entry.data.date)} · {entry.id}.md</p>
+        <h3>
+          <a href={`${BASE}blog/${entry.id}/`} class="post-title-link">
+            {entry.data.title}
+          </a>
+        </h3>
+        {entry.data.summary && <p class="summary">{entry.data.summary}</p>}
       </div>
     ))
   )}

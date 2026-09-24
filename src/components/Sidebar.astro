@@ -102,11 +102,13 @@ function getFolderHref(fullPath: string) {
       id="sidebar-search"
       placeholder="search..."
       autocomplete="off"
+      aria-label="Поиск по названиям статей"
     />
-    <button id="sort-date-btn" class="sort-btn" title="Сортировка по дате">
-      <span class="sort-icon">↕</span>
+    <button id="sort-date-btn" class="sort-btn" title="Сортировка по дате" aria-label="Сортировка по дате" aria-pressed="false">
+      <span class="sort-icon" aria-hidden="true">↕</span>
     </button>
   </div>
+  <p id="sidebar-empty" class="sidebar-empty" role="status" hidden>ничего не найдено</p>
 
   <ul id="sidebar-tree" class="sortable-list">
     {mainEntry && (
@@ -209,11 +211,15 @@ function getFolderHref(fullPath: string) {
             if (sortOrder === 'desc') {
               icon.textContent = '↓';
               sortBtn.setAttribute('title', 'Новые сверху');
+              sortBtn.setAttribute('aria-label', 'Новые сверху');
+              sortBtn.setAttribute('aria-pressed', 'true');
               sortBtn.classList.add('active');
               sortBtn.setAttribute('data-label', 'new');
             } else if (sortOrder === 'asc') {
               icon.textContent = '↑';
               sortBtn.setAttribute('title', 'Старые сверху');
+              sortBtn.setAttribute('aria-label', 'Старые сверху');
+              sortBtn.setAttribute('aria-pressed', 'true');
               sortBtn.classList.add('active');
               sortBtn.setAttribute('data-label', 'old');
             }
@@ -251,6 +257,8 @@ function getFolderHref(fullPath: string) {
               const visibleFiles = folder.querySelectorAll('li[data-filename]:not([style*="display: none"])');
               folder.style.display = visibleFiles.length > 0 ? '' : 'none';
             });
+            const empty = document.getElementById('sidebar-empty');
+            if (empty) empty.hidden = tree.querySelectorAll('li[data-filename]:not([style*="display: none"])').length > 0;
           }
         }
       } catch (e) {
@@ -296,9 +304,11 @@ function getFolderHref(fullPath: string) {
       
       localStorage.setItem('sidebar-search', raw);
 
+      const empty = document.getElementById('sidebar-empty');
       if (!raw) {
         allFileItems.forEach(li => li.style.display = '');
         allFolderItems.forEach(li => li.style.display = '');
+        if (empty) empty.hidden = true;
         return;
       }
       const queries = [raw];
@@ -311,6 +321,7 @@ function getFolderHref(fullPath: string) {
         const visibleFiles = folder.querySelectorAll<HTMLLIElement>('li[data-filename]:not([style*="display: none"])');
         folder.style.display = visibleFiles.length > 0 ? '' : 'none';
       });
+      if (empty) empty.hidden = tree!.querySelectorAll('li[data-filename]:not([style*="display: none"])').length > 0;
     }
 
     searchInput.addEventListener('input', performSearch);
@@ -342,6 +353,8 @@ function getFolderHref(fullPath: string) {
       const state = sortStates[sortOrder];
       sortIcon.textContent = state.icon;
       sortBtn!.setAttribute('title', state.title);
+      sortBtn!.setAttribute('aria-label', state.title);
+      sortBtn!.setAttribute('aria-pressed', sortOrder === 'none' ? 'false' : 'true');
       if (sortOrder === 'none') {
         sortBtn!.classList.remove('active');
         sortBtn!.removeAttribute('data-label');
@@ -371,12 +384,12 @@ function getFolderHref(fullPath: string) {
     align-items: stretch;
     gap: 0.3rem;
     margin-bottom: 0.4rem;
-    font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', 'Consolas', monospace;
+    font-family: var(--font-family);
   }
 
   .sidebar-controls input {
     flex: 1;
-    font-size: 0.75rem;
+    font-size: var(--app-font-control);
     font-family: inherit;
     padding: 0.2rem 0.4rem;
     border: 1px solid var(--pico-muted-border-color);
@@ -410,7 +423,7 @@ function getFolderHref(fullPath: string) {
     color: var(--pico-muted-color) !important;
     cursor: pointer;
     padding: 0 0.35rem !important;
-    font-size: 0.75rem !important;
+    font-size: var(--app-font-control) !important;
     line-height: 1 !important;
     transition: color 0.15s ease, border-color 0.15s ease;
     margin: 0 !important;
@@ -436,14 +449,23 @@ function getFolderHref(fullPath: string) {
   .sort-btn[data-label]::after {
     content: attr(data-label);
     margin-left: 0.15rem;
-    font-size: 0.6rem;
+    font-size: var(--app-font-caption);
     opacity: 0.8;
+  }
+
+  .sidebar-empty {
+    margin: 0.4rem 0 0;
+    font-size: 0.8rem;
+    color: var(--pico-muted-color);
+  }
+  .sidebar-empty[hidden] {
+    display: none;
   }
 
   /* --- Дерево файлов --- */
   .sidebar-nav {
     position: relative;
-    font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', 'Consolas', monospace;
+    font-family: var(--font-family);
     font-size: 0.8rem;
   }
 
@@ -505,7 +527,7 @@ function getFolderHref(fullPath: string) {
   .sidebar-nav a.file-link {
     text-decoration: none !important;
     color: var(--pico-contrast) !important;
-    transition: all 0.15s ease;
+    transition: color 0.15s ease, background-color 0.15s ease;
     display: flex;
     align-items: center;
     line-height: 1.2;
@@ -530,7 +552,7 @@ function getFolderHref(fullPath: string) {
   .sidebar-nav a.folder-link {
     text-decoration: none !important;
     color: inherit !important;
-    transition: all 0.15s ease;
+    transition: color 0.15s ease, background-color 0.15s ease;
     display: inline-flex;
     align-items: center;
     padding: 2px 4px;
@@ -571,8 +593,8 @@ function getFolderHref(fullPath: string) {
   }
 
   .file-date {
-    font-size: 0.7rem;
-    opacity: 0.45;
+    font-size: var(--app-font-caption);
+    opacity: 0.7;
     white-space: nowrap;
     line-height: 1.7;
     flex: 0 0 auto;
@@ -611,20 +633,20 @@ function getFolderHref(fullPath: string) {
       font-size: 1rem;
     }
     .sidebar-controls input {
-      font-size: 0.9rem;
+      font-size: var(--app-font-lg); /* ≥16px so iOS Safari does not zoom the field on focus */
       padding: 0.6rem 0.8rem;
       height: 44px; /* Larger tap target */
     }
     .sort-btn {
       height: 44px !important;
       width: 44px !important;
-      font-size: 1.1rem !important;
+      font-size: var(--app-font-lg) !important;
     }
     .sidebar-nav a.file-link, 
     .sidebar-nav a.folder-link, 
     .sidebar-nav summary {
       font-size: 1rem;
-      padding: 6px 4px;
+      padding: 12px 4px; /* ~41px tap row */
     }
     .file-date {
       font-size: 1rem;

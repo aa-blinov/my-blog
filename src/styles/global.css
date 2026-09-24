@@ -1,3 +1,7 @@
+/* Self-hosted: Pico from npm, JetBrains Mono variable (latin + cyrillic subsets load on demand) */
+@import "@picocss/pico/css/pico.min.css";
+@import "@fontsource-variable/jetbrains-mono";
+
 /* ==========================================================================
    Breakpoint: desktop 992px, mobile max 991px (CSS vars cannot be used in @media)
    ========================================================================== */
@@ -11,6 +15,11 @@
   --app-primary-hover-light: #7ab800;
   --app-primary-hover-dark: #a8e00a;
   --app-primary-inverse: #fff;
+  /* Text-safe greens for the light theme: lime (#95d600) is a highlight, not a text color (2.1:1 on white) */
+  --app-primary-ink-light: #4d7a00;
+  --app-primary-ink-rgb-light: 77, 122, 0;
+  --app-primary-ink-hover-light: #3f6600;
+  --app-primary-inverse-dark: #13171f;
   --app-primary-underline-opacity: 0.5;
   --app-primary-focus-opacity-light: 0.25;
   --app-primary-focus-opacity-dark: 0.375;
@@ -20,11 +29,11 @@
   /* Layout */
   --app-navbar-desktop-width: 64px;
   --app-navbar-desktop-button: 40px;
-  --app-navbar-mobile-height: 46px;
-  --app-navbar-mobile-button: 28px;
+  --app-navbar-mobile-height: 48px;
+  --app-navbar-mobile-button: 44px;
   --app-sidebar-width: 320px;
   --app-main-max-width: 130ch;
-  --app-content-padding-top-mobile: 50px;
+  --app-content-padding-top-mobile: 52px;
 
   /* Spacing */
   --app-spacing-xs: 0.15rem;
@@ -34,6 +43,14 @@
   --app-spacing-lg: 1.5rem;
   --app-spacing-xl: 2rem;
   --app-spacing-page: 2rem;
+
+  /* Editor block: code and diagrams live in a dark window in both themes */
+  --app-editor-bg: #24292e;
+  --app-editor-fg: #e1e4e8;
+
+  /* UI control text (search, sort, copy button, list meta) */
+  --app-font-control: 0.75rem;
+  --app-font-caption: 0.7rem;
 
   /* Article content font scale */
   --app-font-xs: 0.8rem;
@@ -53,7 +70,7 @@
   --app-transition: 0.2s ease;
 
   /* Font family & Pico primary (synced from app-primary for compatibility) */
-  --font-family: 'JetBrains Mono', 'Cascadia Code', Consolas, monospace;
+  --font-family: 'JetBrains Mono Variable', 'JetBrains Mono', 'Cascadia Code', Consolas, monospace;
   --pico-primary: var(--app-primary);
   --pico-primary-rgb: var(--app-primary-rgb);
 }
@@ -61,15 +78,15 @@
 /* --- Theme overrides: green primary in light theme --- */
 html[data-theme="light"],
 :root:not([data-theme="dark"]) {
-  --pico-primary: var(--app-primary);
+  --pico-primary: var(--app-primary-ink-light);
   --pico-primary-rgb: var(--app-primary-rgb);
-  --pico-primary-background: var(--app-primary);
-  --pico-primary-border: var(--app-primary);
-  --pico-primary-underline: rgba(var(--app-primary-rgb), var(--app-primary-underline-opacity));
-  --pico-primary-hover: var(--app-primary-hover-light);
-  --pico-primary-hover-background: var(--app-primary-hover-light);
-  --pico-primary-hover-border: var(--app-primary-hover-light);
-  --pico-primary-hover-underline: var(--app-primary-hover-light);
+  --pico-primary-background: var(--app-primary-ink-light);
+  --pico-primary-border: var(--app-primary-ink-light);
+  --pico-primary-underline: rgba(var(--app-primary-ink-rgb-light), var(--app-primary-underline-opacity));
+  --pico-primary-hover: var(--app-primary-ink-hover-light);
+  --pico-primary-hover-background: var(--app-primary-ink-hover-light);
+  --pico-primary-hover-border: var(--app-primary-ink-hover-light);
+  --pico-primary-hover-underline: var(--app-primary-ink-hover-light);
   --pico-primary-focus: rgba(var(--app-primary-rgb), var(--app-primary-focus-opacity-light));
   --pico-primary-inverse: var(--app-primary-inverse);
   --pico-text-selection-color: rgba(var(--app-primary-rgb), var(--app-primary-selection-opacity-light));
@@ -83,11 +100,11 @@ html[data-theme="dark"] {
   --pico-primary-border: var(--app-primary);
   --pico-primary-underline: rgba(var(--app-primary-rgb), var(--app-primary-underline-opacity));
   --pico-primary-hover: var(--app-primary-hover-dark);
-  --pico-primary-hover-background: var(--app-primary-hover-light);
-  --pico-primary-hover-border: var(--app-primary-hover-light);
+  --pico-primary-hover-background: var(--app-primary-hover-dark);
+  --pico-primary-hover-border: var(--app-primary-hover-dark);
   --pico-primary-hover-underline: var(--app-primary-hover-dark);
   --pico-primary-focus: rgba(var(--app-primary-rgb), var(--app-primary-focus-opacity-dark));
-  --pico-primary-inverse: var(--app-primary-inverse);
+  --pico-primary-inverse: var(--app-primary-inverse-dark);
   --pico-text-selection-color: rgba(var(--app-primary-rgb), var(--app-primary-selection-opacity-dark));
 }
 
@@ -112,6 +129,16 @@ body {
   line-height: 1.6;
   background-color: var(--pico-background-color);
   overflow-x: clip;
+}
+
+/* --- Keyboard focus: one green ring for everything interactive (The Flat Rule: outline, not glow) --- */
+:focus-visible {
+  outline: 2px solid var(--pico-primary) !important;
+  outline-offset: 2px;
+  box-shadow: none !important;
+}
+:focus:not(:focus-visible) {
+  outline: none;
 }
 
 /* --- Scrollbar (WebKit) --- */
@@ -266,6 +293,8 @@ pre, code {
     flex: none;
     min-height: auto;
     padding: var(--app-spacing);
+    padding-left: max(var(--app-spacing), env(safe-area-inset-left));
+    padding-right: max(var(--app-spacing), env(safe-area-inset-right));
     display: block;
   }
   #layout-sidebar.sidebar-hidden,
@@ -286,9 +315,11 @@ pre, code {
     overscroll-behavior-y: contain;
     -webkit-overflow-scrolling: touch;
     touch-action: pan-y;
+    padding-left: max(var(--app-spacing), env(safe-area-inset-left));
+    padding-right: max(var(--app-spacing), env(safe-area-inset-right));
+    padding-bottom: max(var(--app-spacing), env(safe-area-inset-bottom));
     border-bottom: 1px solid var(--pico-muted-border-color);
     margin: 0;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   }
 }
 
@@ -333,14 +364,14 @@ pre, code {
   top: var(--app-spacing-md);
   right: var(--app-spacing-md);
   z-index: var(--app-z-code-copy);
-  font-size: 0.75rem !important;
+  font-size: var(--app-font-control) !important;
   padding: var(--app-spacing-sm) 0.6rem !important;
   width: auto !important;
   margin: 0 !important;
   line-height: 1.4 !important;
   min-height: 0 !important;
   background-color: rgba(255, 255, 255, 0.1) !important;
-  color: #e5e7eb !important;
+  color: var(--app-editor-fg) !important;
   border: 1px solid rgba(255, 255, 255, 0.2) !important;
   border-radius: var(--app-radius-sm) !important;
   box-shadow: none !important;
@@ -365,6 +396,23 @@ pre, code {
   background-color: var(--pico-primary) !important;
   border-color: var(--pico-primary) !important;
   color: var(--pico-primary-inverse, var(--app-primary-inverse)) !important;
+}
+
+/* Touch: the copy button and footer links grow to a usable target on coarse pointers */
+@media (pointer: coarse) {
+  .code-copy-btn {
+    min-height: 36px !important;
+    min-width: 36px !important;
+    padding: var(--app-spacing-sm) 0.75rem !important;
+    opacity: 1;
+  }
+  .site-footer a {
+    display: inline-block;
+    padding: 0.6rem 0.25rem;
+  }
+  .site-footer {
+    padding-bottom: max(var(--app-spacing-lg), env(safe-area-inset-bottom));
+  }
 }
 
 /* ==========================================================================
@@ -410,20 +458,21 @@ pre, code {
   margin: 0 0.1rem;
 }
 .content a[href^="/"]:not(.post-title-link):hover {
-  background-color: var(--pico-primary-background) !important;
+  background-color: var(--pico-primary) !important;
   border-color: var(--pico-primary);
+  color: var(--pico-primary-inverse) !important;
   opacity: 1;
 }
 
 .content a[href^="http"]:not(.nav-link) {
   display: inline;
   color: var(--pico-primary) !important;
-  text-decoration-color: var(--pico-primary) !important;
-  opacity: 0.8;
-  transition: opacity var(--app-transition);
+  text-decoration-color: var(--pico-primary-underline) !important;
+  transition: color var(--app-transition), text-decoration-color var(--app-transition);
 }
 .content a[href^="http"]:not(.nav-link):hover {
-  opacity: 1;
+  color: var(--pico-primary-hover) !important;
+  text-decoration-color: var(--pico-primary-hover) !important;
 }
 .content a[href^="http"]:not(.nav-link)::after {
   content: "";
@@ -465,16 +514,77 @@ main article .content {
 .post-title-link {
   text-decoration: none !important;
   color: var(--pico-contrast) !important;
-  transition: all var(--app-transition) ease;
+  transition: color var(--app-transition);
 }
 .post-title-link:hover {
   color: var(--pico-primary) !important;
-  text-shadow: 0 0 8px rgba(var(--pico-primary-rgb), 0.4);
 }
 a.all-articles-link.post-title-link {
   color: var(--pico-primary) !important;
 }
 a.all-articles-link.post-title-link:hover {
   color: var(--pico-primary-hover, var(--app-primary-hover-light)) !important;
-  text-shadow: 0 0 8px rgba(var(--pico-primary-rgb), 0.4);
+}
+
+/* ==========================================================================
+   Post lists and section headings (home, /blog/, folder pages)
+   ========================================================================== */
+
+.post-list-item {
+  margin-bottom: var(--app-spacing-xl);
+}
+.post-list-item .meta {
+  margin-bottom: var(--app-spacing-xs);
+  font-size: var(--app-font-control);
+}
+.post-list-item h3 {
+  margin: 0;
+  font-size: var(--app-font-lg);
+  line-height: 1.3;
+}
+.post-list-item .summary {
+  font-size: var(--app-font-xs);
+  margin: 0.35rem 0 0;
+  opacity: 0.8;
+  line-height: 1.4;
+}
+
+.section-heading {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 0 0 var(--app-spacing-xl);
+  font-size: 1.5rem;
+  border: none;
+  padding: 0;
+}
+.section-heading svg {
+  width: 1.75rem;
+  height: 1.75rem;
+  color: var(--pico-primary);
+  flex-shrink: 0;
+}
+.section-block {
+  margin-top: 3rem;
+}
+.section-block:first-of-type {
+  margin-top: var(--app-spacing-xl);
+}
+.section-divider {
+  margin: 0 0 3rem;
+  opacity: 0.3;
+}
+
+.recent-posts {
+  margin-top: 4rem;
+  border-top: 1px solid var(--pico-muted-border-color);
+  padding-top: var(--app-spacing-xl);
+}
+.all-articles {
+  margin-top: var(--app-spacing-xl);
+}
+.all-articles h3 {
+  margin: 0;
+  font-size: var(--app-font-lg);
+  line-height: 1.3;
 }

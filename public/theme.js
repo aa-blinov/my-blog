@@ -1,8 +1,6 @@
 (() => {
   const root = document.documentElement;
   const btn = document.getElementById("theme-toggle");
-  const chromaLight = document.getElementById("chroma-light");
-  const chromaDark = document.getElementById("chroma-dark");
 
   const storedTheme = localStorage.getItem("theme");
   const systemDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
@@ -10,11 +8,6 @@
   
   const applyThemeUi = (theme) => {
     root.dataset.theme = theme;
-    if (chromaLight && chromaDark) {
-      const isDark = theme === "dark";
-      chromaDark.disabled = !isDark;
-      chromaLight.disabled = isDark;
-    }
   };
 
   const copyToClipboard = async (text) => {
@@ -90,8 +83,8 @@
     const index = fontSizes.indexOf(size);
     
     // Update button states (optional: visual feedback when limits reached)
-    if (fontDecreaseBtn) fontDecreaseBtn.style.opacity = index === 0 ? "0.3" : "0.7";
-    if (fontIncreaseBtn) fontIncreaseBtn.style.opacity = index === fontSizes.length - 1 ? "0.3" : "0.7";
+    if (fontDecreaseBtn) fontDecreaseBtn.style.opacity = index === 0 ? "0.35" : "0.85";
+    if (fontIncreaseBtn) fontIncreaseBtn.style.opacity = index === fontSizes.length - 1 ? "0.35" : "0.85";
   };
 
   applyFontUi(initialFont);
@@ -165,9 +158,9 @@
         diagramWrapper.style.overflowX = "auto";
         diagramWrapper.style.cursor = "pointer";
         // Force dark background to match Astro Shiki dark theme
-        diagramWrapper.style.backgroundColor = "#24292e";
+        diagramWrapper.style.backgroundColor = "var(--app-editor-bg)";
         diagramWrapper.style.padding = "1rem";
-        diagramWrapper.style.borderRadius = "var(--pico-border-radius)";
+        diagramWrapper.style.borderRadius = "var(--app-radius-sm)";
         diagramWrapper.title = "Нажмите, чтобы увидеть код исходника";
         
         // Add code button on Mermaid wrapper
