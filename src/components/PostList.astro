@@ -3,7 +3,7 @@ import { formatDate } from '../utils/date';
 import { BASE } from '../config';
 
 interface Props {
-  posts: { id: string; data: { title: string; date: Date; section: string; summary?: string } }[];
+  posts: { id: string; data: { title: string; date: Date; section?: string; summary?: string } }[];
 }
 
 const { posts } = Astro.props;

@@ -4,7 +4,7 @@ import { getCollection, render } from 'astro:content';
 const pages = (await getCollection('pages')).filter((e) => !e.data.draft);
 const aboutEntry = pages.find((e) => e.id === 'about-me');
 
-let Content: import('astro').ContentComponent | null = null;
+let Content: Awaited<ReturnType<typeof render>>['Content'] | null = null;
 let entryData: { data: { title: string; date: Date; summary?: string }; fileLabel: string } | null = null;
 
 if (aboutEntry) {

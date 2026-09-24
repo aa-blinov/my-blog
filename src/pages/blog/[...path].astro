@@ -1,9 +1,12 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import PostList from '../../components/PostList.astro';
-import { getCollection, render } from 'astro:content';
+import { getCollection, render, type CollectionEntry } from 'astro:content';
 import { formatDate } from '../../utils/date';
 import { sortByDateDesc } from '../../utils/date';
+
+type BlogEntry = CollectionEntry<'blog'>;
+type Props = { kind: 'file'; entry: BlogEntry; path?: never } | { kind: 'folder'; path: string; entry?: never };
 
 export async function getStaticPaths() {
   const entries = await getCollection('blog');
@@ -15,7 +18,7 @@ export async function getStaticPaths() {
   }));
 
   // 2. Routes for folders (directories)
-  const directoryPaths = new Set();
+  const directoryPaths = new Set<string>();
   entries.forEach((entry) => {
     const parts = entry.id.split('/');
     // Add all parent paths
@@ -25,18 +28,21 @@ export async function getStaticPaths() {
   });
 
   const folderPaths = Array.from(directoryPaths).map((path) => ({
-    params: { path: path as string },
-    props: { kind: 'folder', path: path as string },
+    params: { path },
+    props: { kind: 'folder', path },
   }));
 
   return [...filePaths, ...folderPaths];
 }
 
-const { kind, entry, path } = Astro.props;
+const props = Astro.props as Props;
+const kind = props.kind;
+const entry = props.kind === 'file' ? props.entry : undefined;
+const path = props.kind === 'folder' ? props.path : '';
 
 // If it's a file, pre-render the content
-let Content = null;
-if (kind === 'file') {
+let Content: Awaited<ReturnType<typeof render>>['Content'] | null = null;
+if (entry) {
   const rendered = await render(entry);
   Content = rendered.Content;
 }
@@ -44,17 +50,17 @@ if (kind === 'file') {
 // If it's a folder, find all entries and group them
 interface Group {
   name: string;
-  entries: any[];
+  entries: BlogEntry[];
   maxDate: number;
 }
-let directEntries = [];
+let directEntries: BlogEntry[] = [];
 let subGroups: Group[] = [];
 
 if (kind === 'folder') {
   const allEntries = await getCollection('blog');
   const entriesInFolder = allEntries.filter((e) => !e.data.draft && e.id.startsWith(path + '/'));
   
-  const groups: Record<string, any[]> = {};
+  const groups: Record<string, BlogEntry[]> = {};
   
   entriesInFolder.forEach(entry => {
     const relativeSlug = entry.id.slice(path.length + 1);
@@ -78,10 +84,10 @@ if (kind === 'folder') {
     .sort((a, b) => a.name.localeCompare(b.name)); // Sort sections alphabetically
 }
 
-const title = kind === 'file' ? entry.data.title : (path.split('/').pop() || path);
+const title = entry ? entry.data.title : (path.split('/').pop() || path);
 ---
 
-{kind === 'file' ? (
+{entry && Content ? (
   <Layout title={entry.data.title} description={entry.data.summary}>
     <article>
       <div class="entry-header">

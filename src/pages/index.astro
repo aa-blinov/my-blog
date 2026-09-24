@@ -2,7 +2,6 @@
 import PageFromEntry from '../components/PageFromEntry.astro';
 import PostList from '../components/PostList.astro';
 import { getCollection, render } from 'astro:content';
-import { RECENT_POSTS_LIMIT } from '../config';
 import { sortByDateDesc } from '../utils/date';
 
 const pages = (await getCollection('pages')).filter((e) => !e.data.draft);
@@ -12,7 +11,7 @@ const posts = sortByDateDesc(
   (await getCollection('blog')).filter((p) => !p.data.draft)
 ).slice(0, 5);
 
-let Content: import('astro').ContentComponent | null = null;
+let Content: Awaited<ReturnType<typeof render>>['Content'] | null = null;
 let entryData: { data: { title: string; date: Date; summary?: string }; fileLabel: string } | null = null;
 
 if (homeEntry) {
