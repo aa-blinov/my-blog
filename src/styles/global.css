@@ -131,6 +131,31 @@ body {
   overflow-x: clip;
 }
 
+/* --- Skip link: first tab stop, visible only in focus, styled like a sidebar control --- */
+.skip-link {
+  position: fixed;
+  top: var(--app-spacing-md);
+  left: var(--app-spacing-md);
+  z-index: calc(var(--app-z-navbar) + 1);
+  padding: var(--app-spacing-sm) var(--app-spacing-md);
+  font-family: var(--font-family);
+  font-size: var(--app-font-control);
+  line-height: 1.4;
+  color: var(--pico-primary);
+  background: var(--pico-background-color);
+  border: 1px solid var(--pico-primary);
+  border-radius: var(--app-radius-sm);
+  text-decoration: none;
+  transform: translateY(calc(-100% - var(--app-spacing)));
+}
+.skip-link:focus-visible {
+  transform: none;
+  text-decoration: none;
+}
+main:focus {
+  outline: none;
+}
+
 /* --- Keyboard focus: one green ring for everything interactive (The Flat Rule: outline, not glow) --- */
 :focus-visible {
   outline: 2px solid var(--pico-primary) !important;

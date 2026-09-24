@@ -57,6 +57,7 @@ const breadcrumbPath = getBreadcrumb(Astro.url.pathname);
     </script>
   </head>
   <body>
+    <a href="#main" class="skip-link">к содержанию</a>
     <div class="app-layout">
       <NavBar breadcrumbPath={breadcrumbPath} />
       <div class="main-container">
@@ -64,7 +65,7 @@ const breadcrumbPath = getBreadcrumb(Astro.url.pathname);
           <aside id="layout-sidebar">
             <Sidebar blogEntries={blogEntries} mainEntry={mainForSidebar} aboutEntry={aboutForSidebar} />
           </aside>
-          <main>
+          <main id="main" tabindex="-1">
             <slot />
           </main>
         </div>
