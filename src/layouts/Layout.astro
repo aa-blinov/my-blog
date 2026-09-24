@@ -73,6 +73,8 @@ const breadcrumbPath = getBreadcrumb(Astro.url.pathname);
       </div>
     </div>
 
-    <script defer src={`${BASE}theme.js`}></script>
+    <script>
+      import '../scripts/theme.js';
+    </script>
   </body>
 </html>

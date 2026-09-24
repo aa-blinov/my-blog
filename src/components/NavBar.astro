@@ -190,9 +190,9 @@ interface Props {
     flex-direction: column;
     align-items: center;
     gap: var(--app-spacing-lg);
-    list-style: none !important;
-    margin: 0 !important;
-    padding: 0 !important;
+    list-style: none;
+    margin: 0;
+    padding: 0;
   }
 
   .vertical-navbar .bottom-nav {
@@ -209,10 +209,10 @@ interface Props {
     height: var(--app-navbar-desktop-button);
     padding: 0;
     margin: 0;
-    border: none !important;
-    background: transparent !important;
-    box-shadow: none !important;
-    color: var(--pico-muted-color) !important;
+    border: none;
+    background: transparent;
+    box-shadow: none;
+    color: var(--pico-muted-color);
     opacity: 0.85;
     cursor: pointer;
     transition: opacity var(--app-transition), color var(--app-transition);
@@ -221,14 +221,14 @@ interface Props {
 
   .vertical-navbar a svg,
   .vertical-navbar button svg {
-    color: inherit !important;
-    stroke: currentColor !important;
+    color: inherit;
+    stroke: currentColor;
   }
 
   .vertical-navbar a:hover,
   .vertical-navbar button:hover {
     opacity: 1;
-    color: var(--pico-primary) !important;
+    color: var(--pico-primary);
   }
 
   .mobile-only {
@@ -237,15 +237,15 @@ interface Props {
 
   #sun-icon,
   #moon-icon {
-    display: none !important;
+    display: none;
   }
 
   :global(html[data-theme="dark"]) #sun-icon {
-    display: block !important;
+    display: block;
   }
 
   :global(html[data-theme="light"]) #moon-icon {
-    display: block !important;
+    display: block;
   }
 
   @media (max-width: 991px) {
@@ -275,10 +275,10 @@ interface Props {
 
     .vertical-navbar a,
     .vertical-navbar button {
-      width: var(--app-navbar-mobile-button) !important;
-      height: var(--app-navbar-mobile-button) !important;
-      min-height: var(--app-navbar-mobile-button) !important;
-      padding: 0 !important;
+      width: var(--app-navbar-mobile-button);
+      height: var(--app-navbar-mobile-button);
+      min-height: var(--app-navbar-mobile-button);
+      padding: 0;
     }
 
     .vertical-navbar ul {
@@ -287,7 +287,7 @@ interface Props {
       min-width: 0;
       justify-content: flex-start;
       gap: 0;
-      margin-top: 0 !important;
+      margin-top: 0;
       overflow: hidden;
       flex-shrink: 0;
     }

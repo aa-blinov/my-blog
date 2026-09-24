@@ -122,7 +122,7 @@
     if (mermaidPres.length === 0) return;
 
     try {
-      const { default: mermaid } = await import("https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs");
+      const { default: mermaid } = await import("mermaid");
 
       mermaid.initialize({
         startOnLoad: false,

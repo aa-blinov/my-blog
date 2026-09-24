@@ -336,6 +336,11 @@
         "name": "The Flat Rule",
         "body": "box-shadow, text-shadow, filter: drop-shadow, backdrop-filter и любые градиенты не используются, включая состояния наведения и мобильные оверлеи. Если нужно отделить, проводится линия; если нужно выделить, кладётся подложка или меняется цвет текста.",
         "section": "elevation"
+      },
+      {
+        "name": "The Layer Rule",
+        "body": "Pico подключён в cascade layer pico, поэтому любое своё правило перекрывает его без !important. В коде !important не используется.",
+        "section": "typography"
       }
     ],
     "dos": [

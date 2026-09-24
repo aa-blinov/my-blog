@@ -416,36 +416,36 @@ function getFolderHref(fullPath: string) {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: transparent !important;
-    background-color: transparent !important;
-    border: 1px solid var(--pico-muted-border-color) !important;
-    border-radius: 3px !important;
-    color: var(--pico-muted-color) !important;
+    background: transparent;
+    background-color: transparent;
+    border: 1px solid var(--pico-muted-border-color);
+    border-radius: 3px;
+    color: var(--pico-muted-color);
     cursor: pointer;
-    padding: 0 0.35rem !important;
-    font-size: var(--app-font-control) !important;
-    line-height: 1 !important;
+    padding: 0 0.35rem;
+    font-size: var(--app-font-control);
+    line-height: 1;
     transition: color 0.15s ease, border-color 0.15s ease;
-    margin: 0 !important;
-    height: auto !important;
-    width: auto !important;
+    margin: 0;
+    height: auto;
+    width: auto;
     min-width: 24px;
     min-height: 24px;
     font-family: inherit;
-    box-shadow: none !important;
-    box-sizing: border-box !important;
+    box-shadow: none;
+    box-sizing: border-box;
   }
 
   .sort-btn:hover {
-    color: var(--pico-primary) !important;
-    border-color: var(--pico-primary) !important;
-    background: transparent !important;
+    color: var(--pico-primary);
+    border-color: var(--pico-primary);
+    background: transparent;
   }
 
   .sort-btn.active {
-    color: var(--pico-primary) !important;
-    border-color: var(--pico-primary) !important;
-    background: transparent !important;
+    color: var(--pico-primary);
+    border-color: var(--pico-primary);
+    background: transparent;
   }
 
   .sort-btn[data-label]::after {
@@ -507,11 +507,11 @@ function getFolderHref(fullPath: string) {
     font-weight: bold;
     margin-bottom: 0;
     line-height: 1;
-    padding: 1px 0 !important;
+    padding: 1px 0;
   }
 
   .sidebar-nav summary::after {
-    display: none !important;
+    display: none;
   }
 
   .ascii-icon {
@@ -527,8 +527,8 @@ function getFolderHref(fullPath: string) {
   }
 
   .sidebar-nav a.file-link {
-    text-decoration: none !important;
-    color: var(--pico-contrast) !important;
+    text-decoration: none;
+    color: var(--pico-contrast);
     transition: color 0.15s ease, background-color 0.15s ease;
     display: flex;
     align-items: center;
@@ -540,20 +540,20 @@ function getFolderHref(fullPath: string) {
   }
 
   .sidebar-nav a.file-link:hover {
-    color: var(--pico-primary) !important;
-    background-color: var(--pico-code-background-color) !important;
+    color: var(--pico-primary);
+    background-color: var(--pico-code-background-color);
   }
 
   .sidebar-nav a.file-link.active {
-    color: var(--pico-primary) !important;
+    color: var(--pico-primary);
     font-weight: bold;
-    background-color: rgba(var(--pico-primary-rgb), 0.1) !important;
+    background-color: rgba(var(--pico-primary-rgb), 0.1);
   }
 
   /* --- Folder Links --- */
   .sidebar-nav a.folder-link {
-    text-decoration: none !important;
-    color: inherit !important;
+    text-decoration: none;
+    color: inherit;
     transition: color 0.15s ease, background-color 0.15s ease;
     display: inline-flex;
     align-items: center;
@@ -563,14 +563,14 @@ function getFolderHref(fullPath: string) {
   }
 
   .sidebar-nav a.folder-link:hover {
-    color: var(--pico-primary) !important;
-    background-color: var(--pico-code-background-color) !important;
+    color: var(--pico-primary);
+    background-color: var(--pico-code-background-color);
   }
 
   .sidebar-nav a.folder-link.active {
-    color: var(--pico-primary) !important;
+    color: var(--pico-primary);
     font-weight: bold;
-    background-color: rgba(var(--pico-primary-rgb), 0.1) !important;
+    background-color: rgba(var(--pico-primary-rgb), 0.1);
   }
 
   .file-link-wrapper {
@@ -603,31 +603,26 @@ function getFolderHref(fullPath: string) {
     margin-left: auto;
   }
 
-  details ul {
-    padding-left: 0.75rem !important;
+  .sidebar-nav details > ul {
+    padding-left: 0.75rem;
     border-left: 1px solid var(--pico-muted-border-color);
-    margin-left: 0.2rem !important;
-    margin-top: 0 !important;
-    margin-bottom: 0 !important;
+    margin-left: 0.2rem;
+    margin-top: 0;
+    margin-bottom: 0;
   }
 
   .sidebar-nav details {
-    margin: 0 !important;
-    padding: 0 !important;
-    position: static !important;
-    border: none !important;
+    margin: 0;
+    padding: 0;
+    position: static;
+    border: none;
   }
 
   .sidebar-nav details summary {
-    margin: 0 !important;
-    padding: 0 !important;
-    padding-bottom: 0 !important;
-    border: none !important;
-  }
-
-  .sidebar-nav details > ul {
-    margin-top: 0 !important;
-    padding-top: 0 !important;
+    margin: 0;
+    padding: 0;
+    padding-bottom: 0;
+    border: none;
   }
 
   @media (max-width: 991px) {
@@ -640,9 +635,9 @@ function getFolderHref(fullPath: string) {
       height: 44px; /* Larger tap target */
     }
     .sort-btn {
-      height: 44px !important;
-      width: 44px !important;
-      font-size: var(--app-font-lg) !important;
+      height: 44px;
+      width: 44px;
+      font-size: var(--app-font-lg);
     }
     .sidebar-nav a.file-link, 
     .sidebar-nav a.folder-link, 
