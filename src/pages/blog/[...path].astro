@@ -1,7 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import PostList from '../../components/PostList.astro';
-import { getCollection } from 'astro:content';
+import { getCollection, render } from 'astro:content';
 import { formatDate } from '../../utils/date';
 import { sortByDateDesc } from '../../utils/date';
 
@@ -10,14 +10,14 @@ export async function getStaticPaths() {
   
   // 1. Routes for individual files
   const filePaths = entries.map((entry) => ({
-    params: { path: entry.slug },
+    params: { path: entry.id },
     props: { kind: 'file', entry },
   }));
 
   // 2. Routes for folders (directories)
   const directoryPaths = new Set();
   entries.forEach((entry) => {
-    const parts = entry.slug.split('/');
+    const parts = entry.id.split('/');
     // Add all parent paths
     for (let i = 1; i < parts.length; i++) {
       directoryPaths.add(parts.slice(0, i).join('/'));
@@ -37,7 +37,7 @@ const { kind, entry, path } = Astro.props;
 // If it's a file, pre-render the content
 let Content = null;
 if (kind === 'file') {
-  const rendered = await entry.render();
+  const rendered = await render(entry);
   Content = rendered.Content;
 }
 
@@ -52,12 +52,12 @@ let subGroups: Group[] = [];
 
 if (kind === 'folder') {
   const allEntries = await getCollection('blog');
-  const entriesInFolder = allEntries.filter((e) => !e.data.draft && e.slug.startsWith(path + '/'));
+  const entriesInFolder = allEntries.filter((e) => !e.data.draft && e.id.startsWith(path + '/'));
   
   const groups: Record<string, any[]> = {};
   
   entriesInFolder.forEach(entry => {
-    const relativeSlug = entry.slug.slice(path.length + 1);
+    const relativeSlug = entry.id.slice(path.length + 1);
     const parts = relativeSlug.split('/');
     if (parts.length === 1) {
       directEntries.push(entry);
@@ -85,7 +85,7 @@ const title = kind === 'file' ? entry.data.title : (path.split('/').pop() || pat
   <Layout title={entry.data.title} description={entry.data.summary}>
     <article>
       <div class="entry-header">
-        <p class="meta">{formatDate(entry.data.date)} · {entry.id}</p>
+        <p class="meta">{formatDate(entry.data.date)} · {entry.id}.md</p>
         <hgroup>
           <h1>{entry.data.title}</h1>
           {entry.data.summary && <p class="summary">{entry.data.summary}</p>}

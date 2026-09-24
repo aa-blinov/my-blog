@@ -17,8 +17,8 @@ const { title, description } = Astro.props;
 
 const blogEntries = sortByDateDesc((await getCollection('blog')).filter((e) => !e.data.draft)).map((entry) => {
   return {
-    id: entry.id, // Full path like 'science/human-body/article.md'
-    slug: entry.slug, // Full slug like 'science/human-body/article'
+    id: `${entry.id}.md`, // File-like path for the sidebar tree, e.g. 'science/human-body/article.md'
+    slug: entry.id, // URL path like 'science/human-body/article'
     title: entry.data.title,
     date: entry.data.date,
     section: entry.data.section, // Still support frontmatter override
@@ -26,11 +26,11 @@ const blogEntries = sortByDateDesc((await getCollection('blog')).filter((e) => !
 });
 
 const pages = (await getCollection('pages')).filter((e) => !e.data.draft);
-const mainEntry = pages.find((e) => e.slug === 'main');
-const aboutEntry = pages.find((e) => e.slug === 'about-me');
+const mainEntry = pages.find((e) => e.id === 'main');
+const aboutEntry = pages.find((e) => e.id === 'about-me');
 
-const mainForSidebar = mainEntry ? { slug: mainEntry.slug, title: mainEntry.data.title, date: mainEntry.data.date } : null;
-const aboutForSidebar = aboutEntry ? { slug: aboutEntry.slug, title: aboutEntry.data.title, date: aboutEntry.data.date } : null;
+const mainForSidebar = mainEntry ? { slug: mainEntry.id, title: mainEntry.data.title, date: mainEntry.data.date } : null;
+const aboutForSidebar = aboutEntry ? { slug: aboutEntry.id, title: aboutEntry.data.title, date: aboutEntry.data.date } : null;
 const fullTitle = title === SITE.title ? title : `${title} | ${SITE.title}`;
 const desc = description ?? SITE.description;
 const breadcrumbPath = getBreadcrumb(Astro.url.pathname);

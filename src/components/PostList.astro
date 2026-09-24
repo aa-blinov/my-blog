@@ -3,7 +3,7 @@ import { formatDate } from '../utils/date';
 import { BASE } from '../config';
 
 interface Props {
-  posts: { slug: string; data: { title: string; date: Date; section: string; summary?: string } }[];
+  posts: { id: string; data: { title: string; date: Date; section: string; summary?: string } }[];
 }
 
 const { posts } = Astro.props;
@@ -16,9 +16,9 @@ const { posts } = Astro.props;
     posts.map((entry) => (
       <div style="margin-bottom: 2rem;">
         <div style="margin-bottom: 0.25rem">
-          <p class="meta" style="margin-bottom: 0.15rem; font-size: 0.75rem; opacity: 0.6;">{formatDate(entry.data.date)} · {entry.slug}.md</p>
+          <p class="meta" style="margin-bottom: 0.15rem; font-size: 0.75rem; opacity: 0.6;">{formatDate(entry.data.date)} · {entry.id}.md</p>
           <h3 style="margin: 0; font-size: 1.15rem; line-height: 1.3;">
-            <a href={`${BASE}blog/${entry.slug}/`} class="post-title-link">
+            <a href={`${BASE}blog/${entry.id}/`} class="post-title-link">
               {entry.data.title}
             </a>
           </h3>

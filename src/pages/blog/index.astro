@@ -18,7 +18,7 @@ const groups: Record<string, any[]> = {};
 const directEntries: any[] = [];
 
 entries.forEach(entry => {
-  const parts = entry.slug.split('/');
+  const parts = entry.id.split('/');
   if (parts.length === 1) {
     directEntries.push(entry);
   } else {
