@@ -197,6 +197,7 @@ function getFolderHref(fullPath: string) {
                 >
                   {node.name}/
                 </a>
+                <a href={getFolderHref(node.fullPath || '')} class="folder-open" aria-label={`Раздел ${node.name}`}>→</a>
               </summary>
               <ul class="sortable-list">
                 {childrenArr.map(child => renderTree(child))}
@@ -308,13 +309,19 @@ function getFolderHref(fullPath: string) {
     const tree = document.getElementById('sidebar-tree');
     if (!searchInput || !sortBtn || !tree) return;
 
-    // --- Folder link handling (prevent toggle on name click) ---
+    // --- Имя папки: на десктопе ссылка на раздел, на телефоне раскрывает папку (в раздел ведёт →) ---
     tree.addEventListener('click', (e) => {
       const target = e.target as HTMLElement;
       const folderLink = target.closest('.folder-link');
-      if (folderLink) {
-        e.stopPropagation();
+      if (!folderLink) return;
+      if (window.innerWidth < 992) {
+        e.preventDefault();
+        const details = folderLink.closest('details');
+        if (details) details.open = !details.open;
+        e.stopImmediatePropagation();
+        return;
       }
+      e.stopPropagation();
     }, true);
 
     // --- Транслитерация ---
@@ -657,6 +664,10 @@ function getFolderHref(fullPath: string) {
     border-radius: 3px;
   }
 
+  .folder-open {
+    display: none; /* только на телефоне: отдельная цель для перехода в раздел */
+  }
+
   .sidebar-nav a.folder-link:hover {
     color: var(--pico-primary);
     background-color: var(--pico-code-background-color);
@@ -738,8 +749,28 @@ function getFolderHref(fullPath: string) {
     }
     .sort-btn {
       height: 44px;
-      width: 44px;
+      width: auto;
+      min-width: 44px;
+      padding: 0 0.6rem;
       font-size: var(--app-font-lg);
+      white-space: nowrap;
+    }
+    .sidebar-nav summary {
+      display: flex;
+      align-items: center;
+    }
+    .sidebar-nav summary .folder-link {
+      flex: 1;
+    }
+    .folder-open {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      margin: -6px 0;
+      color: var(--pico-muted-color);
+      text-decoration: none;
     }
     .sidebar-nav a.file-link, 
     .sidebar-nav a.folder-link, 

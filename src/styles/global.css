@@ -291,12 +291,39 @@ main article .content h4 {
   margin: 0 0 var(--app-spacing-xl);
   padding: var(--app-spacing) var(--app-spacing-lg);
   border-left: 1px solid var(--pico-muted-border-color);
+  border-bottom: none;
   font-size: var(--app-font-sm);
 }
 .toc-title {
-  margin: 0 0 var(--app-spacing-md);
+  margin: 0;
+  padding: 0;
   font-size: var(--app-font-control);
   color: var(--pico-muted-color);
+  cursor: pointer;
+  list-style: none;
+}
+.toc-title::-webkit-details-marker {
+  display: none;
+}
+.toc-title::after {
+  display: none;
+}
+.toc-title::before {
+  content: "▸ ";
+  color: var(--pico-primary);
+}
+.toc[open] .toc-title::before {
+  content: "▾ ";
+}
+.toc[open] .toc-title {
+  margin-bottom: var(--app-spacing-md);
+}
+@media (max-width: 991px) {
+  .toc-title {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+  }
 }
 .toc-list {
   display: block;
@@ -626,6 +653,21 @@ a.all-articles-link.post-title-link:hover {
 .meta-sep {
   opacity: 0.55;
   user-select: none;
+}
+/* На телефоне в мета-строке только имя файла: папки видны в дереве, а слаг в две строки над H1 мешал читать */
+.meta-file {
+  display: none;
+}
+@media (max-width: 991px) {
+  .meta-path {
+    display: none;
+  }
+  .meta-file {
+    display: inline;
+  }
+  main article .entry-header h1 {
+    font-size: 1.6em;
+  }
 }
 
 /* ==========================================================================

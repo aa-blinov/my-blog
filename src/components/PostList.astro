@@ -16,7 +16,7 @@ const { posts, numbered = false } = Astro.props;
   ) : (
     posts.map((entry) => (
       <div class="post-list-item">
-        <p class="meta">{numbered && entry.data.part !== undefined && <><span>часть {entry.data.part}</span><span class="meta-sep" aria-hidden="true">~</span></>}<span>{formatDate(entry.data.date)}</span><span class="meta-sep" aria-hidden="true">~</span><span>{entry.id}.md</span></p>
+        <p class="meta">{numbered && entry.data.part !== undefined && <><span>часть {entry.data.part}</span><span class="meta-sep" aria-hidden="true">~</span></>}<span>{formatDate(entry.data.date)}</span><span class="meta-sep" aria-hidden="true">~</span><span class="meta-path">{entry.id}.md</span><span class="meta-file">{entry.id.split('/').pop()}.md</span></p>
         <h3>
           <a href={`${BASE}blog/${entry.id}/`} class="post-title-link">
             {entry.data.title}

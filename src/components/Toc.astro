@@ -7,15 +7,25 @@ interface Props {
 
 // Только H2: карта лонгрида, а не полное дерево подзаголовков
 const items = Astro.props.headings.filter((h) => h.depth === 2);
+const n = items.length;
+const word = n % 10 === 1 && n % 100 !== 11 ? 'раздел' : n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 10 || n % 100 >= 20) ? 'раздела' : 'разделов';
 ---
 
-{items.length > 0 && (
-  <section class="toc" aria-label="Содержание">
-    <p class="toc-title">Содержание</p>
+{n > 0 && (
+  <details class="toc" id="toc">
+    <summary class="toc-title">Содержание, {n} {word}</summary>
     <ol class="toc-list">
       {items.map((h) => (
         <li><a href={`#${h.slug}`}>{h.text}</a></li>
       ))}
     </ol>
-  </section>
+  </details>
 )}
+
+<script is:inline>
+  // На десктопе оглавление раскрыто, на телефоне свёрнуто: текст статьи на первом экране
+  (function () {
+    var t = document.getElementById('toc');
+    if (t && window.matchMedia('(min-width: 992px)').matches) t.open = true;
+  })();
+</script>
