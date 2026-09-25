@@ -123,14 +123,14 @@ function getFolderHref(fullPath: string) {
       />
       <button id="sidebar-search-clear" class="search-clear" type="button" aria-label="Очистить поиск" hidden>×</button>
     </span>
-    <button id="sort-date-btn" class="sort-btn" title="По разделам и имени. Нажми для сортировки по дате" aria-label="По разделам и имени. Нажми для сортировки по дате" aria-pressed="false" data-label="по имени">
-      <span class="sort-icon" aria-hidden="true">↕</span>
+    <button id="sort-date-btn" class="sort-btn" title="Новые сверху" aria-label="Новые сверху" aria-pressed="false" data-label="новые">
+      <span class="sort-icon" aria-hidden="true">↓</span>
     </button>
   </div>
   <p id="sidebar-empty" class="sidebar-empty" role="status" hidden>ничего не найдено. Ищу по названию и имени файла, попробуй другое слово</p>
   <p id="sidebar-count" class="sidebar-empty" role="status" hidden></p>
 
-  <ul id="sidebar-tree" class="sortable-list">
+  <ul id="sidebar-tree" class="sortable-list" data-sort="desc">
     {mainEntry && (
       <li class="sidebar-pinned" data-filename="main.md" data-title={mainEntry.title.toLowerCase()} data-date={mainEntry.date.toISOString()}>
         <span class="file-link-wrapper">
@@ -204,7 +204,11 @@ function getFolderHref(fullPath: string) {
                 >
                   {node.name}/
                 </a>
-                <a href={getFolderHref(node.fullPath || '')} class="folder-open" aria-label={`Раздел ${node.name}`}>→</a>
+                <a href={getFolderHref(node.fullPath || '')} class="folder-open" aria-label={`Раздел ${node.name}`}>
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="18" height="18" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+                  </svg>
+                </a>
               </summary>
               <ul class="sortable-list">
                 {childrenArr.map(child => renderTree(child))}
@@ -235,18 +239,19 @@ function getFolderHref(fullPath: string) {
 
       try {
         // --- Restore Sort State ---
-        const sortOrder = localStorage.getItem('sidebar-sort') || 'none';
-        if (sortOrder !== 'none') {
-          tree.setAttribute('data-sort', sortOrder);
+        // По умолчанию новые сверху (в разметке); из хранилища только отличие от умолчания
+        const sortOrder = localStorage.getItem('sidebar-sort') || 'desc';
+        if (sortOrder !== 'desc') {
+          if (sortOrder === 'none') tree.removeAttribute('data-sort'); else tree.setAttribute('data-sort', sortOrder);
           const icon = sortBtn.querySelector('.sort-icon');
           if (icon) {
-            if (sortOrder === 'desc') {
-              icon.textContent = '↓';
-              sortBtn.setAttribute('title', 'Новые сверху');
-              sortBtn.setAttribute('aria-label', 'Новые сверху');
+            if (sortOrder === 'none') {
+              icon.textContent = '↕';
+              sortBtn.setAttribute('title', 'По разделам и имени');
+              sortBtn.setAttribute('aria-label', 'По разделам и имени');
               sortBtn.setAttribute('aria-pressed', 'true');
               sortBtn.classList.add('active');
-              sortBtn.setAttribute('data-label', 'новые');
+              sortBtn.setAttribute('data-label', 'по имени');
             } else if (sortOrder === 'asc') {
               icon.textContent = '↑';
               sortBtn.setAttribute('title', 'Старые сверху');
@@ -423,10 +428,10 @@ function getFolderHref(fullPath: string) {
 
     // --- Сортировка ---
     type SortOrder = 'none' | 'desc' | 'asc';
-    let sortOrder: SortOrder = (localStorage.getItem('sidebar-sort') as SortOrder) || 'none';
+    let sortOrder: SortOrder = (localStorage.getItem('sidebar-sort') as SortOrder) || 'desc';
     const sortIcon = sortBtn.querySelector('.sort-icon') as HTMLSpanElement;
     const sortStates: Record<SortOrder, { icon: string; title: string; label: string }> = {
-      'none': { icon: '↕', title: 'По разделам и имени. Нажми для сортировки по дате', label: 'по имени' },
+      'none': { icon: '↕', title: 'По разделам и имени', label: 'по имени' },
       'desc': { icon: '↓', title: 'Новые сверху', label: 'новые' },
       'asc':  { icon: '↑', title: 'Старые сверху', label: 'старые' },
     };
@@ -436,18 +441,19 @@ function getFolderHref(fullPath: string) {
       sortIcon.textContent = state.icon;
       sortBtn!.setAttribute('title', state.title);
       sortBtn!.setAttribute('aria-label', state.title);
-      sortBtn!.setAttribute('aria-pressed', sortOrder === 'none' ? 'false' : 'true');
-      sortBtn!.classList.toggle('active', sortOrder !== 'none');
+      // Умолчание «новые сверху» не подсвечивается: зелёный только у отличия от него
+      sortBtn!.setAttribute('aria-pressed', sortOrder === 'desc' ? 'false' : 'true');
+      sortBtn!.classList.toggle('active', sortOrder !== 'desc');
       sortBtn!.setAttribute('data-label', state.label);
       
       // Update global sort attribute on the list for CSS sorting
-      tree!.setAttribute('data-sort', sortOrder);
+      if (sortOrder === 'none') tree!.removeAttribute('data-sort'); else tree!.setAttribute('data-sort', sortOrder);
     }
 
     sortBtn.addEventListener('click', () => {
-      if (sortOrder === 'none') sortOrder = 'desc';
-      else if (sortOrder === 'desc') sortOrder = 'asc';
-      else sortOrder = 'none';
+      if (sortOrder === 'desc') sortOrder = 'asc';
+      else if (sortOrder === 'asc') sortOrder = 'none';
+      else sortOrder = 'desc';
       localStorage.setItem('sidebar-sort', sortOrder);
       updateSortUI();
     });

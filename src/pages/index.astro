@@ -48,6 +48,7 @@ if (homeEntry) {
   {Content ? <Content /> : <p>Добавь в <code>content/pages/</code> файл <code>main.md</code> с frontmatter: <code>title</code>, <code>date</code>.</p>}
 
   <div class="site-map">
+    <h2 class="section-heading"><span class="glyph" aria-hidden="true">▸</span> Разделы</h2>
     {seriesRows.map((s) => (
       <div class="post-list-item">
         <p class="meta"><span>{s.folder}/</span><span class="meta-sep" aria-hidden="true">~</span><span>{s.parts.length} {plural(s.parts.length, 'часть', 'части', 'частей')}</span></p>
