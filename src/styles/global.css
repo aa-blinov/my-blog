@@ -658,8 +658,8 @@ a.all-articles-link.post-title-link:hover {
   flex-wrap: wrap;
   column-gap: 0.6em;
   margin: var(--app-spacing-xl) 0 0;
-  font-size: var(--app-font-control);
-  color: var(--pico-muted-color);
+  font-size: var(--app-font-sm); /* кто пишет: кегль футера и цвет текста, а не мелкая серая подпись */
+  color: var(--pico-color);
 }
 .author-line a {
   color: inherit;
