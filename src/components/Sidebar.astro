@@ -91,6 +91,13 @@ function isActive(href: string): boolean {
   return normalize(currentPath) === normalize(href);
 }
 
+// Папка раскрыта, если в ней лежит текущая страница; корень blog/ раскрыт всегда
+function isOnActivePath(fullPath: string): boolean {
+  if (!fullPath) return true;
+  const p = currentPath.endsWith('/') ? currentPath : currentPath + '/';
+  return p.startsWith(`${BASE}blog/${fullPath}/`);
+}
+
 function getFolderHref(fullPath: string) {
   const cleanPath = fullPath ? `${fullPath}/` : '';
   return `${BASE}blog/${cleanPath}`;
@@ -182,7 +189,7 @@ function getFolderHref(fullPath: string) {
           } : {})}
         >
           {node.kind === 'folder' ? (
-            <details open>
+            <details open={isOnActivePath(node.fullPath || '')}>
               <summary class="contrast">
                 <span class="ascii-icon folder">▸</span>
                 <a 
@@ -277,6 +284,8 @@ function getFolderHref(fullPath: string) {
             allFolderItems.forEach(folder => {
               const visibleFiles = folder.querySelectorAll('li[data-filename]:not([style*="display: none"])');
               folder.style.display = visibleFiles.length > 0 ? '' : 'none';
+              const details = folder.querySelector('details');
+              if (details && visibleFiles.length > 0) details.open = true;
             });
             const empty = document.getElementById('sidebar-empty');
             if (empty) empty.hidden = tree.querySelectorAll('li[data-filename]:not([style*="display: none"])').length > 0;
@@ -345,11 +354,27 @@ function getFolderHref(fullPath: string) {
       allFolderItems.forEach(folder => {
         const visibleFiles = folder.querySelectorAll<HTMLLIElement>('li[data-filename]:not([style*="display: none"])');
         folder.style.display = visibleFiles.length > 0 ? '' : 'none';
+        const details = folder.querySelector('details');
+        if (details && visibleFiles.length > 0) details.open = true;
       });
       if (empty) empty.hidden = tree!.querySelectorAll('li[data-filename]:not([style*="display: none"])').length > 0;
     }
 
     searchInput.addEventListener('input', performSearch);
+
+    // --- Текущий файл виден сразу: в sticky-дереве на десктопе и в оверлее на мобиле ---
+    function revealActive() {
+      const active = tree!.querySelector<HTMLElement>('.file-link.active, .folder-link.active');
+      const box = document.getElementById('layout-sidebar');
+      if (!active || !box) return;
+      const a = active.getBoundingClientRect();
+      const b = box.getBoundingClientRect();
+      if (a.top < b.top || a.bottom > b.bottom) {
+        box.scrollTop += a.top - b.top - b.height / 3;
+      }
+    }
+    revealActive();
+    window.addEventListener('sidebar-state-changed', () => requestAnimationFrame(revealActive));
     clearBtn?.addEventListener('click', () => {
       searchInput.value = '';
       performSearch();
@@ -525,7 +550,7 @@ function getFolderHref(fullPath: string) {
 
   .sidebar-empty {
     margin: 0.4rem 0 0;
-    font-size: 0.8rem;
+    font-size: inherit;
     color: var(--pico-muted-color);
   }
   .sidebar-empty[hidden] {
@@ -536,7 +561,8 @@ function getFolderHref(fullPath: string) {
   .sidebar-nav {
     position: relative;
     font-family: var(--font-family);
-    font-size: 0.8rem;
+    /* Дерево следует за регулятором размера шрифта: 0.8 от кегля статьи */
+    font-size: calc(var(--app-article-font, 1rem) * 0.8);
   }
 
   .sidebar-nav ul {
@@ -571,7 +597,7 @@ function getFolderHref(fullPath: string) {
 
   .sidebar-nav summary {
     cursor: pointer;
-    font-size: 0.8rem;
+    font-size: inherit;
     font-weight: bold;
     margin-bottom: 0;
     line-height: 1;
@@ -663,7 +689,7 @@ function getFolderHref(fullPath: string) {
   }
 
   .file-date {
-    font-size: var(--app-font-caption);
+    font-size: calc(var(--app-article-font, 1rem) * 0.7);
     opacity: 0.7;
     white-space: nowrap;
     line-height: 1.7;

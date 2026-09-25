@@ -33,7 +33,7 @@
   --app-navbar-mobile-height: 48px;
   --app-navbar-mobile-button: 44px;
   --app-sidebar-width: 320px;
-  --app-main-max-width: 130ch;
+  --app-main-max-width: 92ch; /* ~85 знаков mono в строке: эссе читается без потери строки */
   --app-content-padding-top-mobile: 52px;
 
   /* Spacing */
@@ -294,6 +294,16 @@ pre, code {
   }
   #layout-sidebar {
     padding-right: var(--app-spacing-page);
+    /* Дерево остаётся на экране при чтении лонгрида и прокручивается само */
+    position: sticky;
+    top: 0;
+    align-self: start;
+    max-height: 100vh;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    padding-top: var(--app-spacing-md);
+    margin-top: calc(-1 * var(--app-spacing-md));
   }
   main {
     padding-left: var(--app-spacing-page);
