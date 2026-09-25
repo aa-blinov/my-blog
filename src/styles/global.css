@@ -895,6 +895,13 @@ a.all-articles-link.post-title-link:hover {
   opacity: 0.3;
 }
 
+.site-map {
+  margin-top: var(--app-spacing-xl);
+}
+.site-map .post-list-item {
+  margin-bottom: var(--app-spacing-lg);
+}
+
 .recent-posts {
   margin-top: 4rem;
   border-top: 1px solid var(--pico-muted-border-color);

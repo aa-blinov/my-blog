@@ -98,6 +98,13 @@ function isOnActivePath(fullPath: string): boolean {
   return p.startsWith(`${BASE}blog/${fullPath}/`);
 }
 
+// В дереве заголовок до первого «: »: у научпопа после двоеточия идёт подзаголовок, он отрезался многоточием
+function shortTitle(title: string): string {
+  const clean = title.replace(/:\s*Об этой секции$/, '');
+  const i = clean.indexOf(': ');
+  return i > 0 ? clean.slice(0, i) : clean;
+}
+
 function getFolderHref(fullPath: string) {
   const cleanPath = fullPath ? `${fullPath}/` : '';
   return `${BASE}blog/${cleanPath}`;
@@ -207,7 +214,7 @@ function getFolderHref(fullPath: string) {
             <>
               <span class="file-link-wrapper">
                 <a href={`${BASE}blog/${node.entry?.slug}/`} class:list={['file-link', { active: isActive(`${BASE}blog/${node.entry?.slug}/`) }]}>
-                        <span class="file-name" title={`${node.entry?.title.replace(/:\s*Об этой секции$/, '')} (${node.name})`}>{node.entry?.title.replace(/:\s*Об этой секции$/, '')}</span>
+                        <span class="file-name" title={`${node.entry?.title.replace(/:\s*Об этой секции$/, '')} (${node.name})`}>{shortTitle(node.entry?.title ?? '')}</span>
                 </a>
               </span>
               <span class="file-date">{formatDate(node.entry!.date)}</span>
