@@ -876,10 +876,6 @@ a.all-articles-link.post-title-link:hover {
   align-self: baseline;
   margin-top: 0.45em;
 }
-.section-heading .glyph {
-  color: var(--pico-muted-color); /* текстовый знак, как в дереве; графических иконок в контенте нет */
-  font-weight: 400;
-}
 .section-block {
   margin-top: 3rem;
 }

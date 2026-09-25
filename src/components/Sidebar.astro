@@ -321,19 +321,15 @@ function getFolderHref(fullPath: string) {
     const tree = document.getElementById('sidebar-tree');
     if (!searchInput || !sortBtn || !tree) return;
 
-    // --- Имя папки: на десктопе ссылка на раздел, на телефоне раскрывает папку (в раздел ведёт →) ---
+    // --- Имя папки везде раскрывает папку, в раздел ведёт стрелка справа: одна модель на всех ширинах ---
     tree.addEventListener('click', (e) => {
       const target = e.target as HTMLElement;
       const folderLink = target.closest('.folder-link');
       if (!folderLink) return;
-      if (window.innerWidth < 992) {
-        e.preventDefault();
-        const details = folderLink.closest('details');
-        if (details) details.open = !details.open;
-        e.stopImmediatePropagation();
-        return;
-      }
-      e.stopPropagation();
+      e.preventDefault();
+      const details = folderLink.closest('details');
+      if (details) details.open = !details.open;
+      e.stopImmediatePropagation();
     }, true);
 
     // --- Транслитерация ---
@@ -678,7 +674,29 @@ function getFolderHref(fullPath: string) {
   }
 
   .folder-open {
-    display: none; /* только на телефоне: отдельная цель для перехода в раздел */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 20px;
+    margin-left: auto;
+    color: var(--pico-muted-color);
+    opacity: 0.6;
+    text-decoration: none;
+    transition: opacity var(--app-transition), color var(--app-transition);
+  }
+  .folder-open:hover,
+  .folder-open:focus-visible {
+    opacity: 1;
+    color: var(--pico-primary);
+  }
+  .folder-open svg {
+    width: 14px;
+    height: 14px;
+  }
+  .sidebar-nav summary {
+    display: flex;
+    align-items: center;
   }
 
   .sidebar-nav a.folder-link:hover {
@@ -768,22 +786,18 @@ function getFolderHref(fullPath: string) {
       font-size: var(--app-font-lg);
       white-space: nowrap;
     }
-    .sidebar-nav summary {
-      display: flex;
-      align-items: center;
-    }
     .sidebar-nav summary .folder-link {
       flex: 1;
     }
     .folder-open {
-      display: flex;
-      align-items: center;
-      justify-content: center;
       width: 44px;
       height: 44px;
       margin: -6px 0;
-      color: var(--pico-muted-color);
-      text-decoration: none;
+      opacity: 1;
+    }
+    .folder-open svg {
+      width: 18px;
+      height: 18px;
     }
     .sidebar-nav a.file-link, 
     .sidebar-nav a.folder-link, 

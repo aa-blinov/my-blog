@@ -48,7 +48,7 @@ if (homeEntry) {
   {Content ? <Content /> : <p>Добавь в <code>content/pages/</code> файл <code>main.md</code> с frontmatter: <code>title</code>, <code>date</code>.</p>}
 
   <div class="site-map">
-    <h2 class="section-heading"><span class="glyph" aria-hidden="true">▸</span> Разделы</h2>
+    <h2 class="section-heading">Разделы</h2>
     {seriesRows.map((s) => (
       <div class="post-list-item">
         <p class="meta"><span>{s.folder}/</span><span class="meta-sep" aria-hidden="true">~</span><span>{s.parts.length} {plural(s.parts.length, 'часть', 'части', 'частей')}</span></p>
@@ -64,7 +64,7 @@ if (homeEntry) {
   </div>
   
   <div class="recent-posts">
-    <h2 class="section-heading"><span class="glyph" aria-hidden="true">▸</span>
+    <h2 class="section-heading">
       Свежие статьи
     </h2>
     <PostList posts={posts} />
@@ -80,7 +80,7 @@ if (homeEntry) {
 
   {recentNotes.length > 0 && (
     <div class="recent-posts">
-      <h2 class="section-heading"><span class="glyph" aria-hidden="true">▸</span>
+      <h2 class="section-heading">
         Заметки
       </h2>
       <NoteList notes={recentNotes} />
