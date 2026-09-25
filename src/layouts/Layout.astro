@@ -22,6 +22,7 @@ const blogEntries = sortByDateDesc((await getCollection('blog')).filter((e) => !
     title: entry.data.title,
     date: entry.data.date,
     section: entry.data.section, // Still support frontmatter override
+    part: entry.data.part, // номер части в серии: дерево сортирует по нему
   };
 });
 

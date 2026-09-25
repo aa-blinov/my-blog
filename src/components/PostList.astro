@@ -3,10 +3,11 @@ import { formatDate } from '../utils/date';
 import { BASE } from '../config';
 
 interface Props {
-  posts: { id: string; data: { title: string; date: Date; section?: string; summary?: string } }[];
+  posts: { id: string; data: { title: string; date: Date; section?: string; summary?: string; part?: number } }[];
+  numbered?: boolean; // серия: номер части перед датой
 }
 
-const { posts } = Astro.props;
+const { posts, numbered = false } = Astro.props;
 ---
 
 <div class="post-list">
@@ -15,7 +16,7 @@ const { posts } = Astro.props;
   ) : (
     posts.map((entry) => (
       <div class="post-list-item">
-        <p class="meta"><span>{formatDate(entry.data.date)}</span><span class="meta-sep" aria-hidden="true">~</span><span>{entry.id}.md</span></p>
+        <p class="meta">{numbered && entry.data.part !== undefined && <><span>часть {entry.data.part}</span><span class="meta-sep" aria-hidden="true">~</span></>}<span>{formatDate(entry.data.date)}</span><span class="meta-sep" aria-hidden="true">~</span><span>{entry.id}.md</span></p>
         <h3>
           <a href={`${BASE}blog/${entry.id}/`} class="post-title-link">
             {entry.data.title}

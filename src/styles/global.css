@@ -564,6 +564,69 @@ a.all-articles-link.post-title-link:hover {
 }
 
 /* ==========================================================================
+   Series: line under the title, prev/next after the text
+   ========================================================================== */
+
+.series-line {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 0.6em;
+  margin: var(--app-spacing-md) 0 0;
+  font-size: var(--app-font-control);
+  color: var(--pico-muted-color);
+}
+.series-line a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--pico-muted-border-color);
+  text-underline-offset: 0.2em;
+}
+.series-line a:hover {
+  color: var(--pico-primary);
+  text-decoration-color: var(--pico-primary);
+}
+
+.series-nav {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--app-spacing-xl);
+  margin-top: 3rem;
+  padding-top: var(--app-spacing-lg);
+  border-top: 1px solid var(--pico-muted-border-color);
+  font-weight: 700;
+  line-height: 1.3;
+}
+.series-nav a {
+  color: var(--pico-contrast);
+  text-decoration: none;
+  transition: color var(--app-transition);
+  max-width: 48%;
+}
+.series-nav a:hover {
+  color: var(--pico-primary);
+}
+.series-next {
+  margin-left: auto;
+  text-align: right;
+}
+.series-arrow {
+  color: var(--pico-muted-color);
+}
+@media (max-width: 991px) {
+  .series-nav {
+    flex-direction: column;
+    gap: var(--app-spacing);
+  }
+  .series-nav a {
+    max-width: none;
+  }
+  .series-next {
+    margin-left: 0;
+    text-align: left;
+  }
+}
+
+/* ==========================================================================
    Notes feed: git-log rhythm, a time stamp and text, hairline between entries
    ========================================================================== */
 

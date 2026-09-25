@@ -1,5 +1,6 @@
 ---
 title: "Решить, что забыть"
+part: 3
 date: 2026-09-10
 draft: false
 ---

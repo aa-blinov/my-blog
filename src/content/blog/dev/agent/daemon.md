@@ -1,5 +1,6 @@
 ---
 title: "Агент как процесс"
+part: 8
 date: 2026-09-11
 draft: false
 ---

@@ -8,6 +8,7 @@ interface BlogEntry {
   title: string;
   date: Date;
   section?: string;
+  part?: number;
 }
 
 interface Props {
@@ -145,7 +146,11 @@ function getFolderHref(fullPath: string) {
     
     {/* Рекурсивный рендеринг дерева */}
     {function renderTree(node: TreeNode) {
-      const childrenArr = Object.values(node.children || {}).sort((a, b) => a.name.localeCompare(b.name));
+      // Папка-серия (у детей есть part): части по номеру, about-* сверху; иначе по алфавиту
+      const isSeriesFolder = node.kind === 'folder' && Object.values(node.children || {}).some((c) => c.entry?.part !== undefined);
+      const childrenArr = Object.values(node.children || {}).sort((a, b) =>
+        isSeriesFolder ? (a.entry?.part ?? -1) - (b.entry?.part ?? -1) : a.name.localeCompare(b.name),
+      );
       
       // Calculate order values for CSS. 
       // We use timestamps in seconds to keep them within safe integer range for CSS.
@@ -153,6 +158,7 @@ function getFolderHref(fullPath: string) {
       // asc: lower date = smaller order value
       const isSectionRootFile = node.kind === 'file' && node.name.startsWith('about-');
       const orderPinTop = -9999999999; // «обзор раздела» (about-*.md) всегда сверху в своей папке
+      const partOrder = node.kind === 'file' && node.entry?.part !== undefined ? node.entry.part : null; // часть серии не перемешивается сортировкой по дате
       const dateVal = node.entry?.date.getTime() || 0;
       const minDateVal = node.minDate?.getTime() || 0;
       const maxDateVal = node.maxDate?.getTime() || 0;
@@ -161,8 +167,8 @@ function getFolderHref(fullPath: string) {
         <li 
           class:list={[{ 'folder-item': node.kind === 'folder', 'sortable-item': true }]} 
           style={{
-            '--order-desc': isSectionRootFile ? orderPinTop : (node.kind === 'file' ? -Math.floor(dateVal / 100000) : -Math.floor(maxDateVal / 100000)),
-            '--order-asc': isSectionRootFile ? orderPinTop : (node.kind === 'file' ? Math.floor(dateVal / 100000) : Math.floor(minDateVal / 100000))
+            '--order-desc': isSectionRootFile ? orderPinTop : partOrder ?? (node.kind === 'file' ? -Math.floor(dateVal / 100000) : -Math.floor(maxDateVal / 100000)),
+            '--order-asc': isSectionRootFile ? orderPinTop : partOrder ?? (node.kind === 'file' ? Math.floor(dateVal / 100000) : Math.floor(minDateVal / 100000))
           }}
           data-date-min={node.minDate?.toISOString()} 
           data-date-max={node.maxDate?.toISOString()}

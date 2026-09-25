@@ -1,0 +1,38 @@
+---
+import type { Series, BlogEntry } from '../utils/series';
+import { BASE } from '../config';
+
+interface Props {
+  series: Series;
+  entry: BlogEntry;
+  where: 'head' | 'foot';
+}
+
+const { series, entry, where } = Astro.props;
+const idx = series.parts.findIndex((p) => p.id === entry.id);
+const prev = idx > 0 ? series.parts[idx - 1] : null;
+const next = idx >= 0 && idx < series.parts.length - 1 ? series.parts[idx + 1] : null;
+const href = (e: BlogEntry) => `${BASE}blog/${e.id}/`;
+const tocHref = `${BASE}blog/${series.folder}/`;
+---
+
+{where === 'head' ? (
+  <p class="series-line">
+    <span>Серия <a href={tocHref}>«{series.title}»</a></span>
+    <span class="meta-sep" aria-hidden="true">~</span>
+    <span>часть {entry.data.part} из {series.parts.length}</span>
+  </p>
+) : (
+  <nav class="series-nav" aria-label="Навигация по серии">
+    {prev ? (
+      <a href={href(prev)} class="series-prev" rel="prev"><span class="series-arrow" aria-hidden="true">←</span> {prev.data.title}</a>
+    ) : (
+      <a href={tocHref} class="series-prev"><span class="series-arrow" aria-hidden="true">←</span> Оглавление серии</a>
+    )}
+    {next ? (
+      <a href={href(next)} class="series-next" rel="next">{next.data.title} <span class="series-arrow" aria-hidden="true">→</span></a>
+    ) : (
+      <a href={tocHref} class="series-next">Оглавление серии <span class="series-arrow" aria-hidden="true">→</span></a>
+    )}
+  </nav>
+)}

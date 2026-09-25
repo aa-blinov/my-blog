@@ -10,6 +10,7 @@ const blog = defineCollection({
     draft: z.boolean().optional().default(false),
     summary: z.string().optional(),
     section: z.string().optional(),
+    part: z.number().int().positive().optional(), // номер части внутри серии (папка с about-*.md)
   }),
 });
 
