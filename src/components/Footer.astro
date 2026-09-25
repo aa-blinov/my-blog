@@ -1,6 +1,9 @@
 ---
 import { SITE, BASE } from '../config';
+import { getCollection } from 'astro:content';
 const year = new Date().getFullYear();
+// Ссылки на ленту появляются вместе с первой заметкой, как и пин в дереве
+const hasNotes = (await getCollection('notes')).some((n) => !n.data.draft);
 ---
 <footer class="site-footer">
   <small>
@@ -12,10 +15,18 @@ const year = new Date().getFullYear();
     {' | '}
     <a href={SITE.linkedin} target="_blank" rel="noopener noreferrer me" aria-label="LinkedIn, откроется в новой вкладке">LinkedIn</a>
     <br />
-    <a href={`${BASE}notes/`}>Заметки</a>
-    {' | '}
+    {hasNotes && (
+      <>
+        <a href={`${BASE}notes/`}>Заметки</a>
+        {' | '}
+      </>
+    )}
     RSS: <a href={`${BASE}rss.xml`}>статьи</a>
-    {' | '}
-    <a href={`${BASE}notes.xml`}>заметки</a>
+    {hasNotes && (
+      <>
+        {' | '}
+        <a href={`${BASE}notes.xml`}>заметки</a>
+      </>
+    )}
   </small>
 </footer>

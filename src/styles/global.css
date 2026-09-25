@@ -461,6 +461,9 @@ pre, code {
 }
 
 .meta {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 0.6em;
   color: var(--pico-muted-color);
   font-size: var(--app-font-sm);
   margin-bottom: var(--app-spacing-md);
@@ -645,11 +648,6 @@ a.all-articles-link.post-title-link:hover {
 }
 
 /* Meta line: date ~ path, the tilde as a quiet separator (one glyph for the whole site) */
-.meta {
-  display: flex;
-  flex-wrap: wrap;
-  column-gap: 0.6em;
-}
 .meta-sep {
   opacity: 0.55;
   user-select: none;
@@ -878,11 +876,9 @@ a.all-articles-link.post-title-link:hover {
   align-self: baseline;
   margin-top: 0.45em;
 }
-.section-heading svg {
-  width: 1.75rem;
-  height: 1.75rem;
-  color: var(--pico-muted-color); /* иконка это знак, не состояние: зелёный только на активном и ссылках */
-  flex-shrink: 0;
+.section-heading .glyph {
+  color: var(--pico-muted-color); /* текстовый знак, как в дереве; графических иконок в контенте нет */
+  font-weight: 400;
 }
 .section-block {
   margin-top: 3rem;
@@ -897,6 +893,8 @@ a.all-articles-link.post-title-link:hover {
 
 .site-map {
   margin-top: var(--app-spacing-xl);
+  padding-top: var(--app-spacing-lg);
+  border-top: 1px solid var(--pico-muted-border-color);
 }
 .site-map .post-list-item {
   margin-bottom: var(--app-spacing-lg);

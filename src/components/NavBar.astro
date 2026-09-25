@@ -36,14 +36,6 @@ interface Props {
   <ul class="bottom-nav">
     <!-- Font Size Controls -->
     <li>
-      <button id="font-increase" class="contrast" aria-label="Увеличить шрифт">
-        <!-- Plus Icon -->
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" width="20" height="20">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-        </svg>
-      </button>
-    </li>
-    <li>
       <button id="font-decrease" class="contrast" aria-label="Уменьшить шрифт">
         <!-- Minus Icon -->
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" width="20" height="20">
@@ -52,6 +44,14 @@ interface Props {
       </button>
     </li>
 
+    <li>
+      <button id="font-increase" class="contrast" aria-label="Увеличить шрифт">
+        <!-- Plus Icon -->
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" width="20" height="20">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+        </svg>
+      </button>
+    </li>
     <!-- Theme Toggle -->
     <li>
       <button id="theme-toggle" class="contrast" aria-label="Переключить тему">
@@ -304,9 +304,6 @@ interface Props {
       flex-shrink: 0;
     }
 
-    .vertical-navbar .bottom-nav li:nth-child(1) { order: 0; }
-    .vertical-navbar .bottom-nav li:nth-child(2) { order: -1; }
-    .vertical-navbar .bottom-nav li:nth-child(3) { order: 1; }
 
     .vertical-navbar .bottom-nav {
       margin-top: 0;

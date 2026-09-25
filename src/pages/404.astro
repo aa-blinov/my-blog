@@ -6,7 +6,7 @@ import { BASE } from '../config';
 <Layout title="Файла нет" description="Такой страницы нет">
   <article>
     <div class="entry-header">
-      <p class="meta"><span>404</span><span class="meta-sep" aria-hidden="true">~</span><span>file not found</span></p>
+      <p class="meta"><span>404</span><span class="meta-sep" aria-hidden="true">~</span><span id="missing-path">file not found</span></p>
       <hgroup>
         <h1>Такого файла нет</h1>
         <p class="summary">Ссылка устарела или в адресе опечатка.</p>
@@ -18,3 +18,11 @@ import { BASE } from '../config';
     </div>
   </article>
 </Layout>
+
+<script is:inline>
+  // Показать, какого адреса нет: читатель видит опечатку сразу
+  (function () {
+    var el = document.getElementById('missing-path');
+    if (el && location.pathname && location.pathname !== '/') el.textContent = location.pathname;
+  })();
+</script>

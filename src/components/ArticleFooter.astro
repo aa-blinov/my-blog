@@ -10,30 +10,38 @@ interface Props {
 }
 
 const { entry, inSeries } = Astro.props;
+const isAbout = (id: string) => id.split('/').pop()!.startsWith('about-');
+const folder = entry.id.slice(0, entry.id.lastIndexOf('/'));
+const all = (await getCollection('blog')).filter((e) => !e.data.draft && !isAbout(e.id) && e.id !== entry.id);
+// Соседи из своей папки; если она почти пуста, из верхнего раздела
+const inFolder = all.filter((e) => e.id.startsWith(folder + '/'));
 const top = entry.id.split('/')[0];
-const isAbout = entry.id.split('/').pop()!.startsWith('about-');
-const more = inSeries || isAbout
-  ? []
-  : sortByDateDesc(
-      (await getCollection('blog')).filter(
-        (e) => !e.data.draft && e.id !== entry.id && e.id.startsWith(top + '/') && !e.id.split('/').pop()!.startsWith('about-'),
-      ),
-    ).slice(0, 3);
+const pool = inFolder.length >= 2 ? inFolder : all.filter((e) => e.id.startsWith(top + '/'));
+const poolFolder = inFolder.length >= 2 ? folder : top;
+const more = inSeries || isAbout(entry.id) ? [] : sortByDateDesc(pool).slice(0, 3);
+const folderName = poolFolder.split('/').pop()!;
+const about = (await getCollection('blog')).find((e) => e.id === `${poolFolder}/about-${folderName}`);
+const folderTitle = about?.data.title.replace(/:\s*Об этой секции$/, '') ?? sectionTitle(folderName);
+const hasNotes = (await getCollection('notes')).some((n) => !n.data.draft);
 ---
 
 <aside class="article-footer" aria-label="После статьи">
   {more.length > 0 && (
     <section class="more-in-section">
-      <h2 class="section-heading">Ещё в разделе «{sectionTitle(top)}» <span class="section-slug">{top}/</span></h2>
+      <h2 class="section-heading">Ещё в разделе «{folderTitle}» <span class="section-slug">{poolFolder}/</span></h2>
       <PostList posts={more} />
-      <p class="all-articles"><a href={`${BASE}blog/${top}/`} class="post-title-link all-articles-link">Весь раздел &rarr;</a></p>
+      <p class="all-articles"><a href={`${BASE}blog/${poolFolder}/`} class="post-title-link all-articles-link">Весь раздел &rarr;</a></p>
     </section>
   )}
   <p class="author-line">
     <span>{SITE.author}, руководитель разработки в EORA.</span>
     <a href={`${BASE}about-me/`}>Обо мне</a>
-    <span class="meta-sep" aria-hidden="true">~</span>
-    <a href={`${BASE}notes/`}>Заметки</a>
+    {hasNotes && (
+      <>
+        <span class="meta-sep" aria-hidden="true">~</span>
+        <a href={`${BASE}notes/`}>Заметки</a>
+      </>
+    )}
     <span class="meta-sep" aria-hidden="true">~</span>
     <a href={`${BASE}rss.xml`}>RSS</a>
   </p>
