@@ -6,6 +6,7 @@ import Sidebar from '../components/Sidebar.astro';
 import { BASE, SITE } from '../config';
 import { getBreadcrumb } from '../utils/breadcrumb';
 import { sortByDateDesc } from '../utils/date';
+import { liveFolders, inLiveFolder } from '../utils/series';
 import '../styles/global.css';
 
 interface Props {
@@ -15,7 +16,9 @@ interface Props {
 
 const { title, description } = Astro.props;
 
-const blogEntries = sortByDateDesc((await getCollection('blog')).filter((e) => !e.data.draft)).map((entry) => {
+const published = (await getCollection('blog')).filter((e) => !e.data.draft);
+const live = liveFolders(published);
+const blogEntries = sortByDateDesc(published.filter((e) => inLiveFolder(e.id, live))).map((entry) => {
   return {
     id: `${entry.id}.md`, // File-like path for the sidebar tree, e.g. 'science/human-body/article.md'
     slug: entry.id, // URL path like 'science/human-body/article'

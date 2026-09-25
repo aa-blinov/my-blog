@@ -4,9 +4,12 @@ import PostList from '../../components/PostList.astro';
 import { getCollection } from 'astro:content';
 import { sortByDateDesc } from '../../utils/date';
 import { sectionTitle } from '../../config';
+import { liveFolders, inLiveFolder, isAbout } from '../../utils/series';
 
 const allEntries = await getCollection('blog');
-const entries = allEntries.filter((p) => !p.data.draft);
+const published = allEntries.filter((p) => !p.data.draft);
+const live = liveFolders(published);
+const entries = published.filter((p) => inLiveFolder(p.id, live) && !isAbout(p.id));
 
 // 1. Grouping by top-level sections
 interface Group {

@@ -5,12 +5,13 @@ import NoteList from '../components/NoteList.astro';
 import { getCollection, render } from 'astro:content';
 import { sortByDateDesc } from '../utils/date';
 import { BASE, RECENT_POSTS_LIMIT } from '../config';
+import { isAbout } from '../utils/series';
 
 const pages = (await getCollection('pages')).filter((e) => !e.data.draft);
 const homeEntry = pages.find((e) => e.id === 'main');
 
 const posts = sortByDateDesc(
-  (await getCollection('blog')).filter((p) => !p.data.draft)
+  (await getCollection('blog')).filter((p) => !p.data.draft && !isAbout(p.id))
 ).slice(0, RECENT_POSTS_LIMIT);
 
 const recentNotes = sortByDateDesc(

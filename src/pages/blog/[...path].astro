@@ -6,7 +6,7 @@ import SeriesNav from '../../components/SeriesNav.astro';
 import ArticleFooter from '../../components/ArticleFooter.astro';
 import { formatDate } from '../../utils/date';
 import { sortByDateDesc } from '../../utils/date';
-import { getSeries, seriesOf } from '../../utils/series';
+import { getSeries, seriesOf, isAbout } from '../../utils/series';
 import { sectionTitle } from '../../config';
 
 type BlogEntry = CollectionEntry<'blog'>;
@@ -84,14 +84,12 @@ if (kind === 'folder') {
     }
   });
 
-  directEntries = sortByDateDesc(directEntries);
+  directEntries = sortByDateDesc(directEntries.filter((e) => !isAbout(e.id)));
   folderSeries = await getSeries(path);
   folderAbout = allEntries.find((e) => e.id === `${path}/about-${path.split('/').pop()}` && !e.data.draft) ?? null;
-  if (folderSeries) {
-    // Серия: about-файл становится вводным текстом, части идут по номеру
-    directEntries = folderSeries.parts;
-    if (folderAbout) AboutContent = (await render(folderAbout)).Content;
-  }
+  // about-файл это вводный текст раздела, не строка в списке; в серии части идут по номеру
+  if (folderAbout) AboutContent = (await render(folderAbout)).Content;
+  if (folderSeries) directEntries = folderSeries.parts;
   subGroups = Object.entries(groups)
     .map(([name, entries]) => ({ 
       name, 
@@ -134,7 +132,7 @@ const title = entry ? entry.data.title : (folderAbout?.data.title.replace(/:\s*�
         </hgroup>
       </div>
 
-      {folderSeries && AboutContent && (
+      {AboutContent && (
         <div class="content">
           <AboutContent />
         </div>

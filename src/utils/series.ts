@@ -25,3 +25,24 @@ export function seriesOf(entry: BlogEntry): string | null {
   const i = entry.id.lastIndexOf('/');
   return i > 0 ? entry.id.slice(0, i) : null;
 }
+
+/** about-<папка>.md это вводный текст раздела, а не статья. */
+export function isAbout(id: string): boolean {
+  return id.split('/').pop()!.startsWith('about-');
+}
+
+/** Папки, в которых есть хотя бы одна статья кроме about-*. Пустой раздел не показываем, пока в нём нечего читать. */
+export function liveFolders(entries: { id: string }[]): Set<string> {
+  const live = new Set<string>();
+  for (const e of entries) {
+    if (isAbout(e.id)) continue;
+    const parts = e.id.split('/');
+    for (let i = 1; i < parts.length; i++) live.add(parts.slice(0, i).join('/'));
+  }
+  return live;
+}
+
+export function inLiveFolder(id: string, live: Set<string>): boolean {
+  const i = id.lastIndexOf('/');
+  return i < 0 || live.has(id.slice(0, i));
+}
