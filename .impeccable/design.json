@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-09-25T00:00:00Z",
+  "generatedAt": "2026-09-25T12:00:00Z",
   "title": "Design System: Личный сайт Александра Блинова",
   "extensions": {
     "colorMeta": {
@@ -160,7 +160,7 @@
       },
       "headline": {
         "displayName": "Headline",
-        "purpose": "Заголовки разделов на /blog/ и h2 внутри длинных статей."
+        "purpose": "Заголовки разделов на главной, /blog/ и страницах папок. Внутри статьи своя шкала от кегля статьи: h2 1.35em, h3 1.15em, h4 1em."
       },
       "title": {
         "displayName": "Title",
@@ -172,15 +172,15 @@
       },
       "label": {
         "displayName": "Label",
-        "purpose": "Дерево файлов, поиск, сортировка, кнопка копирования; 1rem на мобильном."
+        "purpose": "Дерево файлов: 0.8 × кегль статьи на десктопе, 1rem на мобильном."
       },
       "caption": {
         "displayName": "Caption",
-        "purpose": "Даты в дереве файлов, opacity 0.45."
+        "purpose": "Даты в дереве файлов (0.7 × кегль статьи, Ink Muted без прозрачности) и подпись «по имени / новые / старые» у сортировки."
       },
       "control": {
         "displayName": "Control",
-        "purpose": "Поле поиска, сортировка, кнопка копирования, мета-строка списков; 1.15rem на мобильном, чтобы iOS не зумил поле."
+        "purpose": "Поле поиска, сортировка, кнопка копирования, мета-строка списков, строка серии, заголовок и номера «Содержания»; 1.15rem на мобильном, чтобы iOS не зумил поле."
       }
     },
     "shadows": [],
@@ -209,11 +209,13 @@
     ],
     "layout": {
       "navbarDesktopWidth": "64px",
-      "navbarMobileHeight": "46px",
+      "navbarMobileHeight": "48px",
       "sidebarWidth": "320px",
-      "mainMaxWidth": "130ch",
+      "mainMaxWidth": "92ch",
       "pagePadding": "2rem",
-      "htmlFontSize": "90%"
+      "htmlFontSize": "90%",
+      "navbarMobileButton": "44px",
+      "sidebarSticky": "position: sticky; top: 0; max-height: 100vh; overflow-y: auto"
     },
     "fonts": [
       {
@@ -239,33 +241,33 @@
       "name": "Nav Button",
       "kind": "nav",
       "refersTo": "nav-button",
-      "description": "Кнопка панели инструментов: контурная иконка без фона, зелёная при наведении.",
+      "description": "Кнопка панели инструментов: контурная иконка без фона, зелёная при наведении; на краю шкалы размера шрифта :disabled с opacity 0.3.",
       "html": "<button class=\"ds-nav-btn\" aria-label=\"Toggle theme\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z\"/></svg></button>",
-      "css": ".ds-nav-btn { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; padding: 0; border: none; background: transparent; color: var(--pico-muted-color, #646b79); opacity: 0.7; cursor: pointer; transition: opacity 0.2s ease, color 0.2s ease; } .ds-nav-btn:hover, .ds-nav-btn:focus-visible { opacity: 1; color: #95d600; outline: none; }"
+      "css": ".ds-nav-btn { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; padding: 0; border: none; background: transparent; color: var(--pico-muted-color, #646b79); opacity: 0.85; cursor: pointer; transition: opacity 0.2s ease, color 0.2s ease; } .ds-nav-btn:hover, .ds-nav-btn:focus-visible { opacity: 1; color: #95d600; outline: none; } .ds-nav-btn:disabled { opacity: 0.3; cursor: default; color: var(--pico-muted-color, #646b79); }"
     },
     {
-      "name": "Search Input",
+      "name": "Search Field",
       "kind": "input",
       "refersTo": "search-input",
-      "description": "Поле поиска по дереву файлов: прозрачное, волосяная рамка, зелёная в фокусе.",
-      "html": "<input class=\"ds-search\" type=\"search\" placeholder=\"search...\" />",
-      "css": ".ds-search { font-family: 'JetBrains Mono Variable', 'JetBrains Mono', 'Cascadia Code', Consolas, monospace; font-size: 0.75rem; padding: 0.2rem 0.4rem; border: 1px solid var(--pico-muted-border-color, #e7eaf0); border-radius: 3px; background: transparent; color: var(--pico-color, #373c44); outline: none; line-height: 1; width: 100%; } .ds-search::placeholder { color: var(--pico-muted-color, #646b79); opacity: 0.6; } .ds-search:focus { border-color: #95d600; }"
+      "description": "Поле поиска по дереву: прозрачное, волосяная рамка, зелёная в фокусе; крестик очистки появляется с текстом, под полем строка «показано N из M» или подсказка при нуле.",
+      "html": "<div class=\"ds-search-wrap\"><span class=\"ds-search-field\"><input class=\"ds-search\" type=\"text\" placeholder=\"search...\" value=\"агент\" aria-label=\"Поиск по названию и имени файла\" /><button class=\"ds-search-clear\" type=\"button\" aria-label=\"Очистить поиск\">×</button></span><p class=\"ds-search-status\" role=\"status\">показано 9 из 42</p></div>",
+      "css": ".ds-search-wrap { font-family: 'JetBrains Mono Variable', 'JetBrains Mono', 'Cascadia Code', Consolas, monospace; font-size: 0.8rem; } .ds-search-field { position: relative; display: flex; min-width: 0; } .ds-search { flex: 1; width: 100%; font-family: inherit; font-size: 0.75rem; line-height: 1; padding: 0.2rem 1.6rem 0.2rem 0.4rem; border: 1px solid var(--pico-muted-border-color, #e7eaf0); border-radius: 3px; background: transparent; color: var(--pico-color, #373c44); outline: none; margin: 0; } .ds-search::placeholder { color: var(--pico-muted-color, #646b79); opacity: 1; } .ds-search:focus { border-color: var(--pico-primary, #4d7a00); } .ds-search-clear { position: absolute; right: 0; top: 0; bottom: 0; width: 1.6rem; padding: 0; margin: 0; border: none; background: transparent; color: var(--pico-muted-color, #646b79); font-family: inherit; font-size: 1.15rem; line-height: 1; cursor: pointer; transition: color 0.15s ease; } .ds-search-clear:hover, .ds-search-clear:focus-visible { color: var(--pico-primary, #4d7a00); outline: none; } .ds-search-status { margin: 0.4rem 0 0; color: var(--pico-muted-color, #646b79); }"
     },
     {
       "name": "Sort Button",
       "kind": "button",
       "refersTo": "sort-button",
       "description": "Кнопка сортировки дерева: контур и значок, зелёные в активном состоянии.",
-      "html": "<button class=\"ds-sort\" title=\"Сортировка по дате\">↕</button>",
-      "css": ".ds-sort { display: inline-flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono Variable', 'JetBrains Mono', monospace; font-size: 0.75rem; line-height: 1; padding: 0 0.35rem; height: 1.6rem; background: transparent; border: 1px solid var(--pico-muted-border-color, #e7eaf0); border-radius: 3px; color: var(--pico-muted-color, #646b79); cursor: pointer; transition: color 0.15s ease, border-color 0.15s ease; } .ds-sort:hover, .ds-sort:focus-visible, .ds-sort.active { color: #95d600; border-color: #95d600; outline: none; }"
+      "html": "<button class=\"ds-sort active\" title=\"Новые сверху\" aria-pressed=\"true\" data-label=\"новые\"><span aria-hidden=\"true\">↓</span></button>",
+      "css": ".ds-sort { display: inline-flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono Variable', 'JetBrains Mono', monospace; font-size: 0.75rem; line-height: 1; padding: 0 0.35rem; height: 1.6rem; background: transparent; border: 1px solid var(--pico-muted-border-color, #e7eaf0); border-radius: 3px; color: var(--pico-muted-color, #646b79); cursor: pointer; transition: color 0.15s ease, border-color 0.15s ease; } .ds-sort:hover, .ds-sort:focus-visible, .ds-sort.active { color: #95d600; border-color: #95d600; outline: none; } .ds-sort[data-label]::after { content: attr(data-label); margin-left: 0.15rem; font-size: 0.7rem; opacity: 0.8; }"
     },
     {
       "name": "File Tree",
       "kind": "nav",
       "refersTo": "file-link",
-      "description": "Дерево файлов: папка с треугольником, файлы с датой, активный файл зелёный на подложке.",
-      "html": "<nav class=\"ds-tree\"><ul><li class=\"ds-folder\"><span class=\"ds-icon ds-folder-icon\">▸</span><a href=\"#\" class=\"ds-folder-link\">dev/</a><ul><li class=\"ds-file\"><a href=\"#\" class=\"ds-file-link\">agent-loop.md</a><span class=\"ds-date\">09-10-2026</span></li><li class=\"ds-file\"><a href=\"#\" class=\"ds-file-link active\">agent-tools.md</a><span class=\"ds-date\">09-10-2026</span></li></ul></li></ul></nav>",
-      "css": ".ds-tree { font-family: 'JetBrains Mono Variable', 'JetBrains Mono', 'Cascadia Code', Consolas, monospace; font-size: 0.8rem; } .ds-tree ul { list-style: none; margin: 0; padding: 0; } .ds-tree li { line-height: 1; padding: 1px 0; } .ds-tree .ds-folder > ul { padding-left: 0.75rem; margin-left: 0.2rem; border-left: 1px solid var(--pico-muted-border-color, #e7eaf0); } .ds-icon { color: var(--pico-muted-color, #646b79); margin-right: 0.2rem; } .ds-folder-icon { color: #95d600; } .ds-folder-link { font-weight: 700; color: var(--pico-muted-color, #646b79); text-decoration: none; padding: 2px 4px; margin: 0 -4px; border-radius: 3px; } .ds-file { display: flex; align-items: baseline; gap: 0.75rem; } .ds-file-link { color: var(--pico-contrast, #181c25); text-decoration: none; line-height: 1.2; padding: 2px 4px; margin: 0 -4px; border-radius: 3px; transition: all 0.15s ease; flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; } .ds-file-link:hover, .ds-folder-link:hover { color: #95d600; background: var(--pico-code-background-color, #f3f4f7); } .ds-file-link.active { color: #95d600; font-weight: 700; background: rgba(149, 214, 0, 0.1); } .ds-date { font-size: 0.7rem; opacity: 0.45; white-space: nowrap; line-height: 1.7; margin-left: auto; }"
+      "description": "Дерево файлов: папка с треугольником, файлы русскими названиями до двух строк с датой ГГГГ-ММ-ДД, активный файл зелёный на подложке.",
+      "html": "<nav class=\"ds-tree\"><ul><li class=\"ds-folder\"><details open><summary><span class=\"ds-icon ds-folder-icon\">▸</span><a href=\"#\" class=\"ds-folder-link\">agent/</a></summary><ul><li class=\"ds-file\"><span class=\"ds-file-wrap\"><a href=\"#\" class=\"ds-file-link\"><span class=\"ds-file-name\" title=\"Цикл, из которого сделан агент (agent-loop.md)\">Цикл, из которого сделан агент</span></a></span><span class=\"ds-date\">2026-09-10</span></li><li class=\"ds-file\"><span class=\"ds-file-wrap\"><a href=\"#\" class=\"ds-file-link active\"><span class=\"ds-file-name\" title=\"Инструменты: как агент трогает мир (agent-tools.md)\">Инструменты: как агент трогает мир и почему это опаснее, чем кажется</span></a></span><span class=\"ds-date\">2026-09-12</span></li></ul></details></li></ul></nav>",
+      "css": ".ds-tree { font-family: 'JetBrains Mono Variable', 'JetBrains Mono', 'Cascadia Code', Consolas, monospace; font-size: 0.8rem; } .ds-tree ul { list-style: none; margin: 0; padding: 0; display: grid; } .ds-tree li { line-height: 1; padding: 1px 0; } .ds-tree summary { cursor: pointer; font-weight: 700; line-height: 1; padding: 1px 0; list-style: none; color: var(--pico-muted-color, #646b79); } .ds-tree summary::-webkit-details-marker { display: none; } .ds-tree details > ul { padding-left: 0.75rem; margin-left: 0.2rem; border-left: 1px solid var(--pico-muted-border-color, #e7eaf0); } .ds-icon { margin-right: 0.2rem; } .ds-folder-icon { color: var(--pico-primary, #4d7a00); padding: 0 0.1rem; } .ds-folder-link { color: inherit; text-decoration: none; display: inline-flex; padding: 2px 4px; margin: 0 -4px; border-radius: 3px; transition: color 0.15s ease, background-color 0.15s ease; } .ds-file { display: flex; align-items: flex-start; gap: 0.75rem; min-width: 0; } .ds-file-wrap { flex: 1; min-width: 0; } .ds-file-link { display: flex; align-items: center; color: var(--pico-contrast, #181c25); text-decoration: none; line-height: 1.2; min-width: 0; padding: 2px 4px; margin: 0 -4px; border-radius: 3px; transition: color 0.15s ease, background-color 0.15s ease; } .ds-file-name { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; line-clamp: 2; overflow: hidden; overflow-wrap: anywhere; line-height: 1.25; min-width: 0; } .ds-file-link:hover, .ds-folder-link:hover, .ds-file-link:focus-visible { color: var(--pico-primary, #4d7a00); background: var(--pico-code-background-color, #f3f4f7); outline: none; } .ds-file-link.active { color: var(--pico-primary, #4d7a00); font-weight: 700; background: rgba(149, 214, 0, 0.1); } .ds-date { font-size: 0.7rem; color: var(--pico-muted-color, #646b79); white-space: nowrap; line-height: 1.25; padding-top: 2px; flex: 0 0 auto; margin-left: auto; }"
     },
     {
       "name": "Code Block",
@@ -288,36 +290,61 @@
       "kind": "custom",
       "refersTo": "post-title-link",
       "description": "Статья в списке: мета-строка с датой и путём, заголовок без рамок и подложек.",
-      "html": "<div class=\"ds-post\"><p class=\"ds-meta\">09-24-2026 · ai/dead-internet.md</p><h3 class=\"ds-post-title\"><a href=\"#\">Интернет не умер. Он сменил читателя</a></h3></div>",
-      "css": ".ds-post { font-family: 'JetBrains Mono Variable', 'JetBrains Mono', 'Cascadia Code', Consolas, monospace; margin-bottom: 2rem; } .ds-meta { margin: 0 0 0.15rem; font-size: 0.75rem; color: var(--pico-muted-color, #646b79); opacity: 0.6; } .ds-post-title { margin: 0; font-size: 1.15rem; line-height: 1.3; font-weight: 700; } .ds-post-title a { color: var(--pico-contrast, #181c25); text-decoration: none; transition: color 0.2s ease; } .ds-post-title a:hover, .ds-post-title a:focus-visible { color: #95d600; outline: none; }"
+      "html": "<div class=\"ds-post\"><p class=\"ds-meta\">2026-09-24 <span class=\"ds-sep\">~</span> ai/dead-internet.md</p><h3 class=\"ds-post-title\"><a href=\"#\">Интернет не умер. Он сменил читателя</a></h3></div>",
+      "css": ".ds-post { font-family: 'JetBrains Mono Variable', 'JetBrains Mono', 'Cascadia Code', Consolas, monospace; margin-bottom: 2rem; } .ds-meta { margin: 0 0 0.15rem; font-size: 0.75rem; color: var(--pico-muted-color, #646b79); opacity: 0.6; } .ds-post-title { margin: 0; font-size: 1.15rem; line-height: 1.3; font-weight: 700; } .ds-post-title a { color: var(--pico-contrast, #181c25); text-decoration: none; transition: color 0.2s ease; } .ds-post-title a:hover, .ds-post-title a:focus-visible { color: #95d600; outline: none; } .ds-sep { opacity: 0.55; margin: 0 0.3em; user-select: none; }"
     },
     {
       "name": "Article Header",
       "kind": "custom",
       "refersTo": "post-title-link",
       "description": "Шапка статьи: мета-строка, заголовок, волосяная линия снизу.",
-      "html": "<header class=\"ds-entry\"><p class=\"ds-entry-meta\">09-10-2026 · dev/agent-loop.md</p><h1 class=\"ds-entry-title\">Цикл, из которого сделан агент</h1></header>",
-      "css": ".ds-entry { font-family: 'JetBrains Mono Variable', 'JetBrains Mono', 'Cascadia Code', Consolas, monospace; border-bottom: 1px solid var(--pico-muted-border-color, #e7eaf0); padding-bottom: 1rem; margin-bottom: 1.5rem; } .ds-entry-meta { margin: 0 0 0.5rem; font-size: 0.9rem; color: var(--pico-muted-color, #646b79); } .ds-entry-title { margin: 0; font-size: 2em; line-height: 1.125; font-weight: 700; color: var(--pico-h1-color, #2d3138); }"
+      "html": "<header class=\"ds-entry\"><p class=\"ds-entry-meta\">2026-09-10 <span class=\"ds-sep\">~</span> dev/agent-loop.md</p><h1 class=\"ds-entry-title\">Цикл, из которого сделан агент</h1></header>",
+      "css": ".ds-entry { font-family: 'JetBrains Mono Variable', 'JetBrains Mono', 'Cascadia Code', Consolas, monospace; border-bottom: 1px solid var(--pico-muted-border-color, #e7eaf0); padding-bottom: 1rem; margin-bottom: 1.5rem; } .ds-entry-meta { margin: 0 0 0.5rem; font-size: 0.9rem; color: var(--pico-muted-color, #646b79); } .ds-entry-title { margin: 0; font-size: 2em; line-height: 1.125; font-weight: 700; color: var(--pico-h1-color, #2d3138); } .ds-sep { opacity: 0.55; margin: 0 0.3em; user-select: none; }"
     },
     {
       "name": "Note Entry",
       "kind": "custom",
       "refersTo": "note-anchor",
       "description": "Запись ленты заметок: метка времени как якорь-ссылка, текст, волосяная линия снизу; приход по якорю подсвечивается гаснущей подложкой.",
-      "html": "<div class=\"ds-note-list\"><article class=\"ds-note\" id=\"n-2026-09-24-1830\"><p class=\"ds-note-meta\"><a href=\"#n-2026-09-24-1830\" class=\"ds-note-anchor\" title=\"Ссылка на заметку\"><time datetime=\"2026-09-24T18:30:00\">09-24-2026 · 18:30</time></a></p><div class=\"ds-note-body\"><p>Короткая мысль между статьями: одно-два предложения, иногда ссылка или кусок кода.</p></div></article><article class=\"ds-note\"><p class=\"ds-note-meta\"><a href=\"#\" class=\"ds-note-anchor\"><time>09-23-2026 · 09:12</time></a></p><div class=\"ds-note-body\"><p>Вторая запись, отделённая волосяной линией.</p></div></article></div>",
-      "css": ".ds-note-list { display: flex; flex-direction: column; font-family: 'JetBrains Mono Variable', 'JetBrains Mono', 'Cascadia Code', Consolas, monospace; color: var(--pico-color, #373c44); } .ds-note { padding: 1.5rem 0; border-bottom: 1px solid var(--pico-muted-border-color, #e7eaf0); scroll-margin-top: 2rem; transition: background-color 0.6s ease; } .ds-note:first-child { padding-top: 0.5rem; } .ds-note:last-child { border-bottom: none; } .ds-note-meta { margin: 0 0 0.5rem; font-size: 0.75rem; line-height: 1; color: var(--pico-muted-color, #646b79); } .ds-note-anchor { color: inherit; text-decoration: underline; text-decoration-color: var(--pico-muted-border-color, #e7eaf0); text-underline-offset: 0.2em; transition: color 0.2s ease, text-decoration-color 0.2s ease; } .ds-note-anchor:hover, .ds-note-anchor:focus-visible { color: var(--pico-primary, #4d7a00); text-decoration-color: var(--pico-primary, #4d7a00); outline: none; } .ds-note-body { font-size: 1rem; line-height: 1.6; } .ds-note-body > :last-child { margin-bottom: 0; } .ds-note:target { animation: ds-note-arrive 3s ease-out forwards; margin-inline: -1rem; padding-inline: 1rem; border-radius: 4px; } @keyframes ds-note-arrive { 0%, 60% { background-color: var(--pico-code-background-color, #f3f4f7); } 100% { background-color: transparent; } } @media (prefers-reduced-motion: reduce) { .ds-note:target { animation: none; background-color: var(--pico-code-background-color, #f3f4f7); } }"
+      "html": "<div class=\"ds-note-list\"><article class=\"ds-note\" id=\"n-2026-09-24-1830\"><p class=\"ds-note-meta\"><a href=\"#n-2026-09-24-1830\" class=\"ds-note-anchor\" title=\"Ссылка на заметку\"><time datetime=\"2026-09-24T18:30:00\">2026-09-24 <span class=\"ds-sep\">~</span> 18:30</time></a></p><div class=\"ds-note-body\"><p>Короткая мысль между статьями: одно-два предложения, иногда ссылка или кусок кода.</p></div></article><article class=\"ds-note\"><p class=\"ds-note-meta\"><a href=\"#\" class=\"ds-note-anchor\"><time>2026-09-23 <span class=\"ds-sep\">~</span> 09:12</time></a></p><div class=\"ds-note-body\"><p>Вторая запись, отделённая волосяной линией.</p></div></article></div>",
+      "css": ".ds-note-list { display: flex; flex-direction: column; font-family: 'JetBrains Mono Variable', 'JetBrains Mono', 'Cascadia Code', Consolas, monospace; color: var(--pico-color, #373c44); } .ds-note { padding: 1.5rem 0; border-bottom: 1px solid var(--pico-muted-border-color, #e7eaf0); scroll-margin-top: 2rem; transition: background-color 0.6s ease; } .ds-note:first-child { padding-top: 0.5rem; } .ds-note:last-child { border-bottom: none; } .ds-note-meta { margin: 0 0 0.5rem; font-size: 0.75rem; line-height: 1; color: var(--pico-muted-color, #646b79); } .ds-note-anchor { color: inherit; text-decoration: underline; text-decoration-color: var(--pico-muted-border-color, #e7eaf0); text-underline-offset: 0.2em; transition: color 0.2s ease, text-decoration-color 0.2s ease; } .ds-note-anchor:hover, .ds-note-anchor:focus-visible { color: var(--pico-primary, #4d7a00); text-decoration-color: var(--pico-primary, #4d7a00); outline: none; } .ds-note-body { font-size: 1rem; line-height: 1.6; } .ds-note-body > :last-child { margin-bottom: 0; } .ds-note:target { animation: ds-note-arrive 3s ease-out forwards; margin-inline: -1rem; padding-inline: 1rem; border-radius: 4px; } @keyframes ds-note-arrive { 0%, 60% { background-color: var(--pico-code-background-color, #f3f4f7); } 100% { background-color: transparent; } } @media (prefers-reduced-motion: reduce) { .ds-note:target { animation: none; background-color: var(--pico-code-background-color, #f3f4f7); } } .ds-sep { opacity: 0.55; margin: 0 0.3em; user-select: none; }"
+    },
+    {
+      "name": "Series Nav",
+      "kind": "nav",
+      "refersTo": "series-nav-link",
+      "description": "Серия: строка «Серия «…» ~ часть N из M» под заголовком и ссылки на соседние части после текста, жирные Ink Contrast, стрелки Ink Muted.",
+      "html": "<div class=\"ds-series\"><p class=\"ds-series-line\"><span>Серия <a href=\"#\">«Как устроен мой агент»</a></span><span class=\"ds-sep\" aria-hidden=\"true\">~</span><span>часть 3 из 9</span></p><nav class=\"ds-series-nav\" aria-label=\"Навигация по серии\"><a href=\"#\" class=\"ds-series-prev\" rel=\"prev\"><span class=\"ds-series-arrow\" aria-hidden=\"true\">←</span> Цикл, из которого сделан агент</a><a href=\"#\" class=\"ds-series-next\" rel=\"next\">Память: что агент помнит между шагами <span class=\"ds-series-arrow\" aria-hidden=\"true\">→</span></a></nav></div>",
+      "css": ".ds-series { font-family: 'JetBrains Mono Variable', 'JetBrains Mono', 'Cascadia Code', Consolas, monospace; color: var(--pico-color, #373c44); } .ds-series-line { display: flex; flex-wrap: wrap; column-gap: 0.6em; margin: 0.5rem 0 0; font-size: 0.75rem; color: var(--pico-muted-color, #646b79); } .ds-series-line a { color: inherit; text-decoration: underline; text-decoration-color: var(--pico-muted-border-color, #e7eaf0); text-underline-offset: 0.2em; } .ds-series-line a:hover, .ds-series-line a:focus-visible { color: var(--pico-primary, #4d7a00); text-decoration-color: var(--pico-primary, #4d7a00); outline: none; } .ds-sep { opacity: 0.55; user-select: none; } .ds-series-nav { display: flex; justify-content: space-between; gap: 2rem; margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--pico-muted-border-color, #e7eaf0); font-size: 1rem; font-weight: 700; line-height: 1.3; } .ds-series-nav a { color: var(--pico-contrast, #181c25); text-decoration: none; max-width: 48%; transition: color 0.2s ease; } .ds-series-nav a:hover, .ds-series-nav a:focus-visible { color: var(--pico-primary, #4d7a00); outline: none; } .ds-series-next { margin-left: auto; text-align: right; } .ds-series-arrow { color: var(--pico-muted-color, #646b79); } @media (max-width: 991px) { .ds-series-nav { flex-direction: column; gap: 1rem; } .ds-series-nav a { max-width: none; } .ds-series-next { margin-left: 0; text-align: left; } }"
+    },
+    {
+      "name": "TOC",
+      "kind": "custom",
+      "refersTo": "toc",
+      "description": "Содержание лонгрида (6+ H2): волосяная линия слева, заголовок и номера Ink Muted кеглем Control, ссылки цвета текста, зелёные при наведении.",
+      "html": "<section class=\"ds-toc\" aria-label=\"Содержание\"><p class=\"ds-toc-title\">Содержание</p><ol class=\"ds-toc-list\"><li><a href=\"#\">Зачем агенту цикл</a></li><li><a href=\"#\">Один шаг: модель, инструмент, результат</a></li><li><a href=\"#\">Где хранится состояние</a></li><li><a href=\"#\">Когда останавливаться</a></li><li><a href=\"#\">Ошибки и повторы</a></li><li><a href=\"#\">Что дальше</a></li></ol></section>",
+      "css": ".ds-toc { font-family: 'JetBrains Mono Variable', 'JetBrains Mono', 'Cascadia Code', Consolas, monospace; margin: 0 0 2rem; padding: 1rem 1.5rem; border-left: 1px solid var(--pico-muted-border-color, #e7eaf0); font-size: 0.9rem; } .ds-toc-title { margin: 0 0 0.5rem; font-size: 0.75rem; color: var(--pico-muted-color, #646b79); } .ds-toc-list { margin: 0; padding: 0 0 0 1.6em; line-height: 1.5; list-style: decimal; color: var(--pico-color, #373c44); } .ds-toc-list li { margin: 0.15em 0; padding-left: 0.2em; } .ds-toc-list li::marker { color: var(--pico-muted-color, #646b79); font-size: 0.75rem; } .ds-toc-list a { color: inherit; text-decoration: none; } .ds-toc-list a:hover, .ds-toc-list a:focus-visible { color: var(--pico-primary, #4d7a00); outline: none; }"
+    },
+    {
+      "name": "Article Footer",
+      "kind": "custom",
+      "refersTo": "author-line",
+      "description": "После статьи: «Ещё в разделе» с тремя соседями и «Весь раздел →», затем строка автора 0.9rem цветом текста с тихими ссылками через тильду.",
+      "html": "<aside class=\"ds-af\" aria-label=\"После статьи\"><section><h2 class=\"ds-af-heading\">Ещё в разделе «Разработка» <span class=\"ds-af-slug\">dev/</span></h2><div class=\"ds-af-item\"><p class=\"ds-af-meta\">2026-09-01 <span class=\"ds-sep\">~</span> dev/agent-eval.md</p><h3><a href=\"#\">Как я проверяю агента до того, как он проверит меня</a></h3></div><p class=\"ds-af-all\"><a href=\"#\" class=\"ds-af-all-link\">Весь раздел →</a></p></section><p class=\"ds-author-line\"><span>Александр Блинов, руководитель разработки в EORA.</span><a href=\"#\">Обо мне</a><span class=\"ds-sep\" aria-hidden=\"true\">~</span><a href=\"#\">Заметки</a><span class=\"ds-sep\" aria-hidden=\"true\">~</span><a href=\"#\">RSS</a></p></aside>",
+      "css": ".ds-af { font-family: 'JetBrains Mono Variable', 'JetBrains Mono', 'Cascadia Code', Consolas, monospace; color: var(--pico-color, #373c44); margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--pico-muted-border-color, #e7eaf0); } .ds-af-heading { display: flex; align-items: center; gap: 0.75rem; margin: 0 0 1.5rem; font-size: 1.15rem; font-weight: 700; } .ds-af-slug { font-size: 0.9rem; font-weight: 400; color: var(--pico-muted-color, #646b79); align-self: baseline; margin-top: 0.45em; } .ds-af-item { margin-bottom: 2rem; } .ds-af-meta { margin: 0 0 0.15rem; font-size: 0.75rem; color: var(--pico-muted-color, #646b79); } .ds-af-item h3 { margin: 0; font-size: 1.15rem; line-height: 1.3; font-weight: 700; } .ds-af-item h3 a, .ds-af-all-link { color: var(--pico-contrast, #181c25); text-decoration: none; transition: color 0.2s ease; } .ds-af-all { margin: 0; font-weight: 700; } .ds-af-item h3 a:hover, .ds-af-all-link:hover, .ds-af-item h3 a:focus-visible, .ds-af-all-link:focus-visible { color: var(--pico-primary, #4d7a00); outline: none; } .ds-sep { opacity: 0.55; user-select: none; } .ds-author-line { display: flex; flex-wrap: wrap; column-gap: 0.6em; margin: 2rem 0 0; font-size: 0.9rem; color: var(--pico-color, #373c44); } .ds-author-line a { color: inherit; text-decoration: underline; text-decoration-color: var(--pico-muted-border-color, #e7eaf0); text-underline-offset: 0.2em; } .ds-author-line a:hover, .ds-author-line a:focus-visible { color: var(--pico-primary, #4d7a00); text-decoration-color: var(--pico-primary, #4d7a00); outline: none; }"
     }
   ],
   "narrative": {
     "northStar": "Открытый проект в IDE",
-    "overview": "Сайт ведёт себя как рабочее окно редактора, в котором открыт проект блога. Слева узкая вертикальная панель инструментов, за ней дерево файлов с папками-разделами и статьями в виде .md-файлов с датами, справа сам текст. Всё набрано одним моноширинным шрифтом, включая заголовки и интерфейс, и единственный цвет в системе, Monster Green, работает как подсветка синтаксиса: он метит активный файл, курсор в поиске, ссылку под наведением и ничего больше. Интерфейс не украшает чтение, он его обслуживает и уходит с дороги.\n\nПлотность высокая, но воздух есть: дерево файлов набрано мелко и плотно, как в IDE, а колонка текста широкая (до 130 символов), с межстрочным 1.6 и абзацами через строку. Поверхности плоские: страница, сайдбар и панель инструментов лежат в одной плоскости и разделены только волосяными линиями. Тёмная тема не отдельная тема, а та же система на тёмной бумаге: те же линии, тот же зелёный, те же пропорции.",
+    "overview": "Сайт ведёт себя как рабочее окно редактора, в котором открыт проект блога. Слева узкая вертикальная панель инструментов, за ней дерево файлов с папками-разделами и статьями в виде .md-файлов с датами, справа сам текст. Всё набрано одним моноширинным шрифтом, включая заголовки и интерфейс, и единственный цвет в системе, Monster Green, работает как подсветка синтаксиса: он метит активный файл, курсор в поиске, ссылку под наведением и ничего больше. Интерфейс не украшает чтение, он его обслуживает и уходит с дороги.\n\nПлотность высокая, но воздух есть: дерево файлов набрано мелко и плотно, как в IDE, а колонка текста ограничена 92ch (около 85 знаков mono), с межстрочным 1.6 и абзацами через строку. Поверхности плоские: страница, сайдбар и панель инструментов лежат в одной плоскости и разделены только волосяными линиями. Тёмная тема не отдельная тема, а та же система на тёмной бумаге: те же линии, тот же зелёный, те же пропорции.",
     "keyCharacteristics": [
       "Одно семейство шрифта на всё: JetBrains Mono для текста, заголовков, дат, кнопок и полей.",
       "Один акцент, Monster Green, только на состояниях и метках; никаких цветных поверхностей.",
       "Плоскость без исключений: ни теней, ни градиентов, глубина только линиями и тональными подложками.",
       "Навигация как файловая система: папки, файлы и треугольники вместо меню.",
       "Две темы из одной палитры: бумага и ночь, зелёный один на обе.",
-      "Читатель управляет чтением: тема, размер шрифта в пять шагов, поиск и сортировка дерева."
+      "Читатель управляет чтением: тема, размер шрифта в пять шагов, поиск и сортировка дерева.",
+      "Статья не обрывается на последней строке: серия ведёт к соседней части, раздел к соседним статьям, автор к себе."
     ],
     "rules": [
       {
@@ -336,8 +363,18 @@
         "section": "colors"
       },
       {
+        "name": "The Pico Boundary Rule",
+        "body": "Pico лежит в своём слое и красит по тегам, поэтому у него две границы, которые нельзя переступать. Первая: <nav> получает стили горизонтального меню (nav ul, nav li), так что в <nav> живёт только настоящая навигация со сброшенным списком (дерево файлов, prev/next серии), а структурные блоки, «Содержание» и «После статьи», это section и aside. Вторая: внутри <a> Pico переопределяет --pico-color на primary, поэтому ссылка, которая должна быть цвета текста, берёт цвет от родителя (color: inherit), а цвет ставится на список или абзац; ссылке var(--pico-color) не пишется.",
+        "section": "colors"
+      },
+      {
         "name": "The One Typeface Rule",
         "body": "Пропорциональный шрифт не появляется нигде, ни в заголовках, ни в кнопках, ни в футере. Иерархия строится весом (400/700) и кеглем, не сменой гарнитуры.",
+        "section": "typography"
+      },
+      {
+        "name": "The Layer Rule",
+        "body": "Pico подключён в cascade layer pico, поэтому любое своё правило перекрывает его без !important. В коде !important не используется; если рука тянется, значит нужен более точный селектор или правило стоит выше по каскаду.",
         "section": "typography"
       },
       {
@@ -349,11 +386,6 @@
         "name": "The Flat Rule",
         "body": "box-shadow, text-shadow, filter: drop-shadow, backdrop-filter и любые градиенты не используются, включая состояния наведения и мобильные оверлеи. Если нужно отделить, проводится линия; если нужно выделить, кладётся подложка или меняется цвет текста.",
         "section": "elevation"
-      },
-      {
-        "name": "The Layer Rule",
-        "body": "Pico подключён в cascade layer pico, поэтому любое своё правило перекрывает его без !important. В коде !important не используется.",
-        "section": "typography"
       }
     ],
     "dos": [
@@ -362,9 +394,12 @@
       "Do брать для зелёного текста в светлой теме Monster Green Ink и проверять пару на 4.5:1.",
       "Do разделять зоны волосяной линией 1px цвета Paper Rule или Night Rule и выделять элементы подложкой Paper Code или Night Code.",
       "Do держать блоки кода и диаграммы в тёмном окне #24292e в обеих темах.",
-      "Do показывать статьи как файлы: имя .md, дата в формате ММ-ДД-ГГГГ, путь раздела в мета-строке.",
+      "Do показывать статьи как файлы: имя .md, дата в формате ГГГГ-ММ-ДД, путь раздела в мета-строке; между датой и путём тильда, не «·».",
       "Do отдавать читателю размер текста и тему и запоминать выбор.",
-      "Do давать тап-целям на мобильном не меньше 44px."
+      "Do давать тап-целям на мобильном не меньше 44px.",
+      "Do держать структурные блоки (содержание, «после статьи») в section и aside, а <nav> оставлять настоящей навигации со сброшенным списком.",
+      "Do задавать цвет текстовой ссылки на родителе и писать ссылке color: inherit: внутри <a> Pico подменяет --pico-color.",
+      "Do вести читателя дальше после текста: соседняя часть серии, три соседние статьи раздела, строка автора."
     ],
     "donts": [
       "Don't использовать тени, свечения, размытия и градиенты ни на одной поверхности и ни в одном состоянии.",
@@ -373,7 +408,9 @@
       "Don't рисовать карточки: статьи в списках это заголовок с мета-строкой, без рамок и подложек.",
       "Don't заменять текстовые знаки ▸, →, ~ на графические и добавлять эмодзи в интерфейс.",
       "Don't добавлять пропорциональный шрифт ради «читаемости» заголовков.",
-      "Don't заставлять читателя листать код по горизонтали: длинные строки переносятся."
+      "Don't заставлять читателя листать код по горизонтали: длинные строки переносятся.",
+      "Don't оборачивать в <nav> блоки, которые не меню: Pico разложит их список в горизонтальную строку.",
+      "Don't показывать в дереве пустые папки и имена .md вместо названий: файл в подсказке, название в строке."
     ]
   }
 }
