@@ -99,22 +99,25 @@ function getFolderHref(fullPath: string) {
 
 <nav class="sidebar-nav">
   <div class="sidebar-controls">
-    <input
-      type="text"
-      id="sidebar-search"
-      placeholder="search..."
-      autocomplete="off"
-      aria-label="Поиск по названиям статей"
-    />
+    <span class="search-field">
+      <input
+        type="text"
+        id="sidebar-search"
+        placeholder="search..."
+        autocomplete="off"
+        aria-label="Поиск по названию и имени файла"
+      />
+      <button id="sidebar-search-clear" class="search-clear" type="button" aria-label="Очистить поиск" hidden>×</button>
+    </span>
     <button id="sort-date-btn" class="sort-btn" title="Сортировка по дате" aria-label="Сортировка по дате" aria-pressed="false">
       <span class="sort-icon" aria-hidden="true">↕</span>
     </button>
   </div>
-  <p id="sidebar-empty" class="sidebar-empty" role="status" hidden>ничего не найдено</p>
+  <p id="sidebar-empty" class="sidebar-empty" role="status" hidden>ничего не найдено. Ищу по названию и имени файла, попробуй другое слово</p>
 
   <ul id="sidebar-tree" class="sortable-list">
     {mainEntry && (
-      <li class="sidebar-pinned" data-filename="main.md" data-date={mainEntry.date.toISOString()}>
+      <li class="sidebar-pinned" data-filename="main.md" data-title={mainEntry.title.toLowerCase()} data-date={mainEntry.date.toISOString()}>
         <span class="file-link-wrapper">
           <a href={BASE} class:list={['file-link', { active: isActive(BASE) }]}>
             <span class="file-name">main.md</span>
@@ -124,7 +127,7 @@ function getFolderHref(fullPath: string) {
       </li>
     )}
     {aboutEntry && (
-      <li class="sidebar-pinned" data-filename="about-me.md" data-date={aboutEntry.date.toISOString()}>
+      <li class="sidebar-pinned" data-filename="about-me.md" data-title={aboutEntry.title.toLowerCase()} data-date={aboutEntry.date.toISOString()}>
         <span class="file-link-wrapper">
           <a href={`${BASE}about-me/`} class:list={['file-link', { active: isActive(`${BASE}about-me/`) }]}>
             <span class="file-name">about-me.md</span>
@@ -134,7 +137,7 @@ function getFolderHref(fullPath: string) {
       </li>
     )}
     {notesEntry && (
-      <li class="sidebar-pinned" data-filename="notes.md" data-date={notesEntry.date.toISOString()}>
+      <li class="sidebar-pinned" data-filename="notes.md" data-title={notesEntry.title.toLowerCase()} data-date={notesEntry.date.toISOString()}>
         <span class="file-link-wrapper">
           <a href={`${BASE}notes/`} class:list={['file-link', { active: isActive(`${BASE}notes/`) }]}>
             <span class="file-name">notes.md</span>
@@ -174,6 +177,7 @@ function getFolderHref(fullPath: string) {
           data-date-max={node.maxDate?.toISOString()}
           {...(node.kind === 'file' ? { 
             'data-filename': node.name, 
+            'data-title': node.entry?.title.toLowerCase(),
             'data-date': node.entry?.date.toISOString() 
           } : {})}
         >
@@ -241,10 +245,12 @@ function getFolderHref(fullPath: string) {
         }
 
         // --- Restore Search State ---
-        const searchRaw = localStorage.getItem('sidebar-search');
+        const searchRaw = sessionStorage.getItem('sidebar-search');
         if (searchRaw) {
           const raw = searchRaw.toLowerCase().trim();
           searchInput.value = searchRaw; // Restore input value
+          const clearBtn = document.getElementById('sidebar-search-clear');
+          if (clearBtn) clearBtn.hidden = !raw;
           if (raw) {
             const ruToEn = {
               'а':'a','б':'b','в':'v','г':'g','д':'d','е':'e','ё':'yo',
@@ -265,7 +271,8 @@ function getFolderHref(fullPath: string) {
             
             allFileItems.forEach(li => {
               const name = (li.getAttribute('data-filename') || '').toLowerCase();
-              li.style.display = queries.some(q => name.includes(q)) ? '' : 'none';
+              const title = (li.getAttribute('data-title') || '').toLowerCase();
+              li.style.display = queries.some(q => name.includes(q)) || title.includes(raw) ? '' : 'none';
             });
             allFolderItems.forEach(folder => {
               const visibleFiles = folder.querySelectorAll('li[data-filename]:not([style*="display: none"])');
@@ -285,6 +292,7 @@ function getFolderHref(fullPath: string) {
 <script>
   document.addEventListener('DOMContentLoaded', () => {
     const searchInput = document.getElementById('sidebar-search') as HTMLInputElement;
+    const clearBtn = document.getElementById('sidebar-search-clear') as HTMLButtonElement | null;
     const sortBtn = document.getElementById('sort-date-btn');
     const tree = document.getElementById('sidebar-tree');
     if (!searchInput || !sortBtn || !tree) return;
@@ -316,7 +324,9 @@ function getFolderHref(fullPath: string) {
       const allFileItems = tree!.querySelectorAll<HTMLLIElement>('li[data-filename]');
       const allFolderItems = tree!.querySelectorAll<HTMLLIElement>('li.folder-item');
       
-      localStorage.setItem('sidebar-search', raw);
+      // Фильтр живёт в рамках вкладки: на следующий день дерево снова целое
+      sessionStorage.setItem('sidebar-search', raw);
+      if (clearBtn) clearBtn.hidden = !raw;
 
       const empty = document.getElementById('sidebar-empty');
       if (!raw) {
@@ -329,7 +339,8 @@ function getFolderHref(fullPath: string) {
       if (hasRussian(raw)) queries.push(transliterate(raw));
       allFileItems.forEach(li => {
         const name = (li.getAttribute('data-filename') || '').toLowerCase();
-        li.style.display = queries.some(q => name.includes(q)) ? '' : 'none';
+        const title = (li.getAttribute('data-title') || '').toLowerCase();
+        li.style.display = queries.some(q => name.includes(q)) || title.includes(raw) ? '' : 'none';
       });
       allFolderItems.forEach(folder => {
         const visibleFiles = folder.querySelectorAll<HTMLLIElement>('li[data-filename]:not([style*="display: none"])');
@@ -339,6 +350,18 @@ function getFolderHref(fullPath: string) {
     }
 
     searchInput.addEventListener('input', performSearch);
+    clearBtn?.addEventListener('click', () => {
+      searchInput.value = '';
+      performSearch();
+      searchInput.focus();
+    });
+    searchInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && searchInput.value) {
+        e.stopPropagation();
+        searchInput.value = '';
+        performSearch();
+      }
+    });
 
     // --- Закрытие сайдбара при клике на мобилках ---
     tree.addEventListener('click', (e) => {
@@ -401,8 +424,39 @@ function getFolderHref(fullPath: string) {
     font-family: var(--font-family);
   }
 
+  .search-field {
+    flex: 1;
+    position: relative;
+    display: flex;
+    min-width: 0;
+  }
+  .search-clear {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 1.6rem;
+    padding: 0;
+    margin: 0;
+    border: none;
+    background: transparent;
+    color: var(--pico-muted-color);
+    font-family: inherit;
+    font-size: var(--app-font-lg);
+    line-height: 1;
+    cursor: pointer;
+    transition: color 0.15s ease;
+  }
+  .search-clear:hover {
+    color: var(--pico-primary);
+  }
+  .search-clear[hidden] {
+    display: none;
+  }
   .sidebar-controls input {
     flex: 1;
+    width: 100%;
+    padding-right: 1.6rem;
     font-size: var(--app-font-control);
     font-family: inherit;
     padding: 0.2rem 0.4rem;
@@ -643,9 +697,12 @@ function getFolderHref(fullPath: string) {
     .sidebar-nav {
       font-size: 1rem;
     }
+    .search-clear {
+      width: 44px;
+    }
     .sidebar-controls input {
       font-size: var(--app-font-lg); /* ≥16px so iOS Safari does not zoom the field on focus */
-      padding: 0.6rem 0.8rem;
+      padding: 0.6rem 44px 0.6rem 0.8rem;
       height: 44px; /* Larger tap target */
     }
     .sort-btn {
