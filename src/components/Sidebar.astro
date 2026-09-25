@@ -195,7 +195,7 @@ function getFolderHref(fullPath: string) {
           } : {})}
         >
           {node.kind === 'folder' ? (
-            <details open={isOnActivePath(node.fullPath || '')}>
+            <details open={isOnActivePath(node.fullPath || '')} data-default-open={isOnActivePath(node.fullPath || '') ? 'true' : 'false'}>
               <summary class="contrast">
                 <span class="ascii-icon folder">▸</span>
                 <a 
@@ -218,7 +218,7 @@ function getFolderHref(fullPath: string) {
             <>
               <span class="file-link-wrapper">
                 <a href={`${BASE}blog/${node.entry?.slug}/`} class:list={['file-link', { active: isActive(`${BASE}blog/${node.entry?.slug}/`) }]}>
-                        <span class="file-name" title={`${node.entry?.title.replace(/:\s*Об этой секции$/, '')} (${node.name})`}>{shortTitle(node.entry?.title ?? '')}</span>
+                        <span class="file-name" title={`${node.entry?.title.replace(/:\s*Об этой секции$/, '')} (${node.name})`} data-short={shortTitle(node.entry?.title ?? '')} data-full={node.entry?.title.replace(/:\s*Об этой секции$/, '')}>{shortTitle(node.entry?.title ?? '')}</span>
                 </a>
               </span>
               <span class="file-date">{formatDate(node.entry!.date)}</span>
@@ -304,6 +304,8 @@ function getFolderHref(fullPath: string) {
             if (empty) empty.hidden = shown > 0;
             const count = document.getElementById('sidebar-count');
             if (count) { count.hidden = shown === 0; count.textContent = 'показано ' + shown + ' из ' + allFileItems.length; }
+            // В результатах полный заголовок: видно, чем совпало
+            tree.querySelectorAll('.file-name[data-full]').forEach(n => { n.textContent = n.getAttribute('data-full'); });
           }
         }
       } catch (e) {
@@ -359,10 +361,15 @@ function getFolderHref(fullPath: string) {
       if (!raw) {
         allFileItems.forEach(li => li.style.display = '');
         allFolderItems.forEach(li => li.style.display = '');
+        // Папки возвращаются к исходному раскрытию, заголовки к короткой форме
+        tree!.querySelectorAll<HTMLDetailsElement>('details[data-default-open]').forEach(d => { d.open = d.dataset.defaultOpen === 'true'; });
+        tree!.querySelectorAll<HTMLElement>('.file-name[data-short]').forEach(n => { n.textContent = n.dataset.short ?? ''; });
         if (empty) empty.hidden = true;
         if (count) count.hidden = true;
         return;
       }
+      // В результатах полный заголовок с подзаголовком: видно, чем совпало
+      tree!.querySelectorAll<HTMLElement>('.file-name[data-full]').forEach(n => { n.textContent = n.dataset.full ?? ''; });
       const queries = [raw];
       if (hasRussian(raw)) queries.push(transliterate(raw));
       allFileItems.forEach(li => {
