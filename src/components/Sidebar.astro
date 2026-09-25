@@ -14,9 +14,10 @@ interface Props {
   blogEntries: BlogEntry[];
   mainEntry?: { slug: string; title: string; date: Date } | null;
   aboutEntry?: { slug: string; title: string; date: Date } | null;
+  notesEntry?: { slug: string; title: string; date: Date } | null;
 }
 
-const { blogEntries, mainEntry, aboutEntry } = Astro.props;
+const { blogEntries, mainEntry, aboutEntry, notesEntry } = Astro.props;
 
 // --- Tree Building ---
 interface TreeNode {
@@ -131,6 +132,17 @@ function getFolderHref(fullPath: string) {
           </a>
         </span>
         <span class="file-date">{formatDate(aboutEntry.date)}</span>
+      </li>
+    )}
+    {notesEntry && (
+      <li class="sidebar-pinned" data-filename="notes.md" data-date={notesEntry.date.toISOString()}>
+        <span class="file-link-wrapper">
+          <a href={`${BASE}notes/`} class:list={['file-link', { active: isActive(`${BASE}notes/`) }]}>
+            <span class="ascii-icon">~</span>
+            <span class="file-name">notes.md</span>
+          </a>
+        </span>
+        <span class="file-date">{formatDate(notesEntry.date)}</span>
       </li>
     )}
     

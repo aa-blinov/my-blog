@@ -1,5 +1,5 @@
 ---
-import { SITE } from '../config';
+import { SITE, BASE } from '../config';
 const year = new Date().getFullYear();
 ---
 <footer class="site-footer">
@@ -11,5 +11,9 @@ const year = new Date().getFullYear();
     <a href={SITE.telegram} target="_blank" rel="noopener noreferrer me" aria-label="Telegram, откроется в новой вкладке">Telegram</a>
     {' | '}
     <a href={SITE.linkedin} target="_blank" rel="noopener noreferrer me" aria-label="LinkedIn, откроется в новой вкладке">LinkedIn</a>
+    <br />
+    RSS: <a href={`${BASE}rss.xml`}>статьи</a>
+    {' | '}
+    <a href={`${BASE}notes.xml`}>заметки</a>
   </small>
 </footer>

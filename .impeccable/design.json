@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-09-24T17:20:00Z",
+  "generatedAt": "2026-09-25T00:00:00Z",
   "title": "Design System: Личный сайт Александра Блинова",
   "extensions": {
     "colorMeta": {
@@ -194,6 +194,11 @@
         "name": "transition-tree",
         "value": "0.15s ease",
         "purpose": "Строки дерева файлов и кнопка сортировки."
+      },
+      {
+        "name": "note-arrive",
+        "value": "3s ease-out",
+        "purpose": "Подложка Paper Code / Night Code на записи ленты, на которую пришли по якорю: держится 60% времени, затем гаснет; статична при prefers-reduced-motion."
       }
     ],
     "breakpoints": [
@@ -293,6 +298,14 @@
       "description": "Шапка статьи: мета-строка, заголовок, волосяная линия снизу.",
       "html": "<header class=\"ds-entry\"><p class=\"ds-entry-meta\">09-10-2026 · dev/agent-loop.md</p><h1 class=\"ds-entry-title\">Цикл, из которого сделан агент</h1></header>",
       "css": ".ds-entry { font-family: 'JetBrains Mono Variable', 'JetBrains Mono', 'Cascadia Code', Consolas, monospace; border-bottom: 1px solid var(--pico-muted-border-color, #e7eaf0); padding-bottom: 1rem; margin-bottom: 1.5rem; } .ds-entry-meta { margin: 0 0 0.5rem; font-size: 0.9rem; color: var(--pico-muted-color, #646b79); } .ds-entry-title { margin: 0; font-size: 2em; line-height: 1.125; font-weight: 700; color: var(--pico-h1-color, #2d3138); }"
+    },
+    {
+      "name": "Note Entry",
+      "kind": "custom",
+      "refersTo": "note-anchor",
+      "description": "Запись ленты заметок: метка времени как якорь-ссылка, текст, волосяная линия снизу; приход по якорю подсвечивается гаснущей подложкой.",
+      "html": "<div class=\"ds-note-list\"><article class=\"ds-note\" id=\"n-2026-09-24-1830\"><p class=\"ds-note-meta\"><a href=\"#n-2026-09-24-1830\" class=\"ds-note-anchor\" title=\"Ссылка на заметку\"><time datetime=\"2026-09-24T18:30:00\">09-24-2026 · 18:30</time></a></p><div class=\"ds-note-body\"><p>Короткая мысль между статьями: одно-два предложения, иногда ссылка или кусок кода.</p></div></article><article class=\"ds-note\"><p class=\"ds-note-meta\"><a href=\"#\" class=\"ds-note-anchor\"><time>09-23-2026 · 09:12</time></a></p><div class=\"ds-note-body\"><p>Вторая запись, отделённая волосяной линией.</p></div></article></div>",
+      "css": ".ds-note-list { display: flex; flex-direction: column; font-family: 'JetBrains Mono Variable', 'JetBrains Mono', 'Cascadia Code', Consolas, monospace; color: var(--pico-color, #373c44); } .ds-note { padding: 1.5rem 0; border-bottom: 1px solid var(--pico-muted-border-color, #e7eaf0); scroll-margin-top: 2rem; transition: background-color 0.6s ease; } .ds-note:first-child { padding-top: 0.5rem; } .ds-note:last-child { border-bottom: none; } .ds-note-meta { margin: 0 0 0.5rem; font-size: 0.75rem; line-height: 1; color: var(--pico-muted-color, #646b79); } .ds-note-anchor { color: inherit; text-decoration: underline; text-decoration-color: var(--pico-muted-border-color, #e7eaf0); text-underline-offset: 0.2em; transition: color 0.2s ease, text-decoration-color 0.2s ease; } .ds-note-anchor:hover, .ds-note-anchor:focus-visible { color: var(--pico-primary, #4d7a00); text-decoration-color: var(--pico-primary, #4d7a00); outline: none; } .ds-note-body { font-size: 1rem; line-height: 1.6; } .ds-note-body > :last-child { margin-bottom: 0; } .ds-note:target { animation: ds-note-arrive 3s ease-out forwards; margin-inline: -1rem; padding-inline: 1rem; border-radius: 4px; } @keyframes ds-note-arrive { 0%, 60% { background-color: var(--pico-code-background-color, #f3f4f7); } 100% { background-color: transparent; } } @media (prefers-reduced-motion: reduce) { .ds-note:target { animation: none; background-color: var(--pico-code-background-color, #f3f4f7); } }"
     }
   ],
   "narrative": {

@@ -1,0 +1,22 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import NoteList from '../../components/NoteList.astro';
+import { getCollection } from 'astro:content';
+import { formatDate, sortByDateDesc } from '../../utils/date';
+
+const notes = sortByDateDesc((await getCollection('notes')).filter((n) => !n.data.draft));
+const latest = notes[0];
+---
+
+<Layout title="Заметки" description="Короткие мысли между статьями">
+  <article>
+    <div class="entry-header">
+      {latest && <p class="meta">{formatDate(latest.data.date)} · notes.md</p>}
+      <hgroup>
+        <h1>Заметки</h1>
+        <p class="summary">Короткие мысли между статьями. Новые сверху.</p>
+      </hgroup>
+    </div>
+    {notes.length > 0 ? <NoteList notes={notes} /> : <p>Пока ничего нет.</p>}
+  </article>
+</Layout>

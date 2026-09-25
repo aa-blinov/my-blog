@@ -26,6 +26,8 @@ const blogEntries = sortByDateDesc((await getCollection('blog')).filter((e) => !
 });
 
 const pages = (await getCollection('pages')).filter((e) => !e.data.draft);
+const notes = sortByDateDesc((await getCollection('notes')).filter((n) => !n.data.draft));
+const notesForSidebar = notes.length > 0 ? { slug: 'notes', title: 'Заметки', date: notes[0].data.date } : null;
 const mainEntry = pages.find((e) => e.id === 'main');
 const aboutEntry = pages.find((e) => e.id === 'about-me');
 
@@ -45,6 +47,8 @@ const breadcrumbPath = getBreadcrumb(Astro.url.pathname);
     <link rel="icon" type="image/svg+xml" href={`${BASE}favicon.svg`} />
     <title>{fullTitle}</title>
     <meta name="description" content={desc} />
+    <link rel="alternate" type="application/rss+xml" title="Статьи" href={`${BASE}rss.xml`} />
+    <link rel="alternate" type="application/rss+xml" title="Заметки" href={`${BASE}notes.xml`} />
     
     <script is:inline>
       (function() {
@@ -63,7 +67,7 @@ const breadcrumbPath = getBreadcrumb(Astro.url.pathname);
       <div class="main-container">
         <div class="main-grid">
           <aside id="layout-sidebar">
-            <Sidebar blogEntries={blogEntries} mainEntry={mainForSidebar} aboutEntry={aboutForSidebar} />
+            <Sidebar blogEntries={blogEntries} mainEntry={mainForSidebar} aboutEntry={aboutForSidebar} notesEntry={notesForSidebar} />
           </aside>
           <main id="main" tabindex="-1">
             <slot />

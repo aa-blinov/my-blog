@@ -5,3 +5,6 @@
 # Hugo (removed)
 /resources/_gen/
 .hugo_build.lock
+
+# impeccable review captures
+/.impeccable/review/

@@ -468,7 +468,7 @@ pre, code {
   max-width: 100%;
 }
 
-.content a[href^="/"]:not(.post-title-link) {
+.content a[href^="/"]:not(.post-title-link):not(.note-anchor) {
   display: inline;
   padding: 0.1rem var(--app-spacing-md);
   border-radius: var(--app-radius-sm);
@@ -483,7 +483,7 @@ pre, code {
   line-height: inherit;
   margin: 0 0.1rem;
 }
-.content a[href^="/"]:not(.post-title-link):hover {
+.content a[href^="/"]:not(.post-title-link):not(.note-anchor):hover {
   background-color: var(--pico-primary);
   border-color: var(--pico-primary);
   color: var(--pico-primary-inverse);
@@ -550,6 +550,76 @@ a.all-articles-link.post-title-link {
 }
 a.all-articles-link.post-title-link:hover {
   color: var(--pico-primary-hover, var(--app-primary-hover-light));
+}
+
+/* ==========================================================================
+   Notes feed: git-log rhythm, a time stamp and text, hairline between entries
+   ========================================================================== */
+
+.note-list {
+  display: flex;
+  flex-direction: column;
+}
+.note {
+  padding: var(--app-spacing-lg) 0;
+  border-bottom: 1px solid var(--pico-muted-border-color);
+  scroll-margin-top: var(--app-spacing-xl);
+  transition: background-color 0.6s ease;
+}
+.note:first-child {
+  padding-top: var(--app-spacing-md);
+}
+.note:last-child {
+  border-bottom: none;
+}
+.note-meta {
+  margin: 0 0 var(--app-spacing-md);
+  font-size: var(--app-font-control);
+  color: var(--pico-muted-color);
+}
+.note-anchor {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--pico-muted-border-color);
+  text-underline-offset: 0.2em;
+  transition: color var(--app-transition), text-decoration-color var(--app-transition);
+}
+.note-anchor:hover {
+  color: var(--pico-primary);
+  text-decoration-color: var(--pico-primary);
+}
+@media (pointer: coarse) {
+  .note-anchor {
+    display: inline-block;
+    padding-block: 0.6rem;
+    margin-block: -0.6rem;
+  }
+}
+.note-body > :last-child {
+  margin-bottom: 0;
+}
+/* Arrived by anchor: a tonal plate that fades, no border, no shadow (The Flat Rule) */
+.note:target {
+  animation: note-arrive 3s ease-out forwards;
+  margin-inline: calc(-1 * var(--app-spacing));
+  padding-inline: var(--app-spacing);
+  border-radius: var(--app-radius-sm);
+}
+@keyframes note-arrive {
+  0%, 60% { background-color: var(--pico-code-background-color); }
+  100% { background-color: transparent; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .note:target {
+    animation: none;
+    background-color: var(--pico-code-background-color);
+  }
+}
+@media (max-width: 991px) {
+  .note:target {
+    margin-inline: calc(-1 * var(--app-spacing-md));
+    padding-inline: var(--app-spacing-md);
+  }
 }
 
 /* ==========================================================================
