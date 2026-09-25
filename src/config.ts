@@ -13,6 +13,25 @@ export const BASE = import.meta.env.BASE_URL;
 // Sections are now entirely determined by subdirectories in src/content/blog/
 export type BlogSection = string;
 
+/** Русские имена папок для заголовков и групп. Папка с about-<имя>.md берёт название оттуда, это запасной список. */
+export const SECTION_TITLES: Record<string, string> = {
+  ai: 'ИИ',
+  dev: 'Разработка',
+  ideas: 'Идеи',
+  knowledge: 'База знаний',
+  life: 'Жизнь',
+  mgmt: 'Менеджмент',
+  projects: 'Маленькие проекты',
+  science: 'Научпоп',
+  'human-body': 'Тело человека',
+  travel: 'Путешествия',
+  agent: 'Как устроен мой агент',
+};
+
+export function sectionTitle(name: string): string {
+  return SECTION_TITLES[name] ?? name;
+}
+
 export function isBlogSection(s: string): boolean {
   return typeof s === 'string' && s.length > 0;
 }

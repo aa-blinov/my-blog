@@ -120,7 +120,7 @@ function getFolderHref(fullPath: string) {
       <li class="sidebar-pinned" data-filename="main.md" data-title={mainEntry.title.toLowerCase()} data-date={mainEntry.date.toISOString()}>
         <span class="file-link-wrapper">
           <a href={BASE} class:list={['file-link', { active: isActive(BASE) }]}>
-            <span class="file-name">main.md</span>
+            <span class="file-name" title="main.md">{mainEntry.title}</span>
           </a>
         </span>
         <span class="file-date">{formatDate(mainEntry.date)}</span>
@@ -130,7 +130,7 @@ function getFolderHref(fullPath: string) {
       <li class="sidebar-pinned" data-filename="about-me.md" data-title={aboutEntry.title.toLowerCase()} data-date={aboutEntry.date.toISOString()}>
         <span class="file-link-wrapper">
           <a href={`${BASE}about-me/`} class:list={['file-link', { active: isActive(`${BASE}about-me/`) }]}>
-            <span class="file-name">about-me.md</span>
+            <span class="file-name" title="about-me.md">{aboutEntry.title}</span>
           </a>
         </span>
         <span class="file-date">{formatDate(aboutEntry.date)}</span>
@@ -140,7 +140,7 @@ function getFolderHref(fullPath: string) {
       <li class="sidebar-pinned" data-filename="notes.md" data-title={notesEntry.title.toLowerCase()} data-date={notesEntry.date.toISOString()}>
         <span class="file-link-wrapper">
           <a href={`${BASE}notes/`} class:list={['file-link', { active: isActive(`${BASE}notes/`) }]}>
-            <span class="file-name">notes.md</span>
+            <span class="file-name" title="notes.md">{notesEntry.title}</span>
           </a>
         </span>
         <span class="file-date">{formatDate(notesEntry.date)}</span>
@@ -200,7 +200,7 @@ function getFolderHref(fullPath: string) {
             <>
               <span class="file-link-wrapper">
                 <a href={`${BASE}blog/${node.entry?.slug}/`} class:list={['file-link', { active: isActive(`${BASE}blog/${node.entry?.slug}/`) }]}>
-                        <span class="file-name">{node.name}</span>
+                        <span class="file-name" title={node.name}>{node.entry?.title.replace(/:\s*Об этой секции$/, '')}</span>
                 </a>
               </span>
               <span class="file-date">{formatDate(node.entry!.date)}</span>
@@ -232,14 +232,14 @@ function getFolderHref(fullPath: string) {
               sortBtn.setAttribute('aria-label', 'Новые сверху');
               sortBtn.setAttribute('aria-pressed', 'true');
               sortBtn.classList.add('active');
-              sortBtn.setAttribute('data-label', 'new');
+              sortBtn.setAttribute('data-label', 'новые');
             } else if (sortOrder === 'asc') {
               icon.textContent = '↑';
               sortBtn.setAttribute('title', 'Старые сверху');
               sortBtn.setAttribute('aria-label', 'Старые сверху');
               sortBtn.setAttribute('aria-pressed', 'true');
               sortBtn.classList.add('active');
-              sortBtn.setAttribute('data-label', 'old');
+              sortBtn.setAttribute('data-label', 'старые');
             }
           }
         }
@@ -382,8 +382,8 @@ function getFolderHref(fullPath: string) {
     const sortIcon = sortBtn.querySelector('.sort-icon') as HTMLSpanElement;
     const sortStates: Record<SortOrder, { icon: string; title: string; label: string }> = {
       'none': { icon: '↕', title: 'Сортировка по дате', label: '' },
-      'desc': { icon: '↓', title: 'Новые сверху', label: 'new' },
-      'asc':  { icon: '↑', title: 'Старые сверху', label: 'old' },
+      'desc': { icon: '↓', title: 'Новые сверху', label: 'новые' },
+      'asc':  { icon: '↑', title: 'Старые сверху', label: 'старые' },
     };
 
     function updateSortUI() {

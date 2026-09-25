@@ -1,5 +1,6 @@
+/** ГГГГ-ММ-ДД: читается однозначно по-русски и сортируется глазами, как имя файла. UTC, как frontmatter. */
 export function formatDate(d: Date): string {
-  return d.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric', timeZone: 'UTC' }).replace(/\//g, '-');
+  return d.toISOString().slice(0, 10);
 }
 
 export function sortByDateDesc<T extends { id?: string; data: { date: Date } }>(entries: T[]): T[] {

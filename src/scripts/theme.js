@@ -35,8 +35,8 @@
       copyBtn.type = "button";
       copyBtn.className = "code-copy-btn";
       copyBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 0 1-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 0 1 1.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 0 0-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 0 1-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 0 0-3.375-3.375h-1.5a1.125 1.125 0 0 1-1.125-1.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H9.75" /></svg>`;
-      copyBtn.setAttribute("aria-label", "Copy code");
-      copyBtn.title = "Copy";
+      copyBtn.setAttribute("aria-label", "Скопировать код");
+      copyBtn.title = "Скопировать код";
 
       copyBtn.addEventListener("click", async () => {
         const codeText = pre.innerText.trimEnd();
@@ -167,9 +167,9 @@
         const diagramToggleBtn = document.createElement("button");
         diagramToggleBtn.type = "button";
         diagramToggleBtn.className = "code-copy-btn";
-        diagramToggleBtn.textContent = "Code";
-        diagramToggleBtn.setAttribute("aria-label", "Показать код");
-        diagramToggleBtn.title = "Показать код";
+        diagramToggleBtn.textContent = "Код";
+        diagramToggleBtn.setAttribute("aria-label", "Показать исходник диаграммы");
+        diagramToggleBtn.title = "Показать исходник диаграммы";
         diagramToggleBtn.style.right = "0.5rem"; // Use same offset as usual since there is no copy button here
         
         diagramWrapper.appendChild(diagramToggleBtn);
@@ -190,9 +190,9 @@
         const toggleBtn = document.createElement("button");
         toggleBtn.type = "button";
         toggleBtn.className = "code-copy-btn";
-        toggleBtn.textContent = "Diagram";
-        toggleBtn.setAttribute("aria-label", "Back to diagram");
-        toggleBtn.title = "Back to diagram";
+        toggleBtn.textContent = "Диаграмма";
+        toggleBtn.setAttribute("aria-label", "Показать диаграмму");
+        toggleBtn.title = "Показать диаграмму";
         toggleBtn.style.right = "3.5rem"; // Offset from copy button
         
         // Add a copy button since we skipped it in enhanceCodeBlocks

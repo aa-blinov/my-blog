@@ -728,6 +728,13 @@ a.all-articles-link.post-title-link:hover {
   border: none;
   padding: 0;
 }
+.section-heading .section-slug {
+  font-size: var(--app-font-sm);
+  font-weight: 400;
+  color: var(--pico-muted-color);
+  align-self: baseline;
+  margin-top: 0.45em;
+}
 .section-heading svg {
   width: 1.75rem;
   height: 1.75rem;
