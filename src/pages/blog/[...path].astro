@@ -3,6 +3,7 @@ import Layout from '../../layouts/Layout.astro';
 import PostList from '../../components/PostList.astro';
 import { getCollection, render, type CollectionEntry } from 'astro:content';
 import SeriesNav from '../../components/SeriesNav.astro';
+import ArticleFooter from '../../components/ArticleFooter.astro';
 import { formatDate } from '../../utils/date';
 import { sortByDateDesc } from '../../utils/date';
 import { getSeries, seriesOf } from '../../utils/series';
@@ -120,6 +121,7 @@ const title = entry ? entry.data.title : (folderAbout?.data.title.replace(/:\s*Ð
         <Content />
       </div>
       {series && <SeriesNav series={series} entry={entry} where="foot" />}
+      <ArticleFooter entry={entry} inSeries={!!series} />
     </article>
   </Layout>
 ) : (

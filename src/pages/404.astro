@@ -1,0 +1,20 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { BASE } from '../config';
+---
+
+<Layout title="Файла нет" description="Такой страницы нет">
+  <article>
+    <div class="entry-header">
+      <p class="meta"><span>404</span><span class="meta-sep" aria-hidden="true">~</span><span>file not found</span></p>
+      <hgroup>
+        <h1>Такого файла нет</h1>
+        <p class="summary">Ссылка устарела или в адресе опечатка.</p>
+      </hgroup>
+    </div>
+    <div class="content">
+      <p>Дерево слева показывает всё, что есть. Поиск в нём ищет по названию и имени файла.</p>
+      <p><a href={BASE}>На главную</a> или <a href={`${BASE}blog/`}>ко всем статьям</a>.</p>
+    </div>
+  </article>
+</Layout>

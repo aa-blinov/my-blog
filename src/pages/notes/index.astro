@@ -3,6 +3,7 @@ import Layout from '../../layouts/Layout.astro';
 import NoteList from '../../components/NoteList.astro';
 import { getCollection } from 'astro:content';
 import { formatDate, sortByDateDesc } from '../../utils/date';
+import { BASE } from '../../config';
 
 const notes = sortByDateDesc((await getCollection('notes')).filter((n) => !n.data.draft));
 const latest = notes[0];
@@ -17,6 +18,12 @@ const latest = notes[0];
         <p class="summary">Мысли между статьями, новые сверху.</p>
       </hgroup>
     </div>
-    {notes.length > 0 ? <NoteList notes={notes} /> : <p>Пока ничего нет.</p>}
+    {notes.length > 0 ? (
+      <NoteList notes={notes} />
+    ) : (
+      <div class="content">
+        <p>Пока ничего нет. Первая заметка появится здесь, в <a href={`${BASE}notes.xml`}>RSS заметок</a> и на главной.</p>
+      </div>
+    )}
   </article>
 </Layout>

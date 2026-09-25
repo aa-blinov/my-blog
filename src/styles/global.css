@@ -637,6 +637,42 @@ a.all-articles-link.post-title-link:hover {
 }
 
 /* ==========================================================================
+   After the article: neighbours in the section, author line
+   ========================================================================== */
+
+.article-footer {
+  margin-top: 3rem;
+  padding-top: var(--app-spacing-lg);
+  border-top: 1px solid var(--pico-muted-border-color);
+}
+.article-footer .section-heading {
+  font-size: var(--app-font-lg);
+  margin-bottom: var(--app-spacing-lg);
+}
+.article-footer .all-articles {
+  margin: 0;
+  font-weight: 700;
+}
+.author-line {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 0.6em;
+  margin: var(--app-spacing-xl) 0 0;
+  font-size: var(--app-font-control);
+  color: var(--pico-muted-color);
+}
+.author-line a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--pico-muted-border-color);
+  text-underline-offset: 0.2em;
+}
+.author-line a:hover {
+  color: var(--pico-primary);
+  text-decoration-color: var(--pico-primary);
+}
+
+/* ==========================================================================
    Notes feed: git-log rhythm, a time stamp and text, hairline between entries
    ========================================================================== */
 
