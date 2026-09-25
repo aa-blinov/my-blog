@@ -83,8 +83,9 @@
     const index = fontSizes.indexOf(size);
     
     // Update button states (optional: visual feedback when limits reached)
-    if (fontDecreaseBtn) fontDecreaseBtn.style.opacity = index === 0 ? "0.35" : "0.85";
-    if (fontIncreaseBtn) fontIncreaseBtn.style.opacity = index === fontSizes.length - 1 ? "0.35" : "0.85";
+    // На границе шкалы кнопка выключена по-настоящему: и видно, и скринридер скажет
+    if (fontDecreaseBtn) fontDecreaseBtn.disabled = index === 0;
+    if (fontIncreaseBtn) fontIncreaseBtn.disabled = index === fontSizes.length - 1;
   };
 
   applyFontUi(initialFont);

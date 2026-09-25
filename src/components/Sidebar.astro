@@ -116,11 +116,12 @@ function getFolderHref(fullPath: string) {
       />
       <button id="sidebar-search-clear" class="search-clear" type="button" aria-label="Очистить поиск" hidden>×</button>
     </span>
-    <button id="sort-date-btn" class="sort-btn" title="Сортировка по дате" aria-label="Сортировка по дате" aria-pressed="false">
+    <button id="sort-date-btn" class="sort-btn" title="По разделам и имени. Нажми для сортировки по дате" aria-label="По разделам и имени. Нажми для сортировки по дате" aria-pressed="false" data-label="по имени">
       <span class="sort-icon" aria-hidden="true">↕</span>
     </button>
   </div>
   <p id="sidebar-empty" class="sidebar-empty" role="status" hidden>ничего не найдено. Ищу по названию и имени файла, попробуй другое слово</p>
+  <p id="sidebar-count" class="sidebar-empty" role="status" hidden></p>
 
   <ul id="sidebar-tree" class="sortable-list">
     {mainEntry && (
@@ -285,8 +286,11 @@ function getFolderHref(fullPath: string) {
               const details = folder.querySelector('details');
               if (details && visibleFiles.length > 0) details.open = true;
             });
+            const shown = tree.querySelectorAll('li[data-filename]:not([style*="display: none"])').length;
             const empty = document.getElementById('sidebar-empty');
-            if (empty) empty.hidden = tree.querySelectorAll('li[data-filename]:not([style*="display: none"])').length > 0;
+            if (empty) empty.hidden = shown > 0;
+            const count = document.getElementById('sidebar-count');
+            if (count) { count.hidden = shown === 0; count.textContent = 'показано ' + shown + ' из ' + allFileItems.length; }
           }
         }
       } catch (e) {
@@ -336,10 +340,12 @@ function getFolderHref(fullPath: string) {
       if (clearBtn) clearBtn.hidden = !raw;
 
       const empty = document.getElementById('sidebar-empty');
+      const count = document.getElementById('sidebar-count');
       if (!raw) {
         allFileItems.forEach(li => li.style.display = '');
         allFolderItems.forEach(li => li.style.display = '');
         if (empty) empty.hidden = true;
+        if (count) count.hidden = true;
         return;
       }
       const queries = [raw];
@@ -355,7 +361,9 @@ function getFolderHref(fullPath: string) {
         const details = folder.querySelector('details');
         if (details && visibleFiles.length > 0) details.open = true;
       });
-      if (empty) empty.hidden = tree!.querySelectorAll('li[data-filename]:not([style*="display: none"])').length > 0;
+      const shown = tree!.querySelectorAll('li[data-filename]:not([style*="display: none"])').length;
+      if (empty) empty.hidden = shown > 0;
+      if (count) { count.hidden = shown === 0; count.textContent = `показано ${shown} из ${allFileItems.length}`; }
     }
 
     searchInput.addEventListener('input', performSearch);
@@ -404,7 +412,7 @@ function getFolderHref(fullPath: string) {
     let sortOrder: SortOrder = (localStorage.getItem('sidebar-sort') as SortOrder) || 'none';
     const sortIcon = sortBtn.querySelector('.sort-icon') as HTMLSpanElement;
     const sortStates: Record<SortOrder, { icon: string; title: string; label: string }> = {
-      'none': { icon: '↕', title: 'Сортировка по дате', label: '' },
+      'none': { icon: '↕', title: 'По разделам и имени. Нажми для сортировки по дате', label: 'по имени' },
       'desc': { icon: '↓', title: 'Новые сверху', label: 'новые' },
       'asc':  { icon: '↑', title: 'Старые сверху', label: 'старые' },
     };
@@ -415,13 +423,8 @@ function getFolderHref(fullPath: string) {
       sortBtn!.setAttribute('title', state.title);
       sortBtn!.setAttribute('aria-label', state.title);
       sortBtn!.setAttribute('aria-pressed', sortOrder === 'none' ? 'false' : 'true');
-      if (sortOrder === 'none') {
-        sortBtn!.classList.remove('active');
-        sortBtn!.removeAttribute('data-label');
-      } else {
-        sortBtn!.classList.add('active');
-        sortBtn!.setAttribute('data-label', state.label);
-      }
+      sortBtn!.classList.toggle('active', sortOrder !== 'none');
+      sortBtn!.setAttribute('data-label', state.label);
       
       // Update global sort attribute on the list for CSS sorting
       tree!.setAttribute('data-sort', sortOrder);
