@@ -18,7 +18,7 @@ const hasEntry = !!entry;
     <div class="entry-header">
       {hasEntry ? (
         <>
-          <p class="meta"><span>{formatDate(entry.data.date)}</span>{' '}<span>{entry.fileLabel}</span></p>
+          <p class="meta"><span>{formatDate(entry.data.date)}</span><span class="meta-sep" aria-hidden="true">~</span><span>{entry.fileLabel}</span></p>
           <hgroup>
             <h1>{entry.data.title}</h1>
             {entry.data.summary && <p class="summary">{entry.data.summary}</p>}

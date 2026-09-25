@@ -18,7 +18,7 @@ const rendered = await Promise.all(notes.map(async (note) => ({ note, Content: (
       <article class="note" id={id}>
         <p class="note-meta">
           <a href={`${BASE}notes/#${id}`} class="note-anchor" title="Ссылка на заметку">
-            <time datetime={note.data.date.toISOString()}>{formatDate(note.data.date)} {formatTime(note.data.date)}</time>
+            <time datetime={note.data.date.toISOString()}>{formatDate(note.data.date)} <span class="meta-sep" aria-hidden="true">~</span> {formatTime(note.data.date)}</time>
           </a>
         </p>
         <div class="content note-body">

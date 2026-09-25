@@ -552,11 +552,15 @@ a.all-articles-link.post-title-link:hover {
   color: var(--pico-primary-hover, var(--app-primary-hover-light));
 }
 
-/* Meta line: date and path as two columns with a gap, no separator glyph */
+/* Meta line: date ~ path, the tilde as a quiet separator (one glyph for the whole site) */
 .meta {
   display: flex;
   flex-wrap: wrap;
-  column-gap: 1.25em;
+  column-gap: 0.6em;
+}
+.meta-sep {
+  opacity: 0.55;
+  user-select: none;
 }
 
 /* ==========================================================================

@@ -263,8 +263,8 @@
       "name": "File Tree",
       "kind": "nav",
       "refersTo": "file-link",
-      "description": "Дерево файлов: папка с треугольником, файлы с тильдой и датой, активный файл зелёный на подложке.",
-      "html": "<nav class=\"ds-tree\"><ul><li class=\"ds-folder\"><span class=\"ds-icon ds-folder-icon\">▸</span><a href=\"#\" class=\"ds-folder-link\">dev/</a><ul><li class=\"ds-file\"><span class=\"ds-icon\">~</span><a href=\"#\" class=\"ds-file-link\">agent-loop.md</a><span class=\"ds-date\">09-10-2026</span></li><li class=\"ds-file\"><span class=\"ds-icon\">~</span><a href=\"#\" class=\"ds-file-link active\">agent-tools.md</a><span class=\"ds-date\">09-10-2026</span></li></ul></li></ul></nav>",
+      "description": "Дерево файлов: папка с треугольником, файлы с датой, активный файл зелёный на подложке.",
+      "html": "<nav class=\"ds-tree\"><ul><li class=\"ds-folder\"><span class=\"ds-icon ds-folder-icon\">▸</span><a href=\"#\" class=\"ds-folder-link\">dev/</a><ul><li class=\"ds-file\"><a href=\"#\" class=\"ds-file-link\">agent-loop.md</a><span class=\"ds-date\">09-10-2026</span></li><li class=\"ds-file\"><a href=\"#\" class=\"ds-file-link active\">agent-tools.md</a><span class=\"ds-date\">09-10-2026</span></li></ul></li></ul></nav>",
       "css": ".ds-tree { font-family: 'JetBrains Mono Variable', 'JetBrains Mono', 'Cascadia Code', Consolas, monospace; font-size: 0.8rem; } .ds-tree ul { list-style: none; margin: 0; padding: 0; } .ds-tree li { line-height: 1; padding: 1px 0; } .ds-tree .ds-folder > ul { padding-left: 0.75rem; margin-left: 0.2rem; border-left: 1px solid var(--pico-muted-border-color, #e7eaf0); } .ds-icon { color: var(--pico-muted-color, #646b79); margin-right: 0.2rem; } .ds-folder-icon { color: #95d600; } .ds-folder-link { font-weight: 700; color: var(--pico-muted-color, #646b79); text-decoration: none; padding: 2px 4px; margin: 0 -4px; border-radius: 3px; } .ds-file { display: flex; align-items: baseline; gap: 0.75rem; } .ds-file-link { color: var(--pico-contrast, #181c25); text-decoration: none; line-height: 1.2; padding: 2px 4px; margin: 0 -4px; border-radius: 3px; transition: all 0.15s ease; flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; } .ds-file-link:hover, .ds-folder-link:hover { color: #95d600; background: var(--pico-code-background-color, #f3f4f7); } .ds-file-link.active { color: #95d600; font-weight: 700; background: rgba(149, 214, 0, 0.1); } .ds-date { font-size: 0.7rem; opacity: 0.45; white-space: nowrap; line-height: 1.7; margin-left: auto; }"
     },
     {
@@ -315,7 +315,7 @@
       "Одно семейство шрифта на всё: JetBrains Mono для текста, заголовков, дат, кнопок и полей.",
       "Один акцент, Monster Green, только на состояниях и метках; никаких цветных поверхностей.",
       "Плоскость без исключений: ни теней, ни градиентов, глубина только линиями и тональными подложками.",
-      "Навигация как файловая система: папки, файлы, тильды и треугольники вместо меню.",
+      "Навигация как файловая система: папки, файлы и треугольники вместо меню.",
       "Две темы из одной палитры: бумага и ночь, зелёный один на обе.",
       "Читатель управляет чтением: тема, размер шрифта в пять шагов, поиск и сортировка дерева."
     ],
@@ -371,7 +371,7 @@
       "Don't вводить второй акцентный цвет или заливать зелёным крупные области.",
       "Don't писать лаймом #95d600 по белому и белым по лайму.",
       "Don't рисовать карточки: статьи в списках это заголовок с мета-строкой, без рамок и подложек.",
-      "Don't заменять текстовые иконки ~, ▸, → на графические и добавлять эмодзи в интерфейс.",
+      "Don't заменять текстовые знаки ▸, →, ~ на графические и добавлять эмодзи в интерфейс.",
       "Don't добавлять пропорциональный шрифт ради «читаемости» заголовков.",
       "Don't заставлять читателя листать код по горизонтали: длинные строки переносятся."
     ]
