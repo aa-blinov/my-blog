@@ -563,7 +563,7 @@ pre, code {
   max-width: 100%;
 }
 
-.content a[href^="/"]:not(.post-title-link):not(.note-anchor) {
+.content a[href^="/"]:not(.post-title-link):not(.note-anchor):not(.series-nav a) {
   display: inline;
   padding: 0.1rem var(--app-spacing-md);
   border-radius: var(--app-radius-sm);
@@ -578,7 +578,7 @@ pre, code {
   line-height: inherit;
   margin: 0 0.1rem;
 }
-.content a[href^="/"]:not(.post-title-link):not(.note-anchor):hover {
+.content a[href^="/"]:not(.post-title-link):not(.note-anchor):not(.series-nav a):hover {
   background-color: var(--pico-primary);
   border-color: var(--pico-primary);
   color: var(--pico-primary-inverse);
