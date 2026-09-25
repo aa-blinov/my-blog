@@ -195,6 +195,12 @@ interface Props {
     padding: 0;
   }
 
+  .vertical-navbar li {
+    margin: 0;
+    padding: 0;
+    display: flex;
+  }
+
   .vertical-navbar .bottom-nav {
     margin-top: auto;
     gap: var(--app-spacing-md);
@@ -296,7 +302,8 @@ interface Props {
     .vertical-navbar .bottom-nav li:nth-child(2) { order: -1; }
     .vertical-navbar .bottom-nav li:nth-child(3) { order: 1; }
 
-    .vertical-navbar ul:last-child {
+    .vertical-navbar .bottom-nav {
+      margin-top: 0;
       margin-left: auto;
     }
   }
