@@ -556,10 +556,10 @@ main article .content {
   color: var(--pico-primary);
 }
 a.all-articles-link.post-title-link {
-  color: var(--pico-primary);
+  color: var(--pico-contrast); /* та же ссылка, что заголовки в списке, а не CTA */
 }
 a.all-articles-link.post-title-link:hover {
-  color: var(--pico-primary-hover, var(--app-primary-hover-light));
+  color: var(--pico-primary);
 }
 
 /* Meta line: date ~ path, the tilde as a quiet separator (one glyph for the whole site) */
@@ -784,7 +784,7 @@ a.all-articles-link.post-title-link:hover {
 .section-heading svg {
   width: 1.75rem;
   height: 1.75rem;
-  color: var(--pico-primary);
+  color: var(--pico-muted-color); /* иконка это знак, не состояние: зелёный только на активном и ссылках */
   flex-shrink: 0;
 }
 .section-block {

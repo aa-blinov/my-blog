@@ -130,7 +130,6 @@ function getFolderHref(fullPath: string) {
             <span class="file-name" title="main.md">{mainEntry.title}</span>
           </a>
         </span>
-        <span class="file-date">{formatDate(mainEntry.date)}</span>
       </li>
     )}
     {aboutEntry && (
@@ -140,7 +139,6 @@ function getFolderHref(fullPath: string) {
             <span class="file-name" title="about-me.md">{aboutEntry.title}</span>
           </a>
         </span>
-        <span class="file-date">{formatDate(aboutEntry.date)}</span>
       </li>
     )}
     {notesEntry && (
@@ -690,7 +688,7 @@ function getFolderHref(fullPath: string) {
 
   .file-date {
     font-size: calc(var(--app-article-font, 1rem) * 0.7);
-    opacity: 0.7;
+    color: var(--pico-muted-color); /* дата второстепенна в обеих темах: Ink Muted, а не прозрачный Contrast */
     white-space: nowrap;
     line-height: 1.7;
     flex: 0 0 auto;
