@@ -6,7 +6,7 @@ import Sidebar from '../components/Sidebar.astro';
 import { BASE, SITE } from '../config';
 import { getBreadcrumb } from '../utils/breadcrumb';
 import { sortByDateDesc } from '../utils/date';
-import { liveFolders, inLiveFolder } from '../utils/series';
+import { liveFolders, inLiveFolder, isAbout } from '../utils/series';
 import '../styles/global.css';
 
 interface Props {
@@ -18,7 +18,8 @@ const { title, description } = Astro.props;
 
 const published = (await getCollection('blog')).filter((e) => !e.data.draft);
 const live = liveFolders(published);
-const blogEntries = sortByDateDesc(published.filter((e) => inLiveFolder(e.id, live))).map((entry) => {
+// about-*.md это вводный текст раздела, не статья: в дереве его нет, в раздел ведёт имя папки
+const blogEntries = sortByDateDesc(published.filter((e) => inLiveFolder(e.id, live) && !isAbout(e.id))).map((entry) => {
   return {
     id: `${entry.id}.md`, // File-like path for the sidebar tree, e.g. 'science/human-body/article.md'
     slug: entry.id, // URL path like 'science/human-body/article'
