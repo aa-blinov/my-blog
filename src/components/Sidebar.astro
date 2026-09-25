@@ -405,7 +405,7 @@ function getFolderHref(fullPath: string) {
 
   .sidebar-controls input::placeholder {
     color: var(--pico-muted-color);
-    opacity: 0.6;
+    opacity: 1; /* Ink Muted проходит 4.5:1 только без прозрачности */
   }
 
   .sidebar-controls input:focus {
