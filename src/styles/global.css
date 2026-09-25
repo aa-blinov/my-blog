@@ -702,6 +702,10 @@ a.all-articles-link.post-title-link:hover {
   line-height: 1.3;
 }
 .series-nav a {
+  display: flex;
+  flex-direction: column;
+  gap: var(--app-spacing-xs);
+  min-height: 44px;
   color: var(--pico-contrast);
   text-decoration: none;
   transition: color var(--app-transition);
@@ -710,12 +714,22 @@ a.all-articles-link.post-title-link:hover {
 .series-nav a:hover {
   color: var(--pico-primary);
 }
+.series-label {
+  font-size: var(--app-font-control);
+  font-weight: 400;
+  color: var(--pico-muted-color);
+}
 .series-next {
   margin-left: auto;
   text-align: right;
+  align-items: flex-end;
 }
 .series-arrow {
   color: var(--pico-muted-color);
+}
+/* Когда блок стоит перед источниками, отступ снизу как сверху */
+.content .series-nav {
+  margin-bottom: 3rem;
 }
 @media (max-width: 991px) {
   .series-nav {
@@ -728,6 +742,7 @@ a.all-articles-link.post-title-link:hover {
   .series-next {
     margin-left: 0;
     text-align: left;
+    align-items: flex-start;
   }
 }
 

@@ -23,16 +23,26 @@ const tocHref = `${BASE}blog/${series.folder}/`;
     <span>часть {entry.data.part} из {series.parts.length}</span>
   </p>
 ) : (
-  <nav class="series-nav" aria-label="Навигация по серии">
+  <nav class="series-nav" id="series-nav" aria-label="Навигация по серии">
     {prev ? (
-      <a href={href(prev)} class="series-prev" rel="prev"><span class="series-arrow" aria-hidden="true">←</span> {prev.data.title}</a>
+      <a href={href(prev)} class="series-prev" rel="prev"><span class="series-label"><span class="series-arrow" aria-hidden="true">←</span> часть {prev.data.part}</span>{prev.data.title}</a>
     ) : (
-      <a href={tocHref} class="series-prev"><span class="series-arrow" aria-hidden="true">←</span> Оглавление серии</a>
+      <a href={tocHref} class="series-prev"><span class="series-label"><span class="series-arrow" aria-hidden="true">←</span> серия</span>Оглавление</a>
     )}
     {next ? (
-      <a href={href(next)} class="series-next" rel="next">{next.data.title} <span class="series-arrow" aria-hidden="true">→</span></a>
+      <a href={href(next)} class="series-next" rel="next"><span class="series-label">часть {next.data.part} <span class="series-arrow" aria-hidden="true">→</span></span>{next.data.title}</a>
     ) : (
-      <a href={tocHref} class="series-next">Оглавление серии <span class="series-arrow" aria-hidden="true">→</span></a>
+      <a href={tocHref} class="series-next"><span class="series-label">серия <span class="series-arrow" aria-hidden="true">→</span></span>Оглавление</a>
     )}
   </nav>
+  <script is:inline>
+    // Источники это приложение, а не конец повествования: ссылки на соседние части встают перед ними
+    (function () {
+      var nav = document.getElementById('series-nav');
+      var heads = document.querySelectorAll('.content h2');
+      for (var i = 0; i < heads.length; i++) {
+        if (/^Список источников/.test(heads[i].textContent.trim())) { heads[i].parentNode.insertBefore(nav, heads[i]); break; }
+      }
+    })();
+  </script>
 )}
