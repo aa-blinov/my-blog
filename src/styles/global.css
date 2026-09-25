@@ -691,6 +691,15 @@ a.all-articles-link.post-title-link:hover {
   text-decoration-color: var(--pico-primary);
 }
 
+.read-line {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 0.6em;
+  margin: var(--app-spacing-md) 0 0;
+  font-size: var(--app-font-control);
+  color: var(--pico-muted-color);
+}
+
 .series-nav {
   display: flex;
   justify-content: space-between;

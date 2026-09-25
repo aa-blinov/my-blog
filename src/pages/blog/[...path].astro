@@ -6,7 +6,7 @@ import SeriesNav from '../../components/SeriesNav.astro';
 import ArticleFooter from '../../components/ArticleFooter.astro';
 import Toc from '../../components/Toc.astro';
 import type { MarkdownHeading } from 'astro';
-import { formatDate } from '../../utils/date';
+import { formatDate, readingMinutes, plural } from '../../utils/date';
 import { sortByDateDesc } from '../../utils/date';
 import { getSeries, seriesOf, isAbout } from '../../utils/series';
 import { sectionTitle } from '../../config';
@@ -50,10 +50,12 @@ const path = props.kind === 'folder' ? props.path : '';
 let Content: Awaited<ReturnType<typeof render>>['Content'] | null = null;
 let series = null as Awaited<ReturnType<typeof getSeries>>;
 let headings: MarkdownHeading[] = [];
+let minutes = 0;
 if (entry) {
   const rendered = await render(entry);
   Content = rendered.Content;
   headings = rendered.headings;
+  minutes = readingMinutes(entry.body ?? '');
   const folder = seriesOf(entry);
   if (folder) series = await getSeries(folder);
 }
@@ -118,6 +120,15 @@ const title = entry ? entry.data.title : (folderAbout?.data.title.replace(/:\s*�
           {entry.data.summary && <p class="summary">{entry.data.summary}</p>}
         </hgroup>
         {series && <SeriesNav series={series} entry={entry} where="head" />}
+        <p class="read-line">
+          <span>≈ {minutes} {plural(minutes, 'минута', 'минуты', 'минут')}</span>
+          {headings.filter((h) => h.depth === 2).length >= 3 && (
+            <>
+              <span class="meta-sep" aria-hidden="true">~</span>
+              <span>{headings.filter((h) => h.depth === 2).length} {plural(headings.filter((h) => h.depth === 2).length, 'раздел', 'раздела', 'разделов')}</span>
+            </>
+          )}
+        </p>
       </div>
       {headings.filter((h) => h.depth === 2).length >= 6 && <Toc headings={headings} />}
       <div class="content">

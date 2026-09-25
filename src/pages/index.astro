@@ -3,7 +3,7 @@ import PageFromEntry from '../components/PageFromEntry.astro';
 import PostList from '../components/PostList.astro';
 import NoteList from '../components/NoteList.astro';
 import { getCollection, render } from 'astro:content';
-import { sortByDateDesc } from '../utils/date';
+import { sortByDateDesc, plural } from '../utils/date';
 import { BASE, RECENT_POSTS_LIMIT, sectionTitle } from '../config';
 import { isAbout, liveFolders, getSeries } from '../utils/series';
 
@@ -18,8 +18,6 @@ const posts = sortByDateDesc(
 const published = (await getCollection('blog')).filter((p) => !p.data.draft);
 const articles = published.filter((p) => !isAbout(p.id));
 const live = liveFolders(published);
-const plural = (n: number, one: string, few: string, many: string) =>
-  n % 10 === 1 && n % 100 !== 11 ? one : n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 10 || n % 100 >= 20) ? few : many;
 const seriesFolders = [...new Set(articles.filter((p) => p.data.part !== undefined).map((p) => p.id.slice(0, p.id.lastIndexOf('/'))))];
 const seriesRows = (await Promise.all(seriesFolders.map((f) => getSeries(f)))).filter((s) => s !== null);
 const topSections = [...new Set(articles.map((p) => p.id.split('/')[0]))]
