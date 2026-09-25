@@ -15,7 +15,7 @@ const { posts } = Astro.props;
   ) : (
     posts.map((entry) => (
       <div class="post-list-item">
-        <p class="meta">{formatDate(entry.data.date)} · {entry.id}.md</p>
+        <p class="meta"><span>{formatDate(entry.data.date)}</span>{' '}<span>{entry.id}.md</span></p>
         <h3>
           <a href={`${BASE}blog/${entry.id}/`} class="post-title-link">
             {entry.data.title}

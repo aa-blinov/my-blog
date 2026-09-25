@@ -552,6 +552,13 @@ a.all-articles-link.post-title-link:hover {
   color: var(--pico-primary-hover, var(--app-primary-hover-light));
 }
 
+/* Meta line: date and path as two columns with a gap, no separator glyph */
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 1.25em;
+}
+
 /* ==========================================================================
    Notes feed: git-log rhythm, a time stamp and text, hairline between entries
    ========================================================================== */

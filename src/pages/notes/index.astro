@@ -11,10 +11,10 @@ const latest = notes[0];
 <Layout title="Заметки" description="Короткие мысли между статьями">
   <article>
     <div class="entry-header">
-      {latest && <p class="meta">{formatDate(latest.data.date)} · notes.md</p>}
+      {latest && <p class="meta"><span>{formatDate(latest.data.date)}</span>{' '}<span>notes.md</span></p>}
       <hgroup>
         <h1>Заметки</h1>
-        <p class="summary">Короткие мысли между статьями. Новые сверху.</p>
+        <p class="summary">Мысли между статьями, новые сверху.</p>
       </hgroup>
     </div>
     {notes.length > 0 ? <NoteList notes={notes} /> : <p>Пока ничего нет.</p>}

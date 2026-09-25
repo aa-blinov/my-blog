@@ -17,14 +17,14 @@ function plain(md: string): string {
 export async function GET(context: APIContext) {
   const notes = sortByDateDesc((await getCollection('notes')).filter((n) => !n.data.draft));
   return rss({
-    title: `${SITE.title} · заметки`,
+    title: `${SITE.title}: заметки`,
     description: 'Короткие мысли между статьями',
     site: context.site ?? SITE.url,
     items: notes.map((n) => {
       const text = plain(n.body ?? '');
       const head = text.length > 80 ? text.slice(0, 77).replace(/\s+\S*$/, '') + '…' : text;
       return {
-        title: `${formatDate(n.data.date)} ${formatTime(n.data.date)} · ${head}`,
+        title: `${formatDate(n.data.date)} ${formatTime(n.data.date)} ${head}`,
         pubDate: n.data.date,
         description: text,
         link: `/notes/#${noteAnchor(n.data.date)}`,
