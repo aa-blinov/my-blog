@@ -267,6 +267,61 @@ article .entry-header {
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-family);
 }
+
+/* Заголовки внутри статьи: ступени от кегля статьи, H1 2em остаётся главным */
+main article .content h2 {
+  font-size: 1.35em;
+  line-height: 1.25;
+  margin: 2.25em 0 0.6em;
+  scroll-margin-top: var(--app-spacing-xl);
+}
+main article .content h3 {
+  font-size: 1.15em;
+  line-height: 1.3;
+  margin: 1.75em 0 0.5em;
+  scroll-margin-top: var(--app-spacing-xl);
+}
+main article .content h4 {
+  font-size: 1em;
+  margin: 1.5em 0 0.5em;
+}
+
+/* Содержание лонгрида: карта разделов в стиле дерева, только для статей с 6+ H2 */
+.toc {
+  margin: 0 0 var(--app-spacing-xl);
+  padding: var(--app-spacing) var(--app-spacing-lg);
+  border-left: 1px solid var(--pico-muted-border-color);
+  font-size: var(--app-font-sm);
+}
+.toc-title {
+  margin: 0 0 var(--app-spacing-md);
+  font-size: var(--app-font-control);
+  color: var(--pico-muted-color);
+}
+.toc-list {
+  display: block;
+  margin: 0;
+  padding: 0 0 0 1.6em;
+  line-height: 1.5;
+  list-style: decimal;
+  color: var(--pico-color); /* Pico внутри <a> подменяет --pico-color на primary, поэтому цвет задаём на списке */
+}
+.toc-list li {
+  display: list-item;
+  margin: 0.15em 0;
+  padding-left: 0.2em;
+}
+.toc-list li::marker {
+  color: var(--pico-muted-color);
+  font-size: var(--app-font-control);
+}
+.toc-list a {
+  color: inherit;
+  text-decoration: none;
+}
+.toc-list a:hover {
+  color: var(--pico-primary);
+}
 pre, code {
   font-family: var(--font-family);
 }

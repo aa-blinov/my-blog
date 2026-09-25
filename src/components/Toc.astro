@@ -1,0 +1,21 @@
+---
+import type { MarkdownHeading } from 'astro';
+
+interface Props {
+  headings: MarkdownHeading[];
+}
+
+// Только H2: карта лонгрида, а не полное дерево подзаголовков
+const items = Astro.props.headings.filter((h) => h.depth === 2);
+---
+
+{items.length > 0 && (
+  <section class="toc" aria-label="Содержание">
+    <p class="toc-title">Содержание</p>
+    <ol class="toc-list">
+      {items.map((h) => (
+        <li><a href={`#${h.slug}`}>{h.text}</a></li>
+      ))}
+    </ol>
+  </section>
+)}
