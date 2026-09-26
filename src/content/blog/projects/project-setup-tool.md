@@ -22,7 +22,7 @@ uv run pst-cli my-bot telegram
 
 Профилей двадцать: `basic`, `fastapi`, `fastapi-db`, `flask`, `streamlit`, `django`, `cli`, `telegram`, `discord`, `grpc`, `celery`, `scraper`, `data`, `ml`, `pypi`, `langchain`, `llama`, `mcp`, `lambda`, `pytest-plugin`. Каждый разворачивает правильную структуру с нужными зависимостями, Dockerfile и README.
 
-Есть и GUI-версия на PyQt5 – для тех, кто предпочитает кликать, а не печатать.
+Есть и GUI-версия на PyQt5 – для тех, кто предпочитает кликать.
 
 ```bash
 uv run pst
