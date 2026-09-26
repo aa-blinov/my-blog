@@ -31,6 +31,7 @@
   --app-navbar-desktop-width: 64px;
   --app-navbar-desktop-button: 40px;
   --app-navbar-mobile-height: 48px;
+  --app-scroll-offset: var(--app-spacing-xl);
   --app-navbar-mobile-button: 44px;
   --app-sidebar-width: 320px;
   --app-main-max-width: 92ch; /* ~85 знаков mono в строке: эссе читается без потери строки */
@@ -273,13 +274,13 @@ main article .content h2 {
   font-size: 1.35em;
   line-height: 1.25;
   margin: 2.25em 0 0.6em;
-  scroll-margin-top: var(--app-spacing-xl);
+  scroll-margin-top: var(--app-scroll-offset);
 }
 main article .content h3 {
   font-size: 1.15em;
   line-height: 1.3;
   margin: 1.75em 0 0.5em;
-  scroll-margin-top: var(--app-spacing-xl);
+  scroll-margin-top: var(--app-scroll-offset);
 }
 main article .content h4 {
   font-size: 1em;
@@ -322,6 +323,9 @@ main article .content h4 {
   margin-bottom: var(--app-spacing-md);
 }
 @media (max-width: 991px) {
+  :root {
+    --app-scroll-offset: calc(var(--app-navbar-mobile-height) + var(--app-spacing));
+  }
   .toc-title {
     min-height: 44px;
   }
@@ -812,7 +816,7 @@ a.all-articles-link.post-title-link:hover {
 .note {
   padding: var(--app-spacing-lg) 0;
   border-bottom: 1px solid var(--pico-muted-border-color);
-  scroll-margin-top: var(--app-spacing-xl);
+  scroll-margin-top: var(--app-scroll-offset);
   transition: background-color 0.6s ease;
 }
 .note:first-child {
