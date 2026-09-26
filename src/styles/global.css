@@ -294,9 +294,12 @@ main article .content h4 {
   font-size: var(--app-font-sm);
 }
 .toc-title {
+  display: flex;
+  align-items: center;
+  gap: 0.4em;
   margin: 0;
   padding: 0;
-  font-size: var(--app-font-control);
+  font-size: var(--app-font-sm);
   color: var(--pico-muted-color);
   cursor: pointer;
   list-style: none;
@@ -307,12 +310,13 @@ main article .content h4 {
 .toc-title::after {
   display: none;
 }
-.toc-title::before {
-  content: "▸ ";
+.toc-chevron {
+  flex-shrink: 0;
   color: var(--pico-primary);
+  transition: transform var(--app-transition);
 }
-.toc[open] .toc-title::before {
-  content: "▾ ";
+.toc[open] .toc-chevron {
+  transform: rotate(90deg);
 }
 .toc[open] .toc-title {
   margin-bottom: var(--app-spacing-md);
@@ -320,8 +324,6 @@ main article .content h4 {
 @media (max-width: 991px) {
   .toc-title {
     min-height: 44px;
-    display: flex;
-    align-items: center;
   }
 }
 .toc-list {

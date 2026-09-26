@@ -13,7 +13,7 @@ const word = n % 10 === 1 && n % 100 !== 11 ? 'раздел' : n % 10 >= 2 && n 
 
 {n > 0 && (
   <details class="toc" id="toc">
-    <summary class="toc-title">Содержание, {n} {word}</summary>
+    <summary class="toc-title"><svg class="toc-chevron" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.75" stroke="currentColor" width="16" height="16" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" /></svg>Содержание, {n} {word}</summary>
     <ol class="toc-list">
       {items.map((h) => (
         <li><a href={`#${h.slug}`}>{h.text}</a></li>
