@@ -3,6 +3,7 @@ import { getCollection, type CollectionEntry } from 'astro:content';
 import { sortByDateDesc } from '../utils/date';
 import { BASE, SITE, sectionTitle } from '../config';
 import PostList from './PostList.astro';
+import Arrow from './Arrow.astro';
 
 interface Props {
   entry: CollectionEntry<'blog'>;
@@ -30,7 +31,7 @@ const hasNotes = (await getCollection('notes')).some((n) => !n.data.draft);
     <section class="more-in-section">
       <h2 class="section-heading">Ещё в разделе «{folderTitle}» <span class="section-slug">{poolFolder}/</span></h2>
       <PostList posts={more} />
-      <p class="all-articles"><a href={`${BASE}blog/${poolFolder}/`} class="post-title-link all-articles-link">Весь раздел &rarr;</a></p>
+      <p class="all-articles"><a href={`${BASE}blog/${poolFolder}/`} class="post-title-link all-articles-link">Весь раздел <Arrow /></a></p>
     </section>
   )}
   <p class="author-line">

@@ -1,6 +1,7 @@
 ---
 import type { Series, BlogEntry } from '../utils/series';
 import { BASE } from '../config';
+import Arrow from './Arrow.astro';
 
 interface Props {
   series: Series;
@@ -25,14 +26,14 @@ const tocHref = `${BASE}blog/${series.folder}/`;
 ) : (
   <nav class="series-nav" id="series-nav" aria-label="Навигация по серии">
     {prev ? (
-      <a href={href(prev)} class="series-prev" rel="prev"><span class="series-label"><span class="series-arrow" aria-hidden="true">←</span> часть {prev.data.part}</span>{prev.data.title}</a>
+      <a href={href(prev)} class="series-prev" rel="prev"><span class="series-label"><Arrow dir="left" size={14} /> часть {prev.data.part}</span>{prev.data.title}</a>
     ) : (
-      <a href={tocHref} class="series-prev"><span class="series-label"><span class="series-arrow" aria-hidden="true">←</span> серия</span>Оглавление</a>
+      <a href={tocHref} class="series-prev"><span class="series-label"><Arrow dir="left" size={14} /> серия</span>Оглавление</a>
     )}
     {next ? (
-      <a href={href(next)} class="series-next" rel="next"><span class="series-label">часть {next.data.part} <span class="series-arrow" aria-hidden="true">→</span></span>{next.data.title}</a>
+      <a href={href(next)} class="series-next" rel="next"><span class="series-label">часть {next.data.part} <Arrow dir="right" size={14} /></span>{next.data.title}</a>
     ) : (
-      <a href={tocHref} class="series-next"><span class="series-label">серия <span class="series-arrow" aria-hidden="true">→</span></span>Оглавление</a>
+      <a href={tocHref} class="series-next"><span class="series-label">серия <Arrow dir="right" size={14} /></span>Оглавление</a>
     )}
   </nav>
   <script is:inline>

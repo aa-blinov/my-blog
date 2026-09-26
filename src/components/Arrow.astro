@@ -1,0 +1,12 @@
+---
+// Стрелка Heroicons (outline arrow-left / arrow-right), одна семья с панелью инструментов.
+// Декоративная: смысл несёт текст рядом, поэтому aria-hidden.
+interface Props {
+  dir?: 'left' | 'right';
+  size?: number;
+}
+const { dir = 'right', size = 16 } = Astro.props;
+const d = dir === 'right' ? 'M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3' : 'M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18';
+---
+
+<svg class={`arrow arrow-${dir}`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.75" stroke="currentColor" width={size} height={size} aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d={d} /></svg>

@@ -289,9 +289,8 @@ main article .content h4 {
 /* Содержание лонгрида: карта разделов в стиле дерева, только для статей с 6+ H2 */
 .toc {
   margin: 0 0 var(--app-spacing-xl);
-  padding: var(--app-spacing) var(--app-spacing-lg);
-  border-left: 1px solid var(--pico-muted-border-color);
-  border-bottom: none;
+  padding: 0;
+  border: none; /* от левого края, как остальной текст */
   font-size: var(--app-font-sm);
 }
 .toc-title {
@@ -733,8 +732,17 @@ a.all-articles-link.post-title-link:hover {
   text-align: right;
   align-items: flex-end;
 }
-.series-arrow {
+.arrow {
+  display: inline-block;
+  vertical-align: -0.15em;
   color: var(--pico-muted-color);
+}
+.series-label .arrow {
+  vertical-align: -0.2em;
+}
+.all-articles-link .arrow {
+  color: inherit;
+  margin-left: 0.15em;
 }
 /* Когда блок стоит перед источниками, отступ снизу как сверху */
 .content .series-nav {
