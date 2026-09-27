@@ -25,6 +25,7 @@ export const SECTION_TITLES: Record<string, string> = {
   science: 'Научпоп',
   'human-body': 'Тело человека',
   travel: 'Путешествия',
+  mind: 'Ум',
   agent: 'Как устроен мой агент',
 };
 
