@@ -51,7 +51,7 @@
   --app-editor-fg: #e1e4e8;
 
   /* UI control text (search, sort, copy button, list meta) */
-  --app-font-control: 0.75rem;
+  --app-font-control: 0.8rem;
   --app-font-caption: 0.7rem;
 
   /* Article content font scale */
@@ -124,6 +124,13 @@ html {
   background-color: var(--pico-background-color);
   scrollbar-width: thin;
   scrollbar-color: var(--pico-muted-border-color) var(--pico-background-color);
+}
+
+/* Широкие экраны: база 16px, иначе на ретина-ноутбуках дерево и мета мельчат */
+@media (min-width: 1440px) {
+  html {
+    font-size: 100%;
+  }
 }
 
 body {

@@ -585,8 +585,8 @@ function getFolderHref(fullPath: string) {
   .sidebar-nav {
     position: relative;
     font-family: var(--font-family);
-    /* Дерево следует за регулятором размера шрифта: 0.8 от кегля статьи */
-    font-size: calc(var(--app-article-font, 1rem) * 0.8);
+    /* Дерево следует за регулятором размера шрифта: 0.9 от кегля статьи, но не меньше 0.85rem */
+    font-size: max(0.85rem, calc(var(--app-article-font, 1rem) * 0.9));
   }
 
   .sidebar-nav ul {
@@ -742,7 +742,7 @@ function getFolderHref(fullPath: string) {
   }
 
   .file-date {
-    font-size: calc(var(--app-article-font, 1rem) * 0.7);
+    font-size: max(0.75rem, calc(var(--app-article-font, 1rem) * 0.8));
     color: var(--pico-muted-color); /* дата второстепенна в обеих темах: Ink Muted, а не прозрачный Contrast */
     white-space: nowrap;
     line-height: 1.25;
