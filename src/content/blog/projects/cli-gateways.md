@@ -1,6 +1,6 @@
 ---
 title: "Два шлюза: Claude Code и Codex как OpenAI API"
-date: 2026-09-26
+date: 2026-09-26T04:20:00Z
 draft: false
 ---
 

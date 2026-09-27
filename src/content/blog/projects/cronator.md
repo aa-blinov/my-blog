@@ -1,6 +1,6 @@
 ---
 title: "Cronator: когда cron начинает болеть"
-date: 2026-09-26
+date: 2026-09-26T03:38:00Z
 draft: false
 ---
 
