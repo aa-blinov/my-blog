@@ -1,6 +1,6 @@
 ---
 title: "Весь код был у GitHub"
-date: 2026-09-27
+date: 2026-09-27T05:16:00Z
 draft: false
 ---
 

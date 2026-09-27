@@ -886,6 +886,7 @@ a.all-articles-link.post-title-link:hover {
   margin-bottom: var(--app-spacing-xs);
   font-size: var(--app-font-control);
 }
+main article .content .post-list-item h3,
 .post-list-item h3 {
   margin: 0;
   font-size: var(--app-font-lg);
