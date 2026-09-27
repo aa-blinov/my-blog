@@ -240,7 +240,7 @@ function getFolderHref(fullPath: string) {
       try {
         // --- Restore Sort State ---
         // По умолчанию новые сверху (в разметке); из хранилища только отличие от умолчания
-        const sortOrder = localStorage.getItem('sidebar-sort') || 'desc';
+        const sortOrder = localStorage.getItem('sidebar-sort-v2') || 'desc';
         if (sortOrder !== 'desc') {
           if (sortOrder === 'none') tree.removeAttribute('data-sort'); else tree.setAttribute('data-sort', sortOrder);
           const icon = sortBtn.querySelector('.sort-icon');
@@ -431,7 +431,7 @@ function getFolderHref(fullPath: string) {
 
     // --- Сортировка ---
     type SortOrder = 'none' | 'desc' | 'asc';
-    let sortOrder: SortOrder = (localStorage.getItem('sidebar-sort') as SortOrder) || 'desc';
+    let sortOrder: SortOrder = (localStorage.getItem('sidebar-sort-v2') as SortOrder) || 'desc';
     const sortIcon = sortBtn.querySelector('.sort-icon') as HTMLSpanElement;
     const sortStates: Record<SortOrder, { icon: string; title: string; label: string }> = {
       'none': { icon: '↕', title: 'По разделам и имени', label: 'по имени' },
@@ -457,7 +457,7 @@ function getFolderHref(fullPath: string) {
       if (sortOrder === 'desc') sortOrder = 'asc';
       else if (sortOrder === 'asc') sortOrder = 'none';
       else sortOrder = 'desc';
-      localStorage.setItem('sidebar-sort', sortOrder);
+      localStorage.setItem('sidebar-sort-v2', sortOrder);
       updateSortUI();
     });
   });
