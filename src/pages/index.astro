@@ -43,26 +43,10 @@ if (homeEntry) {
 }
 ---
 
-<PageFromEntry entry={entryData} fallbackTitle="Главная" fallbackH1="Главная" prompt="main &gt;">
+<PageFromEntry entry={entryData} fallbackTitle="Главная" fallbackH1="Главная" prompt="main &gt;" hideMeta>
   {Content ? <Content /> : <p>Добавь в <code>content/pages/</code> файл <code>main.md</code> с frontmatter: <code>title</code>, <code>date</code>.</p>}
 
-  <div class="site-map">
-    <h2 class="section-heading">Разделы</h2>
-    {seriesRows.map((s) => (
-      <div class="post-list-item">
-        <p class="meta"><span>{s.folder}/</span><span class="meta-sep" aria-hidden="true">~</span><span>{s.parts.length} {plural(s.parts.length, 'часть', 'части', 'частей')}</span></p>
-        <h3><a href={`${BASE}blog/${s.folder}/`} class="post-title-link">Серия «{s.title}»</a></h3>
-      </div>
-    ))}
-    {topSections.map((s) => (
-      <div class="post-list-item">
-        <p class="meta"><span>{s.slug}/</span><span class="meta-sep" aria-hidden="true">~</span><span>{s.count} {plural(s.count, 'статья', 'статьи', 'статей')}</span></p>
-        <h3><a href={`${BASE}blog/${s.slug}/`} class="post-title-link">{s.title}</a></h3>
-      </div>
-    ))}
-  </div>
-  
-  <div class="recent-posts">
+  <div class="recent-posts recent-first">
     <h2 class="section-heading">
       Свежие статьи
     </h2>
@@ -92,4 +76,17 @@ if (homeEntry) {
       </div>
     </div>
   )}
+
+  <div class="site-map">
+    <h2 class="section-heading">Разделы</h2>
+    <ul class="section-tags">
+      {topSections.map((s) => (
+        <li><a href={`${BASE}blog/${s.slug}/`}>{s.title}<span class="tag-count">{s.count}</span></a></li>
+      ))}
+      {seriesRows.map((s) => (
+        <li><a href={`${BASE}blog/${s.folder}/`}>Серия «{s.title}»<span class="tag-count">{s.parts.length}</span></a></li>
+      ))}
+    </ul>
+  </div>
+
 </PageFromEntry>

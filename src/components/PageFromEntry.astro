@@ -7,9 +7,10 @@ interface Props {
   fallbackTitle: string;
   fallbackH1: string;
   prompt: string;
+  hideMeta?: boolean;
 }
 
-const { entry, fallbackTitle, fallbackH1 } = Astro.props;
+const { entry, fallbackTitle, fallbackH1, hideMeta = false } = Astro.props;
 const hasEntry = !!entry;
 ---
 
@@ -18,7 +19,7 @@ const hasEntry = !!entry;
     <div class="entry-header">
       {hasEntry ? (
         <>
-          <p class="meta"><span>{formatDate(entry.data.date)}</span><span class="meta-sep" aria-hidden="true">~</span><span>{entry.fileLabel}</span></p>
+          {!hideMeta && <p class="meta"><span>{formatDate(entry.data.date)}</span><span class="meta-sep" aria-hidden="true">~</span><span>{entry.fileLabel}</span></p>}
           <hgroup>
             <h1>{entry.data.title}</h1>
             {entry.data.summary && <p class="summary">{entry.data.summary}</p>}
