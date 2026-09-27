@@ -75,7 +75,7 @@
   const fontSizes = ["xs", "sm", "md", "lg", "xl"];
   
   // Default to 'md' if nothing is stored
-  const storedFont = localStorage.getItem("font-size");
+  const storedFont = localStorage.getItem("font-size-v2");
   const initialFont = fontSizes.includes(storedFont) ? storedFont : "md";
   
   const applyFontUi = (size) => {
@@ -96,7 +96,7 @@
       const currentIndex = fontSizes.indexOf(currentSize);
       if (currentIndex < fontSizes.length - 1) {
         const nextSize = fontSizes[currentIndex + 1];
-        localStorage.setItem("font-size", nextSize);
+        localStorage.setItem("font-size-v2", nextSize);
         applyFontUi(nextSize);
       }
     });
@@ -108,7 +108,7 @@
       const currentIndex = fontSizes.indexOf(currentSize);
       if (currentIndex > 0) {
         const nextSize = fontSizes[currentIndex - 1];
-        localStorage.setItem("font-size", nextSize);
+        localStorage.setItem("font-size-v2", nextSize);
         applyFontUi(nextSize);
       }
     });

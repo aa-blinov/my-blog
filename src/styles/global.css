@@ -33,7 +33,7 @@
   --app-navbar-mobile-height: 48px;
   --app-scroll-offset: var(--app-spacing-xl);
   --app-navbar-mobile-button: 44px;
-  --app-sidebar-width: 320px;
+  --app-sidebar-width: clamp(300px, 19rem, 400px);
   --app-main-max-width: 92ch; /* ~85 знаков mono в строке: эссе читается без потери строки */
   --app-content-padding-top-mobile: 52px;
 
@@ -248,12 +248,12 @@ article > * {
 }
 
 /* Переключатель размера в навбаре масштабирует корень: все rem-токены, статья, заголовки, мета и дерево едут вместе */
-html[data-font="xs"] { --app-zoom: 0.85; }
-html[data-font="sm"] { --app-zoom: 0.92; }
-html[data-font="md"] { --app-zoom: 1; }
-html[data-font="lg"] { --app-zoom: 1.1; }
-html[data-font="xl"] { --app-zoom: 1.2; }
-:root { --app-article-font: 1rem; }
+html[data-font="xs"] { --app-zoom: 1; }
+html[data-font="sm"] { --app-zoom: 1.1; }
+html[data-font="md"] { --app-zoom: 1.2; }
+html[data-font="lg"] { --app-zoom: 1.3; }
+html[data-font="xl"] { --app-zoom: 1.45; }
+:root { --app-zoom: 1.2; --app-article-font: 1rem; }
 
 main article .entry-header,
 main article .content {
