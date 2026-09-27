@@ -1,6 +1,6 @@
 ---
 title: "Whisper Bot: голосовые сообщения в текст прямо в Telegram"
-date: 2026-04-11
+date: 2026-04-11T02:36:00Z
 draft: false
 ---
 

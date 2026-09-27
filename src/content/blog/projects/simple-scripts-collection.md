@@ -1,6 +1,6 @@
 ---
 title: "52 скрипта без pip install"
-date: 2026-04-08
+date: 2026-04-08T03:05:00Z
 draft: false
 ---
 

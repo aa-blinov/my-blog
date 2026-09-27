@@ -1,6 +1,6 @@
 ---
 title: "Project Setup Tool: ритуал создания проекта – один раз и навсегда"
-date: 2026-04-11
+date: 2026-04-11T00:59:00Z
 draft: false
 ---
 
