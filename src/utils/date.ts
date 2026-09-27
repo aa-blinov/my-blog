@@ -33,3 +33,20 @@ export function noteAnchor(d: Date): string {
   const p = (n: number) => String(n).padStart(2, '0');
   return `${d.getUTCFullYear()}-${p(d.getUTCMonth() + 1)}-${p(d.getUTCDate())}-${p(d.getUTCHours())}${p(d.getUTCMinutes())}`;
 }
+
+/** Первый абзац тела статьи без разметки, обрезанный по слову до maxLen символов. */
+export function excerpt(body: string, maxLen = 160): string {
+  const text = body
+    .replace(/^---[\s\S]*?---/, '')
+    .replace(/```[\s\S]*?```/g, '')
+    .replace(/^#.*$/gm, '')
+    .replace(/!\[[^\]]*\]\([^)]*\)/g, '')
+    .replace(/\[([^\]]*)\]\([^)]*\)/g, '$1')
+    .replace(/<[^>]+>/g, '')
+    .replace(/[*_`]/g, '')
+    .trim();
+  const para = text.split(/\n\s*\n/).map((p) => p.replace(/\s+/g, ' ').trim()).find((p) => p.length > 40) ?? '';
+  if (para.length <= maxLen) return para;
+  const cut = para.slice(0, maxLen);
+  return cut.slice(0, cut.lastIndexOf(' ')).replace(/[,;:–-]$/, '') + '…';
+}
