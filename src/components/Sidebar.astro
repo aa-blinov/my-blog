@@ -204,11 +204,6 @@ function getFolderHref(fullPath: string) {
                 >
                   {node.name}/
                 </a>
-                <a href={getFolderHref(node.fullPath || '')} class="folder-open" aria-label={`Раздел ${node.name}`}>
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="18" height="18" aria-hidden="true">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
-                  </svg>
-                </a>
               </summary>
               <ul class="sortable-list">
                 {childrenArr.map(child => renderTree(child))}
@@ -680,27 +675,6 @@ function getFolderHref(fullPath: string) {
     border-radius: 3px;
   }
 
-  .folder-open {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 24px;
-    height: 20px;
-    margin-left: auto;
-    color: var(--pico-muted-color);
-    opacity: 0.6;
-    text-decoration: none;
-    transition: opacity var(--app-transition), color var(--app-transition);
-  }
-  .folder-open:hover,
-  .folder-open:focus-visible {
-    opacity: 1;
-    color: var(--pico-primary);
-  }
-  .folder-open svg {
-    width: 14px;
-    height: 14px;
-  }
   .sidebar-nav summary {
     display: flex;
     align-items: center;
@@ -795,16 +769,6 @@ function getFolderHref(fullPath: string) {
     }
     .sidebar-nav summary .folder-link {
       flex: 1;
-    }
-    .folder-open {
-      width: 44px;
-      height: 44px;
-      margin: -6px 0;
-      opacity: 1;
-    }
-    .folder-open svg {
-      width: 18px;
-      height: 18px;
     }
     .sidebar-nav a.file-link, 
     .sidebar-nav a.folder-link, 
