@@ -49,6 +49,13 @@ const subGroups: Group[] = Object.entries(groups)
       <p>По разделам, внутри по дате.</p>
     </div>
 
+    {/* Больше 150 записей одной стеной: сверху разделы с числом статей, как карта блога на главной */}
+    <ul class="section-tags blog-index-tags" aria-label="Разделы блога">
+      {subGroups.map((group) => (
+        <li><a href={`#section-${group.name}`}>{sectionTitle(group.name)}<span class="tag-count">{group.entries.length}</span></a></li>
+      ))}
+    </ul>
+
     {directEntries.length > 0 && (
       <section class="section-block">
         <header>
@@ -64,7 +71,7 @@ const subGroups: Group[] = Object.entries(groups)
       <section class="section-block">
         {(index > 0 || directEntries.length > 0) && <hr class="section-divider" />}
         <header>
-          <h2 class="section-heading">
+          <h2 class="section-heading" id={`section-${group.name}`}>
             {sectionTitle(group.name)} <span class="section-slug">{group.name}/</span>
           </h2>
         </header>

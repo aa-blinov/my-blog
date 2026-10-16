@@ -156,7 +156,7 @@ const title = entry ? entry.data.title : (folderAbout?.data.title.replace(/:\s*Ð
       
       {directEntries.length > 0 && (
         <section class="section-block">
-          <PostList posts={directEntries} numbered={!!folderSeries} />
+          <PostList posts={directEntries} numbered={!!folderSeries} level={2} />
         </section>
       )}
       {subGroups.map((group, index) => (

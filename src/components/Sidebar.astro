@@ -114,7 +114,7 @@ function getFolderHref(fullPath: string) {
 }
 ---
 
-<nav class="sidebar-nav">
+<nav class="sidebar-nav" aria-label="Дерево статей">
   <div class="sidebar-controls">
     <span class="search-field">
       <input
@@ -201,12 +201,7 @@ function getFolderHref(fullPath: string) {
             <details open={isOnActivePath(node.fullPath || '')} data-default-open={isOnActivePath(node.fullPath || '') ? 'true' : 'false'}>
               <summary class="contrast">
                 <span class="ascii-icon folder">▸</span>
-                <a 
-                  href={getFolderHref(node.fullPath || '')} 
-                  class:list={['folder-link', { active: isActive(getFolderHref(node.fullPath || '')) }]}
-                >
-                  {node.name}/
-                </a>
+                <span class:list={['folder-link', { active: isActive(getFolderHref(node.fullPath || '')) }]}>{node.name}/</span>
               </summary>
               <ul class="sortable-list">
                 {childrenArr.map(child => renderTree(child))}
@@ -321,16 +316,8 @@ function getFolderHref(fullPath: string) {
     const tree = document.getElementById('sidebar-tree');
     if (!searchInput || !sortBtn || !tree) return;
 
-    // --- Имя папки везде раскрывает папку, в раздел ведёт стрелка справа: одна модель на всех ширинах ---
-    tree.addEventListener('click', (e) => {
-      const target = e.target as HTMLElement;
-      const folderLink = target.closest('.folder-link');
-      if (!folderLink) return;
-      e.preventDefault();
-      const details = folderLink.closest('details');
-      if (details) details.open = !details.open;
-      e.stopImmediatePropagation();
-    }, true);
+    // Имя папки это текст внутри summary: раскрывает папку штатно, без ссылки внутри кнопки (axe: nested-interactive).
+    // В раздел ведут хлебные крошки, главная и «О серии»
 
     // --- Транслитерация ---
     const ruToEn: Record<string, string> = {
@@ -511,7 +498,7 @@ function getFolderHref(fullPath: string) {
     border-radius: 3px;
     background: transparent;
     color: var(--pico-color);
-    outline: none;
+    /* фокус: общее зелёное кольцо :focus-visible, как у всего интерактивного */
     margin: 0;
     line-height: 1;
     height: auto;
@@ -629,6 +616,12 @@ function getFolderHref(fullPath: string) {
   .sidebar-nav summary::after {
     display: none;
   }
+  /* Pico приглушает открытый summary и оставляет закрытый цветом текста: папки на пути к статье выглядели неактивными.
+     По DESIGN.md имя папки всегда Ink Muted, открыта она или нет */
+  .sidebar-nav details > summary,
+  .sidebar-nav details[open] > summary {
+    color: var(--pico-muted-color);
+  }
 
   .ascii-icon {
     color: var(--pico-muted-color);
@@ -667,7 +660,7 @@ function getFolderHref(fullPath: string) {
   }
 
   /* --- Folder Links --- */
-  .sidebar-nav a.folder-link {
+  .sidebar-nav .folder-link {
     text-decoration: none;
     color: inherit;
     transition: color 0.15s ease, background-color 0.15s ease;
@@ -683,12 +676,12 @@ function getFolderHref(fullPath: string) {
     align-items: center;
   }
 
-  .sidebar-nav a.folder-link:hover {
+  .sidebar-nav .folder-link:hover {
     color: var(--pico-primary);
     background-color: var(--pico-code-background-color);
   }
 
-  .sidebar-nav a.folder-link.active {
+  .sidebar-nav .folder-link.active {
     color: var(--pico-primary);
     font-weight: bold;
     background-color: rgba(var(--pico-primary-rgb), 0.1);
@@ -707,15 +700,11 @@ function getFolderHref(fullPath: string) {
   }
 
   .file-name {
-    /* Название до двух строк, дальше многоточие; полное в подсказке */
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
-    line-clamp: 2;
+    /* Название целиком: обрезка на второй строке прятала конец, а на таче подсказки нет */
+    display: block;
     min-width: 0;
     line-height: 1.25;
-    overflow: hidden;
-    overflow-wrap: anywhere;
+    overflow-wrap: break-word;
   }
 
   .file-date {
@@ -774,7 +763,7 @@ function getFolderHref(fullPath: string) {
       flex: 1;
     }
     .sidebar-nav a.file-link, 
-    .sidebar-nav a.folder-link, 
+    .sidebar-nav .folder-link, 
     .sidebar-nav summary {
       font-size: 1rem;
       padding: 12px 4px; /* ~41px tap row */

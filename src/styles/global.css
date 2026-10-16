@@ -110,6 +110,24 @@ html[data-theme="dark"] {
   --pico-text-selection-color: rgba(var(--app-primary-rgb), var(--app-primary-selection-opacity-dark));
 }
 
+/* Без JS атрибута темы нет: при тёмной ОС Pico рисует ночной фон, а светлый блок выше дал бы тёмно-зелёные ссылки (3.5:1) */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    --pico-primary: var(--app-primary);
+    --pico-primary-rgb: var(--app-primary-rgb);
+    --pico-primary-background: var(--app-primary);
+    --pico-primary-border: var(--app-primary);
+    --pico-primary-underline: rgba(var(--app-primary-rgb), var(--app-primary-underline-opacity));
+    --pico-primary-hover: var(--app-primary-hover-dark);
+    --pico-primary-hover-background: var(--app-primary-hover-dark);
+    --pico-primary-hover-border: var(--app-primary-hover-dark);
+    --pico-primary-hover-underline: var(--app-primary-hover-dark);
+    --pico-primary-focus: rgba(var(--app-primary-rgb), var(--app-primary-focus-opacity-dark));
+    --pico-primary-inverse: var(--app-primary-inverse-dark);
+    --pico-text-selection-color: rgba(var(--app-primary-rgb), var(--app-primary-selection-opacity-dark));
+  }
+}
+
 /* ==========================================================================
    Base: html, body, box-sizing, overflow
    ========================================================================== */
@@ -345,6 +363,13 @@ main article .content h4 {
   line-height: 1.5;
   list-style: decimal;
   color: var(--pico-color); /* Pico внутри <a> подменяет --pico-color на primary, поэтому цвет задаём на списке */
+}
+/* Номер списка стоит в отступе, а статья обрезает всё левее (overflow-x: clip): у «10.» терялась первая цифра */
+.content ol:has(> li:nth-child(10)) {
+  padding-inline-start: 2.8em;
+}
+.toc-list:has(> li:nth-child(10)) {
+  padding-inline-start: 2.4em;
 }
 .toc-list li {
   display: list-item;
@@ -894,8 +919,8 @@ a.all-articles-link.post-title-link:hover {
   margin-bottom: var(--app-spacing-xs);
   font-size: var(--app-font-control);
 }
-main article .content .post-list-item h3,
-.post-list-item h3 {
+main article .content .post-list-item .post-title,
+.post-list-item .post-title {
   margin: 0;
   font-size: var(--app-font-lg);
   line-height: 1.3;
@@ -909,6 +934,7 @@ main article .content .post-list-item h3,
 }
 
 .section-heading {
+  scroll-margin-top: var(--app-scroll-offset); /* якоря разделов на /blog/ не прячутся под мобильной панелью */
   display: flex;
   align-items: center;
   gap: 0.75rem;
@@ -964,13 +990,16 @@ main article .content .post-list-item h3,
   min-height: 2.25rem;
   padding: 0.25rem 0.7rem;
   border: 1px solid var(--pico-muted-border-color);
-  border-radius: 0.35rem;
+  border-radius: var(--app-radius-sm); /* шкала DESIGN.md: 0, 3px, 4px */
   color: var(--pico-color);
   font-size: var(--app-font-sm);
   text-decoration: none;
   transition: border-color var(--app-transition), color var(--app-transition);
 }
 .section-tags a:hover { border-color: var(--pico-primary); color: var(--pico-primary); }
+.blog-index-tags {
+  margin-bottom: var(--app-spacing-xl);
+}
 .section-tags .tag-count {
   color: var(--pico-muted-color);
   font-size: var(--app-font-control);
@@ -1019,9 +1048,10 @@ main article .content .post-list-item h3,
   font-size: var(--app-font-control);
   color: var(--pico-muted-color);
 }
-.am-step-title {
-  font-weight: 700;
-  margin-bottom: var(--app-spacing-md);
+main article .content .am-step-title {
+  margin: 0 0 var(--app-spacing-md);
+  font-size: 1.15em;
+  line-height: 1.3;
 }
 .am-step p:last-child {
   margin-bottom: 0;
@@ -1039,7 +1069,7 @@ main article .content .post-list-item h3,
   border-top: none;
   padding-top: 0;
 }
-main article .content .am-card h4 {
+main article .content .am-card :is(h3, h4) {
   margin: 0 0 var(--app-spacing-xs);
   font-size: 1em;
 }
@@ -1177,6 +1207,22 @@ details.am-why > .am-src {
   border-color: var(--pico-primary);
   color: var(--pico-primary-inverse);
 }
+/* Текст только для скринридера: контекст к одинаковым подписям вроде «Почему так» */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+/* Цепочка чипов вместе со знаком препинания после неё не рвётся: точка не остаётся одна на строке */
+.ref-run {
+  white-space: nowrap;
+}
 /* Всплывашка источника: плоская, как вся система; от текста отделяет волосяная рамка, не тень */
 .ref-tip {
   position: absolute;
@@ -1191,7 +1237,8 @@ details.am-why > .am-src {
   line-height: 1.5;
   pointer-events: none;
 }
-.ref-tip-host {
+.ref-tip-host,
+.ref-tip-hint {
   display: block;
   margin-top: 0.25rem;
   color: var(--pico-muted-color);
