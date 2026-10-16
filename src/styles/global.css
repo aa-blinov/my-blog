@@ -1177,18 +1177,3 @@ details.am-why > .am-src {
   border-color: var(--pico-primary);
   color: var(--pico-primary-inverse);
 }
-.am-sources {
-  font-size: var(--app-font-sm);
-  line-height: 1.5;
-}
-.am-sources li {
-  margin-bottom: var(--app-spacing-md);
-  scroll-margin-top: var(--app-scroll-offset);
-}
-.am-sources li:target {
-  background: var(--pico-code-background-color);
-  border-radius: 4px;
-}
-.am-sources a {
-  overflow-wrap: anywhere;
-}

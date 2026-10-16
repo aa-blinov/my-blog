@@ -36,14 +36,4 @@ const tocHref = `${BASE}blog/${series.folder}/`;
       <a href={tocHref} class="series-next"><span class="series-label">серия <Arrow dir="right" size={14} /></span>Оглавление</a>
     )}
   </nav>
-  <script is:inline>
-    // Источники это приложение, а не конец повествования: ссылки на соседние части встают перед ними
-    (function () {
-      var nav = document.getElementById('series-nav');
-      var heads = document.querySelectorAll('.content h2');
-      for (var i = 0; i < heads.length; i++) {
-        if (/^Список источников/.test(heads[i].textContent.trim())) { heads[i].parentNode.insertBefore(nav, heads[i]); break; }
-      }
-    })();
-  </script>
 )}

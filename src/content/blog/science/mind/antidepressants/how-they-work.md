@@ -10,7 +10,7 @@ draft: false
 
 Теперь разберёмся, что таблетка делает в мозге. Это основа для всего дальше: из механизма вырастают и сила препаратов, и их побочные эффекты. Здесь без формул: как нервные клетки передают сигнал, в какой момент вмешивается каждый класс антидепрессантов и почему эффект приходит через недели.
 
-Это не инструкция. Препарат и дозу подбирает врач: он смотрит на историю болезни, другие лекарства, беременность, сопутствующие болезни. Номер в квадратных скобках ведёт к источнику в конце страницы.
+Это не инструкция. Препарат и дозу подбирает врач: он смотрит на историю болезни, другие лекарства, беременность, сопутствующие болезни. Номер в квадратных скобках ведёт на источник, при наведении видно, что это.
 
 ## Сначала про синапс
 
@@ -25,7 +25,7 @@ draft: false
 
 ## Почему эффект приходит через недели
 
-Насос блокируется в первые часы, а настроение меняется через недели. Эта задержка плохо сочетается с простой схемой «стало больше серотонина, стало лучше». Обзор Кэтрин Хармер и Филипа Коуэна с кафедры психиатрии Оксфордского университета, написанный вместе с Рональдом Дюманом, в Lancet Psychiatry<a class="ref" href="#src-1">[1]</a> описывает, как это объясняют сейчас. Одно объяснение: препарат рано, ещё до улучшения настроения, сдвигает то, как мозг обрабатывает эмоциональные и социальные сигналы, а настроение догоняет постепенно, по мере того как человек проживает новые ситуации. Другое: медленно перестраиваются связи между нервными клетками, это называют нейропластичностью. Как именно эти два объяснения складываются, пока выясняют. А простая схема «не хватает серотонина, таблетка добавляет» не подтвердилась, об этом [отдельная статья](/blog/science/mind/serotonin-theory-and-ssri/).
+Насос блокируется в первые часы, а настроение меняется через недели. Эта задержка плохо сочетается с простой схемой «стало больше серотонина, стало лучше». Обзор Кэтрин Хармер и Филипа Коуэна с кафедры психиатрии Оксфордского университета, написанный вместе с Рональдом Дюманом, в Lancet Psychiatry<a class="ref" href="https://pubmed.ncbi.nlm.nih.gov/28153641/" title="Harmer C.J., Duman R.S., Cowen P.J. How do antidepressants work? New perspectives for refining future treatment approaches. Lancet Psychiatry, 2017.">[1]</a> описывает, как это объясняют сейчас. Одно объяснение: препарат рано, ещё до улучшения настроения, сдвигает то, как мозг обрабатывает эмоциональные и социальные сигналы, а настроение догоняет постепенно, по мере того как человек проживает новые ситуации. Другое: медленно перестраиваются связи между нервными клетками, это называют нейропластичностью. Как именно эти два объяснения складываются, пока выясняют. А простая схема «не хватает серотонина, таблетка добавляет» не подтвердилась, об этом [отдельная статья](/blog/science/mind/serotonin-theory-and-ssri/).
 
 ## Классы и их названия
 
@@ -35,48 +35,30 @@ draft: false
 
 <details class="am-fold">
 <summary><strong>СИОЗС</strong><span class="am-names">блокируют насос серотонина: флуоксетин, сертралин, пароксетин, циталопрам, эсциталопрам, флувоксамин</span></summary>
-<p>Обычно клетка, выпустив серотонин, забирает его обратно. Эти препараты ей мешают, и серотонина в синапсе остаётся больше<a class="ref" href="#src-2">[2]</a>. «Селективные» значит, что на другие системы они действуют мало, поэтому переносятся лучше старых препаратов.</p>
+<p>Обычно клетка, выпустив серотонин, забирает его обратно. Эти препараты ей мешают, и серотонина в синапсе остаётся больше<a class="ref" href="https://www.ncbi.nlm.nih.gov/books/NBK554406/" title="Chu A., Wadhwa R. Selective Serotonin Reuptake Inhibitors. StatPearls, 2023.">[2]</a>. «Селективные» значит, что на другие системы они действуют мало, поэтому переносятся лучше старых препаратов.</p>
 </details>
 
 <details class="am-fold">
 <summary><strong>СИОЗСН</strong><span class="am-names">блокируют насосы серотонина и норадреналина: венлафаксин, дезвенлафаксин, дулоксетин</span></summary>
-<p>Делают то же, что СИОЗС, но сразу для двух веществ: серотонина и норадреналина<a class="ref" href="#src-3">[3]</a><a class="ref" href="#src-4">[4]</a>.</p>
+<p>Делают то же, что СИОЗС, но сразу для двух веществ: серотонина и норадреналина<a class="ref" href="https://www.ncbi.nlm.nih.gov/books/NBK535363/" title="Singh D., Saadabadi A. Venlafaxine. StatPearls, 2024.">[3]</a><a class="ref" href="https://www.ncbi.nlm.nih.gov/books/NBK549806/" title="Biswas T., Patel P. et al. Duloxetine. StatPearls, 2026.">[4]</a>.</p>
 </details>
 
 <details class="am-fold">
 <summary><strong>ТЦА, трициклические</strong><span class="am-names">блокируют насосы и много посторонних рецепторов: амитриптилин, имипрамин, кломипрамин; опасны при передозировке</span></summary>
-<p>Один из двух первых классов антидепрессантов. Они тоже мешают обратному захвату серотонина и норадреналина<a class="ref" href="#src-5">[5]</a>, но вдобавок действуют на много посторонних рецепторов: гистаминовые, холинергические, адренергические. Отсюда сухость во рту, запоры, сонливость, падение давления при вставании. А при передозировке они ещё и нарушают проводимость в сердце, поэтому так опасны.</p>
+<p>Один из двух первых классов антидепрессантов. Они тоже мешают обратному захвату серотонина и норадреналина<a class="ref" href="https://www.ncbi.nlm.nih.gov/books/NBK557791/" title="Moraczewski J., Awosika A.O. et al. Tricyclic Antidepressants. StatPearls, 2023.">[5]</a>, но вдобавок действуют на много посторонних рецепторов: гистаминовые, холинергические, адренергические. Отсюда сухость во рту, запоры, сонливость, падение давления при вставании. А при передозировке они ещё и нарушают проводимость в сердце, поэтому так опасны.</p>
 </details>
 
 <details class="am-fold">
 <summary><strong>ИМАО</strong><span class="am-names">блокируют фермент, который разрушает медиаторы: фенелзин, моклобемид; старым нужна диета; опасные сочетания</span></summary>
-<p>Они блокируют фермент МАО, который разрушает серотонин, норадреналин и дофамин<a class="ref" href="#src-6">[6]</a>. Старые необратимые ИМАО требуют диеты. Без этого фермента вещество тирамин из выдержанного сыра, копчёностей и некоторых других продуктов может резко поднять давление. Не менее опасно сочетать их с другими препаратами, которые повышают серотонин. Так можно получить серотониновый синдром, опасное отравление избытком серотонина, поэтому при переходе на ИМАО или с них нужна пауза.</p>
+<p>Они блокируют фермент МАО, который разрушает серотонин, норадреналин и дофамин<a class="ref" href="https://www.ncbi.nlm.nih.gov/books/NBK539848/" title="Patel P., Saadabadi A. Monoamine Oxidase Inhibitors (MAOIs). StatPearls, 2025.">[6]</a>. Старые необратимые ИМАО требуют диеты. Без этого фермента вещество тирамин из выдержанного сыра, копчёностей и некоторых других продуктов может резко поднять давление. Не менее опасно сочетать их с другими препаратами, которые повышают серотонин. Так можно получить серотониновый синдром, опасное отравление избытком серотонина, поэтому при переходе на ИМАО или с них нужна пауза.</p>
 </details>
 
 <details class="am-fold">
 <summary><strong>Другие механизмы</strong><span class="am-names">рецепторы, насосы других медиаторов или насос серотонина вместе с рецепторами: бупропион, миртазапин, агомелатин, вортиоксетин, тразодон</span></summary>
-<p>Каждый устроен по-своему. <strong>Бупропион</strong> действует на норадреналин и дофамин, а серотонин почти не трогает<a class="ref" href="#src-7">[7]</a>. <strong>Миртазапин</strong> блокирует рецепторы, которые тормозят выброс норадреналина и серотонина<a class="ref" href="#src-8">[8]</a>, и заодно сильно блокирует гистаминовые рецепторы, отсюда сонливость и аппетит. <strong>Агомелатин</strong> стимулирует рецепторы мелатонина и блокирует один из серотониновых рецепторов<a class="ref" href="#src-9">[9]</a>. <strong>Вортиоксетин</strong> сочетает блокаду обратного захвата серотонина с действием на несколько его рецепторов<a class="ref" href="#src-10">[10]</a>. <strong>Тразодон</strong> мешает обратному захвату серотонина, блокирует один из типов серотониновых рецепторов, а также гистаминовые и адренергические рецепторы<a class="ref" href="#src-11">[11]</a>; в малых дозах он работает в основном как снотворное, в больших как антидепрессант.</p>
+<p>Каждый устроен по-своему. <strong>Бупропион</strong> действует на норадреналин и дофамин, а серотонин почти не трогает<a class="ref" href="https://www.ncbi.nlm.nih.gov/books/NBK470212/" title="Huecker M.R., Smiley A. et al. Bupropion. StatPearls, 2024.">[7]</a>. <strong>Миртазапин</strong> блокирует рецепторы, которые тормозят выброс норадреналина и серотонина<a class="ref" href="https://www.ncbi.nlm.nih.gov/books/NBK519059/" title="Jilani T.N., Gibbons J.R. et al. Mirtazapine. StatPearls, 2024.">[8]</a>, и заодно сильно блокирует гистаминовые рецепторы, отсюда сонливость и аппетит. <strong>Агомелатин</strong> стимулирует рецепторы мелатонина и блокирует один из серотониновых рецепторов<a class="ref" href="https://pubmed.ncbi.nlm.nih.gov/20577266/" title="de Bodinat C. et al. Agomelatine, the first melatonergic antidepressant: discovery, characterization and development. Nature Reviews Drug Discovery, 2010.">[9]</a>. <strong>Вортиоксетин</strong> сочетает блокаду обратного захвата серотонина с действием на несколько его рецепторов<a class="ref" href="https://pubmed.ncbi.nlm.nih.gov/25016186/" title="Sanchez C., Asin K.E. et al. Vortioxetine, a novel antidepressant with multimodal activity: review of preclinical and clinical data. Pharmacology &amp; Therapeutics, 2015.">[10]</a>. <strong>Тразодон</strong> мешает обратному захвату серотонина, блокирует один из типов серотониновых рецепторов, а также гистаминовые и адренергические рецепторы<a class="ref" href="https://www.ncbi.nlm.nih.gov/books/NBK470560/" title="Shin J.J., Saadabadi A. Trazodone. StatPearls, 2024.">[11]</a>; в малых дозах он работает в основном как снотворное, в больших как антидепрессант.</p>
 </details>
 
 
 ---
 
 **Дальше.** В [третьей части](/blog/science/mind/antidepressants/strength-and-price/) сравним препараты разных классов: насколько они сильны и чем за них платишь.
-
----
-
-## Список источников
-
-<ol class="am-sources">
-<li id="src-1">Harmer C.J., Duman R.S., Cowen P.J. How do antidepressants work? New perspectives for refining future treatment approaches. <em>Lancet Psychiatry</em>, 2017. <a href="https://pubmed.ncbi.nlm.nih.gov/28153641/">pubmed.ncbi.nlm.nih.gov/28153641/</a></li>
-<li id="src-2">Chu A., Wadhwa R. Selective Serotonin Reuptake Inhibitors. <em>StatPearls</em>, 2023. <a href="https://www.ncbi.nlm.nih.gov/books/NBK554406/">www.ncbi.nlm.nih.gov/books/NBK554406/</a></li>
-<li id="src-3">Singh D., Saadabadi A. Venlafaxine. <em>StatPearls</em>, 2024. <a href="https://www.ncbi.nlm.nih.gov/books/NBK535363/">www.ncbi.nlm.nih.gov/books/NBK535363/</a></li>
-<li id="src-4">Biswas T., Patel P. et al. Duloxetine. <em>StatPearls</em>, 2026. <a href="https://www.ncbi.nlm.nih.gov/books/NBK549806/">www.ncbi.nlm.nih.gov/books/NBK549806/</a></li>
-<li id="src-5">Moraczewski J., Awosika A.O. et al. Tricyclic Antidepressants. <em>StatPearls</em>, 2023. <a href="https://www.ncbi.nlm.nih.gov/books/NBK557791/">www.ncbi.nlm.nih.gov/books/NBK557791/</a></li>
-<li id="src-6">Patel P., Saadabadi A. Monoamine Oxidase Inhibitors (MAOIs). <em>StatPearls</em>, 2025. <a href="https://www.ncbi.nlm.nih.gov/books/NBK539848/">www.ncbi.nlm.nih.gov/books/NBK539848/</a></li>
-<li id="src-7">Huecker M.R., Smiley A. et al. Bupropion. <em>StatPearls</em>, 2024. <a href="https://www.ncbi.nlm.nih.gov/books/NBK470212/">www.ncbi.nlm.nih.gov/books/NBK470212/</a></li>
-<li id="src-8">Jilani T.N., Gibbons J.R. et al. Mirtazapine. <em>StatPearls</em>, 2024. <a href="https://www.ncbi.nlm.nih.gov/books/NBK519059/">www.ncbi.nlm.nih.gov/books/NBK519059/</a></li>
-<li id="src-9">de Bodinat C. et al. Agomelatine, the first melatonergic antidepressant: discovery, characterization and development. <em>Nature Reviews Drug Discovery</em>, 2010. <a href="https://pubmed.ncbi.nlm.nih.gov/20577266/">pubmed.ncbi.nlm.nih.gov/20577266/</a></li>
-<li id="src-10">Sanchez C., Asin K.E. et al. Vortioxetine, a novel antidepressant with multimodal activity: review of preclinical and clinical data. <em>Pharmacology &amp; Therapeutics</em>, 2015. <a href="https://pubmed.ncbi.nlm.nih.gov/25016186/">pubmed.ncbi.nlm.nih.gov/25016186/</a></li>
-<li id="src-11">Shin J.J., Saadabadi A. Trazodone. <em>StatPearls</em>, 2024. <a href="https://www.ncbi.nlm.nih.gov/books/NBK470560/">www.ncbi.nlm.nih.gov/books/NBK470560/</a></li>
-</ol>
