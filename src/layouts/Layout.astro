@@ -18,12 +18,19 @@ const { title, description } = Astro.props;
 
 const published = (await getCollection('blog')).filter((e) => !e.data.draft);
 const live = liveFolders(published);
-// about-*.md это вводный текст раздела, не статья: в дереве его нет, в раздел ведёт имя папки
-const blogEntries = sortByDateDesc(published.filter((e) => inLiveFolder(e.id, live) && !isAbout(e.id))).map((entry) => {
+// about-*.md это вводный текст раздела, не статья: в дереве его нет, в раздел ведёт имя папки.
+// Исключение серии: их about пунктом «О серии» сверху, иначе на оглавление из дерева не попасть
+const seriesFolders = new Set(published.filter((e) => e.data.part !== undefined).map((e) => e.id.slice(0, e.id.lastIndexOf('/'))));
+const folderOf = (id: string) => id.slice(0, id.lastIndexOf('/'));
+const isSeriesAbout = (id: string) => isAbout(id) && seriesFolders.has(folderOf(id));
+const blogEntries = sortByDateDesc(published.filter((e) => inLiveFolder(e.id, live) && (!isAbout(e.id) || isSeriesAbout(e.id)))).map((entry) => {
+  const seriesAbout = isSeriesAbout(entry.id);
   return {
     id: `${entry.id}.md`, // File-like path for the sidebar tree, e.g. 'science/human-body/article.md'
-    slug: entry.id, // URL path like 'science/human-body/article'
+    slug: seriesAbout ? folderOf(entry.id) : entry.id, // URL path like 'science/human-body/article'; about серии живёт на странице папки
     title: entry.data.title,
+    nav: seriesAbout ? 'О серии' : entry.data.nav,
+    inSeries: seriesAbout || entry.data.part !== undefined, // в серии порядок по номеру, дата не нужна
     date: entry.data.date,
     section: entry.data.section, // Still support frontmatter override
     part: entry.data.part, // номер части в серии: дерево сортирует по нему

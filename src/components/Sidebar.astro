@@ -9,6 +9,8 @@ interface BlogEntry {
   date: Date;
   section?: string;
   part?: number;
+  nav?: string;
+  inSeries?: boolean;
 }
 
 interface Props {
@@ -99,7 +101,8 @@ function isOnActivePath(fullPath: string): boolean {
 }
 
 // В дереве заголовок до первого «: »: у научпопа после двоеточия идёт подзаголовок, он отрезался многоточием
-function shortTitle(title: string): string {
+function shortTitle(title: string, nav?: string): string {
+  if (nav) return nav;
   const clean = title.replace(/:\s*Об этой секции$/, '');
   const i = clean.indexOf(': ');
   return i > 0 ? clean.slice(0, i) : clean;
@@ -213,10 +216,10 @@ function getFolderHref(fullPath: string) {
             <>
               <span class="file-link-wrapper">
                 <a href={`${BASE}blog/${node.entry?.slug}/`} class:list={['file-link', { active: isActive(`${BASE}blog/${node.entry?.slug}/`) }]}>
-                        <span class="file-name" title={`${node.entry?.title.replace(/:\s*Об этой секции$/, '')} (${node.name})`} data-short={shortTitle(node.entry?.title ?? '')} data-full={node.entry?.title.replace(/:\s*Об этой секции$/, '')}>{shortTitle(node.entry?.title ?? '')}</span>
+                        <span class="file-name" title={`${node.entry?.title.replace(/:\s*Об этой секции$/, '')} (${node.name})`} data-short={shortTitle(node.entry?.title ?? '', node.entry?.nav)} data-full={node.entry?.title.replace(/:\s*Об этой секции$/, '')}>{shortTitle(node.entry?.title ?? '', node.entry?.nav)}</span>
                 </a>
               </span>
-              <span class="file-date">{formatDate(node.entry!.date)}</span>
+              {!node.entry?.inSeries && <span class="file-date">{formatDate(node.entry!.date)}</span>}
             </>
           )}
         </li>

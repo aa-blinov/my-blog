@@ -1,5 +1,6 @@
 ---
 title: "Вам назначили антидепрессант"
+nav: "Первые недели"
 part: 1
 date: 2026-10-16T09:00:00Z
 draft: false
@@ -144,11 +145,11 @@ draft: false
 
 1. Вам назначили антидепрессант: эта часть.
 2. [Как работают антидепрессанты](/blog/science/mind/antidepressants/how-they-work/): синапс, классы, почему эффект через недели.
-3. [Чем они отличаются: сила и цена](/blog/science/mind/antidepressants/strength-and-price/): насколько они сильны, побочные эффекты и риски.
-4. [Почему назначили именно этот](/blog/science/mind/antidepressants/why-this-one/): карта выбора и все препараты.
-5. [Если помогает мало](/blog/science/mind/antidepressants/if-it-helps-little/): как оценивают результат и что меняют.
+3. [Чем препараты отличаются](/blog/science/mind/antidepressants/strength-and-price/): насколько они сильны, побочные эффекты и риски.
+4. [Почему назначили именно этот препарат](/blog/science/mind/antidepressants/why-this-one/): карта выбора и все препараты.
+5. [Если лечение помогает мало](/blog/science/mind/antidepressants/if-it-helps-little/): как оценивают результат и что меняют.
 6. [Сколько принимать и как заканчивать](/blog/science/mind/antidepressants/how-long-and-stopping/).
-7. [Беременность, пожилые, подростки](/blog/science/mind/antidepressants/special-groups/).
+7. [Беременность, пожилые, дети](/blog/science/mind/antidepressants/special-groups/).
 8. [Как это устроено в России и СНГ](/blog/science/mind/antidepressants/cis-practice/): учёт, рецепты, местные рекомендации и препараты.
 
 ---
