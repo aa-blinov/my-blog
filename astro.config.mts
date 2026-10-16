@@ -8,10 +8,14 @@ export default defineConfig({
   output: 'static',
   integrations: [sitemap()],
   // Серия про агента переехала в dev/agent/; старые адреса живут в чужих закладках
-  redirects: Object.fromEntries(
-    ['loop', 'tools', 'context', 'personas', 'plan-mode', 'subagents', 'memory', 'daemon', 'evals'].map((n) => [
-      `/blog/dev/agent-${n}/`,
-      `/blog/dev/agent/${n}/`,
-    ]),
-  ),
+  redirects: {
+    ...Object.fromEntries(
+      ['loop', 'tools', 'context', 'personas', 'plan-mode', 'subagents', 'memory', 'daemon', 'evals'].map((n) => [
+        `/blog/dev/agent-${n}/`,
+        `/blog/dev/agent/${n}/`,
+      ]),
+    ),
+    // Карта антидепрессантов стала серией в mind/antidepressants/
+    '/blog/science/mind/antidepressants-map/': '/blog/science/mind/antidepressants/',
+  },
 });
