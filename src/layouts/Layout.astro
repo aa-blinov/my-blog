@@ -8,6 +8,9 @@ import { getBreadcrumb } from '../utils/breadcrumb';
 import { sortByDateDesc } from '../utils/date';
 import { liveFolders, inLiveFolder, isAbout } from '../utils/series';
 import '../styles/global.css';
+// Тот же файл, что берёт CSS fontsource: Vite отдаёт один хешированный адрес, предзагрузка не качает шрифт дважды
+import monoLatin from '@fontsource-variable/jetbrains-mono/files/jetbrains-mono-latin-wght-normal.woff2?url';
+import monoCyrillic from '@fontsource-variable/jetbrains-mono/files/jetbrains-mono-cyrillic-wght-normal.woff2?url';
 
 interface Props {
   title: string;
@@ -56,6 +59,8 @@ const breadcrumbPath = getBreadcrumb(Astro.url.pathname);
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
     <meta name="color-scheme" content="light dark" />
+    <link rel="preload" href={monoCyrillic} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={monoLatin} as="font" type="font/woff2" crossorigin />
     <link rel="icon" type="image/svg+xml" href={`${BASE}favicon.svg`} />
     <title>{fullTitle}</title>
     <meta name="description" content={desc} />
@@ -67,8 +72,9 @@ const breadcrumbPath = getBreadcrumb(Astro.url.pathname);
         const theme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.dataset.theme = theme;
         
-        const font = localStorage.getItem('font-size') || 'md';
-        document.documentElement.dataset.font = font;
+        // Тот же ключ, что у кнопок в theme.js: иначе страница рисуется в md и перескакивает, когда модуль применит сохранённый размер
+        const font = localStorage.getItem('font-size-v2');
+        document.documentElement.dataset.font = ['xs', 'sm', 'md', 'lg', 'xl'].includes(font) ? font : 'md';
       })();
     </script>
   </head>

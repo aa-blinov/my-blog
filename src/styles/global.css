@@ -34,7 +34,7 @@
   --app-scroll-offset: var(--app-spacing-xl);
   --app-navbar-mobile-button: 44px;
   --app-sidebar-width: clamp(300px, 19rem, 400px);
-  --app-main-max-width: 92ch; /* ~85 знаков mono в строке: эссе читается без потери строки */
+  --app-main-max-width: 55.2em; /* 92 знака JetBrains Mono (0.6em на знак), ~85 в строке. В em, а не ch: ch меряется по запасному шрифту, пока основной грузится, и колонка дёргалась */
   --app-content-padding-top-mobile: 52px;
 
   /* Spacing */
@@ -905,7 +905,7 @@ main article .content .post-list-item h3,
   margin: 0.35rem 0 0;
   color: var(--pico-muted-color);
   line-height: 1.45;
-  max-width: 70ch;
+  max-width: 42em; /* 70 знаков mono, em по той же причине, что у main */
 }
 
 .section-heading {
