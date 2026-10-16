@@ -137,6 +137,7 @@ draft: false
 5. [Если помогает мало](/blog/science/mind/antidepressants/if-it-helps-little/): как оценивают результат и что меняют.
 6. [Сколько принимать и как заканчивать](/blog/science/mind/antidepressants/how-long-and-stopping/).
 7. [Беременность, пожилые, подростки](/blog/science/mind/antidepressants/special-groups/).
+8. [Как это устроено в России и СНГ](/blog/science/mind/antidepressants/cis-practice/): учёт, рецепты, местные рекомендации и препараты.
 
 ---
 
