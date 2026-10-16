@@ -28,7 +28,7 @@ This repository is not an open source template or starter kit. Source code and c
 
 ## Tech Stack
 
-- Astro 5
+- Astro 7
 - TypeScript
 - Astro Content Collections with Zod schemas
 - Pico CSS plus custom global styling
