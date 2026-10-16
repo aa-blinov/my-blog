@@ -598,17 +598,17 @@ pre, code {
   opacity: 1;
 }
 
-.content a[href^="http"]:not(.nav-link) {
+.content a[href^="http"]:not(.nav-link):not(.ref) {
   display: inline;
   color: var(--pico-primary);
   text-decoration-color: var(--pico-primary-underline);
   transition: color var(--app-transition), text-decoration-color var(--app-transition);
 }
-.content a[href^="http"]:not(.nav-link):hover {
+.content a[href^="http"]:not(.nav-link):not(.ref):hover {
   color: var(--pico-primary-hover);
   text-decoration-color: var(--pico-primary-hover);
 }
-.content a[href^="http"]:not(.nav-link)::after {
+.content a[href^="http"]:not(.nav-link):not(.ref)::after {
   content: "";
   display: inline-block;
   width: 12px;
@@ -1176,4 +1176,23 @@ details.am-why > .am-src {
   background: var(--pico-primary);
   border-color: var(--pico-primary);
   color: var(--pico-primary-inverse);
+}
+/* Всплывашка источника: плоская, как вся система; от текста отделяет волосяная рамка, не тень */
+.ref-tip {
+  position: absolute;
+  z-index: 100;
+  max-width: min(28rem, calc(100vw - 32px));
+  padding: 0.5rem 0.75rem;
+  background: var(--pico-background-color);
+  border: 1px solid var(--pico-muted-border-color);
+  border-radius: var(--app-radius-sm);
+  color: var(--pico-contrast);
+  font-size: var(--app-font-sm);
+  line-height: 1.5;
+  pointer-events: none;
+}
+.ref-tip-host {
+  display: block;
+  margin-top: 0.25rem;
+  color: var(--pico-muted-color);
 }
