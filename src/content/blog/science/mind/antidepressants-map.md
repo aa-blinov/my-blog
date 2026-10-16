@@ -72,14 +72,14 @@ draft: false
 </div>
 <div class="am-arrow">↓</div>
 
-<div class="am-step am-check" data-n="3">
+<div class="am-step" data-n="3">
 <div class="am-step-title">Через две недели: симптомы снизились хотя бы на 20% по оценке врача?</div>
 <p><strong>Да:</strong> продолжать и оценивать дальше.<br><strong>Нет:</strong> это повод обсудить с врачом дозу или смену препарата.</p>
 <p>В первые недели доза бывает ещё стартовой, поэтому врач смотрит и на неё. Окончательно о результате судят позже. Самому бросать препарат не надо, даже если пока не помогает.</p>
 </div>
 <div class="am-arrow">↓</div>
 
-<div class="am-step am-doctor" data-n="4">
+<div class="am-step" data-n="4">
 <div class="am-step-title">Не помогли несколько препаратов</div>
 <p>Сначала проверяют дозу, срок, регулярность приёма и сам диагноз. Дальше решает психиатр: смена препарата, усиление другим препаратом, психотерапия. Работа Чиприани таких пациентов почти не включала, поэтому из неё здесь выводов не сделать.</p>
 </div>
@@ -94,40 +94,40 @@ draft: false
 
 <div class="am-map">
 
-<details class="am-group am-ssri">
-<summary><span class="am-class am-ssri">СИОЗС</span><span class="am-names">Эсциталопрам, Сертралин, Флуоксетин, Пароксетин, Циталопрам, Флувоксамин</span></summary>
+<details class="am-group">
+<summary><span class="am-class">СИОЗС</span><span class="am-names">Эсциталопрам, Сертралин, Флуоксетин, Пароксетин, Циталопрам, Флувоксамин</span></summary>
 <div class="am-grid">
-<div class="am-card am-ssri">
+<div class="am-card">
 <h4>Эсциталопрам</h4>
 <div class="am-brands">Ципралекс, Селектра, Ленуксин, Элицея</div>
 <p class="am-row"><span class="am-label">Плюс:</span> Среди самых эффективных и лучше переносимых у Чиприани</p>
 <p class="am-row"><span class="am-label">Цена:</span> Сексуальные нарушения; среди частых по симптомам отмены</p>
 </div>
-<div class="am-card am-ssri">
+<div class="am-card">
 <h4>Сертралин</h4>
 <div class="am-brands">Золофт, Асентра, Стимулотон, Серената</div>
 <p class="am-row"><span class="am-label">Плюс:</span> Среди лучше переносимых у Чиприани</p>
 <p class="am-row"><span class="am-label">Цена:</span> Сексуальные нарушения</p>
 </div>
-<div class="am-card am-ssri">
+<div class="am-card">
 <h4>Флуоксетин</h4>
 <div class="am-brands">Прозак, Профлузак, Флуоксетин Ланнахер</div>
 <p class="am-row"><span class="am-label">Плюс:</span> Бросали реже, чем плацебо</p>
 <p class="am-row"><span class="am-label">Цена:</span> Слабее в прямых сравнениях; сексуальные нарушения</p>
 </div>
-<div class="am-card am-ssri">
+<div class="am-card">
 <h4>Пароксетин</h4>
 <div class="am-brands">Паксил</div>
 <p class="am-row"><span class="am-label">Плюс:</span> Среди эффективных в прямых сравнениях</p>
 <p class="am-row"><span class="am-label">Цена:</span> Сексуальные нарушения; среди самых тяжёлых по отмене</p>
 </div>
-<div class="am-card am-ssri">
+<div class="am-card">
 <h4>Циталопрам</h4>
 <div class="am-brands">Ципрамил</div>
 <p class="am-row"><span class="am-label">Плюс:</span> Среди лучше переносимых</p>
 <p class="am-row"><span class="am-label">Цена:</span> Токсичнее остальных СИОЗС при передозировке (Хоутон); удлиняет интервал QT на ЭКГ, поэтому доза не выше 40 мг в сутки, после 60 лет не выше 20 мг; сексуальные нарушения</p>
 </div>
-<div class="am-card am-ssri">
+<div class="am-card">
 <h4>Флувоксамин</h4>
 <div class="am-brands">Феварин, Рокона и другие</div>
 <p class="am-row"><span class="am-label">Цена:</span> Слабее и хуже переносится в прямых сравнениях; сексуальные нарушения; мешает разрушению других лекарств, например агомелатина</p>
@@ -135,16 +135,16 @@ draft: false
 </div>
 </details>
 
-<details class="am-group am-snri">
-<summary><span class="am-class am-snri">СИОЗСН</span><span class="am-names">Венлафаксин, Дулоксетин</span></summary>
+<details class="am-group">
+<summary><span class="am-class">СИОЗСН</span><span class="am-names">Венлафаксин, Дулоксетин</span></summary>
 <div class="am-grid">
-<div class="am-card am-snri">
+<div class="am-card">
 <h4>Венлафаксин</h4>
 <div class="am-brands">Велаксин, Велафакс, Алвента</div>
 <p class="am-row"><span class="am-label">Плюс:</span> Среди эффективных в прямых сравнениях</p>
 <p class="am-row"><span class="am-label">Цена:</span> Сексуальные нарушения; хуже переносится; может повышать давление; токсичнее СИОЗС; частые и тяжёлые симптомы отмены</p>
 </div>
-<div class="am-card am-snri">
+<div class="am-card">
 <h4>Дулоксетин</h4>
 <div class="am-brands">Симбалта, Дулоксента, Депратал</div>
 <p class="am-row"><span class="am-label">Плюс:</span> Диабетическая нейропатия</p>
@@ -153,33 +153,33 @@ draft: false
 </div>
 </details>
 
-<details class="am-group am-other">
-<summary><span class="am-class am-other">Другие механизмы</span><span class="am-names">Миртазапин, Агомелатин, Вортиоксетин, Тразодон, Бупропион</span></summary>
+<details class="am-group">
+<summary><span class="am-class">Другие механизмы</span><span class="am-names">Миртазапин, Агомелатин, Вортиоксетин, Тразодон, Бупропион</span></summary>
 <div class="am-grid">
-<div class="am-card am-other">
+<div class="am-card">
 <h4>Миртазапин</h4>
 <div class="am-brands">Каликста, Мирзатен Ку-таб, Миртазапин Канон</div>
 <p class="am-row"><span class="am-label">Плюс:</span> Среди эффективных; по сексуальной функции значимо не отличался от плацебо</p>
 <p class="am-row"><span class="am-label">Цена:</span> Сонливость; аппетит и прибавка веса, сильнее других антидепрессантов у Гафура; токсичнее СИОЗС при передозировке</p>
 </div>
-<div class="am-card am-other">
+<div class="am-card">
 <h4>Агомелатин</h4>
 <div class="am-brands">Вальдоксан, Агомелатин Канон и другие</div>
 <p class="am-row"><span class="am-label">Плюс:</span> Один из двух препаратов, которые у Чиприани бросали реже, чем плацебо; по сексуальной функции значимо не отличался от плацебо</p>
 <p class="am-row"><span class="am-label">Цена:</span> Нужны анализы печени до начала, при повышении дозы и примерно через 3, 6, 12 и 24 недели; нельзя при болезнях печени и с препаратами, которые замедляют его разрушение, например флувоксамином</p>
 </div>
-<div class="am-card am-other">
+<div class="am-card">
 <h4>Вортиоксетин</h4>
 <div class="am-brands">Бринтелликс</div>
 <p class="am-row"><span class="am-label">Плюс:</span> Среди эффективных и лучше переносимых</p>
 </div>
-<div class="am-card am-other">
+<div class="am-card">
 <h4>Тразодон</h4>
 <div class="am-brands">Триттико</div>
 <p class="am-row"><span class="am-label">Плюс:</span> В малых дозах как снотворное</p>
 <p class="am-row"><span class="am-label">Цена:</span> Слабее и хуже переносится в прямых сравнениях; редко приапизм, болезненная затянувшаяся эрекция, это повод для срочной помощи</p>
 </div>
-<div class="am-card am-other">
+<div class="am-card">
 <h4>Бупропион</h4>
 <div class="am-brands">Веллбутрин, в России нет действующей регистрации</div>
 <p class="am-row"><span class="am-label">Плюс:</span> Отказ от курения; по сексуальной функции значимо не отличался от плацебо</p>
@@ -188,21 +188,21 @@ draft: false
 </div>
 </details>
 
-<details class="am-group am-old">
-<summary><span class="am-class am-old">Трициклические и ИМАО</span><span class="am-names">Амитриптилин, Кломипрамин, Моклобемид</span></summary>
+<details class="am-group">
+<summary><span class="am-class">Трициклические и ИМАО</span><span class="am-names">Амитриптилин, Кломипрамин, Моклобемид</span></summary>
 <div class="am-grid">
-<div class="am-card am-old">
+<div class="am-card">
 <h4>Амитриптилин</h4>
 <div class="am-brands">Продаётся под названием Амитриптилин</div>
 <p class="am-row"><span class="am-label">Плюс:</span> Наибольшая оценка эффекта против плацебо у Чиприани</p>
 <p class="am-row"><span class="am-label">Цена:</span> Хуже переносится; трициклические самые токсичные при передозировке</p>
 </div>
-<div class="am-card am-old">
+<div class="am-card">
 <h4>Кломипрамин</h4>
 <div class="am-brands">Анафранил, Клофранил</div>
 <p class="am-row"><span class="am-label">Цена:</span> Единственный, кого бросали чаще, чем плацебо</p>
 </div>
-<div class="am-card am-old">
+<div class="am-card">
 <h4>Моклобемид (ИМАО)</h4>
 <div class="am-brands">Аурорикс, в России нет действующей регистрации</div>
 <p class="am-row"><span class="am-label">Плюс:</span> По сексуальной функции значимо не отличался от плацебо</p>
