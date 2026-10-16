@@ -1,6 +1,5 @@
 ---
 import { BASE } from '../config';
-import { formatDate } from '../utils/date';
 
 interface BlogEntry {
   id: string;
@@ -10,7 +9,6 @@ interface BlogEntry {
   section?: string;
   part?: number;
   nav?: string;
-  inSeries?: boolean;
 }
 
 interface Props {
@@ -120,7 +118,7 @@ function getFolderHref(fullPath: string) {
       <input
         type="text"
         id="sidebar-search"
-        placeholder="search..."
+        placeholder="поиск..."
         autocomplete="off"
         aria-label="Поиск по названию и имени файла"
       />
@@ -159,7 +157,6 @@ function getFolderHref(fullPath: string) {
             <span class="file-name" title="notes.md">{notesEntry.title}</span>
           </a>
         </span>
-        <span class="file-date">{formatDate(notesEntry.date)}</span>
       </li>
     )}
     
@@ -214,7 +211,6 @@ function getFolderHref(fullPath: string) {
                         <span class="file-name" title={`${node.entry?.title.replace(/:\s*Об этой секции$/, '')} (${node.name})`} data-short={shortTitle(node.entry?.title ?? '', node.entry?.nav)} data-full={node.entry?.title.replace(/:\s*Об этой секции$/, '')}>{shortTitle(node.entry?.title ?? '', node.entry?.nav)}</span>
                 </a>
               </span>
-              {!node.entry?.inSeries && <span class="file-date">{formatDate(node.entry!.date)}</span>}
             </>
           )}
         </li>
@@ -707,15 +703,6 @@ function getFolderHref(fullPath: string) {
     overflow-wrap: break-word;
   }
 
-  .file-date {
-    font-size: max(0.75rem, calc(var(--app-article-font, 1rem) * 0.8));
-    color: var(--pico-muted-color); /* дата второстепенна в обеих темах: Ink Muted, а не прозрачный Contrast */
-    white-space: nowrap;
-    line-height: 1.25;
-    padding-top: 2px; /* на одной линии с первой строкой названия */
-    flex: 0 0 auto;
-    margin-left: auto;
-  }
 
   .sidebar-nav details > ul {
     padding-left: 0.75rem;
@@ -767,9 +754,6 @@ function getFolderHref(fullPath: string) {
     .sidebar-nav summary {
       font-size: 1rem;
       padding: 12px 4px; /* ~41px tap row */
-    }
-    .file-date {
-      display: none; /* на телефоне ширина нужна названию */
     }
   }
 </style>

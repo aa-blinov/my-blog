@@ -615,6 +615,9 @@ pre, code {
   vertical-align: middle;
   line-height: inherit;
   margin: 0 0.1rem;
+  /* плашка, перенесённая на две строки, остаётся плашкой на каждой, а не обрывком рамки */
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
 }
 .content a[href^="/"]:not(.post-title-link):not(.note-anchor):not(.series-nav a):not(.section-tags a):hover {
   background-color: var(--pico-primary);
@@ -1182,7 +1185,8 @@ details.am-why > .am-src {
 }
 @media (max-width: 991px) {
   details.am-group > summary,
-  details.am-fold > summary {
+  details.am-fold > summary,
+  details.am-why > summary {
     min-height: 44px;
   }
 }
@@ -1218,6 +1222,17 @@ details.am-why > .am-src {
   clip-path: inset(50%);
   white-space: nowrap;
   border: 0;
+}
+/* На таче чип маленький: зона нажатия шире самого чипа, вид и строка не меняются */
+@media (pointer: coarse) {
+  .content a.ref {
+    position: relative;
+  }
+  .content a.ref::before {
+    content: "";
+    position: absolute;
+    inset: -12px -6px;
+  }
 }
 /* Цепочка чипов вместе со знаком препинания после неё не рвётся: точка не остаётся одна на строке */
 .ref-run {
