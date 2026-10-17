@@ -17,6 +17,7 @@ export interface MapNode {
   label: string; // подпись на карте, коротко
   title?: string; // заголовок карточки, если отличается от подписи
   note?: string; // строка под заголовком карточки, например торговые названия
+  hint?: string; // подсказка при наведении; если нет, у листа показывается note
   facts?: MapFact[];
   link?: { href: string; text: string };
   children?: MapNode[];
