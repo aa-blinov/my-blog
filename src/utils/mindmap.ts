@@ -34,8 +34,9 @@ export interface PlacedNode {
   parent?: string;
 }
 
-const RADIUS = [0, 250, 520]; // радиус круга на глубине; дальше шаг 270
-const radiusAt = (depth: number) => RADIUS[depth] ?? RADIUS[RADIUS.length - 1] + (depth - RADIUS.length + 1) * 270;
+// Радиус внешнего круга растёт с числом листьев: на подпись около 170px дуги. Внутренние круги делят его поровну
+const ARC_PER_LEAF = 170;
+const STAGGER = 70; // соседние листья через один ближе и дальше: длинные подписи не наезжают друг на друга
 
 const leaves = (n: MapNode): number => (n.children?.length ? n.children.reduce((s, c) => s + leaves(c), 0) : 1);
 
@@ -43,9 +44,15 @@ const leaves = (n: MapNode): number => (n.children?.length ? n.children.reduce((
 export function layout(root: MapNode): { nodes: PlacedNode[]; width: number; height: number } {
   const placed: PlacedNode[] = [];
   const total = leaves(root);
+  const depthOf = (n: MapNode): number => (n.children?.length ? 1 + Math.max(...n.children.map(depthOf)) : 0);
+  const maxDepth = Math.max(1, depthOf(root));
+  const outer = Math.max(520, (total * ARC_PER_LEAF) / (2 * Math.PI));
+  const radiusAt = (depth: number) => (outer * depth) / maxDepth;
+  let leafIndex = 0;
   const walk = (n: MapNode, depth: number, from: number, to: number, parent?: string) => {
     const angle = (from + to) / 2 - Math.PI / 2; // первый сектор сверху, дальше по часовой
-    const r = radiusAt(depth);
+    const isLeaf = !n.children?.length && depth > 0;
+    const r = radiusAt(depth) + (isLeaf && total > 20 ? (leafIndex++ % 2 ? STAGGER : -STAGGER) / 2 : 0);
     placed.push({ node: n, depth, x: r * Math.cos(angle), y: r * Math.sin(angle), parent });
     let start = from;
     for (const c of n.children ?? []) {

@@ -8,7 +8,6 @@ interface BlogEntry {
   date: Date;
   section?: string;
   part?: number;
-  nav?: string;
 }
 
 interface Props {
@@ -98,12 +97,9 @@ function isOnActivePath(fullPath: string): boolean {
   return p.startsWith(`${BASE}blog/${fullPath}/`);
 }
 
-// В дереве заголовок до первого «: »: у научпопа после двоеточия идёт подзаголовок, он отрезался многоточием
-function shortTitle(title: string, nav?: string): string {
-  if (nav) return nav;
-  const clean = title.replace(/:\s*Об этой секции$/, '');
-  const i = clean.indexOf(': ');
-  return i > 0 ? clean.slice(0, i) : clean;
+// В дереве ровно то название, что у статьи: короткие подписи и обрезка до «: » расходились с заголовком
+function shortTitle(title: string): string {
+  return title.replace(/:\s*Об этой секции$/, '');
 }
 
 // В серии: «О серии» первым, потом части по номеру, потом остальные файлы (карта)
@@ -215,7 +211,7 @@ function getFolderHref(fullPath: string) {
             <>
               <span class="file-link-wrapper">
                 <a href={`${BASE}blog/${node.entry?.slug}/`} class:list={['file-link', { active: isActive(`${BASE}blog/${node.entry?.slug}/`) }]} aria-current={isActive(`${BASE}blog/${node.entry?.slug}/`) ? 'page' : undefined}>
-                        <span class="file-name" title={`${node.entry?.title.replace(/:\s*Об этой секции$/, '')} (${node.name})`} data-short={shortTitle(node.entry?.title ?? '', node.entry?.nav)} data-full={node.entry?.title.replace(/:\s*Об этой секции$/, '')}>{shortTitle(node.entry?.title ?? '', node.entry?.nav)}</span>
+                        <span class="file-name" title={`${node.entry?.title.replace(/:\s*Об этой секции$/, '')} (${node.name})`} data-short={shortTitle(node.entry?.title ?? '')} data-full={node.entry?.title.replace(/:\s*Об этой секции$/, '')}>{shortTitle(node.entry?.title ?? '')}</span>
                 </a>
               </span>
             </>

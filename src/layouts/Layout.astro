@@ -32,7 +32,6 @@ const blogEntries = sortByDateDesc(published.filter((e) => inLiveFolder(e.id, li
     id: `${entry.id}.md`, // File-like path for the sidebar tree, e.g. 'science/human-body/article.md'
     slug: seriesAbout ? folderOf(entry.id) : entry.id, // URL path like 'science/human-body/article'; about серии живёт на странице папки
     title: entry.data.title,
-    nav: seriesAbout ? 'О серии' : entry.data.nav,
     date: entry.data.date,
     section: entry.data.section, // Still support frontmatter override
     part: entry.data.part, // номер части в серии: дерево сортирует по нему

@@ -22,12 +22,17 @@
     const h = tip.offsetHeight;
     const left = Math.min(Math.max(EDGE, r.left + r.width / 2 - w / 2), window.innerWidth - EDGE - w);
     const below = r.bottom + GAP + h <= window.innerHeight;
-    tip.style.left = `${left + window.scrollX}px`;
-    tip.style.top = `${(below ? r.bottom + GAP : r.top - GAP - h) + window.scrollY}px`;
+    // В полноэкранном режиме видно только полноэкранный элемент: всплывашка живёт в нём, координаты от его угла
+    const host = tip.parentElement;
+    const o = host && host !== document.body ? host.getBoundingClientRect() : { left: -window.scrollX, top: -window.scrollY };
+    tip.style.left = `${left - o.left}px`;
+    tip.style.top = `${(below ? r.bottom + GAP : r.top - GAP - h) - o.top}px`;
   };
 
   const show = (a) => {
     current = a;
+    const holder = document.fullscreenElement ?? document.body;
+    if (tip.parentElement !== holder) holder.append(tip);
     tip.textContent = a.dataset.tip;
     const host = document.createElement("span");
     host.className = "ref-tip-host";

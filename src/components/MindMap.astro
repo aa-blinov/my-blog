@@ -29,7 +29,7 @@ const cardTitle = (n: MapNode) => n.title ?? n.label;
 ---
 
 <div class="mm" data-mindmap>
-  <div class="mm-frame" tabindex="0" role="application" aria-roledescription="интерактивная карта" aria-label="Карта: стрелки двигают, плюс и минус меняют масштаб, ноль вписывает карту в окно, Tab переходит по узлам">
+  <div class="mm-frame" tabindex="0" role="application" aria-roledescription="интерактивная карта" aria-label="Карта: стрелки двигают, плюс и минус меняют масштаб, ноль вписывает карту в окно, F разворачивает на весь экран, Tab переходит по узлам">
     <div class="mm-canvas" style={`width:${Math.ceil(width)}px;height:${Math.ceil(height)}px`}>
       <svg class="mm-edges" width={Math.ceil(width)} height={Math.ceil(height)} aria-hidden="true">
         {nodes.filter((p) => p.parent).map((p) => (
@@ -53,6 +53,7 @@ const cardTitle = (n: MapNode) => n.title ?? n.label;
       <button type="button" data-zoom="in" aria-label="Приблизить">+</button>
       <button type="button" data-zoom="out" aria-label="Отдалить">−</button>
       <button type="button" data-zoom="fit" aria-label="Вписать карту в окно">вписать</button>
+      <button type="button" class="mm-full" aria-pressed="false" aria-label="Карта на весь экран">на весь экран</button>
     </div>
 
     <div class="mm-panel" role="region" aria-label="Карточка узла" hidden>
@@ -125,13 +126,13 @@ const cardTitle = (n: MapNode) => n.title ?? n.label;
       s = ns;
       apply();
     };
-    // Вписать целиком; на узком экране так подписи нечитаемы, поэтому не мельче READABLE с корнем в центре, дальше пальцем
-    const READABLE = 0.6;
+    // Вписать целиком; на узком экране (телефон) так подписи нечитаемы, поэтому не мельче READABLE с корнем в центре, дальше пальцем
+    const READABLE = 0.5;
     const rootNode = nodes[0];
     const fit = (whole = false) => {
       const v = viewport();
       s = Math.min(MAX, Math.max(MIN, Math.min((v.w - 24) / W, (v.h - 24) / H)));
-      if (!whole && s < READABLE) {
+      if (!whole && s < READABLE && v.w < 600) {
         s = READABLE;
         tx = v.x + v.w / 2 - parseFloat(rootNode.style.left) * s;
         ty = v.y + v.h / 2 - parseFloat(rootNode.style.top) * s;
@@ -247,12 +248,41 @@ const cardTitle = (n: MapNode) => n.title ?? n.label;
       const jump = t.closest<HTMLElement>('[data-jump]');
       if (jump) { select(jump.dataset.jump!, { focusCard: true }); return; }
       if (t.closest('.mm-close')) { close(); return; }
+      if (t.closest('.mm-full')) { toggleFull(); return; }
       const z = t.closest<HTMLElement>('[data-zoom]')?.dataset.zoom;
       if (z === 'fit') fit(true);
       else if (z) zoomAt(frame.clientWidth / 2, frame.clientHeight / 2, z === 'in' ? 1.25 : 0.8);
     });
+    // На весь экран: штатный Fullscreen API, а где его нет (iPhone) карта растягивается поверх страницы классом.
+    // Выход: Escape (сначала закрывает карточку, если открыта), та же кнопка или системный жест
+    const fullBtn = mm.querySelector<HTMLButtonElement>('.mm-full')!;
+    const isFull = () => document.fullscreenElement === frame || frame.classList.contains('is-full');
+    const syncFull = () => {
+      const on = isFull();
+      fullBtn.setAttribute('aria-pressed', String(on));
+      fullBtn.textContent = on ? 'выйти' : 'на весь экран';
+      fullBtn.setAttribute('aria-label', on ? 'Выйти из полноэкранного режима' : 'Карта на весь экран');
+      document.documentElement.classList.toggle('mm-locked', frame.classList.contains('is-full'));
+      requestAnimationFrame(() => (selected ? focusOn(selected, s) : fit()));
+    };
+    const toggleFull = async () => {
+      if (isFull()) {
+        if (document.fullscreenElement) await document.exitFullscreen();
+        frame.classList.remove('is-full');
+      } else if (frame.requestFullscreen && document.fullscreenEnabled) {
+        try { await frame.requestFullscreen(); } catch { frame.classList.add('is-full'); }
+      } else {
+        frame.classList.add('is-full');
+      }
+      syncFull();
+      frame.focus({ preventScroll: true });
+    };
+    document.addEventListener('fullscreenchange', syncFull);
+
     frame.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && !panel.hidden) { e.preventDefault(); close(); return; }
+      if (e.key === 'Escape' && frame.classList.contains('is-full')) { e.preventDefault(); toggleFull(); return; }
+      if (e.key === 'f' && !(e.target as HTMLElement).closest('.mm-panel')) { e.preventDefault(); toggleFull(); return; }
       if ((e.target as HTMLElement).closest('.mm-panel')) return;
       const step = 60;
       const k: Record<string, () => void> = {

@@ -1,6 +1,5 @@
 ---
 title: "Вам назначили антидепрессант"
-nav: "Первые недели"
 summary: "Когда срочно к врачу, чего ждать в первые недели и что спросить на приёме."
 part: 1
 date: 2026-10-16T09:00:00Z
@@ -150,7 +149,7 @@ draft: false
 
 1. Вам назначили антидепрессант: эта часть.
 2. [Как работают антидепрессанты](/blog/science/mind/antidepressants/how-they-work/): синапс, классы, почему эффект через недели.
-3. [Чем препараты отличаются](/blog/science/mind/antidepressants/strength-and-price/): насколько они сильны, побочные эффекты и риски.
+3. [Польза и побочные эффекты](/blog/science/mind/antidepressants/strength-and-price/): насколько они сильны, побочные эффекты и риски.
 4. [Почему назначили именно этот препарат](/blog/science/mind/antidepressants/why-this-one/): карта выбора и все препараты.
 5. [Если лечение помогает мало](/blog/science/mind/antidepressants/if-it-helps-little/): как оценивают результат и что меняют.
 6. [Сколько принимать и как заканчивать](/blog/science/mind/antidepressants/how-long-and-stopping/).

@@ -11,7 +11,6 @@ const blog = defineCollection({
     summary: z.string().optional(),
     section: z.string().optional(),
     part: z.number().int().positive().optional(), // номер части внутри серии (папка с about-*.md)
-    nav: z.string().optional(), // короткая подпись в дереве, если заголовок не влезает в строку
     map: z.string().optional(), // интерактивная карта из src/data/maps/<имя>.ts под текстом статьи
   }),
 });

@@ -1349,6 +1349,24 @@ html:not(.js) .needs-js {
   user-select: none;
   -webkit-user-select: none;
 }
+.mm-frame:fullscreen,
+.mm-frame.is-full {
+  height: 100%;
+  border: none;
+  border-radius: 0;
+}
+/* Где нет Fullscreen API (iPhone): поверх всей страницы, под системными отступами */
+.mm-frame.is-full {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  height: 100dvh;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+}
+html.mm-locked,
+html.mm-locked body {
+  overflow: hidden;
+}
 .mm-frame.is-dragging {
   cursor: grabbing;
 }
