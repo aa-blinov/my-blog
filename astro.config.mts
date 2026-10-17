@@ -15,7 +15,7 @@ export default defineConfig({
         `/blog/dev/agent/${n}/`,
       ]),
     ),
-    // Карта антидепрессантов стала серией в mind/antidepressants/
-    '/blog/science/mind/antidepressants-map/': '/blog/science/mind/antidepressants/',
+    // Старый адрес карты антидепрессантов: теперь это интерактивная карта внутри серии
+    '/blog/science/mind/antidepressants-map/': '/blog/science/mind/antidepressants/map/',
   },
 });

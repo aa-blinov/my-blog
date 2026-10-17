@@ -106,6 +106,12 @@ function shortTitle(title: string, nav?: string): string {
   return i > 0 ? clean.slice(0, i) : clean;
 }
 
+// В серии: «О серии» первым, потом части по номеру, потом остальные файлы (карта)
+function seriesRank(n: TreeNode): number {
+  if (n.name.startsWith('about-')) return -1;
+  return n.entry?.part ?? 10000;
+}
+
 function getFolderHref(fullPath: string) {
   const cleanPath = fullPath ? `${fullPath}/` : '';
   return `${BASE}blog/${cleanPath}`;
@@ -161,11 +167,11 @@ function getFolderHref(fullPath: string) {
     )}
     
     {/* Рекурсивный рендеринг дерева */}
-    {function renderTree(node: TreeNode) {
+    {function renderTree(node: TreeNode, inSeries = false) {
       // Папка-серия (у детей есть part): части по номеру, about-* сверху; иначе по алфавиту
       const isSeriesFolder = node.kind === 'folder' && Object.values(node.children || {}).some((c) => c.entry?.part !== undefined);
       const childrenArr = Object.values(node.children || {}).sort((a, b) =>
-        isSeriesFolder ? (a.entry?.part ?? -1) - (b.entry?.part ?? -1) : a.name.localeCompare(b.name),
+        isSeriesFolder ? seriesRank(a) - seriesRank(b) : a.name.localeCompare(b.name),
       );
       
       // Calculate order values for CSS. 
@@ -174,7 +180,8 @@ function getFolderHref(fullPath: string) {
       // asc: lower date = smaller order value
       const isSectionRootFile = node.kind === 'file' && node.name.startsWith('about-');
       const orderPinTop = -9999999999; // «обзор раздела» (about-*.md) всегда сверху в своей папке
-      const partOrder = node.kind === 'file' && node.entry?.part !== undefined ? node.entry.part : null; // часть серии не перемешивается сортировкой по дате
+      // Часть серии не перемешивается сортировкой по дате; прочие файлы серии (карта и т. п.) идут после частей
+      const partOrder = node.kind === 'file' && node.entry?.part !== undefined ? node.entry.part : node.kind === 'file' && inSeries && !node.name.startsWith('about-') ? 10000 : null;
       const dateVal = node.entry?.date.getTime() || 0;
       const minDateVal = node.minDate?.getTime() || 0;
       const maxDateVal = node.maxDate?.getTime() || 0;
@@ -201,7 +208,7 @@ function getFolderHref(fullPath: string) {
                 <span class:list={['folder-link', { active: isActive(getFolderHref(node.fullPath || '')) }]}>{node.name}/</span>
               </summary>
               <ul class="sortable-list">
-                {childrenArr.map(child => renderTree(child))}
+                {childrenArr.map(child => renderTree(child, isSeriesFolder))}
               </ul>
             </details>
           ) : (

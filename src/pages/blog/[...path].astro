@@ -5,6 +5,8 @@ import { getCollection, render, type CollectionEntry } from 'astro:content';
 import SeriesNav from '../../components/SeriesNav.astro';
 import ArticleFooter from '../../components/ArticleFooter.astro';
 import Toc from '../../components/Toc.astro';
+import MindMap from '../../components/MindMap.astro';
+import { maps } from '../../data/maps';
 import type { MarkdownHeading } from 'astro';
 import { formatDate, readingMinutes, plural } from '../../utils/date';
 import { sortByDateDesc } from '../../utils/date';
@@ -133,6 +135,7 @@ const title = entry ? entry.data.title : (folderAbout?.data.title.replace(/:\s*Ğ
       {headings.filter((h) => h.depth === 2).length >= 6 && <Toc headings={headings} />}
       <div class="content">
         <Content />
+        {entry.data.map && maps[entry.data.map] && <MindMap data={maps[entry.data.map]} />}
       </div>
       {series && <SeriesNav series={series} entry={entry} where="foot" />}
       <ArticleFooter entry={entry} inSeries={!!series} />

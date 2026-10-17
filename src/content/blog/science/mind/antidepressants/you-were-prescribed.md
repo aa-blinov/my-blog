@@ -156,3 +156,5 @@ draft: false
 6. [Сколько принимать и как заканчивать](/blog/science/mind/antidepressants/how-long-and-stopping/).
 7. [Беременность, пожилые, дети](/blog/science/mind/antidepressants/special-groups/).
 8. [Как это устроено в России и СНГ](/blog/science/mind/antidepressants/cis-practice/): учёт, рецепты, местные рекомендации и препараты.
+
+Все препараты серии собраны и на [интерактивной карте](/blog/science/mind/antidepressants/map/).

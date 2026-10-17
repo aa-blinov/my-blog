@@ -1322,3 +1322,259 @@ html:not(.js) .needs-js {
   margin-top: 0.25rem;
   color: var(--pico-muted-color);
 }
+
+/* ==========================================================================
+   Интерактивная mind-карта (MindMap.astro): плоско, волосяные линии, один акцент.
+   Зелёным только выбранный узел и путь от него к корню; карточка справа, на телефоне снизу
+   ========================================================================== */
+.mm {
+  /* Свои имена цветов: внутри <button> Pico подменяет --pico-background-color и --pico-color на акцент */
+  --mm-bg: var(--pico-background-color);
+  --mm-ink: var(--pico-contrast);
+  --mm-muted: var(--pico-muted-color);
+  --mm-rule: var(--pico-muted-border-color);
+  --mm-tone: var(--pico-code-background-color);
+  --mm-accent: var(--pico-primary);
+  margin: var(--app-spacing-lg) 0;
+}
+.mm-frame {
+  position: relative;
+  height: clamp(440px, 72vh, 780px);
+  overflow: hidden;
+  border: 1px solid var(--mm-rule);
+  border-radius: var(--app-radius-sm);
+  background: var(--mm-bg);
+  touch-action: none; /* жесты внутри карты двигают карту, страница листается за её пределами */
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.mm-frame.is-dragging {
+  cursor: grabbing;
+}
+.mm-canvas {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform-origin: 0 0;
+}
+.mm-canvas.mm-animate {
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.mm-edges {
+  position: absolute;
+  inset: 0;
+  overflow: visible;
+  pointer-events: none;
+}
+.mm-edges path {
+  fill: none;
+  stroke: var(--mm-muted);
+  stroke-opacity: 0.45; /* линия раздела Rule на карте почти пропадала */
+  stroke-width: 1.5;
+  transition: stroke var(--app-transition);
+}
+.mm-edges path.on {
+  stroke: var(--mm-accent);
+  stroke-opacity: 1;
+  stroke-width: 2;
+}
+.mm .mm-node {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  width: auto;
+  margin: 0;
+  padding: 0.35rem 0.7rem;
+  border: 1px solid var(--mm-rule);
+  border-radius: var(--app-radius-xs);
+  background: var(--mm-bg);
+  box-shadow: none;
+  color: var(--mm-ink);
+  font-family: inherit;
+  font-size: var(--app-font-sm);
+  font-weight: 400;
+  line-height: 1.2;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: color var(--app-transition), background-color var(--app-transition), border-color var(--app-transition);
+}
+.mm .mm-depth-0 {
+  padding: 0.6rem 1rem;
+  border-color: var(--mm-accent);
+  font-size: var(--app-font-lg);
+  font-weight: 700;
+}
+.mm .mm-depth-1 {
+  background: var(--mm-tone);
+  font-weight: 700;
+}
+.mm .mm-node:hover,
+.mm .mm-node.on-path {
+  border-color: var(--mm-accent);
+  color: var(--mm-accent);
+}
+.mm .mm-node.is-selected {
+  background: rgba(var(--pico-primary-rgb), 0.1);
+  color: var(--mm-accent);
+  font-weight: 700;
+}
+.mm-controls {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+  display: flex;
+  gap: 0.3rem;
+}
+.mm .mm-controls button,
+.mm .mm-close,
+.mm .mm-jump {
+  width: auto;
+  min-height: 36px;
+  min-width: 36px;
+  margin: 0;
+  padding: 0 0.6rem;
+  border: 1px solid var(--mm-rule);
+  border-radius: var(--app-radius-xs);
+  background: var(--mm-bg);
+  box-shadow: none;
+  color: var(--mm-ink);
+  font-family: inherit;
+  font-size: var(--app-font-control);
+  line-height: 1;
+  cursor: pointer;
+}
+.mm .mm-controls button:hover,
+.mm .mm-close:hover,
+.mm .mm-jump:hover {
+  border-color: var(--mm-accent);
+  color: var(--mm-accent);
+}
+.mm-hint {
+  margin: 0.4rem 0 var(--app-spacing);
+  font-size: var(--app-font-control);
+  color: var(--mm-muted);
+  pointer-events: none;
+}
+.mm-hint-touch {
+  display: none;
+}
+@media (hover: none) {
+  .mm-hint-mouse {
+    display: none;
+  }
+  .mm-hint-touch {
+    display: inline;
+  }
+}
+.mm-panel {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: min(380px, 46%);
+  padding: var(--app-spacing) var(--app-spacing) var(--app-spacing-lg);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  border-left: 1px solid var(--mm-rule);
+  background: var(--mm-bg);
+  cursor: auto;
+  user-select: text;
+  -webkit-user-select: text;
+  touch-action: pan-y; /* в карточке палец листает текст, а не двигает карту */
+}
+.mm-panel[hidden] {
+  display: none;
+}
+.mm .mm-close {
+  position: sticky;
+  top: 0;
+  float: right;
+  min-width: 44px;
+  min-height: 44px;
+  font-size: var(--app-font-lg);
+}
+main article .content .mm-card h2 {
+  margin: 0.4rem 0 0.25rem;
+  padding-right: 3rem;
+  font-size: 1.15em;
+}
+.mm-card h2:focus {
+  outline: none;
+}
+.mm-note {
+  margin: 0 0 var(--app-spacing-md);
+  font-size: var(--app-font-sm);
+  color: var(--mm-muted);
+}
+.mm-fact {
+  margin: 0 0 var(--app-spacing-md);
+  font-size: var(--app-font-sm);
+  line-height: 1.55;
+}
+.mm-fact p {
+  margin: 0;
+}
+.mm-fact-label,
+.mm-fact p.mm-fact-label {
+  display: block;
+  margin-bottom: 0.15rem;
+  font-size: var(--app-font-control);
+  color: var(--mm-muted);
+}
+.mm-link {
+  margin: var(--app-spacing) 0 var(--app-spacing-md);
+  font-size: var(--app-font-sm);
+}
+.mm-children {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin: 0 0 var(--app-spacing-md);
+}
+.mm-children .mm-fact-label {
+  flex-basis: 100%;
+}
+.mm-list ul {
+  margin: 0;
+  padding: 0 0 var(--app-spacing) 1.4em;
+  list-style: none;
+}
+.mm-list li {
+  margin: 0 0 var(--app-spacing-md);
+  font-size: var(--app-font-sm);
+}
+.mm-list li p {
+  margin: 0.15rem 0 0;
+}
+.mm-list .mm-list-depth-1 {
+  margin-top: var(--app-spacing);
+  font-size: var(--app-font-base, 1rem);
+}
+.mm-list .mm-list-depth-2 {
+  padding-left: 1.2em;
+}
+@media (max-width: 991px) {
+  .mm-frame {
+    height: clamp(420px, 78svh, 720px);
+  }
+  .mm-panel {
+    top: auto;
+    left: 0;
+    width: auto;
+    height: 58%;
+    border-left: none;
+    border-top: 1px solid var(--mm-rule);
+  }
+  .mm .mm-controls button {
+    min-width: 44px;
+    min-height: 44px;
+  }
+  .mm .mm-jump {
+    min-height: 44px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .mm-canvas.mm-animate {
+    transition: none;
+  }
+}

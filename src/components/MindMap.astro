@@ -1,0 +1,278 @@
+---
+import { layout, flatten, type MindMapData, type MapSource, type MapNode } from '../utils/mindmap';
+
+interface Props {
+  data: MindMapData;
+}
+
+const { data } = Astro.props;
+const { nodes, width, height } = layout(data.root);
+const byId = new Map(nodes.map((p) => [p.node.id, p]));
+
+// Источники нумеруются один раз на страницу, по первому появлению в карте
+const sourceNum = new Map<string, number>();
+for (const { node } of flatten(data.root)) {
+  for (const f of node.facts ?? []) for (const s of f.sources ?? []) if (!sourceNum.has(s.url)) sourceNum.set(s.url, sourceNum.size + 1);
+}
+const chip = (s: MapSource) => ({ n: sourceNum.get(s.url)!, ...s });
+
+// Ребро: дуга от родителя к ребёнку, изгиб наружу от центра карты
+const root = nodes[0];
+const edgePath = (from: { x: number; y: number }, to: { x: number; y: number }) => {
+  const mx = (from.x + to.x) / 2;
+  const my = (from.y + to.y) / 2;
+  const cx = mx + (mx - root.x) * 0.12;
+  const cy = my + (my - root.y) * 0.12;
+  return `M${from.x.toFixed(1)},${from.y.toFixed(1)} Q${cx.toFixed(1)},${cy.toFixed(1)} ${to.x.toFixed(1)},${to.y.toFixed(1)}`;
+};
+const cardTitle = (n: MapNode) => n.title ?? n.label;
+---
+
+<div class="mm" data-mindmap>
+  <div class="mm-frame" tabindex="0" role="application" aria-roledescription="интерактивная карта" aria-label="Карта: стрелки двигают, плюс и минус меняют масштаб, ноль вписывает карту в окно, Tab переходит по узлам">
+    <div class="mm-canvas" style={`width:${Math.ceil(width)}px;height:${Math.ceil(height)}px`}>
+      <svg class="mm-edges" width={Math.ceil(width)} height={Math.ceil(height)} aria-hidden="true">
+        {nodes.filter((p) => p.parent).map((p) => (
+          <path d={edgePath(byId.get(p.parent!)!, p)} data-to={p.node.id} />
+        ))}
+      </svg>
+      {nodes.map((p) => (
+        <button
+          type="button"
+          class={`mm-node mm-depth-${Math.min(p.depth, 2)}`}
+          style={`left:${p.x.toFixed(1)}px;top:${p.y.toFixed(1)}px`}
+          data-id={p.node.id}
+          data-parent={p.parent}
+          aria-controls={`mm-card-${p.node.id}`}
+          aria-expanded="false"
+        >{p.node.label}</button>
+      ))}
+    </div>
+
+    <div class="mm-controls">
+      <button type="button" data-zoom="in" aria-label="Приблизить">+</button>
+      <button type="button" data-zoom="out" aria-label="Отдалить">−</button>
+      <button type="button" data-zoom="fit" aria-label="Вписать карту в окно">вписать</button>
+    </div>
+
+    <div class="mm-panel" role="region" aria-label="Карточка узла" hidden>
+      <button type="button" class="mm-close" aria-label="Закрыть карточку">×</button>
+      {nodes.map((p) => (
+        <section class="mm-card" id={`mm-card-${p.node.id}`} data-card={p.node.id} hidden>
+          <h2 tabindex="-1">{cardTitle(p.node)}</h2>
+          {p.node.note && <p class="mm-note">{p.node.note}</p>}
+          {p.node.facts?.map((f) => (
+            <div class="mm-fact">
+              <p class="mm-fact-label">{f.label}</p>
+              <p>{f.text}{f.sources?.length ? <span class="ref-run">{f.sources.map(chip).map((s) => <> <a class="ref" href={s.url} data-tip={s.title} aria-label={`Источник ${s.n}: ${s.title}`}>[{s.n}]</a></>)}</span> : null}</p>
+            </div>
+          ))}
+          {p.node.link && <p class="mm-link"><a href={p.node.link.href}>{p.node.link.text}</a></p>}
+          {p.node.children?.length ? (
+            <p class="mm-children">
+              <span class="mm-fact-label">Дальше по карте</span>
+              {p.node.children.map((c) => <button type="button" class="mm-jump" data-jump={c.id}>{c.label}</button>)}
+            </p>
+          ) : null}
+          {p.parent && <p class="mm-children"><button type="button" class="mm-jump mm-up" data-jump={p.parent}>← {byId.get(p.parent)!.node.label}</button></p>}
+        </section>
+      ))}
+    </div>
+  </div>
+
+  <p class="mm-hint" aria-hidden="true"><span class="mm-hint-mouse">тяни мышью, Ctrl + колесо для масштаба, клик по узлу открывает карточку</span><span class="mm-hint-touch">тяни пальцем, щипок для масштаба, тап по узлу открывает карточку</span></p>
+
+  <details class="am-fold mm-list">
+    <summary><strong>Вся карта списком</strong><span class="am-names">то же самое без карты: для чтения подряд и для скринридера</span></summary>
+    <ul>
+      {flatten(data.root).filter(({ depth }) => depth > 0).map(({ node, depth }) => (
+        <li class={`mm-list-depth-${depth}`}>
+          <strong>{cardTitle(node)}</strong>{node.note && <span class="mm-note"> ({node.note})</span>}
+          {node.facts?.map((f) => <p><span class="mm-fact-label">{f.label}:</span> {f.text}</p>)}
+        </li>
+      ))}
+    </ul>
+  </details>
+</div>
+
+<script>
+  // Движение и масштаб: одна матрица translate + scale на холсте. Мышь и палец через pointer events,
+  // щипок двумя пальцами, Ctrl/⌘ + колесо (так же приходит щипок тачпада); обычное колесо листает страницу
+  document.querySelectorAll<HTMLElement>('[data-mindmap]').forEach((mm) => {
+    const frame = mm.querySelector<HTMLElement>('.mm-frame')!;
+    const canvas = mm.querySelector<HTMLElement>('.mm-canvas')!;
+    const panel = mm.querySelector<HTMLElement>('.mm-panel')!;
+    const nodes = [...mm.querySelectorAll<HTMLButtonElement>('.mm-node')];
+    const byId = new Map(nodes.map((n) => [n.dataset.id!, n]));
+    const W = canvas.offsetWidth;
+    const H = canvas.offsetHeight;
+    const MIN = 0.2;
+    const MAX = 2.5;
+    let s = 1, tx = 0, ty = 0;
+    let selected: HTMLButtonElement | null = null;
+
+    const apply = () => { canvas.style.transform = `translate(${tx}px, ${ty}px) scale(${s})`; };
+    // Видимая область карты: на десктопе карточка справа закрывает часть окна, на телефоне карточка снизу
+    const viewport = () => {
+      const w = frame.clientWidth, h = frame.clientHeight;
+      if (panel.hidden) return { x: 0, y: 0, w, h };
+      return matchMedia('(max-width: 991px)').matches ? { x: 0, y: 0, w, h: h - panel.offsetHeight } : { x: 0, y: 0, w: w - panel.offsetWidth, h };
+    };
+    const zoomAt = (px: number, py: number, k: number) => {
+      const ns = Math.min(MAX, Math.max(MIN, s * k));
+      tx = px - ((px - tx) * ns) / s;
+      ty = py - ((py - ty) * ns) / s;
+      s = ns;
+      apply();
+    };
+    // Вписать целиком; на узком экране так подписи нечитаемы, поэтому не мельче READABLE с корнем в центре, дальше пальцем
+    const READABLE = 0.6;
+    const rootNode = nodes[0];
+    const fit = (whole = false) => {
+      const v = viewport();
+      s = Math.min(MAX, Math.max(MIN, Math.min((v.w - 24) / W, (v.h - 24) / H)));
+      if (!whole && s < READABLE) {
+        s = READABLE;
+        tx = v.x + v.w / 2 - parseFloat(rootNode.style.left) * s;
+        ty = v.y + v.h / 2 - parseFloat(rootNode.style.top) * s;
+      } else {
+        tx = v.x + (v.w - W * s) / 2;
+        ty = v.y + (v.h - H * s) / 2;
+      }
+      apply();
+    };
+    // Узел в центр видимой области; масштаб не меньше читаемого
+    const focusOn = (n: HTMLElement, minScale = 0.8) => {
+      const v = viewport();
+      if (s < minScale) s = minScale;
+      const x = parseFloat(n.style.left), y = parseFloat(n.style.top);
+      tx = v.x + v.w / 2 - x * s;
+      ty = v.y + v.h / 2 - y * s;
+      canvas.classList.add('mm-animate');
+      apply();
+      setTimeout(() => canvas.classList.remove('mm-animate'), 260);
+    };
+
+    // Путь от выбранного узла к корню подсвечен: видно, к какому классу относится препарат
+    const highlight = (id: string | null) => {
+      mm.querySelectorAll('.mm-edges path.on, .mm-node.on-path').forEach((e) => e.classList.remove('on', 'on-path'));
+      let cur = id ? byId.get(id) : null;
+      while (cur) {
+        cur.classList.add('on-path');
+        mm.querySelector(`.mm-edges path[data-to="${cur.dataset.id}"]`)?.classList.add('on');
+        cur = cur.dataset.parent ? byId.get(cur.dataset.parent) ?? null : null;
+      }
+    };
+    const select = (id: string, { focusCard = false, center = true } = {}) => {
+      const n = byId.get(id);
+      if (!n) return;
+      selected?.setAttribute('aria-expanded', 'false');
+      selected?.classList.remove('is-selected');
+      selected = n;
+      n.classList.add('is-selected');
+      n.setAttribute('aria-expanded', 'true');
+      panel.hidden = false;
+      mm.querySelectorAll<HTMLElement>('.mm-card').forEach((c) => { c.hidden = c.dataset.card !== id; });
+      panel.scrollTop = 0;
+      highlight(id);
+      if (center) focusOn(n);
+      if (focusCard) panel.querySelector<HTMLElement>(`#mm-card-${id} h2`)?.focus({ preventScroll: true });
+      history.replaceState(null, '', `#map-${id}`);
+    };
+    const close = () => {
+      panel.hidden = true;
+      selected?.setAttribute('aria-expanded', 'false');
+      selected?.classList.remove('is-selected');
+      highlight(null);
+      const back = selected;
+      selected = null;
+      history.replaceState(null, '', location.pathname + location.search);
+      back?.focus({ preventScroll: true });
+    };
+
+    // --- Указатели: один тянет, два масштабируют; клик по узлу не срабатывает, если тянули ---
+    const pts = new Map<number, { x: number; y: number }>();
+    let moved = 0;
+    let pinch = 0;
+    frame.addEventListener('pointerdown', (e) => {
+      if ((e.target as HTMLElement).closest('.mm-panel, .mm-controls')) return;
+      pts.set(e.pointerId, { x: e.clientX, y: e.clientY });
+      if (pts.size === 1) moved = 0;
+      if (pts.size === 2) { const [a, b] = [...pts.values()]; pinch = Math.hypot(a.x - b.x, a.y - b.y); }
+      // Захват только когда пошёл жест: иначе клик достался бы рамке, а не узлу
+    });
+    frame.addEventListener('pointermove', (e) => {
+      const p = pts.get(e.pointerId);
+      if (!p) return;
+      const dx = e.clientX - p.x, dy = e.clientY - p.y;
+      p.x = e.clientX; p.y = e.clientY;
+      if (pts.size === 1) {
+        moved += Math.abs(dx) + Math.abs(dy);
+        tx += dx; ty += dy;
+        if (moved > 4 && !frame.classList.contains('is-dragging')) { frame.classList.add('is-dragging'); frame.setPointerCapture(e.pointerId); }
+        apply();
+      } else if (pts.size === 2) {
+        const [a, b] = [...pts.values()];
+        const d = Math.hypot(a.x - b.x, a.y - b.y);
+        const r = frame.getBoundingClientRect();
+        moved = 99;
+        tx += dx / 2; ty += dy / 2;
+        zoomAt((a.x + b.x) / 2 - r.left, (a.y + b.y) / 2 - r.top, d / (pinch || d));
+        pinch = d;
+      }
+    });
+    const up = (e: PointerEvent) => {
+      pts.delete(e.pointerId);
+      if (!pts.size) frame.classList.remove('is-dragging');
+    };
+    frame.addEventListener('pointerup', up);
+    frame.addEventListener('pointercancel', up);
+    frame.addEventListener('wheel', (e) => {
+      if (!e.ctrlKey && !e.metaKey) return; // обычное колесо листает страницу, а не застревает в карте
+      e.preventDefault();
+      const r = frame.getBoundingClientRect();
+      zoomAt(e.clientX - r.left, e.clientY - r.top, Math.exp(-e.deltaY * 0.01));
+    }, { passive: false });
+
+    // --- Узлы, кнопки, переходы в карточке ---
+    mm.addEventListener('click', (e) => {
+      const t = e.target as HTMLElement;
+      const node = t.closest<HTMLButtonElement>('.mm-node');
+      if (node) {
+        if (moved > 4) return; // это был жест, а не нажатие
+        if (node === selected) { close(); return; }
+        select(node.dataset.id!, { focusCard: e.detail === 0 }); // detail 0: нажали с клавиатуры, фокус в карточку
+        return;
+      }
+      const jump = t.closest<HTMLElement>('[data-jump]');
+      if (jump) { select(jump.dataset.jump!, { focusCard: true }); return; }
+      if (t.closest('.mm-close')) { close(); return; }
+      const z = t.closest<HTMLElement>('[data-zoom]')?.dataset.zoom;
+      if (z === 'fit') fit(true);
+      else if (z) zoomAt(frame.clientWidth / 2, frame.clientHeight / 2, z === 'in' ? 1.25 : 0.8);
+    });
+    frame.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !panel.hidden) { e.preventDefault(); close(); return; }
+      if ((e.target as HTMLElement).closest('.mm-panel')) return;
+      const step = 60;
+      const k: Record<string, () => void> = {
+        ArrowLeft: () => { tx += step; apply(); }, ArrowRight: () => { tx -= step; apply(); },
+        ArrowUp: () => { ty += step; apply(); }, ArrowDown: () => { ty -= step; apply(); },
+        '+': () => zoomAt(frame.clientWidth / 2, frame.clientHeight / 2, 1.25), '=': () => zoomAt(frame.clientWidth / 2, frame.clientHeight / 2, 1.25),
+        '-': () => zoomAt(frame.clientWidth / 2, frame.clientHeight / 2, 0.8), '0': () => fit(true),
+      };
+      if (k[e.key]) { e.preventDefault(); k[e.key](); }
+    });
+    // Tab по узлам: узел в фокусе не прячется за краем окна
+    nodes.forEach((n) => n.addEventListener('focus', () => {
+      const r = n.getBoundingClientRect(), f = frame.getBoundingClientRect();
+      if (r.left < f.left || r.right > f.right || r.top < f.top || r.bottom > f.bottom) focusOn(n, s);
+    }));
+
+    fit();
+    const fromHash = location.hash.startsWith('#map-') ? location.hash.slice(5) : '';
+    if (fromHash && byId.has(decodeURIComponent(fromHash))) select(decodeURIComponent(fromHash));
+    let lastW = frame.clientWidth;
+    new ResizeObserver(() => { if (Math.abs(frame.clientWidth - lastW) > 40) { lastW = frame.clientWidth; selected ? focusOn(selected, s) : fit(); } }).observe(frame);
+  });
+</script>
