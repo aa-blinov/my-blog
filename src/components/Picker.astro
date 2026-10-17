@@ -120,6 +120,7 @@ const client = {
     const lists = root.querySelector<HTMLElement>('.pk-lists')!;
     const summary = root.querySelector<HTMLElement>('.pk-summary')!;
     const groups = [...form.querySelectorAll<HTMLDetailsElement>('.pk-group')];
+    const pref: Record<string, boolean> = {};
     const safetyGroup = urgentBox?.closest<HTMLDetailsElement>('.pk-group') ?? null;
     const esc = (s: string) => s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]!));
     const chips = (ns: number[]) => ns.length ? ' <span class="ref-run">' + ns.map((n) => {
@@ -214,13 +215,22 @@ const client = {
         return `<h3 class="pk-sub ${cls}">${title}</h3>${note ? `<p class="pk-note">${note}</p>` : ''}${l.common}${l.rows}`;
       };
       const moreList = more.length ? list(more) : null;
+      // На телефоне «С осторожностью» и «Не подходит» свёрнуты в строки с числом: сначала главное, остальное по нажатию.
+      // Что открыл читатель вручную, сохраняем при пересчёте
+      const phone = () => matchMedia('(max-width: 991px)').matches;
+      const fold = (key: string, title: string, cls: string, items: typeof all) => {
+        if (!items.length) return '';
+        const l = list(items);
+        const open = pref[key] ?? !phone();
+        return `<details class="pk-block" data-key="${key}"${open ? ' open' : ''}><summary><h3 class="pk-sub ${cls}">${title} (${items.length})</h3></summary>${l.common}${l.rows}</details>`;
+      };
 
       lists.innerHTML =
         block('Обычно обсуждают первыми', 'pk-sub-first', first, picked.length || helped || failed ? '' : 'Пока ничего не отмечено: это препараты первой линии по рекомендациям. Отметьте особенности в анкете, и список подстроится.') +
         (first.length ? '' : '<p class="pk-note">При отмеченном нет варианта без оговорок. Это повод обсудить выбор с врачом подробнее, а не выбирать из списка ниже самому.</p>') +
-        block('Можно, но с осторожностью', 'pk-sub-caution', caution) +
+        fold('caution', 'Можно, но с осторожностью', 'pk-sub-caution', caution) +
         (moreList ? `<details class="pk-more"><summary>Другие варианты (${more.length})</summary><p class="pk-note">По отмеченному правил нет. Это не значит, что препарат подходит.</p>${moreList.common}${moreList.rows}</details>` : '') +
-        block('Не подходит при отмеченном', 'pk-sub-avoid', avoid);
+        fold('avoid', 'Не подходит при отмеченном', 'pk-sub-avoid', avoid);
       summary.textContent = picked.length || helped || failed
         ? `Учтено отметок: ${picked.length + histCount}. Первыми ${first.length}, с осторожностью ${caution.length}, не подходит ${avoid.length}.`
         : '';
@@ -264,6 +274,11 @@ const client = {
       const review = root.querySelector('.pk-review');
       if (review) io.observe(review);
     }
+    // Запоминаем, какой блок читатель открыл или свернул вручную
+    lists.addEventListener('toggle', (e) => {
+      const d = e.target as HTMLDetailsElement;
+      if (d.dataset.key) pref[d.dataset.key] = d.open;
+    }, true);
     form.addEventListener('change', render);
     form.addEventListener('reset', () => setTimeout(render, 0));
     render();

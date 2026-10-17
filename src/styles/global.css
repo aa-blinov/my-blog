@@ -2032,6 +2032,34 @@ main article .content .pk-sub {
   font-size: var(--app-font-control);
   color: var(--pico-muted-color);
 }
+/* Блок «С осторожностью» и «Не подходит»: на телефоне свёрнут, заголовок со стрелкой и числом */
+.pk-block {
+  margin: var(--app-spacing) 0 0;
+}
+.pk-block > summary {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 44px;
+  cursor: pointer;
+  list-style: none;
+}
+.pk-block > summary::-webkit-details-marker,
+.pk-block > summary::after {
+  display: none;
+}
+.pk-block > summary::before {
+  content: "▸";
+  display: inline-block;
+  color: var(--pico-muted-color);
+  transition: transform 0.15s;
+}
+.pk-block[open] > summary::before {
+  transform: rotate(90deg);
+}
+.pk-block > summary .pk-sub {
+  margin: 0;
+}
 .pk-more {
   margin: var(--app-spacing) 0 0;
 }
