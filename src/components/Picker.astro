@@ -1,0 +1,185 @@
+---
+import type { PickerData } from '../utils/picker';
+import type { MapSource } from '../utils/mindmap';
+
+interface Props {
+  data: PickerData;
+}
+
+const { data } = Astro.props;
+
+// Источники нумеруются один раз на страницу; клиенту уходят номера, а не повторы текста
+const sources: MapSource[] = [];
+const num = new Map<string, number>();
+const reg = (list?: MapSource[]) => (list ?? []).map((s) => {
+  if (!num.has(s.url)) { sources.push(s); num.set(s.url, sources.length); }
+  return num.get(s.url)!;
+});
+const client = {
+  map: data.mapHref ?? '',
+  drugs: data.drugs.map((d) => ({ id: d.id, label: d.label, tier: d.tier, ru: d.registeredRu, src: reg(d.tierSources) })),
+  rules: Object.fromEntries(data.rules.map((r) => [r.when, r.effects.map((e) => ({ d: e.drugs, k: e.kind, r: e.reason, s: reg(e.sources) }))])),
+  history: {
+    helped: { k: data.history.helped.kind, r: data.history.helped.reason, s: reg(data.history.helped.sources) },
+    failed: { k: data.history.failed.kind, r: data.history.failed.reason, s: reg(data.history.failed.sources) },
+  },
+  alerts: data.alerts.map((a) => ({ w: a.when, l: a.level, t: a.text, s: reg(a.sources) })),
+  sources: sources.map((s) => [s.title, s.url]),
+};
+---
+
+<div class="pk" data-picker>
+  <p class="pk-disclaimer"><strong>Это не назначение.</strong> {data.disclaimer}</p>
+
+  <div class="pk-layout">
+    <form class="pk-form" aria-label="Особенности пациента">
+      {data.groups.map((g) => (
+        <fieldset class="pk-group">
+          <legend>{g.label}</legend>
+          {data.options.filter((o) => o.group === g.id).map((o) => (
+            <label class="pk-opt">
+              <input type="checkbox" name="o" value={o.id} />
+              <span>{o.label}{o.hint && <span class="pk-hint">{o.hint}</span>}</span>
+            </label>
+          ))}
+        </fieldset>
+      ))}
+      <fieldset class="pk-group">
+        <legend>Опыт лечения</legend>
+        <label class="pk-select">
+          <span>Раньше помог</span>
+          <select name="helped">
+            <option value="">не было</option>
+            {data.drugs.map((d) => <option value={d.id}>{d.label}</option>)}
+          </select>
+        </label>
+        <label class="pk-select">
+          <span>Не подошёл</span>
+          <select name="failed">
+            <option value="">не было</option>
+            {data.drugs.map((d) => <option value={d.id}>{d.label}</option>)}
+          </select>
+        </label>
+      </fieldset>
+      <p class="pk-actions"><button type="reset" class="pk-reset">сбросить</button></p>
+    </form>
+
+    <section class="pk-result" id="pk-result" aria-live="polite" aria-label="Что обсудить с врачом">
+      <div class="pk-alerts"></div>
+      <h2 class="pk-h">Что обсудить с врачом</h2>
+      <p class="pk-summary"></p>
+      <div class="pk-lists"></div>
+    </section>
+  </div>
+  <a class="pk-jump" href="#pk-result">к результату ↓</a>
+  <script type="application/json" class="pk-data" set:html={JSON.stringify(client)} />
+</div>
+
+<script>
+  // Подсчёт на клиенте: линия по рекомендациям даёт основу, отмеченные особенности сдвигают препарат вверх или вниз,
+  // «не подходит» исключает. Порядок внутри групп: сумма, потом линия
+  type Eff = { d?: string[]; k: 'prefer' | 'consider' | 'note' | 'caution' | 'avoid'; r: string; s: number[] };
+  type Data = {
+    map: string;
+    drugs: { id: string; label: string; tier: number; ru: boolean; src: number[] }[];
+    rules: Record<string, Eff[]>;
+    history: { helped: Eff; failed: Eff };
+    alerts: { w: string; l: string; t: string; s: number[] }[];
+    sources: [string, string][];
+  };
+  const WEIGHT = { prefer: 2, consider: 1, note: 0, caution: -1, avoid: -100 };
+  const TIER_SCORE: Record<number, number> = { 1: 3, 2: 2, 3: 1 };
+  const TIER_NAME: Record<number, string> = { 1: 'первая линия', 2: 'вторая линия', 3: 'третья линия' };
+
+  document.querySelectorAll<HTMLElement>('[data-picker]').forEach((root) => {
+    const data: Data = JSON.parse(root.querySelector('.pk-data')!.textContent!);
+    const form = root.querySelector<HTMLFormElement>('.pk-form')!;
+    const alertsBox = root.querySelector<HTMLElement>('.pk-alerts')!;
+    const lists = root.querySelector<HTMLElement>('.pk-lists')!;
+    const summary = root.querySelector<HTMLElement>('.pk-summary')!;
+    const esc = (s: string) => s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]!));
+    const chips = (ns: number[]) => ns.length ? ' <span class="ref-run">' + ns.map((n) => {
+      const [t, u] = data.sources[n - 1];
+      return `<a class="ref" href="${esc(u)}" data-tip="${esc(t)}" aria-label="Источник ${n}: ${esc(t)}">[${n}]</a>`;
+    }).join(' ') + '</span>' : '';
+
+    const render = () => {
+      const fd = new FormData(form);
+      const picked = fd.getAll('o') as string[];
+      const helped = String(fd.get('helped') ?? '');
+      const failed = String(fd.get('failed') ?? '');
+      const state = new Map(data.drugs.map((d) => [d.id, { d, score: TIER_SCORE[d.tier], plus: [] as Eff[], notes: [] as Eff[], minus: [] as Eff[], avoid: [] as Eff[] }]));
+      const apply = (e: Eff, ids: string[]) => ids.forEach((id) => {
+        const st = state.get(id);
+        if (!st) return;
+        st.score += WEIGHT[e.k];
+        (e.k === 'avoid' ? st.avoid : e.k === 'caution' ? st.minus : e.k === 'note' ? st.notes : st.plus).push(e);
+      });
+      picked.forEach((o) => (data.rules[o] ?? []).forEach((e) => apply(e, e.d ?? [])));
+      if (helped) apply(data.history.helped, [helped]);
+      if (failed && failed !== helped) apply(data.history.failed, [failed]);
+
+      // Предупреждения сверху: срочное раньше результата
+      const order = { urgent: 0, specialist: 1, info: 2 } as Record<string, number>;
+      alertsBox.innerHTML = data.alerts.filter((a) => picked.includes(a.w)).sort((a, b) => order[a.l] - order[b.l])
+        .map((a) => `<p class="pk-alert pk-alert-${a.l}">${esc(a.t)}${chips(a.s)}</p>`).join('');
+
+      // При равном счёте выше то, что зарегистрировано в России: читателю его реально могут назначить
+      const all = [...state.values()].sort((a, b) => b.score - a.score || Number(b.d.ru) - Number(a.d.ru) || a.d.tier - b.d.tier);
+      const avoid = all.filter((x) => x.avoid.length);
+      const caution = all.filter((x) => !x.avoid.length && x.minus.length);
+      const clean = all.filter((x) => !x.avoid.length && !x.minus.length);
+      // «Первыми» только зарегистрированное в России и при этом первая линия или прямо рекомендованное при отмеченном:
+      // отсутствие правил не значит, что препарат проверен и подходит. Подходящих меньше пяти, значит меньше пяти
+      const eligible = (x: (typeof all)[number]) => x.d.ru && (x.d.tier === 1 || x.plus.some((e) => e.k === 'prefer'));
+      const first = clean.filter(eligible).slice(0, 5);
+      const more = clean.filter((x) => !first.includes(x));
+
+      const reasons = (x: (typeof all)[number]) => [...x.avoid, ...x.minus, ...x.notes, ...x.plus]
+        .map((e) => `<li class="pk-r pk-r-${e.k}">${esc(e.r)}${chips(e.s)}</li>`).join('');
+      const row = (x: (typeof all)[number]) => `
+        <li class="pk-drug">
+          <p class="pk-name"><a href="${esc(data.map)}#map-${x.d.id}">${esc(x.d.label)}</a>
+            <span class="pk-tier">${TIER_NAME[x.d.tier]}${chips(x.d.src)}${x.d.ru ? '' : ' ~ в России не зарегистрирован'}</span></p>
+          ${reasons(x) ? `<ul class="pk-reasons">${reasons(x)}</ul>` : ''}
+        </li>`;
+      const block = (title: string, cls: string, items: typeof all, note = '') => items.length
+        ? `<h3 class="pk-sub ${cls}">${title}</h3>${note ? `<p class="pk-note">${note}</p>` : ''}<ul class="pk-list">${items.map(row).join('')}</ul>` : '';
+
+      lists.innerHTML =
+        block('Обычно обсуждают первыми', 'pk-sub-first', first, picked.length || helped || failed ? '' : 'Пока ничего не отмечено: это препараты первой линии по рекомендациям. Отметьте особенности слева, и список подстроится.') +
+        (first.length ? '' : '<p class="pk-note">При отмеченном нет варианта без оговорок. Это повод обсудить выбор с врачом подробнее, а не выбирать из списка ниже самому.</p>') +
+        block('Можно, но с осторожностью', 'pk-sub-caution', caution) +
+        (more.length ? `<details class="pk-more"><summary>Другие варианты (${more.length})</summary><ul class="pk-list">${more.map(row).join('')}</ul></details>` : '') +
+        block('Не подходит при отмеченном', 'pk-sub-avoid', avoid);
+      summary.textContent = picked.length || helped || failed
+        ? `Учтено отметок: ${picked.length + (helped ? 1 : 0) + (failed ? 1 : 0)}. Первыми ${first.length}, с осторожностью ${caution.length}, не подходит ${avoid.length}.`
+        : '';
+
+      // Отметки в адресе: подборку можно переслать или открыть на приёме
+      const q = new URLSearchParams();
+      if (picked.length) q.set('o', picked.join(','));
+      if (helped) q.set('helped', helped);
+      if (failed) q.set('failed', failed);
+      history.replaceState(null, '', location.pathname + (q.toString() ? '?' + q : '') + location.hash);
+    };
+
+    // Восстановить отметки из адреса
+    const q = new URLSearchParams(location.search);
+    (q.get('o') ?? '').split(',').filter(Boolean).forEach((v) => {
+      const cb = form.querySelector<HTMLInputElement>(`input[value="${CSS.escape(v)}"]`);
+      if (cb) cb.checked = true;
+    });
+    for (const k of ['helped', 'failed']) {
+      const sel = form.querySelector<HTMLSelectElement>(`select[name="${k}"]`)!;
+      if (q.get(k)) sel.value = q.get(k)!;
+    }
+    // «к результату» не нужна, когда результат уже на экране
+    const jump = root.querySelector<HTMLElement>('.pk-jump');
+    const res = root.querySelector<HTMLElement>('.pk-result')!;
+    if (jump) new IntersectionObserver(([e]) => { jump.style.visibility = e.isIntersecting ? 'hidden' : ''; }).observe(res);
+    form.addEventListener('change', render);
+    form.addEventListener('reset', () => setTimeout(render, 0));
+    render();
+  });
+</script>

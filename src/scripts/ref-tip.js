@@ -1,7 +1,7 @@
 // Всплывашка источника над чипом [n]: описание из data-tip и сайт.
 // Мышь: по наведению. Клавиатура: по фокусу. Тач: первый тап показывает, второй по тому же чипу открывает источник
 (() => {
-  if (!document.querySelector(".content a.ref[data-tip]")) return;
+  // Без раннего выхода: в подборщике чипы появляются после отметок, а слушатели на document почти ничего не стоят
   const tip = document.createElement("div");
   tip.className = "ref-tip";
   tip.id = "ref-tip";

@@ -1678,3 +1678,220 @@ main article .content .mm-card h2 {
     transition: none;
   }
 }
+
+/* ==========================================================================
+   Подборщик (Picker.astro): анкета слева, результат справа (на телефоне под анкетой).
+   Плоско, линии Rule, один акцент; «не подходит» не красным, а зачёркнутой подписью причины
+   ========================================================================== */
+.pk {
+  margin: var(--app-spacing-lg) 0;
+}
+.pk-disclaimer {
+  padding: var(--app-spacing) 0;
+  border-block: 1px solid var(--pico-muted-border-color);
+  font-size: var(--app-font-sm);
+}
+.pk-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr);
+  gap: var(--app-spacing-xl);
+  align-items: start;
+}
+.pk-form {
+  margin: 0;
+}
+.pk-group {
+  margin: 0 0 var(--app-spacing);
+  padding: 0;
+  border: none;
+}
+.pk-group legend {
+  margin-bottom: 0.35rem;
+  font-size: var(--app-font-control);
+  color: var(--pico-muted-color);
+}
+.pk-opt {
+  display: flex;
+  gap: 0.6rem;
+  align-items: flex-start;
+  margin: 0;
+  padding: 0.3rem 0;
+  font-size: var(--app-font-sm);
+  line-height: 1.4;
+  cursor: pointer;
+}
+.pk .pk-opt input[type="checkbox"] {
+  flex: 0 0 auto;
+  width: 1.05rem;
+  height: 1.05rem;
+  margin: 0.15rem 0 0;
+  border-radius: var(--app-radius-xs);
+}
+.pk-hint {
+  display: block;
+  font-size: var(--app-font-control);
+  color: var(--pico-muted-color);
+}
+.pk-select {
+  display: grid;
+  gap: 0.2rem;
+  margin: 0 0 0.6rem;
+  font-size: var(--app-font-sm);
+}
+.pk .pk-select select {
+  margin: 0;
+  padding: 0.35rem 0.6rem;
+  font-family: inherit;
+  font-size: var(--app-font-sm);
+  border-radius: var(--app-radius-xs);
+}
+.pk .pk-reset {
+  width: auto;
+  margin: 0;
+  padding: 0.35rem 0.8rem;
+  border: 1px solid var(--pico-muted-border-color);
+  border-radius: var(--app-radius-xs);
+  background: transparent;
+  box-shadow: none;
+  color: var(--pico-contrast);
+  font-family: inherit;
+  font-size: var(--app-font-control);
+}
+.pk .pk-reset:hover {
+  border-color: var(--pico-primary);
+  color: var(--pico-primary);
+}
+.pk-result {
+  position: sticky;
+  top: var(--app-spacing);
+  max-height: calc(100vh - 2 * var(--app-spacing));
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+main article .content .pk-h {
+  margin: 0 0 0.3rem;
+  font-size: 1.15em;
+}
+.pk-summary {
+  margin: 0 0 var(--app-spacing-md);
+  font-size: var(--app-font-control);
+  color: var(--pico-muted-color);
+}
+.pk-alert {
+  margin: 0 0 var(--app-spacing-md);
+  padding: 0.6rem 0.8rem;
+  border: 1px solid var(--pico-muted-border-color);
+  border-radius: var(--app-radius-sm);
+  font-size: var(--app-font-sm);
+  line-height: 1.5;
+}
+/* Срочное: та же плоская плашка, но рамка акцентом и жирный текст, без красных заливок */
+.pk-alert-urgent {
+  border-color: var(--pico-primary);
+  font-weight: 700;
+}
+.pk-alert-specialist {
+  background: var(--pico-code-background-color);
+}
+main article .content .pk-sub {
+  margin: var(--app-spacing) 0 0.4rem;
+  font-size: 1em;
+}
+.pk-sub-avoid {
+  color: var(--pico-muted-color);
+}
+.pk-note {
+  margin: 0 0 0.5rem;
+  font-size: var(--app-font-control);
+  color: var(--pico-muted-color);
+}
+.pk .pk-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.pk .pk-drug {
+  margin: 0;
+  padding: 0.5rem 0;
+  border-top: 1px solid var(--pico-muted-border-color);
+  list-style: none;
+}
+.pk-name {
+  margin: 0;
+  font-size: var(--app-font-sm);
+}
+.pk-name > a {
+  font-weight: 700;
+}
+.pk-tier {
+  margin-left: 0.5rem;
+  font-size: var(--app-font-control);
+  color: var(--pico-muted-color);
+}
+.pk .pk-reasons {
+  margin: 0.25rem 0 0;
+  padding: 0 0 0 1.1em;
+  font-size: var(--app-font-sm);
+  line-height: 1.45;
+}
+.pk .pk-r {
+  margin: 0.1rem 0;
+}
+.pk-r-prefer::marker,
+.pk-r-consider::marker {
+  content: "+ ";
+  color: var(--pico-primary);
+}
+.pk-r-note::marker {
+  content: "~ ";
+  color: var(--pico-muted-color);
+}
+.pk-r-caution::marker {
+  content: "! ";
+  color: var(--pico-muted-color);
+}
+.pk-r-avoid::marker {
+  content: "× ";
+  color: var(--pico-muted-color);
+}
+.pk-more {
+  margin: var(--app-spacing) 0 0;
+}
+.pk-more > summary {
+  font-size: var(--app-font-sm);
+  color: var(--pico-muted-color);
+  cursor: pointer;
+}
+.pk-jump {
+  display: none;
+}
+@media (max-width: 991px) {
+  .pk-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .pk-result {
+    position: static;
+    max-height: none;
+    overflow: visible;
+  }
+  .pk-opt {
+    min-height: 44px;
+    align-items: center;
+  }
+  .pk .pk-opt input[type="checkbox"] {
+    margin-top: 0;
+  }
+  /* На телефоне результат под длинной анкетой: плавающая ссылка к нему */
+  .pk-jump {
+    position: sticky;
+    bottom: max(var(--app-spacing), env(safe-area-inset-bottom));
+    display: block;
+    width: fit-content;
+    margin: var(--app-spacing) 0 0 auto;
+    padding: 0.6rem 1rem;
+    border: 1px solid var(--pico-primary);
+    border-radius: var(--app-radius-sm);
+    background: var(--pico-background-color);
+    font-size: var(--app-font-sm);
+  }
+}

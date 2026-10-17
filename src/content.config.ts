@@ -12,6 +12,7 @@ const blog = defineCollection({
     section: z.string().optional(),
     part: z.number().int().positive().optional(), // номер части внутри серии (папка с about-*.md)
     map: z.string().optional(), // интерактивная карта из src/data/maps/<имя>.ts под текстом статьи
+    picker: z.string().optional(), // подборщик из src/data/pickers/<имя>.ts под текстом статьи
   }),
 });
 
