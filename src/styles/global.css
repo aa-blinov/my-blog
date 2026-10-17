@@ -1431,10 +1431,28 @@ html.mm-locked body {
   border-color: var(--mm-accent);
   color: var(--mm-accent);
 }
+.mm .mm-node[hidden] {
+  display: none;
+}
+/* Раскрытая группа помечена так же, как путь к выбранному узлу */
+.mm .mm-node.is-open {
+  border-color: var(--mm-accent);
+}
 .mm .mm-node.is-selected {
   background: rgba(var(--pico-primary-rgb), 0.1);
   color: var(--mm-accent);
   font-weight: 700;
+}
+.mm-short {
+  display: none;
+}
+@media (max-width: 600px) {
+  .mm-long {
+    display: none;
+  }
+  .mm-short {
+    display: inline;
+  }
 }
 .mm-tip {
   position: absolute;

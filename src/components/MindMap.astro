@@ -27,16 +27,18 @@ const edgePath = (from: { x: number; y: number }, to: { x: number; y: number }) 
   return `M${from.x.toFixed(1)},${from.y.toFixed(1)} Q${cx.toFixed(1)},${cy.toFixed(1)} ${to.x.toFixed(1)},${to.y.toFixed(1)}`;
 };
 const cardTitle = (n: MapNode) => n.title ?? n.label;
+// Много листьев: стартуем свёрнутыми, видны центр и группы; группа раскрывается по нажатию
+const collapsible = nodes.filter((p) => !p.node.children?.length).length > 24;
 // Подсказка при наведении: у класса короткое описание (hint), у вещества торговые названия; врачу видно сразу, без нажатия
 const hoverTip = (n: MapNode) => n.hint ?? (n.children?.length ? undefined : n.note);
 ---
 
-<div class="mm" data-mindmap>
+<div class="mm" data-mindmap data-collapsible={collapsible ? "" : undefined}>
   <div class="mm-frame" tabindex="0" role="application" aria-roledescription="интерактивная карта" aria-label="Карта: стрелки двигают, плюс и минус меняют масштаб, ноль вписывает карту в окно, F разворачивает на весь экран, Tab переходит по узлам">
     <div class="mm-canvas" style={`width:${Math.ceil(width)}px;height:${Math.ceil(height)}px`}>
       <svg class="mm-edges" width={Math.ceil(width)} height={Math.ceil(height)} aria-hidden="true">
         {nodes.filter((p) => p.parent).map((p) => (
-          <path d={edgePath(byId.get(p.parent!)!, p)} data-to={p.node.id} />
+          <path d={edgePath(byId.get(p.parent!)!, p)} data-to={p.node.id} data-from={p.parent} />
         ))}
       </svg>
       {nodes.map((p) => (
@@ -58,7 +60,8 @@ const hoverTip = (n: MapNode) => n.hint ?? (n.children?.length ? undefined : n.n
       <button type="button" data-zoom="in" aria-label="Приблизить">+</button>
       <button type="button" data-zoom="out" aria-label="Отдалить">−</button>
       <button type="button" data-zoom="fit" aria-label="Вписать карту в окно">вписать</button>
-      <button type="button" class="mm-full" aria-pressed="false" aria-label="Карта на весь экран">на весь экран</button>
+      {collapsible && <button type="button" class="mm-all" aria-pressed="false"><span class="mm-long">развернуть всё</span><span class="mm-short">все</span></button>}
+      <button type="button" class="mm-full" aria-pressed="false" aria-label="Карта на весь экран"><span class="mm-long">на весь экран</span><span class="mm-short">экран</span></button>
     </div>
 
     <div class="mm-panel" role="region" aria-label="Карточка узла" hidden>
@@ -86,7 +89,7 @@ const hoverTip = (n: MapNode) => n.hint ?? (n.children?.length ? undefined : n.n
     </div>
   </div>
 
-  <p class="mm-hint" aria-hidden="true"><span class="mm-hint-mouse">тяни мышью, Ctrl + колесо для масштаба, клик по узлу открывает карточку</span><span class="mm-hint-touch">тяни пальцем, щипок для масштаба, тап по узлу открывает карточку</span></p>
+  <p class="mm-hint" aria-hidden="true"><span class="mm-hint-mouse">тяни мышью, Ctrl + колесо для масштаба, клик по группе раскрывает её, по узлу открывает карточку</span><span class="mm-hint-touch">тяни пальцем, щипок для масштаба, тап по группе раскрывает её, по узлу открывает карточку</span></p>
 
   <details class="am-fold mm-list">
     <summary><strong>Вся карта списком</strong><span class="am-names">то же самое без карты: для чтения подряд и для скринридера</span></summary>
@@ -120,10 +123,12 @@ const hoverTip = (n: MapNode) => n.hint ?? (n.children?.length ? undefined : n.n
 
     const apply = () => { canvas.style.transform = `translate(${tx}px, ${ty}px) scale(${s})`; };
     // Видимая область карты: на десктопе карточка справа закрывает часть окна, на телефоне карточка снизу
+    // Сверху ряд кнопок: вписываем ниже него, чтобы верхние узлы не прятались под кнопками
+    const TOP = (mm.querySelector<HTMLElement>('.mm-controls')?.offsetHeight ?? 0) + 8;
     const viewport = () => {
       const w = frame.clientWidth, h = frame.clientHeight;
-      if (panel.hidden) return { x: 0, y: 0, w, h };
-      return matchMedia('(max-width: 991px)').matches ? { x: 0, y: 0, w, h: h - panel.offsetHeight } : { x: 0, y: 0, w: w - panel.offsetWidth, h };
+      if (panel.hidden) return { x: 0, y: TOP, w, h: h - TOP };
+      return matchMedia('(max-width: 991px)').matches ? { x: 0, y: TOP, w, h: h - panel.offsetHeight - TOP } : { x: 0, y: TOP, w: w - panel.offsetWidth, h: h - TOP };
     };
     const zoomAt = (px: number, py: number, k: number) => {
       const ns = Math.min(MAX, Math.max(MIN, s * k));
@@ -135,18 +140,43 @@ const hoverTip = (n: MapNode) => n.hint ?? (n.children?.length ? undefined : n.n
     // Вписать целиком; на узком экране (телефон) так подписи нечитаемы, поэтому не мельче READABLE с корнем в центре, дальше пальцем
     const READABLE = 0.5;
     const rootNode = nodes[0];
-    const fit = (whole = false) => {
+    // Рамка видимых узлов: в свёрнутом режиме вписываем только то, что раскрыто
+    const bbox = (list: HTMLElement[]) => {
+      const xs = list.map((n) => parseFloat(n.style.left)), ys = list.map((n) => parseFloat(n.style.top));
+      return { x0: Math.min(...xs) - 130, x1: Math.max(...xs) + 130, y0: Math.min(...ys) - 40, y1: Math.max(...ys) + 40 };
+    };
+    const fitTo = (list: HTMLElement[], whole = false) => {
       const v = viewport();
-      s = Math.min(MAX, Math.max(MIN, Math.min((v.w - 24) / W, (v.h - 24) / H)));
-      if (!whole && s < READABLE && v.w < 600) {
-        s = READABLE;
-        tx = v.x + v.w / 2 - parseFloat(rootNode.style.left) * s;
-        ty = v.y + v.h / 2 - parseFloat(rootNode.style.top) * s;
-      } else {
-        tx = v.x + (v.w - W * s) / 2;
-        ty = v.y + (v.h - H * s) / 2;
-      }
+      const b = bbox(list);
+      const bw = b.x1 - b.x0, bh = b.y1 - b.y0;
+      s = Math.min(MAX, Math.max(MIN, Math.min((v.w - 24) / bw, (v.h - 24) / bh, 1.1)));
+      if (!whole && s < READABLE && v.w < 600) s = READABLE;
+      tx = v.x + v.w / 2 - ((b.x0 + b.x1) / 2) * s;
+      ty = v.y + v.h / 2 - ((b.y0 + b.y1) / 2) * s;
+      canvas.classList.add('mm-animate');
       apply();
+      setTimeout(() => canvas.classList.remove('mm-animate'), 260);
+    };
+    const visible = () => nodes.filter((n) => !n.hidden);
+    const fit = (whole = false) => fitTo(visible(), whole);
+
+    // Свёрнутый режим: листья группы видны, только когда группа раскрыта
+    const collapsible = mm.hasAttribute('data-collapsible');
+    const expanded = new Set<string>();
+    const allBtn = mm.querySelector<HTMLButtonElement>('.mm-all');
+    const setGroup = (id: string, open: boolean) => {
+      if (open) expanded.add(id); else expanded.delete(id);
+      nodes.filter((n) => n.dataset.parent === id && n.dataset.parent !== rootNode.dataset.id).forEach((n) => { n.hidden = !open; });
+      mm.querySelectorAll<SVGPathElement>(`.mm-edges path[data-from="${id}"]`).forEach((pth) => { if (id !== rootNode.dataset.id) pth.style.display = open ? '' : 'none'; });
+      byId.get(id)?.classList.toggle('is-open', open);
+    };
+    const groups = nodes.filter((n) => n.dataset.parent === rootNode.dataset.id);
+    if (collapsible) groups.forEach((g) => setGroup(g.dataset.id!, false));
+    const syncAll = () => {
+      if (!allBtn) return;
+      const all = groups.every((g) => expanded.has(g.dataset.id!));
+      allBtn.innerHTML = all ? '<span class="mm-long">свернуть всё</span><span class="mm-short">свернуть</span>' : '<span class="mm-long">развернуть всё</span><span class="mm-short">все</span>';
+      allBtn.setAttribute('aria-pressed', String(all));
     };
     // Узел в центр видимой области; масштаб не меньше читаемого
     const focusOn = (n: HTMLElement, minScale = 0.8) => {
@@ -173,6 +203,7 @@ const hoverTip = (n: MapNode) => n.hint ?? (n.children?.length ? undefined : n.n
     const select = (id: string, { focusCard = false, center = true } = {}) => {
       const n = byId.get(id);
       if (!n) return;
+      if (collapsible && n.hidden && n.dataset.parent) { setGroup(n.dataset.parent, true); syncAll(); }
       selected?.setAttribute('aria-expanded', 'false');
       selected?.classList.remove('is-selected');
       selected = n;
@@ -262,7 +293,8 @@ const hoverTip = (n: MapNode) => n.hint ?? (n.children?.length ? undefined : n.n
       });
     }
     // При фокусе карта может доехать до узла (анимация 250 мс): подсказку ставим после неё
-    nodes.forEach((n) => { n.addEventListener('focus', () => setTimeout(() => { if (document.activeElement === n) showTip(n); }, 270)); n.addEventListener('blur', hideTip); });
+    // Подсказка по фокусу только с клавиатуры: тап тоже ставит фокус, и подсказка зависала над узлом
+    nodes.forEach((n) => { n.addEventListener('focus', () => setTimeout(() => { if (document.activeElement === n && n.matches(':focus-visible')) showTip(n); }, 270)); n.addEventListener('blur', hideTip); });
     frame.addEventListener('pointerdown', hideTip);
     frame.addEventListener('wheel', hideTip, { passive: true });
 
@@ -272,6 +304,16 @@ const hoverTip = (n: MapNode) => n.hint ?? (n.children?.length ? undefined : n.n
       const node = t.closest<HTMLButtonElement>('.mm-node');
       if (node) {
         if (moved > 4) return; // это был жест, а не нажатие
+        const isGroup = collapsible && node.dataset.parent === rootNode.dataset.id;
+        if (isGroup) {
+          const open = !expanded.has(node.dataset.id!);
+          setGroup(node.dataset.id!, open);
+          syncAll();
+          select(node.dataset.id!, { focusCard: e.detail === 0, center: false });
+          if (open) fitTo([node, ...nodes.filter((c) => c.dataset.parent === node.dataset.id)]);
+          else fit();
+          return;
+        }
         if (node === selected) { close(); return; }
         select(node.dataset.id!, { focusCard: e.detail === 0 }); // detail 0: нажали с клавиатуры, фокус в карточку
         return;
@@ -280,6 +322,13 @@ const hoverTip = (n: MapNode) => n.hint ?? (n.children?.length ? undefined : n.n
       if (jump) { select(jump.dataset.jump!, { focusCard: true }); return; }
       if (t.closest('.mm-close')) { close(); return; }
       if (t.closest('.mm-full')) { toggleFull(); return; }
+      if (t.closest('.mm-all')) {
+        const open = !groups.every((g) => expanded.has(g.dataset.id!));
+        groups.forEach((g) => setGroup(g.dataset.id!, open));
+        syncAll();
+        fit(true);
+        return;
+      }
       const z = t.closest<HTMLElement>('[data-zoom]')?.dataset.zoom;
       if (z === 'fit') fit(true);
       else if (z) zoomAt(frame.clientWidth / 2, frame.clientHeight / 2, z === 'in' ? 1.25 : 0.8);
@@ -291,7 +340,7 @@ const hoverTip = (n: MapNode) => n.hint ?? (n.children?.length ? undefined : n.n
     const syncFull = () => {
       const on = isFull();
       fullBtn.setAttribute('aria-pressed', String(on));
-      fullBtn.textContent = on ? 'выйти' : 'на весь экран';
+      fullBtn.innerHTML = on ? '<span class="mm-long">выйти</span><span class="mm-short">выйти</span>' : '<span class="mm-long">на весь экран</span><span class="mm-short">экран</span>';
       fullBtn.setAttribute('aria-label', on ? 'Выйти из полноэкранного режима' : 'Карта на весь экран');
       document.documentElement.classList.toggle('mm-locked', frame.classList.contains('is-full'));
       requestAnimationFrame(() => (selected ? focusOn(selected, s) : fit()));

@@ -36,9 +36,11 @@ export interface PlacedNode {
   parent?: string;
 }
 
-// Радиус внешнего круга растёт с числом листьев: на подпись около 170px дуги. Внутренние круги делят его поровну
-const ARC_PER_LEAF = 170;
-const STAGGER = 70; // соседние листья через один ближе и дальше: длинные подписи не наезжают друг на друга
+// Круг групп компактный: на подпись группы около 210px дуги, чтобы свёрнутая карта читалась и на телефоне.
+// Круг листьев растёт с их числом; при многих листьях они идут в три ряда, длинные подписи не наезжают друг на друга
+const ARC_PER_GROUP = 280;
+const ARC_PER_LEAF = 130;
+const RINGS = [-80, 0, 80];
 
 const leaves = (n: MapNode): number => (n.children?.length ? n.children.reduce((s, c) => s + leaves(c), 0) : 1);
 
@@ -48,13 +50,19 @@ export function layout(root: MapNode): { nodes: PlacedNode[]; width: number; hei
   const total = leaves(root);
   const depthOf = (n: MapNode): number => (n.children?.length ? 1 + Math.max(...n.children.map(depthOf)) : 0);
   const maxDepth = Math.max(1, depthOf(root));
-  const outer = Math.max(520, (total * ARC_PER_LEAF) / (2 * Math.PI));
-  const radiusAt = (depth: number) => (outer * depth) / maxDepth;
+  const inner = Math.max(260, ((root.children?.length ?? 1) * ARC_PER_GROUP) / (2 * Math.PI));
+  const outer = Math.max(inner + 260, (total * (total > 30 ? ARC_PER_LEAF : 170)) / (2 * Math.PI));
+  const radiusAt = (depth: number) => (depth === 0 ? 0 : depth === 1 ? inner : inner + ((outer - inner) * (depth - 1)) / Math.max(1, maxDepth - 1));
   let leafIndex = 0;
+  let groupIndex = 0;
   const walk = (n: MapNode, depth: number, from: number, to: number, parent?: string) => {
     const angle = (from + to) / 2 - Math.PI / 2; // первый сектор сверху, дальше по часовой
     const isLeaf = !n.children?.length && depth > 0;
-    const r = radiusAt(depth) + (isLeaf && total > 20 ? (leafIndex++ % 2 ? STAGGER : -STAGGER) / 2 : 0);
+    const ring = total > 30 ? RINGS[leafIndex % 3] : total > 20 ? (leafIndex % 2 ? 35 : -35) : 0;
+    if (isLeaf) leafIndex++;
+    // Группы тоже через одну ближе и дальше: у маленьких групп узкий сектор, и длинные подписи соседей сталкивались
+    const groupRing = depth === 1 && (root.children?.length ?? 0) > 6 ? (groupIndex++ % 2 ? 70 : -40) : 0;
+    const r = radiusAt(depth) + (isLeaf ? ring : groupRing);
     placed.push({ node: n, depth, x: r * Math.cos(angle), y: r * Math.sin(angle), parent });
     let start = from;
     for (const c of n.children ?? []) {

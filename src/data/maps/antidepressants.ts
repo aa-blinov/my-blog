@@ -4,12 +4,12 @@ import type { MindMapData } from '../../utils/mindmap';
 
 export const antidepressants: MindMapData = { root: {
   "id": "root",
-  "label": "Антидепрессанты",
-  "title": "Антидепрессанты",
+  "label": "Препараты при депрессии",
+  "title": "Препараты при депрессии",
   "facts": [
     {
       "label": "Как читать карту",
-      "text": "Вокруг центра пять классов антидепрессантов по механизму действия, а ещё то, что назначают рядом с ними, и способы усилить лечение. Препараты, которые встречаются в основном у нас, стоят в своих классах, это отмечено в карточке. В карточке препарата: что это, когда его выбирают, как принимают, чем хорош и чем за него платят."
+      "text": "Вокруг центра пять классов антидепрессантов по механизму действия, дальше препараты других классов, которые встречаются рядом с депрессией: антипсихотики, нормотимики, успокоительные, безрецептурные средства и другие способы усилить лечение. Каждый препарат стоит в своём классе; если он встречается в основном у нас, это отмечено в карточке. В карточке препарата: что это, когда его выбирают, как принимают, чем хорош и чем за него платят."
     },
     {
       "label": "Важно",
@@ -1033,6 +1033,128 @@ export const antidepressants: MindMapData = { root: {
             "href": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=0f43610c-f290-46ea-d186-4f998ed99fce",
             "text": "Полная инструкция: dailymed.nlm.nih.gov"
           }
+        },
+        {
+          "id": "milnacipran",
+          "label": "Милнаципран",
+          "note": "Иксел; в России сейчас не зарегистрирован (регистрация отменена)",
+          "facts": [
+            {
+              "label": "Что это",
+              "text": "Антидепрессант из группы СИОЗСН (ингибиторов обратного захвата серотонина и норадреналина), как венлафаксин и дулоксетин.",
+              "sources": [
+                {
+                  "title": "Российское общество психиатров. Клинические рекомендации «Депрессивный эпизод, рекуррентное депрессивное расстройство», редакция 2021 года (ID 301_2 в рубрикаторе Минздрава, в архиве с 26.08.2024), PDF разработчика.",
+                  "url": "https://psychiatr.ru/download/6271?view=1"
+                }
+              ]
+            },
+            {
+              "label": "Показания по инструкции",
+              "text": "По последней российской инструкции Иксела: большой депрессивный эпизод у взрослых.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Иксел (милнаципран), капсулы 25 и 50 мг, инструкция; РУ П N011787/01, отмена государственной регистрации.",
+                  "url": "https://www.vidal.ru/drugs/ixel__1316"
+                }
+              ]
+            },
+            {
+              "label": "Когда выбирают",
+              "text": "РОП при тяжёлой депрессии без психоза советует начинать с СИОЗСН (среди них милнаципран) или миртазапина, а трициклические оставлять на потом: их хуже переносят. CANMAT 2023 относит милнаципран к первой линии с уровнем доказательности 1, хотя в Канаде его нет.",
+              "sources": [
+                {
+                  "title": "Российское общество психиатров. Клинические рекомендации «Депрессивный эпизод, рекуррентное депрессивное расстройство», редакция 2021 года (ID 301_2 в рубрикаторе Минздрава, в архиве с 26.08.2024), PDF разработчика.",
+                  "url": "https://psychiatr.ru/download/6271?view=1"
+                },
+                {
+                  "title": "Lam R.W. et al. Canadian Network for Mood and Anxiety Treatments (CANMAT) 2023 update on clinical guidelines for management of major depressive disorder in adults. Canadian Journal of Psychiatry, 2024.",
+                  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11351064/"
+                }
+              ]
+            },
+            {
+              "label": "Как принимают",
+              "text": "Внутрь во время еды, утром и вечером. Действие обычно начинается через срок от 1 до 3 недель, лечение продолжают около 6 месяцев, отменяют постепенно.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Иксел (милнаципран), капсулы 25 и 50 мг, инструкция; РУ П N011787/01, отмена государственной регистрации.",
+                  "url": "https://www.vidal.ru/drugs/ixel__1316"
+                }
+              ]
+            },
+            {
+              "label": "Противопоказания",
+              "text": "Неконтролируемое высокое давление; тяжёлая или нестабильная ишемическая болезнь сердца; одновременно с необратимыми ингибиторами МАО; беременность и кормление грудью; возраст до 18 лет.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Иксел (милнаципран), капсулы 25 и 50 мг, инструкция; РУ П N011787/01, отмена государственной регистрации.",
+                  "url": "https://www.vidal.ru/drugs/ixel__1316"
+                }
+              ]
+            },
+            {
+              "label": "Доза по инструкции",
+              "text": "100 мг в сутки: по 50 мг утром и вечером; безопасность доз выше 100 мг не установлена, при слабой работе почек дозу снижают. В рекомендациях РОП тоже 100 мг, в CANMAT от 50 до 200 мг.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Иксел (милнаципран), капсулы 25 и 50 мг, инструкция; РУ П N011787/01, отмена государственной регистрации.",
+                  "url": "https://www.vidal.ru/drugs/ixel__1316"
+                },
+                {
+                  "title": "Российское общество психиатров. Клинические рекомендации «Депрессивный эпизод, рекуррентное депрессивное расстройство», редакция 2021 года (ID 301_2 в рубрикаторе Минздрава, в архиве с 26.08.2024), PDF разработчика.",
+                  "url": "https://psychiatr.ru/download/6271?view=1"
+                },
+                {
+                  "title": "Lam R.W. et al. Canadian Network for Mood and Anxiety Treatments (CANMAT) 2023 update on clinical guidelines for management of major depressive disorder in adults. Canadian Journal of Psychiatry, 2024.",
+                  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11351064/"
+                }
+              ],
+              "more": true
+            },
+            {
+              "label": "Чем платят",
+              "text": "Может повышать давление и учащать пульс, затруднять мочеиспускание (особенно при аденоме простаты); при резкой отмене возможен синдром отмены, CANMAT оценивает его риск как средний. По РОП побочные эффекты у милнаципрана, в отличие от венлафаксина и дулоксетина, бывают не чаще, чем у СИОЗС.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Иксел (милнаципран), капсулы 25 и 50 мг, инструкция; РУ П N011787/01, отмена государственной регистрации.",
+                  "url": "https://www.vidal.ru/drugs/ixel__1316"
+                },
+                {
+                  "title": "Lam R.W. et al. Canadian Network for Mood and Anxiety Treatments (CANMAT) 2023 update on clinical guidelines for management of major depressive disorder in adults. Canadian Journal of Psychiatry, 2024.",
+                  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11351064/"
+                },
+                {
+                  "title": "Российское общество психиатров. Клинические рекомендации «Депрессивный эпизод, рекуррентное депрессивное расстройство», редакция 2021 года (ID 301_2 в рубрикаторе Минздрава, в архиве с 26.08.2024), PDF разработчика.",
+                  "url": "https://psychiatr.ru/download/6271?view=1"
+                }
+              ],
+              "more": true
+            },
+            {
+              "label": "В России",
+              "text": "Не зарегистрирован: регистрация Иксела (РУ П N011787/01) отменена, других препаратов милнаципрана в справочнике нет. В рекомендациях РОП 2021 года он при этом остался.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Иксел (милнаципран), капсулы 25 и 50 мг, инструкция; РУ П N011787/01, отмена государственной регистрации.",
+                  "url": "https://www.vidal.ru/drugs/ixel__1316"
+                },
+                {
+                  "title": "Справочник Видаль: препараты с действующим веществом милнаципран (в списке только Иксел), октябрь 2026.",
+                  "url": "https://www.vidal.ru/drugs/molecule-in/1235"
+                },
+                {
+                  "title": "Российское общество психиатров. Клинические рекомендации «Депрессивный эпизод, рекуррентное депрессивное расстройство», редакция 2021 года (ID 301_2 в рубрикаторе Минздрава, в архиве с 26.08.2024), PDF разработчика.",
+                  "url": "https://psychiatr.ru/download/6271?view=1"
+                }
+              ],
+              "more": true
+            }
+          ],
+          "docs": {
+            "href": "https://www.vidal.ru/drugs/ixel__1316",
+            "text": "Полная инструкция: vidal.ru"
+          }
         }
       ]
     },
@@ -1864,7 +1986,7 @@ export const antidepressants: MindMapData = { root: {
     {
       "id": "tca",
       "label": "Трициклические (ТЦА)",
-      "title": "Трициклические антидепрессанты (ТЦА)",
+      "title": "Трициклические и родственные антидепрессанты (ТЦА)",
       "hint": "Старые трициклические: сильные, но много побочных эффектов и опасны при передозировке.",
       "facts": [
         {
@@ -2816,14 +2938,20 @@ export const antidepressants: MindMapData = { root: {
       ]
     },
     {
-      "id": "nearby",
-      "label": "Не антидепрессанты, но рядом",
-      "title": "Не антидепрессанты, но их часто назначают рядом",
-      "hint": "Не антидепрессанты, но их часто назначают вместе с ними или покупают вместо них.",
+      "id": "antipsychotic",
+      "label": "Антипсихотики (нейролептики)",
+      "title": "Антипсихотики (нейролептики)",
+      "hint": "Против психоза; некоторые в небольших дозах добавляют к антидепрессанту.",
       "facts": [
         {
           "label": "Что это",
-          "text": "Их назначают вместе с антидепрессантами или покупают вместо них. Важно знать, с чем они опасно сочетаются."
+          "text": "Препараты против психоза: блокируют дофаминовые рецепторы. Некоторые из них в небольших дозах добавляют к антидепрессанту, когда одного мало.",
+          "sources": [
+            {
+              "title": "Lam R.W. et al. Canadian Network for Mood and Anxiety Treatments (CANMAT) 2023 update on clinical guidelines for management of major depressive disorder in adults. Canadian Journal of Psychiatry, 2024.",
+              "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11351064/"
+            }
+          ]
         }
       ],
       "children": [
@@ -2902,6 +3030,1203 @@ export const antidepressants: MindMapData = { root: {
             "text": "Полная инструкция: vidal.ru"
           }
         },
+        {
+          "id": "aripiprazole",
+          "label": "Арипипразол",
+          "note": "Зилаксера, Арипризол; Абилифай снят с регистрации",
+          "facts": [
+            {
+              "label": "Что это",
+              "text": "Антипсихотик второго поколения (нейролептик нового типа). Частично стимулирует дофаминовые D2 и серотониновые 5-HT1A рецепторы и блокирует 5-HT2A.",
+              "sources": [
+                {
+                  "title": "Abilify (aripiprazole), инструкция по применению, одобренная FDA. Otsuka, DailyMed.",
+                  "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=c040bd1d-45b7-49f2-93ea-aed7220b30ac"
+                }
+              ]
+            },
+            {
+              "label": "Показания по инструкции",
+              "text": "В России сейчас шизофрения и биполярное расстройство; добавка при депрессии была только в инструкции Абилифая, но его регистрацию отменили. В США (FDA) одобрен как добавка к антидепрессанту при депрессии.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Абилифай (арипипразол), разделы «Показания», «Режим дозирования», «Противопоказания» (РУ ЛС-001812, на Видале отмечена отмена регистрации).",
+                  "url": "https://www.vidal.ru/drugs/abilify__14249"
+                },
+                {
+                  "title": "Справочник Видаль: препараты арипипразола в России (Зилаксера, Арипризол, Арипипразол и др.).",
+                  "url": "https://www.vidal.ru/drugs/molecule-in/1714"
+                },
+                {
+                  "title": "Abilify (aripiprazole), инструкция по применению, одобренная FDA. Otsuka, DailyMed.",
+                  "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=c040bd1d-45b7-49f2-93ea-aed7220b30ac"
+                }
+              ]
+            },
+            {
+              "label": "Когда выбирают",
+              "text": "Добавка к антидепрессанту, когда он помог лишь частично. CANMAT 2023: первая линия среди средств усиления, уровень доказательности 1. NICE называет его среди антипсихотиков второго поколения для комбинации, обычно после консультации специалиста.",
+              "sources": [
+                {
+                  "title": "Lam R.W. et al. CANMAT 2023 update on clinical guidelines for management of major depressive disorder in adults, таблица 7.2 «Summary Recommendations for Adjunctive Medications» и раздел Q.7.g. Canadian Journal of Psychiatry, 2024.",
+                  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11351064/"
+                },
+                {
+                  "title": "NICE. Depression in adults: treatment and management (NG222), рекомендации 1.9.8 и 1.9.9 (комбинированное лечение), от 1.4.33 до 1.4.37 (антипсихотики как усиление), 2022.",
+                  "url": "https://www.nice.org.uk/guidance/ng222/chapter/Recommendations"
+                }
+              ]
+            },
+            {
+              "label": "Как принимают",
+              "text": "Таблетка раз в день, независимо от еды, вместе с продолжающимся антидепрессантом. Дозу повышают не чаще раза в неделю.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Абилифай (арипипразол), разделы «Показания», «Режим дозирования», «Противопоказания» (РУ ЛС-001812, на Видале отмечена отмена регистрации).",
+                  "url": "https://www.vidal.ru/drugs/abilify__14249"
+                },
+                {
+                  "title": "Abilify (aripiprazole), инструкция по применению, одобренная FDA. Otsuka, DailyMed.",
+                  "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=c040bd1d-45b7-49f2-93ea-aed7220b30ac"
+                }
+              ]
+            },
+            {
+              "label": "Противопоказания",
+              "text": "Аллергия на арипипразол; возраст до 18 лет. Осторожно: болезни сердца и сосудов, судороги, ожирение и диабет в семье.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Абилифай (арипипразол), разделы «Показания», «Режим дозирования», «Противопоказания» (РУ ЛС-001812, на Видале отмечена отмена регистрации).",
+                  "url": "https://www.vidal.ru/drugs/abilify__14249"
+                }
+              ]
+            },
+            {
+              "label": "Доза по инструкции",
+              "text": "Как добавка при депрессии: начинают с 5 мг в сутки, при необходимости повышают на 5 мг раз в неделю, не больше 15 мг (инструкция снятого с регистрации Абилифая). FDA: старт от 2 до 5 мг, диапазон от 2 до 15 мг. CANMAT: от 2 до 10 мг.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Абилифай (арипипразол), разделы «Показания», «Режим дозирования», «Противопоказания» (РУ ЛС-001812, на Видале отмечена отмена регистрации).",
+                  "url": "https://www.vidal.ru/drugs/abilify__14249"
+                },
+                {
+                  "title": "Abilify (aripiprazole), инструкция по применению, одобренная FDA. Otsuka, DailyMed.",
+                  "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=c040bd1d-45b7-49f2-93ea-aed7220b30ac"
+                },
+                {
+                  "title": "Lam R.W. et al. CANMAT 2023 update on clinical guidelines for management of major depressive disorder in adults, таблица 7.2 «Summary Recommendations for Adjunctive Medications» и раздел Q.7.g. Canadian Journal of Psychiatry, 2024.",
+                  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11351064/"
+                }
+              ],
+              "more": true
+            },
+            {
+              "label": "Чем платят",
+              "text": "Акатизия (мучительное внутреннее беспокойство, трудно усидеть на месте), бессонница, запоры, усталость; прибавка веса. При долгом приёме риск поздней дискинезии (непроизвольных движений, иногда необратимых). У пожилых с деменцией антипсихотики повышают риск смерти и инсульта, поэтому таким людям их не назначают.",
+              "sources": [
+                {
+                  "title": "Abilify (aripiprazole), инструкция по применению, одобренная FDA. Otsuka, DailyMed.",
+                  "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=c040bd1d-45b7-49f2-93ea-aed7220b30ac"
+                },
+                {
+                  "title": "Lam R.W. et al. CANMAT 2023 update on clinical guidelines for management of major depressive disorder in adults, таблица 7.2 «Summary Recommendations for Adjunctive Medications» и раздел Q.7.g. Canadian Journal of Psychiatry, 2024.",
+                  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11351064/"
+                },
+                {
+                  "title": "Справочник Видаль: Абилифай (арипипразол), разделы «Показания», «Режим дозирования», «Противопоказания» (РУ ЛС-001812, на Видале отмечена отмена регистрации).",
+                  "url": "https://www.vidal.ru/drugs/abilify__14249"
+                }
+              ],
+              "more": true
+            },
+            {
+              "label": "В России",
+              "text": "Зарегистрирован: Зилаксера, Арипризол, Арипипразол.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: препараты арипипразола в России (Зилаксера, Арипризол, Арипипразол и др.).",
+                  "url": "https://www.vidal.ru/drugs/molecule-in/1714"
+                }
+              ],
+              "more": true
+            }
+          ],
+          "docs": {
+            "href": "https://www.vidal.ru/drugs/abilify__14249",
+            "text": "Полная инструкция: vidal.ru"
+          }
+        },
+        {
+          "id": "brexpiprazole",
+          "label": "Брекспипразол",
+          "note": "Рексалти",
+          "facts": [
+            {
+              "label": "Что это",
+              "text": "Антипсихотик второго поколения, близкий родственник арипипразола: частично стимулирует 5-HT1A и D2 рецепторы, блокирует 5-HT2A.",
+              "sources": [
+                {
+                  "title": "Rexulti (brexpiprazole), инструкция по применению, одобренная FDA. Otsuka, DailyMed.",
+                  "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=2d301358-6291-4ec1-bd87-37b4ad9bd850"
+                }
+              ]
+            },
+            {
+              "label": "Показания по инструкции",
+              "text": "В России только шизофрения. В США (FDA): добавка к антидепрессанту при депрессии у взрослых, шизофрения, возбуждение при деменции.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Рексалти (брекспипразол), инструкция (РУ ЛП-006867, действующее).",
+                  "url": "https://www.vidal.ru/drugs/reksalty"
+                },
+                {
+                  "title": "Rexulti (brexpiprazole), инструкция по применению, одобренная FDA. Otsuka, DailyMed.",
+                  "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=2d301358-6291-4ec1-bd87-37b4ad9bd850"
+                }
+              ]
+            },
+            {
+              "label": "Когда выбирают",
+              "text": "Добавка к антидепрессанту при частичном ответе. CANMAT 2023: первая линия, уровень 1, вместе с арипипразолом. В NICE NG222 отдельно не назван.",
+              "sources": [
+                {
+                  "title": "Lam R.W. et al. CANMAT 2023 update on clinical guidelines for management of major depressive disorder in adults, таблица 7.2 «Summary Recommendations for Adjunctive Medications» и раздел Q.7.g. Canadian Journal of Psychiatry, 2024.",
+                  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11351064/"
+                },
+                {
+                  "title": "NICE. Depression in adults: treatment and management (NG222), рекомендации 1.9.8 и 1.9.9 (комбинированное лечение), от 1.4.33 до 1.4.37 (антипсихотики как усиление), 2022.",
+                  "url": "https://www.nice.org.uk/guidance/ng222/chapter/Recommendations"
+                }
+              ]
+            },
+            {
+              "label": "Как принимают",
+              "text": "Таблетка раз в день; дозу повышают раз в неделю.",
+              "sources": [
+                {
+                  "title": "Rexulti (brexpiprazole), инструкция по применению, одобренная FDA. Otsuka, DailyMed.",
+                  "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=2d301358-6291-4ec1-bd87-37b4ad9bd850"
+                }
+              ]
+            },
+            {
+              "label": "Противопоказания",
+              "text": "Аллергия на брекспипразол; возраст до 18 лет; медленный обмен по CYP2D6 вместе с препаратами, тормозящими CYP3A4; сочетание сильных ингибиторов CYP2D6 и CYP3A4 (ферментов печени, которые его разрушают).",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Рексалти (брекспипразол), инструкция (РУ ЛП-006867, действующее).",
+                  "url": "https://www.vidal.ru/drugs/reksalty"
+                }
+              ]
+            },
+            {
+              "label": "Доза по инструкции",
+              "text": "Российская инструкция (шизофрения): от 2 до 4 мг в сутки. FDA для добавки при депрессии: старт 0,5 или 1 мг, цель 2 мг, максимум 3 мг. CANMAT: от 0,5 до 2 мг.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Рексалти (брекспипразол), инструкция (РУ ЛП-006867, действующее).",
+                  "url": "https://www.vidal.ru/drugs/reksalty"
+                },
+                {
+                  "title": "Rexulti (brexpiprazole), инструкция по применению, одобренная FDA. Otsuka, DailyMed.",
+                  "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=2d301358-6291-4ec1-bd87-37b4ad9bd850"
+                },
+                {
+                  "title": "Lam R.W. et al. CANMAT 2023 update on clinical guidelines for management of major depressive disorder in adults, таблица 7.2 «Summary Recommendations for Adjunctive Medications» и раздел Q.7.g. Canadian Journal of Psychiatry, 2024.",
+                  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11351064/"
+                }
+              ],
+              "more": true
+            },
+            {
+              "label": "Чем платят",
+              "text": "Прибавка веса, сонливость, акатизия (в исследованиях при депрессии 9% против 2% на плацебо). Риск поздней дискинезии, как у всех антипсихотиков. У пожилых с деменцией антипсихотики повышают риск смерти и инсульта, поэтому таким людям их не назначают.",
+              "sources": [
+                {
+                  "title": "Rexulti (brexpiprazole), инструкция по применению, одобренная FDA. Otsuka, DailyMed.",
+                  "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=2d301358-6291-4ec1-bd87-37b4ad9bd850"
+                },
+                {
+                  "title": "Справочник Видаль: Рексалти (брекспипразол), инструкция (РУ ЛП-006867, действующее).",
+                  "url": "https://www.vidal.ru/drugs/reksalty"
+                }
+              ],
+              "more": true
+            },
+            {
+              "label": "В России",
+              "text": "Зарегистрирован как Рексалти, но только для шизофрении.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Рексалти (брекспипразол), инструкция (РУ ЛП-006867, действующее).",
+                  "url": "https://www.vidal.ru/drugs/reksalty"
+                }
+              ],
+              "more": true
+            }
+          ],
+          "docs": {
+            "href": "https://www.vidal.ru/drugs/reksalty",
+            "text": "Полная инструкция: vidal.ru"
+          }
+        },
+        {
+          "id": "cariprazine",
+          "label": "Карипразин",
+          "note": "Реагила",
+          "facts": [
+            {
+              "label": "Что это",
+              "text": "Антипсихотик второго поколения: частично стимулирует дофаминовые D3 и D2 и серотониновые 5-HT1A рецепторы, блокирует 5-HT2A.",
+              "sources": [
+                {
+                  "title": "Vraylar (cariprazine), инструкция по применению, одобренная FDA. Allergan, DailyMed.",
+                  "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=4b5f7c65-aa2d-452a-b3db-bc85c06ff12f"
+                }
+              ]
+            },
+            {
+              "label": "Показания по инструкции",
+              "text": "В России: шизофрения, мания и биполярная депрессия, а также большое депрессивное расстройство в качестве дополнения к антидепрессантам. То же в США (FDA).",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Реагила (карипразин), инструкция (РУ ЛП-№(001510)-(РГ-RU), действующее).",
+                  "url": "https://www.vidal.ru/drugs/reagila"
+                },
+                {
+                  "title": "Vraylar (cariprazine), инструкция по применению, одобренная FDA. Allergan, DailyMed.",
+                  "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=4b5f7c65-aa2d-452a-b3db-bc85c06ff12f"
+                }
+              ]
+            },
+            {
+              "label": "Когда выбирают",
+              "text": "Добавка к антидепрессанту при частичном ответе. CANMAT 2023: вторая линия, уровень 2, потому что исследований меньше, чем у других. В NICE NG222 отдельно не назван.",
+              "sources": [
+                {
+                  "title": "Lam R.W. et al. CANMAT 2023 update on clinical guidelines for management of major depressive disorder in adults, таблица 7.2 «Summary Recommendations for Adjunctive Medications» и раздел Q.7.g. Canadian Journal of Psychiatry, 2024.",
+                  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11351064/"
+                },
+                {
+                  "title": "NICE. Depression in adults: treatment and management (NG222), рекомендации 1.9.8 и 1.9.9 (комбинированное лечение), от 1.4.33 до 1.4.37 (антипсихотики как усиление), 2022.",
+                  "url": "https://www.nice.org.uk/guidance/ng222/chapter/Recommendations"
+                }
+              ]
+            },
+            {
+              "label": "Как принимают",
+              "text": "Капсула раз в день. Дозу поднимают не раньше 15-го дня: при более быстром повышении чаще побочные эффекты.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Реагила (карипразин), инструкция (РУ ЛП-№(001510)-(РГ-RU), действующее).",
+                  "url": "https://www.vidal.ru/drugs/reagila"
+                }
+              ]
+            },
+            {
+              "label": "Противопоказания",
+              "text": "Аллергия на карипразин; одновременный приём сильных ингибиторов CYP3A4 или сильных и умеренных индукторов CYP3A4; пожилые с деменцией. Женщинам нужна надёжная контрацепция во время приёма и не меньше 10 недель после.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Реагила (карипразин), инструкция (РУ ЛП-№(001510)-(РГ-RU), действующее).",
+                  "url": "https://www.vidal.ru/drugs/reagila"
+                }
+              ]
+            },
+            {
+              "label": "Доза по инструкции",
+              "text": "Как добавка при депрессии: 1,5 мг в сутки, с 15-го дня можно 3 мг; максимум 3 мг.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Реагила (карипразин), инструкция (РУ ЛП-№(001510)-(РГ-RU), действующее).",
+                  "url": "https://www.vidal.ru/drugs/reagila"
+                },
+                {
+                  "title": "Vraylar (cariprazine), инструкция по применению, одобренная FDA. Allergan, DailyMed.",
+                  "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=4b5f7c65-aa2d-452a-b3db-bc85c06ff12f"
+                }
+              ],
+              "more": true
+            },
+            {
+              "label": "Чем платят",
+              "text": "Очень часто акатизия и паркинсонизм (скованность, дрожь); часто прибавка веса и аппетита, бессонница, тревога; нечасто поздняя дискинезия.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Реагила (карипразин), инструкция (РУ ЛП-№(001510)-(РГ-RU), действующее).",
+                  "url": "https://www.vidal.ru/drugs/reagila"
+                }
+              ],
+              "more": true
+            },
+            {
+              "label": "В России",
+              "text": "Зарегистрирован как Реагила, показание при депрессии как добавка есть.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Реагила (карипразин), инструкция (РУ ЛП-№(001510)-(РГ-RU), действующее).",
+                  "url": "https://www.vidal.ru/drugs/reagila"
+                }
+              ],
+              "more": true
+            }
+          ],
+          "docs": {
+            "href": "https://www.vidal.ru/drugs/reagila",
+            "text": "Полная инструкция: vidal.ru"
+          }
+        },
+        {
+          "id": "quetiapine",
+          "label": "Кветиапин",
+          "note": "Сероквель Пролонг, Кетилепт, Квентиакс",
+          "facts": [
+            {
+              "label": "Что это",
+              "text": "Антипсихотик второго поколения: блокирует дофаминовые D2 и серотониновые 5-HT2A рецепторы; заметно успокаивает и усыпляет.",
+              "sources": [
+                {
+                  "title": "Seroquel XR (quetiapine extended-release), инструкция по применению, одобренная FDA. AstraZeneca, DailyMed.",
+                  "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=473a3ac4-67f4-4782-baa9-7f9bdd8761f4"
+                }
+              ]
+            },
+            {
+              "label": "Показания по инструкции",
+              "text": "В России, в инструкциях на Видале: шизофрения, мания; у части препаратов (например, Кветиапин-СЗ) депрессия при биполярном расстройстве. Добавки к антидепрессанту при обычной депрессии в них нет. В США (FDA) форма длительного действия одобрена как добавка к антидепрессанту при депрессии.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Кветиапин-СЗ, инструкция (РУ ЛП-№(003214)-(РГ-RU)).",
+                  "url": "https://www.vidal.ru/drugs/quetiapine__41328"
+                },
+                {
+                  "title": "Справочник Видаль: препараты кветиапина в России (Сероквель, Сероквель Пролонг, Кетилепт, Квентиакс и др.).",
+                  "url": "https://www.vidal.ru/drugs/molecule-in/908"
+                },
+                {
+                  "title": "Seroquel XR (quetiapine extended-release), инструкция по применению, одобренная FDA. AstraZeneca, DailyMed.",
+                  "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=473a3ac4-67f4-4782-baa9-7f9bdd8761f4"
+                }
+              ]
+            },
+            {
+              "label": "Когда выбирают",
+              "text": "Добавка к антидепрессанту. CANMAT 2023: вторая линия (форма длительного действия), уровень 1: работает, но сильно усыпляет и влияет на обмен веществ. NICE называет его среди антипсихотиков для комбинации. CANMAT ставит кветиапин во вторую линию и как самостоятельный антидепрессант, от 150 до 300 мг.",
+              "sources": [
+                {
+                  "title": "Lam R.W. et al. CANMAT 2023 update on clinical guidelines for management of major depressive disorder in adults, таблица 7.2 «Summary Recommendations for Adjunctive Medications» и раздел Q.7.g. Canadian Journal of Psychiatry, 2024.",
+                  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11351064/"
+                },
+                {
+                  "title": "NICE. Depression in adults: treatment and management (NG222), рекомендации 1.9.8 и 1.9.9 (комбинированное лечение), от 1.4.33 до 1.4.37 (антипсихотики как усиление), 2022.",
+                  "url": "https://www.nice.org.uk/guidance/ng222/chapter/Recommendations"
+                }
+              ]
+            },
+            {
+              "label": "Как принимают",
+              "text": "Таблетка длительного действия раз в день, лучше вечером, натощак или с лёгкой едой; глотать целиком.",
+              "sources": [
+                {
+                  "title": "Seroquel XR (quetiapine extended-release), инструкция по применению, одобренная FDA. AstraZeneca, DailyMed.",
+                  "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=473a3ac4-67f4-4782-baa9-7f9bdd8761f4"
+                }
+              ]
+            },
+            {
+              "label": "Противопоказания",
+              "text": "Аллергия на кветиапин; одновременно с азоловыми противогрибковыми, эритромицином, кларитромицином, ингибиторами протеазы ВИЧ; возраст до 18 лет; беременность и кормление грудью.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Кветиапин-СЗ, инструкция (РУ ЛП-№(003214)-(РГ-RU)).",
+                  "url": "https://www.vidal.ru/drugs/quetiapine__41328"
+                }
+              ]
+            },
+            {
+              "label": "Доза по инструкции",
+              "text": "FDA для добавки при депрессии: 50 мг в 1-й и 2-й день, 150 мг с 3-го дня, дальше от 150 до 300 мг. CANMAT: от 150 до 300 мг.",
+              "sources": [
+                {
+                  "title": "Seroquel XR (quetiapine extended-release), инструкция по применению, одобренная FDA. AstraZeneca, DailyMed.",
+                  "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=473a3ac4-67f4-4782-baa9-7f9bdd8761f4"
+                },
+                {
+                  "title": "Lam R.W. et al. CANMAT 2023 update on clinical guidelines for management of major depressive disorder in adults, таблица 7.2 «Summary Recommendations for Adjunctive Medications» и раздел Q.7.g. Canadian Journal of Psychiatry, 2024.",
+                  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11351064/"
+                }
+              ],
+              "more": true
+            },
+            {
+              "label": "Чем платят",
+              "text": "Сонливость (в исследованиях добавки при депрессии 40% против 9% на плацебо), сухость во рту, усталость; рост сахара, жиров крови и веса. При долгом приёме риск поздней дискинезии (непроизвольных движений). У пожилых с деменцией антипсихотики повышают риск смерти и инсульта, поэтому таким людям их не назначают.",
+              "sources": [
+                {
+                  "title": "Seroquel XR (quetiapine extended-release), инструкция по применению, одобренная FDA. AstraZeneca, DailyMed.",
+                  "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=473a3ac4-67f4-4782-baa9-7f9bdd8761f4"
+                },
+                {
+                  "title": "Lam R.W. et al. CANMAT 2023 update on clinical guidelines for management of major depressive disorder in adults, таблица 7.2 «Summary Recommendations for Adjunctive Medications» и раздел Q.7.g. Canadian Journal of Psychiatry, 2024.",
+                  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11351064/"
+                }
+              ],
+              "more": true
+            },
+            {
+              "label": "В России",
+              "text": "Зарегистрирован, много препаратов, включая форму длительного действия Сероквель Пролонг.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: препараты кветиапина в России (Сероквель, Сероквель Пролонг, Кетилепт, Квентиакс и др.).",
+                  "url": "https://www.vidal.ru/drugs/molecule-in/908"
+                }
+              ],
+              "more": true
+            }
+          ],
+          "docs": {
+            "href": "https://www.vidal.ru/drugs/quetiapine__41328",
+            "text": "Полная инструкция: vidal.ru"
+          }
+        },
+        {
+          "id": "olanzapine",
+          "label": "Оланзапин",
+          "note": "Зипрекса, Оланзапин Канон, Парнасан",
+          "facts": [
+            {
+              "label": "Что это",
+              "text": "Антипсихотик второго поколения: блокирует дофаминовые и серотониновые 5-HT2 рецепторы, а также гистаминовые (отсюда сонливость и аппетит).",
+              "sources": [
+                {
+                  "title": "Zyprexa (olanzapine), инструкция по применению, одобренная FDA. Eli Lilly, DailyMed.",
+                  "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=b418946a-1ab4-4d89-a012-d94fc361a3c4"
+                }
+              ]
+            },
+            {
+              "label": "Показания по инструкции",
+              "text": "В России: шизофрения, мания, профилактика рецидивов при биполярном расстройстве; в инструкции оланзапина (ЛП-002640) есть терапевтически резистентная депрессия (не помогли два антидепрессанта), но только в паре с флуоксетином. Одному оланзапину это показание не дано. В США (FDA) так же.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Оланзапин, таблетки, инструкция (РУ ЛП-002640), показание «терапевтически резистентная депрессия» в комбинации с флуоксетином.",
+                  "url": "https://www.vidal.ru/drugs/olanzapine__43301"
+                },
+                {
+                  "title": "Zyprexa (olanzapine), инструкция по применению, одобренная FDA. Eli Lilly, DailyMed.",
+                  "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=b418946a-1ab4-4d89-a012-d94fc361a3c4"
+                }
+              ]
+            },
+            {
+              "label": "Когда выбирают",
+              "text": "Добавка к антидепрессанту. CANMAT 2023: вторая линия, уровень 1: работает, но сильно прибавляет вес и портит обмен веществ. NICE называет его среди антипсихотиков для комбинации.",
+              "sources": [
+                {
+                  "title": "Lam R.W. et al. CANMAT 2023 update on clinical guidelines for management of major depressive disorder in adults, таблица 7.2 «Summary Recommendations for Adjunctive Medications» и раздел Q.7.g. Canadian Journal of Psychiatry, 2024.",
+                  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11351064/"
+                },
+                {
+                  "title": "NICE. Depression in adults: treatment and management (NG222), рекомендации 1.9.8 и 1.9.9 (комбинированное лечение), от 1.4.33 до 1.4.37 (антипсихотики как усиление), 2022.",
+                  "url": "https://www.nice.org.uk/guidance/ng222/chapter/Recommendations"
+                }
+              ]
+            },
+            {
+              "label": "Как принимают",
+              "text": "Раз в день вечером, вместе с флуоксетином, независимо от еды.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Оланзапин, таблетки, инструкция (РУ ЛП-002640), показание «терапевтически резистентная депрессия» в комбинации с флуоксетином.",
+                  "url": "https://www.vidal.ru/drugs/olanzapine__43301"
+                },
+                {
+                  "title": "Zyprexa (olanzapine), инструкция по применению, одобренная FDA. Eli Lilly, DailyMed.",
+                  "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=b418946a-1ab4-4d89-a012-d94fc361a3c4"
+                }
+              ]
+            },
+            {
+              "label": "Противопоказания",
+              "text": "Аллергия на оланзапин; возраст до 18 лет; непереносимость лактозы (для таблеток с лактозой).",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Оланзапин, таблетки, инструкция (РУ ЛП-002640), показание «терапевтически резистентная депрессия» в комбинации с флуоксетином.",
+                  "url": "https://www.vidal.ru/drugs/olanzapine__43301"
+                }
+              ]
+            },
+            {
+              "label": "Доза по инструкции",
+              "text": "При резистентной депрессии: обычно начинают с 5 мг оланзапина и 20 мг флуоксетина (флуоксетин дальше обычно от 25 до 30 мг); эффект показан при оланзапине от 6 до 12 мг. FDA: оланзапин от 5 до 20 мг. CANMAT: от 2,5 до 10 мг.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Оланзапин, таблетки, инструкция (РУ ЛП-002640), показание «терапевтически резистентная депрессия» в комбинации с флуоксетином.",
+                  "url": "https://www.vidal.ru/drugs/olanzapine__43301"
+                },
+                {
+                  "title": "Zyprexa (olanzapine), инструкция по применению, одобренная FDA. Eli Lilly, DailyMed.",
+                  "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=b418946a-1ab4-4d89-a012-d94fc361a3c4"
+                },
+                {
+                  "title": "Lam R.W. et al. CANMAT 2023 update on clinical guidelines for management of major depressive disorder in adults, таблица 7.2 «Summary Recommendations for Adjunctive Medications» и раздел Q.7.g. Canadian Journal of Psychiatry, 2024.",
+                  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11351064/"
+                }
+              ],
+              "more": true
+            },
+            {
+              "label": "Чем платят",
+              "text": "Сильная прибавка веса: при долгом приёме у 64% вес вырос на 7% и больше; рост сахара и жиров крови; сонливость. При долгом приёме риск поздней дискинезии (непроизвольных движений). У пожилых с деменцией антипсихотики повышают риск смерти и инсульта, поэтому таким людям их не назначают.",
+              "sources": [
+                {
+                  "title": "Zyprexa (olanzapine), инструкция по применению, одобренная FDA. Eli Lilly, DailyMed.",
+                  "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=b418946a-1ab4-4d89-a012-d94fc361a3c4"
+                },
+                {
+                  "title": "Lam R.W. et al. CANMAT 2023 update on clinical guidelines for management of major depressive disorder in adults, таблица 7.2 «Summary Recommendations for Adjunctive Medications» и раздел Q.7.g. Canadian Journal of Psychiatry, 2024.",
+                  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11351064/"
+                },
+                {
+                  "title": "Справочник Видаль: Оланзапин, таблетки, инструкция (РУ ЛП-002640), показание «терапевтически резистентная депрессия» в комбинации с флуоксетином.",
+                  "url": "https://www.vidal.ru/drugs/olanzapine__43301"
+                }
+              ],
+              "more": true
+            },
+            {
+              "label": "В России",
+              "text": "Зарегистрирован, много препаратов: Зипрекса, Оланзапин Канон, Парнасан и др.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: препараты оланзапина в России (Зипрекса, Оланзапин Канон, Парнасан, Нормитон и др.).",
+                  "url": "https://www.vidal.ru/drugs/molecule-in/766"
+                }
+              ],
+              "more": true
+            }
+          ],
+          "docs": {
+            "href": "https://www.vidal.ru/drugs/olanzapine__43301",
+            "text": "Полная инструкция: vidal.ru"
+          }
+        },
+        {
+          "id": "risperidone",
+          "label": "Рисперидон",
+          "note": "Рисдонал, Торендо, Риссет; Рисполепт в таблетках и Рилептид сняты с регистрации",
+          "facts": [
+            {
+              "label": "Что это",
+              "text": "Антипсихотик второго поколения: блокирует дофаминовые D2 и серотониновые 5-HT2 рецепторы.",
+              "sources": [
+                {
+                  "title": "Risperdal (risperidone), инструкция по применению, одобренная FDA. Janssen, DailyMed.",
+                  "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=7e117c7e-02fc-4343-92a1-230061dfc5e0"
+                }
+              ]
+            },
+            {
+              "label": "Показания по инструкции",
+              "text": "В России: шизофрения, мания, короткий курс при агрессии у людей с деменцией и у детей с умственной отсталостью. В США: шизофрения, мания, раздражительность при аутизме. Депрессии нет ни там, ни там.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Рисполепт (рисперидон), инструкция (РУ П N014824/01, на Видале отмечена отмена регистрации).",
+                  "url": "https://www.vidal.ru/drugs/rispolept__5831"
+                },
+                {
+                  "title": "Risperdal (risperidone), инструкция по применению, одобренная FDA. Janssen, DailyMed.",
+                  "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=7e117c7e-02fc-4343-92a1-230061dfc5e0"
+                }
+              ]
+            },
+            {
+              "label": "Когда выбирают",
+              "text": "Добавка к антидепрессанту вне инструкции. CANMAT 2023: вторая линия, уровень 1: работает, но повышает пролактин, бьёт по сексуальной функции и даёт двигательные побочные эффекты. NICE называет его среди антипсихотиков для комбинации.",
+              "sources": [
+                {
+                  "title": "Lam R.W. et al. CANMAT 2023 update on clinical guidelines for management of major depressive disorder in adults, таблица 7.2 «Summary Recommendations for Adjunctive Medications» и раздел Q.7.g. Canadian Journal of Psychiatry, 2024.",
+                  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11351064/"
+                },
+                {
+                  "title": "NICE. Depression in adults: treatment and management (NG222), рекомендации 1.9.8 и 1.9.9 (комбинированное лечение), от 1.4.33 до 1.4.37 (антипсихотики как усиление), 2022.",
+                  "url": "https://www.nice.org.uk/guidance/ng222/chapter/Recommendations"
+                }
+              ]
+            },
+            {
+              "label": "Как принимают",
+              "text": "Таблетки один или два раза в день.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Рисполепт (рисперидон), инструкция (РУ П N014824/01, на Видале отмечена отмена регистрации).",
+                  "url": "https://www.vidal.ru/drugs/rispolept__5831"
+                }
+              ]
+            },
+            {
+              "label": "Противопоказания",
+              "text": "Аллергия на рисперидон; фенилкетонурия (для форм с аспартамом). Осторожно: болезни сердца, Паркинсон, судороги, беременность.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Рисполепт (рисперидон), инструкция (РУ П N014824/01, на Видале отмечена отмена регистрации).",
+                  "url": "https://www.vidal.ru/drugs/rispolept__5831"
+                }
+              ]
+            },
+            {
+              "label": "Доза по инструкции",
+              "text": "Дозы для депрессии в инструкции нет. CANMAT для усиления: от 1 до 3 мг в сутки.",
+              "sources": [
+                {
+                  "title": "Lam R.W. et al. CANMAT 2023 update on clinical guidelines for management of major depressive disorder in adults, таблица 7.2 «Summary Recommendations for Adjunctive Medications» и раздел Q.7.g. Canadian Journal of Psychiatry, 2024.",
+                  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11351064/"
+                }
+              ],
+              "more": true
+            },
+            {
+              "label": "Чем платят",
+              "text": "Повышение пролактина (гормона, от которого сбивается цикл, падает либидо, может выделяться молоко из груди) сильнее, чем у других антипсихотиков; скованность и дрожь; поздняя дискинезия. У пожилых с деменцией антипсихотики повышают риск смерти и инсульта, поэтому таким людям их не назначают.",
+              "sources": [
+                {
+                  "title": "Risperdal (risperidone), инструкция по применению, одобренная FDA. Janssen, DailyMed.",
+                  "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=7e117c7e-02fc-4343-92a1-230061dfc5e0"
+                },
+                {
+                  "title": "Lam R.W. et al. CANMAT 2023 update on clinical guidelines for management of major depressive disorder in adults, таблица 7.2 «Summary Recommendations for Adjunctive Medications» и раздел Q.7.g. Canadian Journal of Psychiatry, 2024.",
+                  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11351064/"
+                }
+              ],
+              "more": true
+            },
+            {
+              "label": "В России",
+              "text": "Зарегистрирован, много препаратов: Рисдонал, Торендо, Риссет, Рисперидон и др.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: препараты рисперидона в России (Рисполепт, Рилептид, Рисдонал, Рисперидон и др.).",
+                  "url": "https://www.vidal.ru/drugs/molecule-in/930"
+                }
+              ],
+              "more": true
+            }
+          ],
+          "docs": {
+            "href": "https://www.vidal.ru/drugs/rispolept__5831",
+            "text": "Полная инструкция: vidal.ru"
+          }
+        }
+      ]
+    },
+    {
+      "id": "moodstab",
+      "label": "Нормотимики (стабилизаторы настроения)",
+      "title": "Нормотимики (стабилизаторы настроения)",
+      "hint": "Стабилизаторы настроения: основа лечения биполярного расстройства.",
+      "facts": [
+        {
+          "label": "Что это",
+          "text": "Основа лечения биполярного расстройства. Литий ещё и добавляют к антидепрессанту, который помог мало.",
+          "sources": [
+            {
+              "title": "NICE. Depression in adults: treatment and management (NG222), рекомендации 1.4.24 (пожилые), от 1.4.25 до 1.4.32 (литий), 1.9 (дальнейшие шаги) и 1.15.2 (эскетамин), 2022.",
+              "url": "https://www.nice.org.uk/guidance/ng222/chapter/Recommendations"
+            }
+          ]
+        }
+      ],
+      "children": [
+        {
+          "id": "lithium",
+          "label": "Литий",
+          "note": "Добавка к антидепрессанту",
+          "facts": [
+            {
+              "label": "Показания по инструкции",
+              "text": "Маниакальные и гипоманиакальные состояния (периоды болезненно приподнятого настроения), профилактика и лечение аффективных психозов (тяжёлых расстройств настроения, в том числе биполярного), аффективные нарушения при алкоголизме; также мигрень, синдром Меньера, сексуальные расстройства, лекарственная зависимость.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Седалит (лития карбонат), раздел «Показания» (ЛП-№(004190)-(РГ-RU) от 27.12.23).",
+                  "url": "https://www.vidal.ru/drugs/sedalit__15786"
+                }
+              ]
+            },
+            {
+              "label": "Когда назначают",
+              "text": "Добавляют к антидепрессанту, который помог мало.",
+              "sources": [
+                {
+                  "title": "NICE. Depression in adults: treatment and management (NG222), рекомендации 1.4.24 (пожилые), от 1.4.25 до 1.4.32 (литий), 1.9 (дальнейшие шаги) и 1.15.2 (эскетамин), 2022.",
+                  "url": "https://www.nice.org.uk/guidance/ng222/chapter/Recommendations"
+                }
+              ]
+            },
+            {
+              "label": "Как принимают",
+              "text": "Узкий коридор между рабочей и опасной дозой, поэтому регулярно сдают кровь на уровень лития через 12 часов после приёма; уровень не выше 1,0 ммоль/л, пожилым от 0,4 до 0,6 ммоль/л. Признаки отравления: понос, рвота, крупная дрожь, шаткость, спутанность, это повод срочно обратиться за помощью.",
+              "sources": [
+                {
+                  "title": "NICE. Depression in adults: treatment and management (NG222), рекомендации 1.4.24 (пожилые), от 1.4.25 до 1.4.32 (литий), 1.9 (дальнейшие шаги) и 1.15.2 (эскетамин), 2022.",
+                  "url": "https://www.nice.org.uk/guidance/ng222/chapter/Recommendations"
+                }
+              ]
+            },
+            {
+              "label": "Противопоказания",
+              "text": "Беременность и кормление грудью; лейкоз; тяжёлые операции. Болезни почек, сердца и щитовидной железы инструкция относит к «с осторожностью»: при них лечение особенно тщательно контролируют.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Седалит (лития карбонат), раздел «Показания» (ЛП-№(004190)-(РГ-RU) от 27.12.23).",
+                  "url": "https://www.vidal.ru/drugs/sedalit__15786"
+                }
+              ]
+            },
+            {
+              "label": "Показания в других странах",
+              "text": "В США только биполярное расстройство I типа: мания и смешанные эпизоды и поддерживающее лечение, с 7 лет.",
+              "sources": [
+                {
+                  "title": "Lithium carbonate tablets and capsules, инструкция по применению, раздел 1 «Indications and Usage». DailyMed, Hikma.",
+                  "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=b839ff4b-f62d-41ab-a823-550a756d58ec"
+                }
+              ],
+              "more": true
+            },
+            {
+              "label": "Насколько помогает",
+              "text": "С литием шансы ответить на лечение в 3,11 раза выше, чем с плацебо; CANMAT ставит его во вторую линию.",
+              "sources": [
+                {
+                  "title": "Crossley N.A., Bauer M. Acceleration and augmentation of antidepressants with lithium for depressive disorders: two meta-analyses of randomized, placebo-controlled trials. Journal of Clinical Psychiatry, 2007.",
+                  "url": "https://pubmed.ncbi.nlm.nih.gov/17592920/"
+                },
+                {
+                  "title": "Lam R.W. et al. Canadian Network for Mood and Anxiety Treatments (CANMAT) 2023 update on clinical guidelines for management of major depressive disorder in adults. Canadian Journal of Psychiatry, 2024.",
+                  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11351064/"
+                }
+              ],
+              "more": true
+            },
+            {
+              "label": "Риск самоубийства",
+              "text": "В долгих испытаниях при расстройствах настроения самоубийств на литии было меньше, но в испытании 2022 года у ветеранов после попытки разницы с плацебо не нашли.",
+              "sources": [
+                {
+                  "title": "Cipriani A., Hawton K., Stockton S., Geddes J.R. Lithium in the prevention of suicide in mood disorders: updated systematic review and meta-analysis. BMJ, 2013.",
+                  "url": "https://pubmed.ncbi.nlm.nih.gov/23814104/"
+                },
+                {
+                  "title": "Katz I.R. et al. Lithium treatment in the prevention of repeat suicide-related outcomes in veterans with major depression or bipolar disorder: a randomized clinical trial. JAMA Psychiatry, 2022.",
+                  "url": "https://pubmed.ncbi.nlm.nih.gov/34787653/"
+                }
+              ],
+              "more": true
+            },
+            {
+              "label": "Что важно при приёме",
+              "text": "Уровень лития поднимают обезвоживание, рвота и понос, обезболивающие вроде ибупрофена и диклофенака, мочегонные и препараты от давления из групп иАПФ и сартанов, поэтому любое новое лекарство согласуют с врачом. Бросать самому нельзя.",
+              "sources": [
+                {
+                  "title": "NICE. Depression in adults: treatment and management (NG222), рекомендации 1.4.24 (пожилые), от 1.4.25 до 1.4.32 (литий), 1.9 (дальнейшие шаги) и 1.15.2 (эскетамин), 2022.",
+                  "url": "https://www.nice.org.uk/guidance/ng222/chapter/Recommendations"
+                }
+              ],
+              "more": true
+            }
+          ],
+          "docs": {
+            "href": "https://www.vidal.ru/drugs/sedalit__15786",
+            "text": "Полная инструкция: vidal.ru"
+          }
+        },
+        {
+          "id": "lamotrigine",
+          "label": "Ламотриджин",
+          "note": "Ламиктал, Ламотриджин Канон, Сейзар",
+          "facts": [
+            {
+              "label": "Что это",
+              "text": "Противоэпилептический препарат и стабилизатор настроения. Тормозит натриевые каналы нейронов и снижает выброс глутамата.",
+              "sources": [
+                {
+                  "title": "Lamictal (lamotrigine), инструкция по применению, одобренная FDA, в том числе предупреждение в рамке о серьёзной сыпи. GlaxoSmithKline, DailyMed.",
+                  "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=d7e3572d-56fe-4727-2bb4-013ccca22678"
+                }
+              ]
+            },
+            {
+              "label": "Показания по инструкции",
+              "text": "В России: эпилепсия; у взрослых с биполярным расстройством предупреждение эпизодов (депрессии, мании, гипомании). Лечения униполярной депрессии и усиления антидепрессанта в показаниях нет. FDA: лечить острые эпизоды настроения им не рекомендуют, эффект не доказан.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Ламиктал (ламотриджин), инструкция (РУ ЛП-№(000831)-(РГ-RU), бессрочно).",
+                  "url": "https://www.vidal.ru/drugs/lamictal__2650"
+                },
+                {
+                  "title": "Lamictal (lamotrigine), инструкция по применению, одобренная FDA, в том числе предупреждение в рамке о серьёзной сыпи. GlaxoSmithKline, DailyMed.",
+                  "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=d7e3572d-56fe-4727-2bb4-013ccca22678"
+                }
+              ]
+            },
+            {
+              "label": "Когда выбирают",
+              "text": "Доказательства в основном при биполярной депрессии: там CANMAT и ISBD 2018 ставят его в первую линию при биполярном расстройстве I типа и во вторую при II типе. Как добавка к антидепрессанту при обычной депрессии CANMAT 2023 даёт только третью линию, уровень 3: исследования низкого качества. NICE тоже упоминает его, вне инструкции. Российские рекомендации допускают его как добавку к антидепрессанту: начинают с 25 мг в сутки и постепенно доводят до 200 мг.",
+              "sources": [
+                {
+                  "title": "Yatham L.N. et al. Canadian Network for Mood and Anxiety Treatments (CANMAT) and International Society for Bipolar Disorders (ISBD) 2018 guidelines for the management of patients with bipolar disorder. Bipolar Disorders, 2018.",
+                  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5947163/"
+                },
+                {
+                  "title": "Lam R.W. et al. CANMAT 2023 update on clinical guidelines for management of major depressive disorder in adults, таблица 7.2 «Summary Recommendations for Adjunctive Medications» и раздел Q.7.g. Canadian Journal of Psychiatry, 2024.",
+                  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11351064/"
+                },
+                {
+                  "title": "NICE. Depression in adults: treatment and management (NG222), рекомендации 1.9.8 и 1.9.9 (комбинированное лечение), от 1.4.33 до 1.4.37 (антипсихотики как усиление), 2022.",
+                  "url": "https://www.nice.org.uk/guidance/ng222/chapter/Recommendations"
+                },
+                {
+                  "title": "Российское общество психиатров. Клинические рекомендации «Депрессивный эпизод, рекуррентное депрессивное расстройство», редакция 2021 года (ID 301_2 в рубрикаторе Минздрава, в архиве с 26.08.2024), PDF разработчика.",
+                  "url": "https://psychiatr.ru/download/6271?view=1"
+                }
+              ]
+            },
+            {
+              "label": "Как принимают",
+              "text": "Дозу поднимают очень медленно, шесть недель, иначе выше риск опасной сыпи. С вальпроатом дозы вдвое ниже. При любой сыпи сразу к врачу. Противозачаточные таблетки с эстрогеном снижают его уровень в крови.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Ламиктал (ламотриджин), инструкция (РУ ЛП-№(000831)-(РГ-RU), бессрочно).",
+                  "url": "https://www.vidal.ru/drugs/lamictal__2650"
+                },
+                {
+                  "title": "Lamictal (lamotrigine), инструкция по применению, одобренная FDA, в том числе предупреждение в рамке о серьёзной сыпи. GlaxoSmithKline, DailyMed.",
+                  "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=d7e3572d-56fe-4727-2bb4-013ccca22678"
+                }
+              ]
+            },
+            {
+              "label": "Противопоказания",
+              "text": "Аллергия на ламотриджин, в том числе сыпь на него в прошлом.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Ламиктал (ламотриджин), инструкция (РУ ЛП-№(000831)-(РГ-RU), бессрочно).",
+                  "url": "https://www.vidal.ru/drugs/lamictal__2650"
+                },
+                {
+                  "title": "Lamictal (lamotrigine), инструкция по применению, одобренная FDA, в том числе предупреждение в рамке о серьёзной сыпи. GlaxoSmithKline, DailyMed.",
+                  "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=d7e3572d-56fe-4727-2bb4-013ccca22678"
+                }
+              ]
+            },
+            {
+              "label": "Доза по инструкции",
+              "text": "При биполярном расстройстве без взаимодействующих лекарств: 25 мг две недели, затем 50 мг две недели, на 5-й неделе 100 мг, цель 200 мг в сутки. CANMAT для усиления: от 100 до 300 мг.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Ламиктал (ламотриджин), инструкция (РУ ЛП-№(000831)-(РГ-RU), бессрочно).",
+                  "url": "https://www.vidal.ru/drugs/lamictal__2650"
+                },
+                {
+                  "title": "Lam R.W. et al. CANMAT 2023 update on clinical guidelines for management of major depressive disorder in adults, таблица 7.2 «Summary Recommendations for Adjunctive Medications» и раздел Q.7.g. Canadian Journal of Psychiatry, 2024.",
+                  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11351064/"
+                }
+              ],
+              "more": true
+            },
+            {
+              "label": "Чем платят",
+              "text": "Обычная сыпь: от 8 до 12% принимающих (на плацебо от 5 до 6%), обычно в первые 8 недель; редко синдром Стивенса-Джонсона и токсический эпидермальный некролиз (тяжёлое, иногда смертельное поражение кожи): у взрослых примерно от 0,08 до 0,3%. Риск выше при быстром повышении дозы и вместе с вальпроатом.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Ламиктал (ламотриджин), инструкция (РУ ЛП-№(000831)-(РГ-RU), бессрочно).",
+                  "url": "https://www.vidal.ru/drugs/lamictal__2650"
+                },
+                {
+                  "title": "Lamictal (lamotrigine), инструкция по применению, одобренная FDA, в том числе предупреждение в рамке о серьёзной сыпи. GlaxoSmithKline, DailyMed.",
+                  "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=d7e3572d-56fe-4727-2bb4-013ccca22678"
+                },
+                {
+                  "title": "Lam R.W. et al. CANMAT 2023 update on clinical guidelines for management of major depressive disorder in adults, таблица 7.2 «Summary Recommendations for Adjunctive Medications» и раздел Q.7.g. Canadian Journal of Psychiatry, 2024.",
+                  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11351064/"
+                }
+              ],
+              "more": true
+            },
+            {
+              "label": "В России",
+              "text": "Зарегистрирован: Ламиктал, Ламотриджин Канон, Сейзар и др.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Ламиктал (ламотриджин), инструкция (РУ ЛП-№(000831)-(РГ-RU), бессрочно).",
+                  "url": "https://www.vidal.ru/drugs/lamictal__2650"
+                }
+              ],
+              "more": true
+            }
+          ],
+          "docs": {
+            "href": "https://www.vidal.ru/drugs/lamictal__2650",
+            "text": "Полная инструкция: vidal.ru"
+          }
+        },
+        {
+          "id": "valproate",
+          "label": "Вальпроевая кислота",
+          "note": "Депакин (Хроно, Хроносфера, Энтерик 300), Конвулекс, Энкорат Хроно",
+          "facts": [
+            {
+              "label": "Что это",
+              "text": "Противоэпилептический препарат, который при биполярном расстройстве служит нормотимиком (стабилизатором настроения).",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Депакин Хроно (вальпроат натрия и вальпроевая кислота), таблетки пролонгированного действия, разделы «Показания», «Режим дозирования», «Противопоказания», «Применение при беременности», «Особые указания» (ЛП-№(004312)-(РГ-RU) от 16.01.24).",
+                  "url": "https://www.vidal.ru/drugs/depakine_chrono__227"
+                },
+                {
+                  "title": "Российское общество психиатров. Клинические рекомендации «Биполярное аффективное расстройство», ID 675, утверждены в 2021 году (копия текста на legalacts.ru).",
+                  "url": "https://legalacts.ru/doc/klinicheskie-rekomendatsii-bipoljarnoe-affektivnoe-rasstroistvo-utv-minzdravom-rossii/"
+                }
+              ]
+            },
+            {
+              "label": "Показания по инструкции",
+              "text": "Депакин Хроно: эпилепсия у взрослых и детей старше 6 лет; лечение и профилактика биполярного расстройства у взрослых.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Депакин Хроно (вальпроат натрия и вальпроевая кислота), таблетки пролонгированного действия, разделы «Показания», «Режим дозирования», «Противопоказания», «Применение при беременности», «Особые указания» (ЛП-№(004312)-(РГ-RU) от 16.01.24).",
+                  "url": "https://www.vidal.ru/drugs/depakine_chrono__227"
+                }
+              ]
+            },
+            {
+              "label": "Когда выбирают",
+              "text": "Биполярное расстройство (РОП): при мании одно из средств первого выбора наряду с литием и атипичными антипсихотиками (уровень A); при раздражительной мании и при преобладании маниакальных фаз ему отдают предпочтение, в том числе перед литием. Депрессия (РОП): при депрессии со смешанными чертами (с признаками подъёма), если не помог атипичный антипсихотик, переходят на нормотимик или добавляют его (уровень B). В CANMAT 2023 по депрессии не упоминается.",
+              "sources": [
+                {
+                  "title": "Российское общество психиатров. Клинические рекомендации «Биполярное аффективное расстройство», ID 675, утверждены в 2021 году (копия текста на legalacts.ru).",
+                  "url": "https://legalacts.ru/doc/klinicheskie-rekomendatsii-bipoljarnoe-affektivnoe-rasstroistvo-utv-minzdravom-rossii/"
+                },
+                {
+                  "title": "Российское общество психиатров. Клинические рекомендации «Депрессивный эпизод, рекуррентное депрессивное расстройство», редакция 2021 года (ID 301_2 в рубрикаторе Минздрава, в архиве с 26.08.2024), PDF разработчика.",
+                  "url": "https://psychiatr.ru/download/6271?view=1"
+                }
+              ]
+            },
+            {
+              "label": "Как принимают",
+              "text": "Депакин Хроно 1 или 2 раза в день; дозу повышают как можно быстрее до минимальной действующей. При дозе выше 45 мг на кг веса нужно тщательное наблюдение врача.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Депакин Хроно (вальпроат натрия и вальпроевая кислота), таблетки пролонгированного действия, разделы «Показания», «Режим дозирования», «Противопоказания», «Применение при беременности», «Особые указания» (ЛП-№(004312)-(РГ-RU) от 16.01.24).",
+                  "url": "https://www.vidal.ru/drugs/depakine_chrono__227"
+                }
+              ]
+            },
+            {
+              "label": "Противопоказания",
+              "text": "Гепатит и тяжёлые болезни печени (в том числе смертельные у кровных родственников); тяжёлые болезни поджелудочной железы; порфирия; наследственные болезни митохондрий (POLG) и цикла мочевины; вместе с мефлохином и зверобоем; беременность при биполярном расстройстве; женщины, способные забеременеть, если не выполнены условия программы предотвращения беременности; дети до 6 лет (для этой формы).",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Депакин Хроно (вальпроат натрия и вальпроевая кислота), таблетки пролонгированного действия, разделы «Показания», «Режим дозирования», «Противопоказания», «Применение при беременности», «Особые указания» (ЛП-№(004312)-(РГ-RU) от 16.01.24).",
+                  "url": "https://www.vidal.ru/drugs/depakine_chrono__227"
+                }
+              ]
+            },
+            {
+              "label": "Доза по инструкции",
+              "text": "При мании начинают с 750 мг в сутки (или 20 мг на кг веса), обычно от 1000 до 2000 мг в сутки.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Депакин Хроно (вальпроат натрия и вальпроевая кислота), таблетки пролонгированного действия, разделы «Показания», «Режим дозирования», «Противопоказания», «Применение при беременности», «Особые указания» (ЛП-№(004312)-(РГ-RU) от 16.01.24).",
+                  "url": "https://www.vidal.ru/drugs/depakine_chrono__227"
+                }
+              ],
+              "more": true
+            },
+            {
+              "label": "Чем платят",
+              "text": "Главный риск для будущего ребёнка: пороки развития (нервной трубки, сердца, лица, конечностей), а у детей, которые были под действием вальпроата в утробе, задержка раннего развития встречается в случаях от 30 до 40%, IQ в среднем на величину от 7 до 10 пунктов ниже. Поэтому женщинам, способным забеременеть, его дают только по программе предотвращения беременности. Также может поражать печень и поджелудочную железу, часто прибавляют вес. Почти вдвое замедляет выведение ламотриджина, вместе с ним выше риск тяжёлых кожных реакций.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Депакин Хроно (вальпроат натрия и вальпроевая кислота), таблетки пролонгированного действия, разделы «Показания», «Режим дозирования», «Противопоказания», «Применение при беременности», «Особые указания» (ЛП-№(004312)-(РГ-RU) от 16.01.24).",
+                  "url": "https://www.vidal.ru/drugs/depakine_chrono__227"
+                },
+                {
+                  "title": "Российское общество психиатров. Клинические рекомендации «Биполярное аффективное расстройство», ID 675, утверждены в 2021 году (копия текста на legalacts.ru).",
+                  "url": "https://legalacts.ru/doc/klinicheskie-rekomendatsii-bipoljarnoe-affektivnoe-rasstroistvo-utv-minzdravom-rossii/"
+                }
+              ],
+              "more": true
+            },
+            {
+              "label": "В России",
+              "text": "По рецепту. В списки психотропных веществ и в перечень предметно-количественного учёта не входит.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Депакин Хроно (вальпроат натрия и вальпроевая кислота), таблетки пролонгированного действия, разделы «Показания», «Режим дозирования», «Противопоказания», «Применение при беременности», «Особые указания» (ЛП-№(004312)-(РГ-RU) от 16.01.24).",
+                  "url": "https://www.vidal.ru/drugs/depakine_chrono__227"
+                },
+                {
+                  "title": "Постановление Правительства РФ от 30.06.1998 № 681 о перечне наркотических средств, психотропных веществ и их прекурсоров, список III.",
+                  "url": "https://base.garant.ru/12112176/"
+                },
+                {
+                  "title": "Приказ Минздрава России от 01.09.2023 № 459н о перечне лекарственных средств, подлежащих предметно-количественному учёту, действует с 01.09.2024.",
+                  "url": "http://publication.pravo.gov.ru/document/0001202310030013"
+                }
+              ],
+              "more": true
+            }
+          ],
+          "docs": {
+            "href": "https://www.vidal.ru/drugs/depakine_chrono__227",
+            "text": "Полная инструкция: vidal.ru"
+          }
+        },
+        {
+          "id": "carbamazepine",
+          "label": "Карбамазепин",
+          "note": "Финлепсин, Финлепсин ретард, Тегретол ЦР, Карбамазепин",
+          "facts": [
+            {
+              "label": "Что это",
+              "text": "Противоэпилептический препарат, который в психиатрии используют как нормотимик (стабилизатор настроения).",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Финлепсин (карбамазепин), таблетки 200 мг, разделы «Показания», «Режим дозирования», «Противопоказания», «Особые указания» (ЛП-№(006154)-(РГ-RU) от 08.07.24).",
+                  "url": "https://www.vidal.ru/drugs/finlepsin__894"
+                },
+                {
+                  "title": "Российское общество психиатров. Клинические рекомендации «Биполярное аффективное расстройство», ID 675, утверждены в 2021 году (копия текста на legalacts.ru).",
+                  "url": "https://legalacts.ru/doc/klinicheskie-rekomendatsii-bipoljarnoe-affektivnoe-rasstroistvo-utv-minzdravom-rossii/"
+                }
+              ]
+            },
+            {
+              "label": "Показания по инструкции",
+              "text": "Эпилепсия; невралгия тройничного и языкоглоточного нервов; боль при диабетической полинейропатии; алкогольная абстиненция; аффективные и шизоаффективные расстройства и психозы.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Финлепсин (карбамазепин), таблетки 200 мг, разделы «Показания», «Режим дозирования», «Противопоказания», «Особые указания» (ЛП-№(006154)-(РГ-RU) от 08.07.24).",
+                  "url": "https://www.vidal.ru/drugs/finlepsin__894"
+                }
+              ]
+            },
+            {
+              "label": "Когда выбирают",
+              "text": "Депрессия (РОП): добавка к антидепрессанту, если он не помог, от 400 до 800 мг (уровень B); для профилактики рецидивов, когда антидепрессанты и литий не переносятся, от 200 до 600 мг (уровень C, данных мало). Биполярное расстройство (РОП): при раздражительной мании (уровень A); при биполярной депрессии доказательства слабее, его оставляют тем, кто уже принимает его для профилактики. В CANMAT 2023 по депрессии не упоминается.",
+              "sources": [
+                {
+                  "title": "Российское общество психиатров. Клинические рекомендации «Депрессивный эпизод, рекуррентное депрессивное расстройство», редакция 2021 года (ID 301_2 в рубрикаторе Минздрава, в архиве с 26.08.2024), PDF разработчика.",
+                  "url": "https://psychiatr.ru/download/6271?view=1"
+                },
+                {
+                  "title": "Российское общество психиатров. Клинические рекомендации «Биполярное аффективное расстройство», ID 675, утверждены в 2021 году (копия текста на legalacts.ru).",
+                  "url": "https://legalacts.ru/doc/klinicheskie-rekomendatsii-bipoljarnoe-affektivnoe-rasstroistvo-utv-minzdravom-rossii/"
+                }
+              ]
+            },
+            {
+              "label": "Как принимают",
+              "text": "Внутрь во время или после еды, запивая. Дозу набирают постепенно; пропущенную дозу принимают сразу, но двойную не пьют.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Финлепсин (карбамазепин), таблетки 200 мг, разделы «Показания», «Режим дозирования», «Противопоказания», «Особые указания» (ЛП-№(006154)-(РГ-RU) от 08.07.24).",
+                  "url": "https://www.vidal.ru/drugs/finlepsin__894"
+                }
+              ]
+            },
+            {
+              "label": "Противопоказания",
+              "text": "Угнетение кроветворения (анемия, лейкопения); острая перемежающаяся порфирия; атриовентрикулярная блокада (нарушение проводимости сердца); одновременно с литием и ингибиторами МАО; непереносимость трициклических антидепрессантов.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Финлепсин (карбамазепин), таблетки 200 мг, разделы «Показания», «Режим дозирования», «Противопоказания», «Особые указания» (ЛП-№(006154)-(РГ-RU) от 08.07.24).",
+                  "url": "https://www.vidal.ru/drugs/finlepsin__894"
+                }
+              ]
+            },
+            {
+              "label": "Доза по инструкции",
+              "text": "Для лечения и профилактики психозов от 200 до 400 мг в сутки, при необходимости до 800 мг (по 400 мг 2 раза). При эпилепсии у взрослых поддерживающая доза от 800 до 1200 мг.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Финлепсин (карбамазепин), таблетки 200 мг, разделы «Показания», «Режим дозирования», «Противопоказания», «Особые указания» (ЛП-№(006154)-(РГ-RU) от 08.07.24).",
+                  "url": "https://www.vidal.ru/drugs/finlepsin__894"
+                }
+              ],
+              "more": true
+            },
+            {
+              "label": "Чем платят",
+              "text": "Тяжёлые кожные реакции (синдромы Стивенса-Джонсона и Лайелла): по американской инструкции в некоторых странах Азии риск примерно в 10 раз выше, поэтому людей с азиатскими корнями до лечения проверяют на ген HLA-B*1502; при положительном результате карбамазепин обычно не назначают. При беременности повышает риск пороков развития, в том числе расщепления позвоночника. Может угнетать кроветворение. Ускоряет распад многих лекарств: ослабляет противозачаточные таблетки, а РОП не советует сочетать его с оланзапином и рисперидоном.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Финлепсин (карбамазепин), таблетки 200 мг, разделы «Показания», «Режим дозирования», «Противопоказания», «Особые указания» (ЛП-№(006154)-(РГ-RU) от 08.07.24).",
+                  "url": "https://www.vidal.ru/drugs/finlepsin__894"
+                },
+                {
+                  "title": "Tegretol, Tegretol-XR (carbamazepine), инструкция по применению, одобренная FDA: предупреждение в рамке о тяжёлых кожных реакциях и аллеле HLA-B*1502. Novartis, DailyMed.",
+                  "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=8d409411-aa9f-4f3a-a52c-fbcb0c3ec053"
+                },
+                {
+                  "title": "Российское общество психиатров. Клинические рекомендации «Депрессивный эпизод, рекуррентное депрессивное расстройство», редакция 2021 года (ID 301_2 в рубрикаторе Минздрава, в архиве с 26.08.2024), PDF разработчика.",
+                  "url": "https://psychiatr.ru/download/6271?view=1"
+                }
+              ],
+              "more": true
+            },
+            {
+              "label": "В России",
+              "text": "По рецепту, входит в перечень жизненно необходимых и важнейших лекарств (ЖНВЛП). В списки психотропных веществ и предметно-количественного учёта не входит.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Финлепсин (карбамазепин), таблетки 200 мг, разделы «Показания», «Режим дозирования», «Противопоказания», «Особые указания» (ЛП-№(006154)-(РГ-RU) от 08.07.24).",
+                  "url": "https://www.vidal.ru/drugs/finlepsin__894"
+                },
+                {
+                  "title": "Постановление Правительства РФ от 30.06.1998 № 681 о перечне наркотических средств, психотропных веществ и их прекурсоров, список III.",
+                  "url": "https://base.garant.ru/12112176/"
+                },
+                {
+                  "title": "Приказ Минздрава России от 01.09.2023 № 459н о перечне лекарственных средств, подлежащих предметно-количественному учёту, действует с 01.09.2024.",
+                  "url": "http://publication.pravo.gov.ru/document/0001202310030013"
+                }
+              ],
+              "more": true
+            }
+          ],
+          "docs": {
+            "href": "https://www.vidal.ru/drugs/finlepsin__894",
+            "text": "Полная инструкция: vidal.ru"
+          }
+        }
+      ]
+    },
+    {
+      "id": "anxio",
+      "label": "Успокоительные (анксиолитики)",
+      "title": "Успокоительные и противотревожные (анксиолитики)",
+      "hint": "Быстро снимают тревогу и помогают уснуть, но депрессию не лечат.",
+      "facts": [
+        {
+          "label": "Что это",
+          "text": "Быстро снимают тревогу и помогают уснуть, но саму депрессию не лечат. Бензодиазепины вместе с антидепрессантом помогают лучше только в первые недели, NICE не советует назначать их надолго.",
+          "sources": [
+            {
+              "title": "Ogawa Y. et al. Antidepressants plus benzodiazepines for adults with major depression. Cochrane Database of Systematic Reviews, 2019.",
+              "url": "https://pubmed.ncbi.nlm.nih.gov/31158298/"
+            },
+            {
+              "title": "NICE. Generalised anxiety disorder and panic disorder in adults: management (CG113), рекомендации 1.2.23, 1.2.24, 1.2.26, 1.2.28, 1.3.20, 1.3.25, 1.3.27, 1.3.28.",
+              "url": "https://www.nice.org.uk/guidance/cg113"
+            }
+          ]
+        }
+      ],
+      "children": [
         {
           "id": "hydroxyzine",
           "label": "Гидроксизин",
@@ -3045,6 +4370,852 @@ export const antidepressants: MindMapData = { root: {
           }
         },
         {
+          "id": "alprazolam",
+          "label": "Алпразолам",
+          "note": "Алпразолам, Золомакс; Ксанакс и Хелекс сняты с регистрации",
+          "facts": [
+            {
+              "label": "Что это",
+              "text": "Транквилизатор (анксиолитик) из группы бензодиазепинов. Действует недолго, поэтому его пьют не реже 3 раз в день.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Алпразолам, таблетки 0,25 мг, разделы «Показания», «Режим дозирования», «Противопоказания», «Особые указания» (ЛП-№(007350)-(РГ-RU) от 23.10.24).",
+                  "url": "https://www.vidal.ru/drugs/alprazolam__13181"
+                },
+                {
+                  "title": "Российское общество психиатров. Клинические рекомендации «Генерализованное тревожное расстройство», ID 457, утверждены в 2021 году, раздел 3.2 «Психофармакотерапия» (копия текста на legalacts.ru; на cr.minzdrav.gov.ru версии 457_2 и 457_3).",
+                  "url": "https://legalacts.ru/doc/klinicheskie-rekomendatsii-generalizovannoe-trevozhnoe-rasstroistvo-utv-minzdravom-rossii/"
+                }
+              ]
+            },
+            {
+              "label": "Показания по инструкции",
+              "text": "Тревожные состояния и неврозы с тревогой, напряжением, плохим сном; смешанные тревожно-депрессивные состояния; невротическая депрессия, в том числе на фоне болезней тела; паническое расстройство с фобиями и без них.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Алпразолам, таблетки 0,25 мг, разделы «Показания», «Режим дозирования», «Противопоказания», «Особые указания» (ЛП-№(007350)-(РГ-RU) от 23.10.24).",
+                  "url": "https://www.vidal.ru/drugs/alprazolam__13181"
+                }
+              ]
+            },
+            {
+              "label": "Когда выбирают",
+              "text": "Российские рекомендации по генерализованной тревоге допускают бензодиазепины коротким курсом в начале лечения, пока не подействует антидепрессант, обычно не дольше 4 недель (уровень B). NICE при генерализованной тревоге допускает их только как короткую меру в кризис, при панических атаках не советует. При депрессии вместе с антидепрессантом они помогают лишь первые 4 недели, дальше разницы нет (Cochrane).",
+              "sources": [
+                {
+                  "title": "Российское общество психиатров. Клинические рекомендации «Генерализованное тревожное расстройство», ID 457, утверждены в 2021 году, раздел 3.2 «Психофармакотерапия» (копия текста на legalacts.ru; на cr.minzdrav.gov.ru версии 457_2 и 457_3).",
+                  "url": "https://legalacts.ru/doc/klinicheskie-rekomendatsii-generalizovannoe-trevozhnoe-rasstroistvo-utv-minzdravom-rossii/"
+                },
+                {
+                  "title": "NICE. Generalised anxiety disorder and panic disorder in adults: management (CG113), рекомендации 1.2.23, 1.2.24, 1.2.26, 1.2.28, 1.3.20, 1.3.25, 1.3.27, 1.3.28.",
+                  "url": "https://www.nice.org.uk/guidance/cg113"
+                },
+                {
+                  "title": "Ogawa Y. et al. Antidepressants plus benzodiazepines for adults with major depression. Cochrane Database of Systematic Reviews, 2019.",
+                  "url": "https://pubmed.ncbi.nlm.nih.gov/31158298/"
+                }
+              ]
+            },
+            {
+              "label": "Как принимают",
+              "text": "Начинают с малой дозы и повышают постепенно, сначала вечернюю. Отменяют медленно: суточную дозу снижают не больше чем на 0,5 мг раз в 3 дня, иногда ещё медленнее.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Алпразолам, таблетки 0,25 мг, разделы «Показания», «Режим дозирования», «Противопоказания», «Особые указания» (ЛП-№(007350)-(РГ-RU) от 23.10.24).",
+                  "url": "https://www.vidal.ru/drugs/alprazolam__13181"
+                }
+              ]
+            },
+            {
+              "label": "Противопоказания",
+              "text": "Миастения (болезненная мышечная слабость); закрытоугольная глаукома; хронические болезни лёгких с дыхательной недостаточностью; тяжёлая депрессия; беременность и кормление грудью; возраст до 18 лет; острое отравление алкоголем, снотворными или опиоидами.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Алпразолам, таблетки 0,25 мг, разделы «Показания», «Режим дозирования», «Противопоказания», «Особые указания» (ЛП-№(007350)-(РГ-RU) от 23.10.24).",
+                  "url": "https://www.vidal.ru/drugs/alprazolam__13181"
+                }
+              ]
+            },
+            {
+              "label": "Доза по инструкции",
+              "text": "Начало от 0,25 до 0,5 мг 3 раза в день, при необходимости до 4,5 мг в сутки; пожилым начинают с 0,25 мг 2 или 3 раза в день. В российских рекомендациях по генерализованной тревоге от 0,5 до 2 мг в сутки.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Алпразолам, таблетки 0,25 мг, разделы «Показания», «Режим дозирования», «Противопоказания», «Особые указания» (ЛП-№(007350)-(РГ-RU) от 23.10.24).",
+                  "url": "https://www.vidal.ru/drugs/alprazolam__13181"
+                },
+                {
+                  "title": "Российское общество психиатров. Клинические рекомендации «Генерализованное тревожное расстройство», ID 457, утверждены в 2021 году, раздел 3.2 «Психофармакотерапия» (копия текста на legalacts.ru; на cr.minzdrav.gov.ru версии 457_2 и 457_3).",
+                  "url": "https://legalacts.ru/doc/klinicheskie-rekomendatsii-generalizovannoe-trevozhnoe-rasstroistvo-utv-minzdravom-rossii/"
+                }
+              ],
+              "more": true
+            },
+            {
+              "label": "Чем платят",
+              "text": "Привыкание и зависимость. При резкой отмене синдром отмены, от бессонницы до рвоты, дрожи и судорог; чаще у тех, кто принимал его дольше, чем от 8 до 12 недель. Вместе с алкоголем и опиоидами опасно угнетает дыхание.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Алпразолам, таблетки 0,25 мг, разделы «Показания», «Режим дозирования», «Противопоказания», «Особые указания» (ЛП-№(007350)-(РГ-RU) от 23.10.24).",
+                  "url": "https://www.vidal.ru/drugs/alprazolam__13181"
+                },
+                {
+                  "title": "FDA. FDA requiring Boxed Warning updated to improve safe use of benzodiazepine drug class, 2020.",
+                  "url": "https://www.fda.gov/drugs/drug-safety-and-availability/fda-requiring-boxed-warning-updated-improve-safe-use-benzodiazepine-drug-class"
+                }
+              ],
+              "more": true
+            },
+            {
+              "label": "В России",
+              "text": "По рецепту. Психотропное вещество списка III, на предметно-количественном учёте.",
+              "sources": [
+                {
+                  "title": "Постановление Правительства РФ от 30.06.1998 № 681 о перечне наркотических средств, психотропных веществ и их прекурсоров, список III.",
+                  "url": "https://base.garant.ru/12112176/"
+                },
+                {
+                  "title": "Приказ Минздрава России от 01.09.2023 № 459н о перечне лекарственных средств, подлежащих предметно-количественному учёту, действует с 01.09.2024.",
+                  "url": "http://publication.pravo.gov.ru/document/0001202310030013"
+                },
+                {
+                  "title": "Справочник Видаль: Алпразолам, таблетки 0,25 мг, разделы «Показания», «Режим дозирования», «Противопоказания», «Особые указания» (ЛП-№(007350)-(РГ-RU) от 23.10.24).",
+                  "url": "https://www.vidal.ru/drugs/alprazolam__13181"
+                },
+                {
+                  "title": "Справочник Видаль: препараты с действующим веществом алпразолам (Ксанакс, Хелекс, Неурол: регистрация отменена; Золомакс, Алпразолам: действующие), октябрь 2026.",
+                  "url": "https://www.vidal.ru/drugs/molecule-in/37"
+                }
+              ],
+              "more": true
+            }
+          ],
+          "docs": {
+            "href": "https://www.vidal.ru/drugs/alprazolam__13181",
+            "text": "Полная инструкция: vidal.ru"
+          }
+        },
+        {
+          "id": "diazepam",
+          "label": "Диазепам",
+          "note": "Сибазон, Релиум; Седуксен, Реланиум и Апаурин сняты с регистрации",
+          "facts": [
+            {
+              "label": "Что это",
+              "text": "Транквилизатор из группы бензодиазепинов с долгим действием: кроме тревоги, снимает мышечные спазмы. Из организма выводится медленно и может накапливаться.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Сибазон (диазепам), таблетки 5 мг, разделы «Показания», «Режим дозирования», «Противопоказания», «Особые указания» (ЛП-№(008774)-(РГ-RU) от 10.02.25).",
+                  "url": "https://www.vidal.ru/drugs/sibazon__9138"
+                },
+                {
+                  "title": "Российское общество психиатров. Клинические рекомендации «Биполярное аффективное расстройство», ID 675, утверждены в 2021 году (копия текста на legalacts.ru).",
+                  "url": "https://legalacts.ru/doc/klinicheskie-rekomendatsii-bipoljarnoe-affektivnoe-rasstroistvo-utv-minzdravom-rossii/"
+                }
+              ]
+            },
+            {
+              "label": "Показания по инструкции",
+              "text": "Острые тревожно-фобические и тревожно-депрессивные состояния; психомоторное возбуждение; алкогольные психозы с абстиненцией; мышечные спазмы, в том числе при травмах позвоночника и радикулите; подготовка к операциям; зудящие дерматозы.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Сибазон (диазепам), таблетки 5 мг, разделы «Показания», «Режим дозирования», «Противопоказания», «Особые указания» (ЛП-№(008774)-(РГ-RU) от 10.02.25).",
+                  "url": "https://www.vidal.ru/drugs/sibazon__9138"
+                }
+              ]
+            },
+            {
+              "label": "Когда выбирают",
+              "text": "В российских рекомендациях по генерализованной тревоге среди названных препаратов его нет; для бензодиазепинов там общее правило: коротко, не дольше 4 недель. В рекомендациях по биполярному расстройству диазепам в уколах добавляют при сильном возбуждении в мании, если не помогли нормотимик с антипсихотиком (уровень C), но предпочитают короткодействующие бензодиазепины. NICE при генерализованной тревоге допускает бензодиазепины только как короткую меру в кризис.",
+              "sources": [
+                {
+                  "title": "Российское общество психиатров. Клинические рекомендации «Генерализованное тревожное расстройство», ID 457, утверждены в 2021 году, раздел 3.2 «Психофармакотерапия» (копия текста на legalacts.ru; на cr.minzdrav.gov.ru версии 457_2 и 457_3).",
+                  "url": "https://legalacts.ru/doc/klinicheskie-rekomendatsii-generalizovannoe-trevozhnoe-rasstroistvo-utv-minzdravom-rossii/"
+                },
+                {
+                  "title": "Российское общество психиатров. Клинические рекомендации «Биполярное аффективное расстройство», ID 675, утверждены в 2021 году (копия текста на legalacts.ru).",
+                  "url": "https://legalacts.ru/doc/klinicheskie-rekomendatsii-bipoljarnoe-affektivnoe-rasstroistvo-utv-minzdravom-rossii/"
+                },
+                {
+                  "title": "NICE. Generalised anxiety disorder and panic disorder in adults: management (CG113), рекомендации 1.2.23, 1.2.24, 1.2.26, 1.2.28, 1.3.20, 1.3.25, 1.3.27, 1.3.28.",
+                  "url": "https://www.nice.org.uk/guidance/cg113"
+                }
+              ]
+            },
+            {
+              "label": "Как принимают",
+              "text": "Внутрь 2 или 3 раза в день. Без особых причин долго не принимают; бросать резко нельзя.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Сибазон (диазепам), таблетки 5 мг, разделы «Показания», «Режим дозирования», «Противопоказания», «Особые указания» (ЛП-№(008774)-(РГ-RU) от 10.02.25).",
+                  "url": "https://www.vidal.ru/drugs/sibazon__9138"
+                }
+              ]
+            },
+            {
+              "label": "Противопоказания",
+              "text": "Миастения; закрытоугольная глаукома; тяжёлая хроническая обструктивная болезнь лёгких и дыхательная недостаточность; тяжёлая печёночная недостаточность; аденома простаты; кома, шок, острое отравление алкоголем или снотворными; возраст до 6 лет.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Сибазон (диазепам), таблетки 5 мг, разделы «Показания», «Режим дозирования», «Противопоказания», «Особые указания» (ЛП-№(008774)-(РГ-RU) от 10.02.25).",
+                  "url": "https://www.vidal.ru/drugs/sibazon__9138"
+                }
+              ]
+            },
+            {
+              "label": "Доза по инструкции",
+              "text": "Взрослым от 5 до 15 мг в сутки; в стационаре до 30 мг, при обострении до 60 мг.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Сибазон (диазепам), таблетки 5 мг, разделы «Показания», «Режим дозирования», «Противопоказания», «Особые указания» (ЛП-№(008774)-(РГ-RU) от 10.02.25).",
+                  "url": "https://www.vidal.ru/drugs/sibazon__9138"
+                }
+              ],
+              "more": true
+            },
+            {
+              "label": "Чем платят",
+              "text": "Зависимость: риск растёт при дозах выше 60 мг в сутки, долгом лечении и злоупотреблении алкоголем в прошлом. При резкой отмене судороги и дрожь. Может угнетать дыхание, особенно вместе с алкоголем и опиоидами; при тревоге с депрессией одним диазепамом не лечат.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Сибазон (диазепам), таблетки 5 мг, разделы «Показания», «Режим дозирования», «Противопоказания», «Особые указания» (ЛП-№(008774)-(РГ-RU) от 10.02.25).",
+                  "url": "https://www.vidal.ru/drugs/sibazon__9138"
+                },
+                {
+                  "title": "Российское общество психиатров. Клинические рекомендации «Биполярное аффективное расстройство», ID 675, утверждены в 2021 году (копия текста на legalacts.ru).",
+                  "url": "https://legalacts.ru/doc/klinicheskie-rekomendatsii-bipoljarnoe-affektivnoe-rasstroistvo-utv-minzdravom-rossii/"
+                },
+                {
+                  "title": "FDA. FDA requiring Boxed Warning updated to improve safe use of benzodiazepine drug class, 2020.",
+                  "url": "https://www.fda.gov/drugs/drug-safety-and-availability/fda-requiring-boxed-warning-updated-improve-safe-use-benzodiazepine-drug-class"
+                }
+              ],
+              "more": true
+            },
+            {
+              "label": "В России",
+              "text": "По рецепту. Психотропное вещество списка III, на предметно-количественном учёте.",
+              "sources": [
+                {
+                  "title": "Постановление Правительства РФ от 30.06.1998 № 681 о перечне наркотических средств, психотропных веществ и их прекурсоров, список III.",
+                  "url": "https://base.garant.ru/12112176/"
+                },
+                {
+                  "title": "Приказ Минздрава России от 01.09.2023 № 459н о перечне лекарственных средств, подлежащих предметно-количественному учёту, действует с 01.09.2024.",
+                  "url": "http://publication.pravo.gov.ru/document/0001202310030013"
+                },
+                {
+                  "title": "Справочник Видаль: Сибазон (диазепам), таблетки 5 мг, разделы «Показания», «Режим дозирования», «Противопоказания», «Особые указания» (ЛП-№(008774)-(РГ-RU) от 10.02.25).",
+                  "url": "https://www.vidal.ru/drugs/sibazon__9138"
+                },
+                {
+                  "title": "Справочник Видаль: препараты с действующим веществом диазепам (Седуксен, Апаурин, Реланиум: регистрация отменена; Сибазон, Релиум: действующие), октябрь 2026.",
+                  "url": "https://www.vidal.ru/drugs/molecule-in/309"
+                }
+              ],
+              "more": true
+            }
+          ],
+          "docs": {
+            "href": "https://www.vidal.ru/drugs/sibazon__9138",
+            "text": "Полная инструкция: vidal.ru"
+          }
+        },
+        {
+          "id": "tofisopam",
+          "label": "Тофизопам",
+          "note": "Грандаксин, Грандапам, Грандолика, Тофизопам",
+          "facts": [
+            {
+              "label": "Что это",
+              "text": "Дневной транквилизатор, родственник бензодиазепинов: по инструкции обычно не снижает активность и бодрость.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Грандаксин (тофизопам), таблетки 50 мг, разделы «Показания», «Режим дозирования», «Противопоказания» (ЛП-№(000172)-(РГ-RU) от 24.03.21).",
+                  "url": "https://www.vidal.ru/drugs/grandaxin"
+                }
+              ]
+            },
+            {
+              "label": "Показания по инструкции",
+              "text": "У взрослых: невротические и психосоматические расстройства с напряжением, тревогой, вегетативными нарушениями, апатией, усталостью и подавленным настроением; алкогольный абстинентный синдром.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Грандаксин (тофизопам), таблетки 50 мг, разделы «Показания», «Режим дозирования», «Противопоказания» (ЛП-№(000172)-(РГ-RU) от 24.03.21).",
+                  "url": "https://www.vidal.ru/drugs/grandaxin"
+                }
+              ]
+            },
+            {
+              "label": "Когда выбирают",
+              "text": "В российских рекомендациях по депрессии и по генерализованной тревоге, в NICE и CANMAT не упоминается. Доказательств мало: в небольшом пилотном испытании 2024 года (66 человек, 2 недели) он снимал тревогу лучше плацебо и не хуже диазепама. Одним тофизопамом депрессию не лечат; авторы получали гонорар от производителя Грандаксина.",
+              "sources": [
+                {
+                  "title": "Kokoszka A. A Comparison of the Anxiolytic Properties of Tofisopam and Diazepam: A Double-Blind, Randomized, Crossover, Placebo-Controlled Pilot Study. Pharmaceuticals, 2024.",
+                  "url": "https://pubmed.ncbi.nlm.nih.gov/38276013/"
+                },
+                {
+                  "title": "Справочник Видаль: Грандаксин (тофизопам), таблетки 50 мг, разделы «Показания», «Режим дозирования», «Противопоказания» (ЛП-№(000172)-(РГ-RU) от 24.03.21).",
+                  "url": "https://www.vidal.ru/drugs/grandaxin"
+                }
+              ]
+            },
+            {
+              "label": "Как принимают",
+              "text": "Можно сразу начинать с нужной дозы, без постепенного повышения; при нерегулярном приёме пьют 1 или 2 таблетки.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Грандаксин (тофизопам), таблетки 50 мг, разделы «Показания», «Режим дозирования», «Противопоказания» (ЛП-№(000172)-(РГ-RU) от 24.03.21).",
+                  "url": "https://www.vidal.ru/drugs/grandaxin"
+                }
+              ]
+            },
+            {
+              "label": "Противопоказания",
+              "text": "Сильное возбуждение, агрессивность или тяжёлая депрессия; декомпенсированная дыхательная недостаточность; апноэ сна; кома; одновременно с такролимусом, сиролимусом или циклоспорином; беременность; возраст до 18 лет.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Грандаксин (тофизопам), таблетки 50 мг, разделы «Показания», «Режим дозирования», «Противопоказания» (ЛП-№(000172)-(РГ-RU) от 24.03.21).",
+                  "url": "https://www.vidal.ru/drugs/grandaxin"
+                }
+              ]
+            },
+            {
+              "label": "Доза по инструкции",
+              "text": "По 1 или 2 таблетки (50 или 100 мг) от 1 до 3 раз в день, от 50 до 300 мг в сутки; больше 300 мг не принимают.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Грандаксин (тофизопам), таблетки 50 мг, разделы «Показания», «Режим дозирования», «Противопоказания» (ЛП-№(000172)-(РГ-RU) от 24.03.21).",
+                  "url": "https://www.vidal.ru/drugs/grandaxin"
+                }
+              ],
+              "more": true
+            },
+            {
+              "label": "Чем платят",
+              "text": "Усиливает действие алкоголя, снотворных и других успокоительных. При хроническом психозе, фобиях и навязчивостях может растормозить и повысить риск суицидальной попытки; при выраженной депрессии противопоказан. При долгом приёме больших доз возможна зависимость, поэтому курс советуют держать в пределах от 4 до 12 недель вместе с постепенной отменой.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Грандаксин (тофизопам), таблетки 50 мг, разделы «Показания», «Режим дозирования», «Противопоказания» (ЛП-№(000172)-(РГ-RU) от 24.03.21).",
+                  "url": "https://www.vidal.ru/drugs/grandaxin"
+                },
+                {
+                  "title": "Справочник Видаль: тофизопам, описание действующего вещества, раздел «Особые указания».",
+                  "url": "https://www.vidal.ru/drugs/molecule/1060"
+                }
+              ],
+              "more": true
+            },
+            {
+              "label": "В России",
+              "text": "По рецепту. В список психотропных веществ (ПП 681) и в перечень предметно-количественного учёта (приказ 459н) не входит.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Грандаксин (тофизопам), таблетки 50 мг, разделы «Показания», «Режим дозирования», «Противопоказания» (ЛП-№(000172)-(РГ-RU) от 24.03.21).",
+                  "url": "https://www.vidal.ru/drugs/grandaxin"
+                },
+                {
+                  "title": "Постановление Правительства РФ от 30.06.1998 № 681 о перечне наркотических средств, психотропных веществ и их прекурсоров, список III.",
+                  "url": "https://base.garant.ru/12112176/"
+                },
+                {
+                  "title": "Приказ Минздрава России от 01.09.2023 № 459н о перечне лекарственных средств, подлежащих предметно-количественному учёту, действует с 01.09.2024.",
+                  "url": "http://publication.pravo.gov.ru/document/0001202310030013"
+                }
+              ],
+              "more": true
+            }
+          ],
+          "docs": {
+            "href": "https://www.vidal.ru/drugs/grandaxin",
+            "text": "Полная инструкция: vidal.ru"
+          }
+        },
+        {
+          "id": "etifoxine",
+          "label": "Этифоксин",
+          "note": "Стрезам, Анкзилера",
+          "facts": [
+            {
+              "label": "Что это",
+              "text": "Противотревожное средство (анксиолитик), не бензодиазепин. По российским рекомендациям слабее основных препаратов, но не вызывает зависимости.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Стрезам (этифоксин), капсулы 50 мг, разделы «Показания», «Режим дозирования», «Противопоказания», «Особые указания» (ЛП-№(009784)-(РГ-RU) от 15.04.25).",
+                  "url": "https://www.vidal.ru/drugs/stresam__18291"
+                },
+                {
+                  "title": "Российское общество психиатров. Клинические рекомендации «Генерализованное тревожное расстройство», ID 457, утверждены в 2021 году, раздел 3.2 «Психофармакотерапия» (копия текста на legalacts.ru; на cr.minzdrav.gov.ru версии 457_2 и 457_3).",
+                  "url": "https://legalacts.ru/doc/klinicheskie-rekomendatsii-generalizovannoe-trevozhnoe-rasstroistvo-utv-minzdravom-rossii/"
+                }
+              ]
+            },
+            {
+              "label": "Показания по инструкции",
+              "text": "Тревога и связанные с ней психосоматические расстройства.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Стрезам (этифоксин), капсулы 50 мг, разделы «Показания», «Режим дозирования», «Противопоказания», «Особые указания» (ЛП-№(009784)-(РГ-RU) от 15.04.25).",
+                  "url": "https://www.vidal.ru/drugs/stresam__18291"
+                }
+              ]
+            },
+            {
+              "label": "Когда выбирают",
+              "text": "Российские рекомендации по генерализованной тревоге: когда не помогли другие лекарства (уровень C); преимущество перед бензодиазепинами в отсутствии зависимости и возможности долгого приёма. В NICE и CANMAT не упоминается.",
+              "sources": [
+                {
+                  "title": "Российское общество психиатров. Клинические рекомендации «Генерализованное тревожное расстройство», ID 457, утверждены в 2021 году, раздел 3.2 «Психофармакотерапия» (копия текста на legalacts.ru; на cr.minzdrav.gov.ru версии 457_2 и 457_3).",
+                  "url": "https://legalacts.ru/doc/klinicheskie-rekomendatsii-generalizovannoe-trevozhnoe-rasstroistvo-utv-minzdravom-rossii/"
+                }
+              ]
+            },
+            {
+              "label": "Как принимают",
+              "text": "Внутрь, запивая водой; курс обычно от нескольких дней до 6 недель. Пропущенную дозу не удваивают.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Стрезам (этифоксин), капсулы 50 мг, разделы «Показания», «Режим дозирования», «Противопоказания», «Особые указания» (ЛП-№(009784)-(РГ-RU) от 15.04.25).",
+                  "url": "https://www.vidal.ru/drugs/stresam__18291"
+                }
+              ]
+            },
+            {
+              "label": "Противопоказания",
+              "text": "Шок; тяжёлая печёночная или почечная недостаточность; миастения; гепатит или тяжёлая кожная реакция на этифоксин в прошлом; непереносимость лактозы; возраст до 18 лет.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Стрезам (этифоксин), капсулы 50 мг, разделы «Показания», «Режим дозирования», «Противопоказания», «Особые указания» (ЛП-№(009784)-(РГ-RU) от 15.04.25).",
+                  "url": "https://www.vidal.ru/drugs/stresam__18291"
+                }
+              ]
+            },
+            {
+              "label": "Доза по инструкции",
+              "text": "По 50 мг 3 раза в день или по 100 мг 2 раза в день, от 150 до 200 мг в сутки.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Стрезам (этифоксин), капсулы 50 мг, разделы «Показания», «Режим дозирования», «Противопоказания», «Особые указания» (ЛП-№(009784)-(РГ-RU) от 15.04.25).",
+                  "url": "https://www.vidal.ru/drugs/stresam__18291"
+                }
+              ],
+              "more": true
+            },
+            {
+              "label": "Чем платят",
+              "text": "Очень редко тяжёлые кожные реакции (DRESS-синдром, синдром Стивенса-Джонсона) и гепатит; после них препарат больше никогда не принимают. Возможна сонливость, поэтому за руль во время лечения лучше не садиться.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Стрезам (этифоксин), капсулы 50 мг, разделы «Показания», «Режим дозирования», «Противопоказания», «Особые указания» (ЛП-№(009784)-(РГ-RU) от 15.04.25).",
+                  "url": "https://www.vidal.ru/drugs/stresam__18291"
+                }
+              ],
+              "more": true
+            },
+            {
+              "label": "В России",
+              "text": "По рецепту. В списки психотропных веществ и в перечень предметно-количественного учёта не входит.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Стрезам (этифоксин), капсулы 50 мг, разделы «Показания», «Режим дозирования», «Противопоказания», «Особые указания» (ЛП-№(009784)-(РГ-RU) от 15.04.25).",
+                  "url": "https://www.vidal.ru/drugs/stresam__18291"
+                },
+                {
+                  "title": "Постановление Правительства РФ от 30.06.1998 № 681 о перечне наркотических средств, психотропных веществ и их прекурсоров, список III.",
+                  "url": "https://base.garant.ru/12112176/"
+                },
+                {
+                  "title": "Приказ Минздрава России от 01.09.2023 № 459н о перечне лекарственных средств, подлежащих предметно-количественному учёту, действует с 01.09.2024.",
+                  "url": "http://publication.pravo.gov.ru/document/0001202310030013"
+                }
+              ],
+              "more": true
+            }
+          ],
+          "docs": {
+            "href": "https://www.vidal.ru/drugs/stresam__18291",
+            "text": "Полная инструкция: vidal.ru"
+          }
+        },
+        {
+          "id": "pregabalin",
+          "label": "Прегабалин",
+          "note": "Лирика и дженерики",
+          "facts": [
+            {
+              "label": "Что это",
+              "text": "Противосудорожный препарат, который также лечит генерализованную тревогу и нейропатическую боль. Не бензодиазепин, действует уже в первую неделю.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Лирика (прегабалин), капсулы, разделы «Показания», «Режим дозирования», «Противопоказания», «Особые указания» (ЛП-№(004450)-(РГ-RU) от 30.01.24).",
+                  "url": "https://www.vidal.ru/drugs/lyrica__9474"
+                },
+                {
+                  "title": "Российское общество психиатров. Клинические рекомендации «Генерализованное тревожное расстройство», ID 457, утверждены в 2021 году, раздел 3.2 «Психофармакотерапия» (копия текста на legalacts.ru; на cr.minzdrav.gov.ru версии 457_2 и 457_3).",
+                  "url": "https://legalacts.ru/doc/klinicheskie-rekomendatsii-generalizovannoe-trevozhnoe-rasstroistvo-utv-minzdravom-rossii/"
+                }
+              ]
+            },
+            {
+              "label": "Показания по инструкции",
+              "text": "У взрослых: нейропатическая боль; добавка при парциальных эпилептических приступах; генерализованное тревожное расстройство; фибромиалгия.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Лирика (прегабалин), капсулы, разделы «Показания», «Режим дозирования», «Противопоказания», «Особые указания» (ЛП-№(004450)-(РГ-RU) от 30.01.24).",
+                  "url": "https://www.vidal.ru/drugs/lyrica__9474"
+                }
+              ]
+            },
+            {
+              "label": "Когда выбирают",
+              "text": "Российские рекомендации по генерализованной тревоге ставят его в первую линию наряду с СИОЗС, венлафаксином и дулоксетином (уровень A), особенно когда тревога проявляется телесными симптомами (уровень C); при неудаче его добавляют к антидепрессанту. NICE предлагает его, если человек не переносит СИОЗС и СИОЗСН. Людям с зависимостями в прошлом назначают осторожно.",
+              "sources": [
+                {
+                  "title": "Российское общество психиатров. Клинические рекомендации «Генерализованное тревожное расстройство», ID 457, утверждены в 2021 году, раздел 3.2 «Психофармакотерапия» (копия текста на legalacts.ru; на cr.minzdrav.gov.ru версии 457_2 и 457_3).",
+                  "url": "https://legalacts.ru/doc/klinicheskie-rekomendatsii-generalizovannoe-trevozhnoe-rasstroistvo-utv-minzdravom-rossii/"
+                },
+                {
+                  "title": "NICE. Generalised anxiety disorder and panic disorder in adults: management (CG113), рекомендации 1.2.25 (прегабалин), 1.2.26 и 1.3.20 (бензодиазепины).",
+                  "url": "https://www.nice.org.uk/guidance/cg113/chapter/Recommendations"
+                }
+              ]
+            },
+            {
+              "label": "Как принимают",
+              "text": "В 2 или 3 приёма в день. Дозу повышают не чаще раза в неделю, нужность лечения регулярно пересматривают; отменяют постепенно, не быстрее чем за неделю.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Лирика (прегабалин), капсулы, разделы «Показания», «Режим дозирования», «Противопоказания», «Особые указания» (ЛП-№(004450)-(РГ-RU) от 30.01.24).",
+                  "url": "https://www.vidal.ru/drugs/lyrica__9474"
+                }
+              ]
+            },
+            {
+              "label": "Противопоказания",
+              "text": "Аллергия на прегабалин; возраст до 17 лет включительно. Осторожно при почечной и сердечной недостаточности, вместе с опиоидами и при зависимостях в прошлом.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Лирика (прегабалин), капсулы, разделы «Показания», «Режим дозирования», «Противопоказания», «Особые указания» (ЛП-№(004450)-(РГ-RU) от 30.01.24).",
+                  "url": "https://www.vidal.ru/drugs/lyrica__9474"
+                }
+              ]
+            },
+            {
+              "label": "Доза по инструкции",
+              "text": "При генерализованной тревоге начинают со 150 мг в сутки, через неделю можно 300 мг, затем 450 мг и максимум 600 мг. Российские рекомендации: от 150 до 600 мг. При слабой работе почек дозу снижают.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Лирика (прегабалин), капсулы, разделы «Показания», «Режим дозирования», «Противопоказания», «Особые указания» (ЛП-№(004450)-(РГ-RU) от 30.01.24).",
+                  "url": "https://www.vidal.ru/drugs/lyrica__9474"
+                },
+                {
+                  "title": "Российское общество психиатров. Клинические рекомендации «Генерализованное тревожное расстройство», ID 457, утверждены в 2021 году, раздел 3.2 «Психофармакотерапия» (копия текста на legalacts.ru; на cr.minzdrav.gov.ru версии 457_2 и 457_3).",
+                  "url": "https://legalacts.ru/doc/klinicheskie-rekomendatsii-generalizovannoe-trevozhnoe-rasstroistvo-utv-minzdravom-rossii/"
+                }
+              ],
+              "more": true
+            },
+            {
+              "label": "Чем платят",
+              "text": "Описаны злоупотребление и зависимость; при отмене бывает синдром отмены, тем тяжелее, чем выше доза. Головокружение и сонливость повышают риск падений у пожилых; бывает прибавка веса. В Великобритании с 2019 года это контролируемое вещество. Вместе с опиоидами, алкоголем и другими успокоительными может угнетать дыхание; описаны кома и смерть.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Лирика (прегабалин), капсулы, разделы «Показания», «Режим дозирования», «Противопоказания», «Особые указания» (ЛП-№(004450)-(РГ-RU) от 30.01.24).",
+                  "url": "https://www.vidal.ru/drugs/lyrica__9474"
+                },
+                {
+                  "title": "NICE. Generalised anxiety disorder and panic disorder in adults: management (CG113), рекомендации 1.2.25 (прегабалин), 1.2.26 и 1.3.20 (бензодиазепины).",
+                  "url": "https://www.nice.org.uk/guidance/cg113/chapter/Recommendations"
+                }
+              ],
+              "more": true
+            },
+            {
+              "label": "В России",
+              "text": "По рецепту. Сильнодействующее вещество (ПП 964), на предметно-количественном учёте.",
+              "sources": [
+                {
+                  "title": "Постановление Правительства РФ от 29.12.2007 № 964 о списках сильнодействующих и ядовитых веществ для целей статьи 234 УК РФ, список сильнодействующих веществ.",
+                  "url": "https://rulaws.ru/goverment/Postanovlenie-Pravitelstva-RF-ot-29.12.2007-N-964/"
+                },
+                {
+                  "title": "Приказ Минздрава России от 01.09.2023 № 459н о перечне лекарственных средств, подлежащих предметно-количественному учёту, действует с 01.09.2024.",
+                  "url": "http://publication.pravo.gov.ru/document/0001202310030013"
+                },
+                {
+                  "title": "Справочник Видаль: Лирика (прегабалин), капсулы, разделы «Показания», «Режим дозирования», «Противопоказания», «Особые указания» (ЛП-№(004450)-(РГ-RU) от 30.01.24).",
+                  "url": "https://www.vidal.ru/drugs/lyrica__9474"
+                }
+              ],
+              "more": true
+            }
+          ],
+          "docs": {
+            "href": "https://www.vidal.ru/drugs/lyrica__9474",
+            "text": "Полная инструкция: vidal.ru"
+          }
+        },
+        {
+          "id": "buspirone",
+          "label": "Буспирон",
+          "note": "Спитомин, Веспирейт",
+          "facts": [
+            {
+              "label": "Что это",
+              "text": "Противотревожное средство (анксиолитик), не бензодиазепин: частично стимулирует серотониновые рецепторы 5-HT1A. Действует не сразу, а через 1 или 2 недели.",
+              "sources": [
+                {
+                  "title": "Российское общество психиатров. Клинические рекомендации «Депрессивный эпизод, рекуррентное депрессивное расстройство», редакция 2021 года (ID 301_2 в рубрикаторе Минздрава, в архиве с 26.08.2024), PDF разработчика.",
+                  "url": "https://psychiatr.ru/download/6271?view=1"
+                },
+                {
+                  "title": "Справочник Видаль: Спитомин (буспирон), таблетки 5 и 10 мг, разделы «Показания», «Режим дозирования», «Противопоказания», «Особые указания» (ЛП-№(004548)-(РГ-RU) от 08.02.24).",
+                  "url": "https://www.vidal.ru/drugs/spitomin__17681"
+                }
+              ]
+            },
+            {
+              "label": "Показания по инструкции",
+              "text": "Короткое лечение тревоги, в основном генерализованного тревожного расстройства; дополнение к лечению депрессии (не как единственное средство).",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Спитомин (буспирон), таблетки 5 и 10 мг, разделы «Показания», «Режим дозирования», «Противопоказания», «Особые указания» (ЛП-№(004548)-(РГ-RU) от 08.02.24).",
+                  "url": "https://www.vidal.ru/drugs/spitomin__17681"
+                }
+              ]
+            },
+            {
+              "label": "Когда выбирают",
+              "text": "Генерализованная тревога (РОП): препарат второй линии, когда не помогли основные (уровень A). Депрессия (РОП): добавка к СИОЗС при устойчивой депрессии, когда не помогли три этапа лечения (уровень B). В испытании STAR*D добавка буспирона к циталопраму дала ремиссию у 30%, как и бупропион, но её чаще бросали из-за побочных эффектов. В CANMAT 2023 среди добавок к антидепрессантам его нет.",
+              "sources": [
+                {
+                  "title": "Российское общество психиатров. Клинические рекомендации «Генерализованное тревожное расстройство», ID 457, утверждены в 2021 году, раздел 3.2 «Психофармакотерапия» (копия текста на legalacts.ru; на cr.minzdrav.gov.ru версии 457_2 и 457_3).",
+                  "url": "https://legalacts.ru/doc/klinicheskie-rekomendatsii-generalizovannoe-trevozhnoe-rasstroistvo-utv-minzdravom-rossii/"
+                },
+                {
+                  "title": "Российское общество психиатров. Клинические рекомендации «Депрессивный эпизод, рекуррентное депрессивное расстройство», редакция 2021 года (ID 301_2 в рубрикаторе Минздрава, в архиве с 26.08.2024), PDF разработчика.",
+                  "url": "https://psychiatr.ru/download/6271?view=1"
+                },
+                {
+                  "title": "Trivedi M.H. et al. Medication augmentation after the failure of SSRIs for depression (STAR*D). New England Journal of Medicine, 2006.",
+                  "url": "https://pubmed.ncbi.nlm.nih.gov/16554526/"
+                },
+                {
+                  "title": "Lam R.W. et al. Canadian Network for Mood and Anxiety Treatments (CANMAT) 2023 update on clinical guidelines for management of major depressive disorder in adults. Canadian Journal of Psychiatry, 2024.",
+                  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11351064/"
+                }
+              ]
+            },
+            {
+              "label": "Как принимают",
+              "text": "Каждый день в одно и то же время, в 2 или 3 приёма. Для разового приёма при стрессе не годится: эффект через срок от 7 до 14 дней, полный через 4 недели. Грейпфрутовый сок повышает уровень препарата в крови.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Спитомин (буспирон), таблетки 5 и 10 мг, разделы «Показания», «Режим дозирования», «Противопоказания», «Особые указания» (ЛП-№(004548)-(РГ-RU) от 08.02.24).",
+                  "url": "https://www.vidal.ru/drugs/spitomin__17681"
+                }
+              ]
+            },
+            {
+              "label": "Противопоказания",
+              "text": "Тяжёлая почечная или печёночная недостаточность; эпилепсия; острое отравление алкоголем, снотворными, обезболивающими или антипсихотиками; беременность и кормление грудью; возраст до 18 лет.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Спитомин (буспирон), таблетки 5 и 10 мг, разделы «Показания», «Режим дозирования», «Противопоказания», «Особые указания» (ЛП-№(004548)-(РГ-RU) от 08.02.24).",
+                  "url": "https://www.vidal.ru/drugs/spitomin__17681"
+                }
+              ]
+            },
+            {
+              "label": "Доза по инструкции",
+              "text": "Начинают с 15 мг в сутки и прибавляют по 5 мг каждые 2 или 3 дня; обычно от 20 до 30 мг в сутки, максимум 60 мг в сутки и 30 мг за раз.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Спитомин (буспирон), таблетки 5 и 10 мг, разделы «Показания», «Режим дозирования», «Противопоказания», «Особые указания» (ЛП-№(004548)-(РГ-RU) от 08.02.24).",
+                  "url": "https://www.vidal.ru/drugs/spitomin__17681"
+                }
+              ],
+              "more": true
+            },
+            {
+              "label": "Чем платят",
+              "text": "Зависимости, по инструкции, не вызывает. Вместе с ингибиторами МАО повышает давление; с другими серотониновыми препаратами возможен серотониновый синдром. Как единственное лекарство от депрессии не подходит: может замаскировать её симптомы.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Спитомин (буспирон), таблетки 5 и 10 мг, разделы «Показания», «Режим дозирования», «Противопоказания», «Особые указания» (ЛП-№(004548)-(РГ-RU) от 08.02.24).",
+                  "url": "https://www.vidal.ru/drugs/spitomin__17681"
+                }
+              ],
+              "more": true
+            },
+            {
+              "label": "В России",
+              "text": "По рецепту. В списки психотропных веществ и в перечень предметно-количественного учёта не входит.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Спитомин (буспирон), таблетки 5 и 10 мг, разделы «Показания», «Режим дозирования», «Противопоказания», «Особые указания» (ЛП-№(004548)-(РГ-RU) от 08.02.24).",
+                  "url": "https://www.vidal.ru/drugs/spitomin__17681"
+                },
+                {
+                  "title": "Постановление Правительства РФ от 30.06.1998 № 681 о перечне наркотических средств, психотропных веществ и их прекурсоров, список III.",
+                  "url": "https://base.garant.ru/12112176/"
+                },
+                {
+                  "title": "Приказ Минздрава России от 01.09.2023 № 459н о перечне лекарственных средств, подлежащих предметно-количественному учёту, действует с 01.09.2024.",
+                  "url": "http://publication.pravo.gov.ru/document/0001202310030013"
+                }
+              ],
+              "more": true
+            }
+          ],
+          "docs": {
+            "href": "https://www.vidal.ru/drugs/spitomin__17681",
+            "text": "Полная инструкция: vidal.ru"
+          }
+        },
+        {
+          "id": "phenibut",
+          "label": "Фенибут",
+          "note": "Фенибут (несколько производителей), Анвифен, Ноофен",
+          "facts": [
+            {
+              "label": "Что это",
+              "text": "Ноотроп с противотревожным действием, производное ГАМК; действует на ГАМК-B рецепторы. В Восточной Европе его назначают больше полувека, а в США он продаётся как нерегулируемая добавка.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Фенибут (аминофенилмасляная кислота), таблетки 250 мг, инструкция (ЛП-№(007102)-(РГ-RU) от 03.10.24).",
+                  "url": "https://www.vidal.ru/drugs/phenibut"
+                },
+                {
+                  "title": "Kupats E. et al. Safety and Tolerability of the Anxiolytic and Nootropic Drug Phenibut: A Systematic Review of Clinical Trials and Case Reports. Pharmacopsychiatry, 2020.",
+                  "url": "https://pubmed.ncbi.nlm.nih.gov/32340063/"
+                },
+                {
+                  "title": "Feldman R. et al. A systematic review of phenibut withdrawal focusing on complications, therapeutic approaches, and single substance versus polysubstance withdrawal. Clinical Toxicology, 2023.",
+                  "url": "https://pubmed.ncbi.nlm.nih.gov/38112312/"
+                }
+              ]
+            },
+            {
+              "label": "Показания по инструкции",
+              "text": "Астенические и тревожно-невротические состояния, тревожность, страх, невроз навязчивых состояний; заикание, тики и недержание мочи у детей; бессонница у пожилых; головокружения и болезнь Меньера, укачивание; успокоение перед операцией; в составе лечения алкогольной абстиненции.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Фенибут (аминофенилмасляная кислота), таблетки 250 мг, инструкция (ЛП-№(007102)-(РГ-RU) от 03.10.24).",
+                  "url": "https://www.vidal.ru/drugs/phenibut"
+                }
+              ]
+            },
+            {
+              "label": "Когда выбирают",
+              "text": "В российских рекомендациях по депрессии и по генерализованной тревоге не упоминается, в NICE и CANMAT тоже. Испытания небольшие: в систематическом обзоре 2020 года 11 испытаний на 583 человека.",
+              "sources": [
+                {
+                  "title": "Kupats E. et al. Safety and Tolerability of the Anxiolytic and Nootropic Drug Phenibut: A Systematic Review of Clinical Trials and Case Reports. Pharmacopsychiatry, 2020.",
+                  "url": "https://pubmed.ncbi.nlm.nih.gov/32340063/"
+                }
+              ]
+            },
+            {
+              "label": "Как принимают",
+              "text": "При тревожных и астенических состояниях внутрь после еды 3 раза в день, курс от 4 до 6 недель.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Ноофен (аминофенилмасляная кислота), капсулы 250 мг, разделы «Режим дозирования» и «Противопоказания» (ЛП-№(003375)-(РГ-RU) от 10.10.23).",
+                  "url": "https://www.vidal.ru/drugs/noophen__38764"
+                }
+              ]
+            },
+            {
+              "label": "Противопоказания",
+              "text": "По инструкции таблеток Фенибута только аллергия на него. У Ноофена ещё острая почечная недостаточность, беременность и кормление грудью, дети до 8 лет.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Фенибут (аминофенилмасляная кислота), таблетки 250 мг, инструкция (ЛП-№(007102)-(РГ-RU) от 03.10.24).",
+                  "url": "https://www.vidal.ru/drugs/phenibut"
+                },
+                {
+                  "title": "Справочник Видаль: Ноофен (аминофенилмасляная кислота), капсулы 250 мг, разделы «Режим дозирования» и «Противопоказания» (ЛП-№(003375)-(РГ-RU) от 10.10.23).",
+                  "url": "https://www.vidal.ru/drugs/noophen__38764"
+                }
+              ]
+            },
+            {
+              "label": "Доза по инструкции",
+              "text": "Взрослым по 250 или 500 мг 3 раза в день; за раз не больше 750 мг (старше 60 лет 500 мг), в сутки при необходимости до 2,5 г.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Ноофен (аминофенилмасляная кислота), капсулы 250 мг, разделы «Режим дозирования» и «Противопоказания» (ЛП-№(003375)-(РГ-RU) от 10.10.23).",
+                  "url": "https://www.vidal.ru/drugs/noophen__38764"
+                }
+              ],
+              "more": true
+            },
+            {
+              "label": "Чем платят",
+              "text": "Сонливость, раздражительность, тошнота в первые дни; при долгом приёме проверяют печень и кровь. При больших дозах, обычно купленных в интернете, описаны зависимость и тяжёлая отмена с галлюцинациями, бредом и судорогами; отмена бывала уже после недели приёма по дозе от 2 до 3 г в день.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Фенибут (аминофенилмасляная кислота), таблетки 250 мг, инструкция (ЛП-№(007102)-(РГ-RU) от 03.10.24).",
+                  "url": "https://www.vidal.ru/drugs/phenibut"
+                },
+                {
+                  "title": "Kupats E. et al. Safety and Tolerability of the Anxiolytic and Nootropic Drug Phenibut: A Systematic Review of Clinical Trials and Case Reports. Pharmacopsychiatry, 2020.",
+                  "url": "https://pubmed.ncbi.nlm.nih.gov/32340063/"
+                },
+                {
+                  "title": "Feldman R. et al. A systematic review of phenibut withdrawal focusing on complications, therapeutic approaches, and single substance versus polysubstance withdrawal. Clinical Toxicology, 2023.",
+                  "url": "https://pubmed.ncbi.nlm.nih.gov/38112312/"
+                }
+              ],
+              "more": true
+            },
+            {
+              "label": "В России",
+              "text": "По рецепту. В списки психотропных веществ и в перечень предметно-количественного учёта не входит.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Фенибут (аминофенилмасляная кислота), таблетки 250 мг, инструкция (ЛП-№(007102)-(РГ-RU) от 03.10.24).",
+                  "url": "https://www.vidal.ru/drugs/phenibut"
+                },
+                {
+                  "title": "Постановление Правительства РФ от 30.06.1998 № 681 о перечне наркотических средств, психотропных веществ и их прекурсоров, список III.",
+                  "url": "https://base.garant.ru/12112176/"
+                },
+                {
+                  "title": "Приказ Минздрава России от 01.09.2023 № 459н о перечне лекарственных средств, подлежащих предметно-количественному учёту, действует с 01.09.2024.",
+                  "url": "http://publication.pravo.gov.ru/document/0001202310030013"
+                }
+              ],
+              "more": true
+            }
+          ],
+          "docs": {
+            "href": "https://www.vidal.ru/drugs/phenibut",
+            "text": "Полная инструкция: vidal.ru"
+          }
+        }
+      ]
+    },
+    {
+      "id": "otc",
+      "label": "Без рецепта и травы",
+      "title": "Без рецепта и травы",
+      "hint": "Продаются без рецепта; надёжных доказательств почти ни у кого нет.",
+      "facts": [
+        {
+          "label": "Что это",
+          "text": "Их покупают сами, «чтобы успокоиться». Надёжных доказательств при депрессии почти ни у кого нет, а зверобой ещё и опасен взаимодействиями.",
+          "sources": [
+            {
+              "title": "EMA, Committee on Herbal Medicinal Products. European Union herbal monograph on Hypericum perforatum L., herba, Revision 1, 2022.",
+              "url": "https://www.ema.europa.eu/en/documents/herbal-monograph/final-european-union-herbal-monograph-hypericum-perforatum-l-herba-revision-1_en.pdf"
+            }
+          ]
+        }
+      ],
+      "children": [
+        {
           "id": "st-johns-wort",
           "label": "Зверобой",
           "note": "Нейроплант и другие",
@@ -3182,124 +5353,227 @@ export const antidepressants: MindMapData = { root: {
             "text": "Полная инструкция: vidal.ru"
           },
           "title": "Афобазол, Тенотен, глицин"
-        }
-      ]
-    },
-    {
-      "id": "boost",
-      "label": "Если одного мало",
-      "title": "Если одного антидепрессанта мало: усиление лечения",
-      "hint": "Что добавляют, когда одного антидепрессанта мало.",
-      "facts": [
+        },
         {
-          "label": "Что это",
-          "text": "Ходы, к которым переходят, если не помогли два препарата подряд. Решает и ведёт врач."
-        }
-      ],
-      "children": [
-        {
-          "id": "lithium",
-          "label": "Литий",
-          "note": "Добавка к антидепрессанту",
+          "id": "novo-passit",
+          "label": "Ново-Пассит",
+          "note": "Ново-Пассит, таблетки и раствор; без рецепта",
           "facts": [
             {
-              "label": "Показания по инструкции",
-              "text": "Маниакальные и гипоманиакальные состояния (периоды болезненно приподнятого настроения), профилактика и лечение аффективных психозов (тяжёлых расстройств настроения, в том числе биполярного), аффективные нарушения при алкоголизме; также мигрень, синдром Меньера, сексуальные расстройства, лекарственная зависимость.",
+              "label": "Что это",
+              "text": "Растительное успокоительное: экстракты валерианы, мелиссы, зверобоя, боярышника, пассифлоры, хмеля и бузины плюс гвайфенезин.",
               "sources": [
                 {
-                  "title": "Справочник Видаль: Седалит (лития карбонат), раздел «Показания» (ЛП-№(004190)-(РГ-RU) от 27.12.23).",
-                  "url": "https://www.vidal.ru/drugs/sedalit__15786"
+                  "title": "Справочник Видаль: Ново-Пассит, таблетки и раствор для приёма внутрь, инструкция (ЛП-№(000120)-(РГ-RU) от 20.01.21).",
+                  "url": "https://www.vidal.ru/drugs/novo-passit__597"
                 }
               ]
             },
             {
-              "label": "Когда назначают",
-              "text": "Добавляют к антидепрессанту, который помог мало.",
+              "label": "Показания по инструкции",
+              "text": "Неврастения и невротические реакции с раздражительностью, тревогой, страхом, усталостью; постоянное психическое напряжение; лёгкая бессонница; головная боль от напряжения, мигрень; функциональные болезни кишечника; климактерический синдром; зудящие дерматозы на фоне стресса.",
               "sources": [
                 {
-                  "title": "NICE. Depression in adults: treatment and management (NG222), рекомендации 1.4.24 (пожилые), от 1.4.25 до 1.4.32 (литий), 1.9 (дальнейшие шаги) и 1.15.2 (эскетамин), 2022.",
-                  "url": "https://www.nice.org.uk/guidance/ng222/chapter/Recommendations"
+                  "title": "Справочник Видаль: Ново-Пассит, таблетки и раствор для приёма внутрь, инструкция (ЛП-№(000120)-(РГ-RU) от 20.01.21).",
+                  "url": "https://www.vidal.ru/drugs/novo-passit__597"
+                }
+              ]
+            },
+            {
+              "label": "Когда выбирают",
+              "text": "В российских рекомендациях по депрессии и по генерализованной тревоге не упоминается. Обзоры Cochrane по валериане и пассифлоре при тревожных расстройствах нашли слишком мало испытаний, чтобы сделать вывод; испытаний самой смеси в этих обзорах нет.",
+              "sources": [
+                {
+                  "title": "Miyasaka L.S., Atallah A.N., Soares B.G. Valerian for anxiety disorders. Cochrane Database of Systematic Reviews, 2006.",
+                  "url": "https://pubmed.ncbi.nlm.nih.gov/17054208/"
+                },
+                {
+                  "title": "Miyasaka L.S., Atallah A.N., Soares B.G. Passiflora for anxiety disorder. Cochrane Database of Systematic Reviews, 2007.",
+                  "url": "https://pubmed.ncbi.nlm.nih.gov/17253512/"
                 }
               ]
             },
             {
               "label": "Как принимают",
-              "text": "Узкий коридор между рабочей и опасной дозой, поэтому регулярно сдают кровь на уровень лития через 12 часов после приёма; уровень не выше 1,0 ммоль/л, пожилым от 0,4 до 0,6 ммоль/л. Признаки отравления: понос, рвота, крупная дрожь, шаткость, спутанность, это повод срочно обратиться за помощью.",
+              "text": "3 раза в день до еды, с перерывом от 4 до 6 часов. Если за 7 дней не лучше, нужно к врачу.",
               "sources": [
                 {
-                  "title": "NICE. Depression in adults: treatment and management (NG222), рекомендации 1.4.24 (пожилые), от 1.4.25 до 1.4.32 (литий), 1.9 (дальнейшие шаги) и 1.15.2 (эскетамин), 2022.",
-                  "url": "https://www.nice.org.uk/guidance/ng222/chapter/Recommendations"
+                  "title": "Справочник Видаль: Ново-Пассит, таблетки и раствор для приёма внутрь, инструкция (ЛП-№(000120)-(РГ-RU) от 20.01.21).",
+                  "url": "https://www.vidal.ru/drugs/novo-passit__597"
                 }
               ]
             },
             {
               "label": "Противопоказания",
-              "text": "Беременность и кормление грудью; лейкоз; тяжёлые операции. Болезни почек, сердца и щитовидной железы инструкция относит к «с осторожностью»: при них лечение особенно тщательно контролируют.",
+              "text": "Миастения; возраст до 12 лет; аллергия на компоненты.",
               "sources": [
                 {
-                  "title": "Справочник Видаль: Седалит (лития карбонат), раздел «Показания» (ЛП-№(004190)-(РГ-RU) от 27.12.23).",
-                  "url": "https://www.vidal.ru/drugs/sedalit__15786"
+                  "title": "Справочник Видаль: Ново-Пассит, таблетки и раствор для приёма внутрь, инструкция (ЛП-№(000120)-(РГ-RU) от 20.01.21).",
+                  "url": "https://www.vidal.ru/drugs/novo-passit__597"
                 }
               ]
             },
             {
-              "label": "Показания в других странах",
-              "text": "В США только биполярное расстройство I типа: мания и смешанные эпизоды и поддерживающее лечение, с 7 лет.",
+              "label": "Доза по инструкции",
+              "text": "Взрослым и детям старше 12 лет по 1 таблетке или 5 мл раствора 3 раза в день; по назначению врача до 2 таблеток или 10 мл 3 раза в день.",
               "sources": [
                 {
-                  "title": "Lithium carbonate tablets and capsules, инструкция по применению, раздел 1 «Indications and Usage». DailyMed, Hikma.",
-                  "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=b839ff4b-f62d-41ab-a823-550a756d58ec"
+                  "title": "Справочник Видаль: Ново-Пассит, таблетки и раствор для приёма внутрь, инструкция (ЛП-№(000120)-(РГ-RU) от 20.01.21).",
+                  "url": "https://www.vidal.ru/drugs/novo-passit__597"
                 }
               ],
               "more": true
             },
             {
-              "label": "Насколько помогает",
-              "text": "С литием шансы ответить на лечение в 3,11 раза выше, чем с плацебо; CANMAT ставит его во вторую линию.",
+              "label": "Чем платят",
+              "text": "Может вызвать сильную усталость и подавленность, усиливает действие алкоголя. Зверобой в составе ослабляет противозачаточные таблетки, лекарства после пересадки органов, от ВИЧ, сердечные и против тромбов. Во время приёма избегают солнца и солярия; в растворе около 12% спирта. Из-за зверобоя вместе с антидепрессантами его без врача не принимают: возможен серотониновый синдром.",
               "sources": [
                 {
-                  "title": "Crossley N.A., Bauer M. Acceleration and augmentation of antidepressants with lithium for depressive disorders: two meta-analyses of randomized, placebo-controlled trials. Journal of Clinical Psychiatry, 2007.",
-                  "url": "https://pubmed.ncbi.nlm.nih.gov/17592920/"
+                  "title": "Справочник Видаль: Ново-Пассит, таблетки и раствор для приёма внутрь, инструкция (ЛП-№(000120)-(РГ-RU) от 20.01.21).",
+                  "url": "https://www.vidal.ru/drugs/novo-passit__597"
                 },
                 {
-                  "title": "Lam R.W. et al. Canadian Network for Mood and Anxiety Treatments (CANMAT) 2023 update on clinical guidelines for management of major depressive disorder in adults. Canadian Journal of Psychiatry, 2024.",
-                  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11351064/"
-                }
-              ],
-              "more": true
-            },
-            {
-              "label": "Риск самоубийства",
-              "text": "В долгих испытаниях при расстройствах настроения самоубийств на литии было меньше, но в испытании 2022 года у ветеранов после попытки разницы с плацебо не нашли.",
-              "sources": [
-                {
-                  "title": "Cipriani A., Hawton K., Stockton S., Geddes J.R. Lithium in the prevention of suicide in mood disorders: updated systematic review and meta-analysis. BMJ, 2013.",
-                  "url": "https://pubmed.ncbi.nlm.nih.gov/23814104/"
+                  "title": "EMA, Committee on Herbal Medicinal Products. European Union herbal monograph on Hypericum perforatum L., herba, Revision 1, 2022.",
+                  "url": "https://www.ema.europa.eu/en/documents/herbal-monograph/final-european-union-herbal-monograph-hypericum-perforatum-l-herba-revision-1_en.pdf"
                 },
                 {
-                  "title": "Katz I.R. et al. Lithium treatment in the prevention of repeat suicide-related outcomes in veterans with major depression or bipolar disorder: a randomized clinical trial. JAMA Psychiatry, 2022.",
-                  "url": "https://pubmed.ncbi.nlm.nih.gov/34787653/"
+                  "title": "Lexapro (escitalopram), инструкция по применению и руководство для пациента (Medication Guide), одобренные FDA. AbbVie, редакции 2023 и 2024 годов.",
+                  "url": "https://www.rxabbvie.com/pdf/lexapro_pi.pdf"
                 }
               ],
               "more": true
             },
             {
-              "label": "Что важно при приёме",
-              "text": "Уровень лития поднимают обезвоживание, рвота и понос, обезболивающие вроде ибупрофена и диклофенака, мочегонные и препараты от давления из групп иАПФ и сартанов, поэтому любое новое лекарство согласуют с врачом. Бросать самому нельзя.",
+              "label": "В России",
+              "text": "Продаётся без рецепта.",
               "sources": [
                 {
-                  "title": "NICE. Depression in adults: treatment and management (NG222), рекомендации 1.4.24 (пожилые), от 1.4.25 до 1.4.32 (литий), 1.9 (дальнейшие шаги) и 1.15.2 (эскетамин), 2022.",
-                  "url": "https://www.nice.org.uk/guidance/ng222/chapter/Recommendations"
+                  "title": "Справочник Видаль: Ново-Пассит, таблетки и раствор для приёма внутрь, инструкция (ЛП-№(000120)-(РГ-RU) от 20.01.21).",
+                  "url": "https://www.vidal.ru/drugs/novo-passit__597"
                 }
               ],
               "more": true
             }
           ],
           "docs": {
-            "href": "https://www.vidal.ru/drugs/sedalit__15786",
+            "href": "https://www.vidal.ru/drugs/novo-passit__597",
             "text": "Полная инструкция: vidal.ru"
           }
         },
+        {
+          "id": "persen",
+          "label": "Персен",
+          "note": "Персен, Персен Ночь; без рецепта",
+          "facts": [
+            {
+              "label": "Что это",
+              "text": "Растительное успокоительное: экстракты валерианы, мелиссы и мяты перечной.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Персен, таблетки, инструкция (ЛП-№(004127)-(РГ-RU) от 22.12.23).",
+                  "url": "https://www.vidal.ru/drugs/persen"
+                }
+              ]
+            },
+            {
+              "label": "Показания по инструкции",
+              "text": "Повышенная нервная возбудимость, бессонница, раздражительность у взрослых и подростков от 12 лет.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Персен, таблетки, инструкция (ЛП-№(004127)-(РГ-RU) от 22.12.23).",
+                  "url": "https://www.vidal.ru/drugs/persen"
+                }
+              ]
+            },
+            {
+              "label": "Когда выбирают",
+              "text": "В российских рекомендациях по депрессии и по генерализованной тревоге не упоминается. По валериане при тревожных расстройствах Cochrane нашёл лишь одно маленькое испытание, и вывода сделать нельзя.",
+              "sources": [
+                {
+                  "title": "Miyasaka L.S., Atallah A.N., Soares B.G. Valerian for anxiety disorders. Cochrane Database of Systematic Reviews, 2006.",
+                  "url": "https://pubmed.ncbi.nlm.nih.gov/17054208/"
+                }
+              ]
+            },
+            {
+              "label": "Как принимают",
+              "text": "Внутрь, запивая водой, независимо от еды; при бессоннице за срок от 30 минут до часа до сна. Подряд не дольше, чем от 1,5 до 2 месяцев.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Персен, таблетки, инструкция (ЛП-№(004127)-(РГ-RU) от 22.12.23).",
+                  "url": "https://www.vidal.ru/drugs/persen"
+                }
+              ]
+            },
+            {
+              "label": "Противопоказания",
+              "text": "Низкое давление; холангит, желчнокаменная болезнь и другие болезни желчных путей; аллергия на компоненты.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Персен, таблетки, инструкция (ЛП-№(004127)-(РГ-RU) от 22.12.23).",
+                  "url": "https://www.vidal.ru/drugs/persen"
+                }
+              ]
+            },
+            {
+              "label": "Доза по инструкции",
+              "text": "По 2 или 3 таблетки 2 или 3 раза в день; при бессоннице 2 или 3 таблетки перед сном; не больше 12 таблеток в день.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Персен, таблетки, инструкция (ЛП-№(004127)-(РГ-RU) от 22.12.23).",
+                  "url": "https://www.vidal.ru/drugs/persen"
+                }
+              ],
+              "more": true
+            },
+            {
+              "label": "Чем платят",
+              "text": "Изредка аллергия и бронхоспазм, при долгом приёме запор, при рефлюксе может усилиться изжога. Синдрома отмены нет.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Персен, таблетки, инструкция (ЛП-№(004127)-(РГ-RU) от 22.12.23).",
+                  "url": "https://www.vidal.ru/drugs/persen"
+                }
+              ],
+              "more": true
+            },
+            {
+              "label": "В России",
+              "text": "Продаётся без рецепта.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Персен, таблетки, инструкция (ЛП-№(004127)-(РГ-RU) от 22.12.23).",
+                  "url": "https://www.vidal.ru/drugs/persen"
+                }
+              ],
+              "more": true
+            }
+          ],
+          "docs": {
+            "href": "https://www.vidal.ru/drugs/persen",
+            "text": "Полная инструкция: vidal.ru"
+          }
+        }
+      ]
+    },
+    {
+      "id": "boost",
+      "label": "Другие способы усиления",
+      "title": "Другие способы усилить лечение",
+      "hint": "Другие ходы, когда не помогли два препарата подряд.",
+      "facts": [
+        {
+          "label": "Что это",
+          "text": "Ходы, к которым переходят, если не помогли два препарата подряд. Решает и ведёт врач.",
+          "sources": [
+            {
+              "title": "Lam R.W. et al. Canadian Network for Mood and Anxiety Treatments (CANMAT) 2023 update on clinical guidelines for management of major depressive disorder in adults. Canadian Journal of Psychiatry, 2024.",
+              "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11351064/"
+            }
+          ]
+        }
+      ],
+      "children": [
         {
           "id": "esketamine",
           "label": "Эскетамин",
@@ -3400,6 +5674,222 @@ export const antidepressants: MindMapData = { root: {
           ],
           "docs": {
             "href": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=d81a6a79-a74a-44b7-822c-0dfa3036eaed",
+            "text": "Полная инструкция: dailymed.nlm.nih.gov"
+          }
+        },
+        {
+          "id": "liothyronine",
+          "label": "Лиотиронин (Т3)",
+          "note": "в России отдельно не продаётся; за рубежом Cytomel",
+          "facts": [
+            {
+              "label": "Что это",
+              "text": "Гормон щитовидной железы трийодтиронин (Т3) в таблетках. Влияет на работу генов в клетках всего тела.",
+              "sources": [
+                {
+                  "title": "Cytomel (liothyronine sodium), инструкция по применению, одобренная FDA. Pfizer, DailyMed.",
+                  "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=51452b31-ff68-4e0c-b982-c15502ebf1d3"
+                }
+              ]
+            },
+            {
+              "label": "Показания по инструкции",
+              "text": "В США (FDA): нехватка гормонов щитовидной железы (гипотиреоз), подавление ТТГ при раке щитовидной железы, диагностический тест. Депрессии в показаниях нет.",
+              "sources": [
+                {
+                  "title": "Cytomel (liothyronine sodium), инструкция по применению, одобренная FDA. Pfizer, DailyMed.",
+                  "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=51452b31-ff68-4e0c-b982-c15502ebf1d3"
+                }
+              ]
+            },
+            {
+              "label": "Когда выбирают",
+              "text": "Добавка к антидепрессанту. CANMAT 2023: вторая линия, уровень 2; исследования старые (до 2003 года), маленькие и только с трициклическими антидепрессантами, и нужен контроль гормонов. NICE тоже упоминает Т3 как вариант усиления, вне инструкции.",
+              "sources": [
+                {
+                  "title": "Lam R.W. et al. CANMAT 2023 update on clinical guidelines for management of major depressive disorder in adults, таблица 7.2 «Summary Recommendations for Adjunctive Medications» и раздел Q.7.g. Canadian Journal of Psychiatry, 2024.",
+                  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11351064/"
+                },
+                {
+                  "title": "NICE. Depression in adults: treatment and management (NG222), рекомендации 1.9.8 и 1.9.9 (комбинированное лечение), от 1.4.33 до 1.4.37 (антипсихотики как усиление), 2022.",
+                  "url": "https://www.nice.org.uk/guidance/ng222/chapter/Recommendations"
+                }
+              ]
+            },
+            {
+              "label": "Как принимают",
+              "text": "Таблетка раз в день; при этом следят за гормонами щитовидной железы.",
+              "sources": [
+                {
+                  "title": "Cytomel (liothyronine sodium), инструкция по применению, одобренная FDA. Pfizer, DailyMed.",
+                  "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=51452b31-ff68-4e0c-b982-c15502ebf1d3"
+                },
+                {
+                  "title": "Lam R.W. et al. CANMAT 2023 update on clinical guidelines for management of major depressive disorder in adults, таблица 7.2 «Summary Recommendations for Adjunctive Medications» и раздел Q.7.g. Canadian Journal of Psychiatry, 2024.",
+                  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11351064/"
+                }
+              ]
+            },
+            {
+              "label": "Противопоказания",
+              "text": "Нелеченая недостаточность надпочечников. Осторожно: пожилые и люди с болезнями сердца; не для похудения.",
+              "sources": [
+                {
+                  "title": "Cytomel (liothyronine sodium), инструкция по применению, одобренная FDA. Pfizer, DailyMed.",
+                  "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=51452b31-ff68-4e0c-b982-c15502ebf1d3"
+                }
+              ]
+            },
+            {
+              "label": "Доза по инструкции",
+              "text": "При гипотиреозе FDA: начинают с 25 мкг, поддерживающая от 25 до 75 мкг. CANMAT для усиления: от 25 до 50 мкг.",
+              "sources": [
+                {
+                  "title": "Cytomel (liothyronine sodium), инструкция по применению, одобренная FDA. Pfizer, DailyMed.",
+                  "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=51452b31-ff68-4e0c-b982-c15502ebf1d3"
+                },
+                {
+                  "title": "Lam R.W. et al. CANMAT 2023 update on clinical guidelines for management of major depressive disorder in adults, таблица 7.2 «Summary Recommendations for Adjunctive Medications» и раздел Q.7.g. Canadian Journal of Psychiatry, 2024.",
+                  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11351064/"
+                }
+              ],
+              "more": true
+            },
+            {
+              "label": "Чем платят",
+              "text": "Побочные эффекты как при избытке гормонов щитовидной железы: сердцебиение и аритмии (например, мерцательная аритмия), особенно у пожилых и сердечников.",
+              "sources": [
+                {
+                  "title": "Cytomel (liothyronine sodium), инструкция по применению, одобренная FDA. Pfizer, DailyMed.",
+                  "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=51452b31-ff68-4e0c-b982-c15502ebf1d3"
+                }
+              ],
+              "more": true
+            },
+            {
+              "label": "В России",
+              "text": "Сейчас не зарегистрирован: Трийодтиронин 50 Берлин-Хеми и комбинации с левотироксином (Новотирал, Тиреокомб, Тиреотом) сняты с регистрации или их регистрация истекла.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Трийодтиронин 50 Берлин-Хеми (лиотиронин), сведения о регистрации: регистрация отменена.",
+                  "url": "https://www.vidal.ru/drugs/triiodothyronine_50_berlin-chemie__858"
+                },
+                {
+                  "title": "Справочник Видаль: препараты лиотиронина (Новотирал, Тиреокомб, Тиреотом; все комбинированные с левотироксином, регистрации отменены или истекли).",
+                  "url": "https://www.vidal.ru/drugs/molecule-in/609"
+                }
+              ],
+              "more": true
+            }
+          ],
+          "docs": {
+            "href": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=51452b31-ff68-4e0c-b982-c15502ebf1d3",
+            "text": "Полная инструкция: dailymed.nlm.nih.gov"
+          }
+        },
+        {
+          "id": "modafinil",
+          "label": "Модафинил",
+          "note": "в России не зарегистрирован; за рубежом Provigil",
+          "facts": [
+            {
+              "label": "Что это",
+              "text": "Средство, прогоняющее сонливость; как именно работает, неизвестно, действие похоже на стимуляторы, но не совпадает с ними.",
+              "sources": [
+                {
+                  "title": "Provigil (modafinil), инструкция по применению, одобренная FDA. Cephalon, DailyMed.",
+                  "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=e16c26ad-7bc2-d155-3a5d-da83ad6492c8"
+                }
+              ]
+            },
+            {
+              "label": "Показания по инструкции",
+              "text": "В США (FDA): дневная сонливость при нарколепсии, обструктивном апноэ сна и сменной работе. Депрессии в показаниях нет.",
+              "sources": [
+                {
+                  "title": "Provigil (modafinil), инструкция по применению, одобренная FDA. Cephalon, DailyMed.",
+                  "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=e16c26ad-7bc2-d155-3a5d-da83ad6492c8"
+                }
+              ]
+            },
+            {
+              "label": "Когда выбирают",
+              "text": "Добавка к антидепрессанту, особенно при усталости и сонливости. CANMAT 2023: вторая линия, уровень 2, эффект небольшой. В NICE NG222 не упоминается.",
+              "sources": [
+                {
+                  "title": "Lam R.W. et al. CANMAT 2023 update on clinical guidelines for management of major depressive disorder in adults, таблица 7.2 «Summary Recommendations for Adjunctive Medications» и раздел Q.7.g. Canadian Journal of Psychiatry, 2024.",
+                  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11351064/"
+                },
+                {
+                  "title": "NICE. Depression in adults: treatment and management (NG222), рекомендации 1.9.8 и 1.9.9 (комбинированное лечение), от 1.4.33 до 1.4.37 (антипсихотики как усиление), 2022.",
+                  "url": "https://www.nice.org.uk/guidance/ng222/chapter/Recommendations"
+                }
+              ]
+            },
+            {
+              "label": "Как принимают",
+              "text": "Таблетка раз в день утром.",
+              "sources": [
+                {
+                  "title": "Provigil (modafinil), инструкция по применению, одобренная FDA. Cephalon, DailyMed.",
+                  "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=e16c26ad-7bc2-d155-3a5d-da83ad6492c8"
+                }
+              ]
+            },
+            {
+              "label": "Противопоказания",
+              "text": "Аллергия на модафинил или армодафинил. Осторожно: психозы, депрессия или мания в прошлом.",
+              "sources": [
+                {
+                  "title": "Provigil (modafinil), инструкция по применению, одобренная FDA. Cephalon, DailyMed.",
+                  "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=e16c26ad-7bc2-d155-3a5d-da83ad6492c8"
+                }
+              ]
+            },
+            {
+              "label": "Доза по инструкции",
+              "text": "FDA: 200 мг утром (при нарколепсии и апноэ). CANMAT для усиления: от 100 до 400 мг.",
+              "sources": [
+                {
+                  "title": "Provigil (modafinil), инструкция по применению, одобренная FDA. Cephalon, DailyMed.",
+                  "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=e16c26ad-7bc2-d155-3a5d-da83ad6492c8"
+                },
+                {
+                  "title": "Lam R.W. et al. CANMAT 2023 update on clinical guidelines for management of major depressive disorder in adults, таблица 7.2 «Summary Recommendations for Adjunctive Medications» и раздел Q.7.g. Canadian Journal of Psychiatry, 2024.",
+                  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11351064/"
+                }
+              ],
+              "more": true
+            },
+            {
+              "label": "Чем платят",
+              "text": "Тревога, нервозность, бессонница; редко тяжёлая сыпь, включая синдром Стивенса-Джонсона (опасное поражение кожи и слизистых). В США контролируемое вещество (список IV).",
+              "sources": [
+                {
+                  "title": "Provigil (modafinil), инструкция по применению, одобренная FDA. Cephalon, DailyMed.",
+                  "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=e16c26ad-7bc2-d155-3a5d-da83ad6492c8"
+                }
+              ],
+              "more": true
+            },
+            {
+              "label": "В России",
+              "text": "Не зарегистрирован. Внесён в список II психотропных веществ (ПП 681), его оборот ограничен: покупка и ввоз без разрешения наказуемы.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: поиск по запросу «модафинил», октябрь 2026 (действующее вещество не найдено).",
+                  "url": "https://www.vidal.ru/search?t=all&q=%D0%BC%D0%BE%D0%B4%D0%B0%D1%84%D0%B8%D0%BD%D0%B8%D0%BB"
+                },
+                {
+                  "title": "Постановление Правительства РФ от 30.06.1998 № 681 о перечне наркотических средств, психотропных веществ и их прекурсоров, список III.",
+                  "url": "https://base.garant.ru/12112176/"
+                }
+              ],
+              "more": true
+            }
+          ],
+          "docs": {
+            "href": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=e16c26ad-7bc2-d155-3a5d-da83ad6492c8",
             "text": "Полная инструкция: dailymed.nlm.nih.gov"
           }
         }
