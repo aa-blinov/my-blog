@@ -1436,6 +1436,22 @@ html.mm-locked body {
   color: var(--mm-accent);
   font-weight: 700;
 }
+.mm-tip {
+  position: absolute;
+  z-index: 2;
+  max-width: min(22rem, calc(100% - 16px));
+  padding: 0.35rem 0.6rem;
+  border: 1px solid var(--mm-rule);
+  border-radius: var(--app-radius-sm);
+  background: var(--mm-tone);
+  color: var(--mm-ink);
+  font-size: var(--app-font-sm);
+  line-height: 1.4;
+  pointer-events: none;
+}
+.mm-tip[hidden] {
+  display: none;
+}
 .mm-controls {
   position: absolute;
   top: 0.5rem;

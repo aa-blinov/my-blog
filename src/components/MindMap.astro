@@ -26,6 +26,8 @@ const edgePath = (from: { x: number; y: number }, to: { x: number; y: number }) 
   return `M${from.x.toFixed(1)},${from.y.toFixed(1)} Q${cx.toFixed(1)},${cy.toFixed(1)} ${to.x.toFixed(1)},${to.y.toFixed(1)}`;
 };
 const cardTitle = (n: MapNode) => n.title ?? n.label;
+// Подсказка при наведении: у вещества торговые названия, у класса его состав; врачу видно сразу, без нажатия
+const hoverTip = (n: MapNode) => n.children?.length ? n.children.map((c) => c.label).join(', ') : n.note;
 ---
 
 <div class="mm" data-mindmap>
@@ -43,12 +45,14 @@ const cardTitle = (n: MapNode) => n.title ?? n.label;
           style={`left:${p.x.toFixed(1)}px;top:${p.y.toFixed(1)}px`}
           data-id={p.node.id}
           data-parent={p.parent}
+          data-tip={p.depth > 0 ? hoverTip(p.node) : undefined}
           aria-controls={`mm-card-${p.node.id}`}
           aria-expanded="false"
         >{p.node.label}</button>
       ))}
     </div>
 
+    <div class="mm-tip" role="tooltip" hidden></div>
     <div class="mm-controls">
       <button type="button" data-zoom="in" aria-label="Приблизить">+</button>
       <button type="button" data-zoom="out" aria-label="Отдалить">−</button>
@@ -111,6 +115,7 @@ const cardTitle = (n: MapNode) => n.title ?? n.label;
     const MAX = 2.5;
     let s = 1, tx = 0, ty = 0;
     let selected: HTMLButtonElement | null = null;
+    const tip = mm.querySelector<HTMLElement>('.mm-tip')!;
 
     const apply = () => { canvas.style.transform = `translate(${tx}px, ${ty}px) scale(${s})`; };
     // Видимая область карты: на десктопе карточка справа закрывает часть окна, на телефоне карточка снизу
@@ -210,7 +215,7 @@ const cardTitle = (n: MapNode) => n.title ?? n.label;
       if (pts.size === 1) {
         moved += Math.abs(dx) + Math.abs(dy);
         tx += dx; ty += dy;
-        if (moved > 4 && !frame.classList.contains('is-dragging')) { frame.classList.add('is-dragging'); frame.setPointerCapture(e.pointerId); }
+        if (moved > 4 && !frame.classList.contains('is-dragging')) { frame.classList.add('is-dragging'); frame.setPointerCapture(e.pointerId); tip.hidden = true; }
         apply();
       } else if (pts.size === 2) {
         const [a, b] = [...pts.values()];
@@ -234,6 +239,31 @@ const cardTitle = (n: MapNode) => n.title ?? n.label;
       const r = frame.getBoundingClientRect();
       zoomAt(e.clientX - r.left, e.clientY - r.top, Math.exp(-e.deltaY * 0.01));
     }, { passive: false });
+
+    // --- Подсказка над узлом: при наведении мышью и при фокусе с клавиатуры, внутри рамки (видна и на весь экран) ---
+    const showTip = (n: HTMLElement) => {
+      const text = n.dataset.tip;
+      if (!text || frame.classList.contains('is-dragging')) return;
+      tip.textContent = text;
+      tip.hidden = false;
+      const f = frame.getBoundingClientRect(), r = n.getBoundingClientRect();
+      const w = tip.offsetWidth, h = tip.offsetHeight;
+      const left = Math.min(Math.max(8, r.left - f.left + r.width / 2 - w / 2), frame.clientWidth - w - 8);
+      const above = r.top - f.top - h - 6 >= 8;
+      tip.style.left = `${left}px`;
+      tip.style.top = `${above ? r.top - f.top - h - 6 : r.bottom - f.top + 6}px`;
+    };
+    const hideTip = () => { tip.hidden = true; };
+    if (matchMedia('(hover: hover)').matches) {
+      nodes.forEach((n) => {
+        n.addEventListener('mouseenter', () => showTip(n));
+        n.addEventListener('mouseleave', hideTip);
+      });
+    }
+    // При фокусе карта может доехать до узла (анимация 250 мс): подсказку ставим после неё
+    nodes.forEach((n) => { n.addEventListener('focus', () => setTimeout(() => { if (document.activeElement === n) showTip(n); }, 270)); n.addEventListener('blur', hideTip); });
+    frame.addEventListener('pointerdown', hideTip);
+    frame.addEventListener('wheel', hideTip, { passive: true });
 
     // --- Узлы, кнопки, переходы в карточке ---
     mm.addEventListener('click', (e) => {
