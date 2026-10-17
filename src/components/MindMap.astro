@@ -27,6 +27,8 @@ const edgePath = (from: { x: number; y: number }, to: { x: number; y: number }) 
   return `M${from.x.toFixed(1)},${from.y.toFixed(1)} Q${cx.toFixed(1)},${cy.toFixed(1)} ${to.x.toFixed(1)},${to.y.toFixed(1)}`;
 };
 const cardTitle = (n: MapNode) => n.title ?? n.label;
+// Поиск по карте: подпись, заголовок карточки, торговые названия и подсказка; описания показаний в поиске не участвуют
+const searchText = (n: MapNode) => [n.label, cardTitle(n), n.note, n.hint].filter(Boolean).join(' ');
 // Много листьев: стартуем свёрнутыми, видны центр и группы; группа раскрывается по нажатию
 const collapsible = nodes.filter((p) => !p.node.children?.length).length > 24;
 // Подсказка при наведении: у класса короткое описание (hint), у вещества торговые названия; врачу видно сразу, без нажатия
@@ -34,6 +36,10 @@ const hoverTip = (n: MapNode) => n.hint ?? (n.children?.length ? undefined : n.n
 ---
 
 <div class="mm" data-mindmap data-collapsible={collapsible ? "" : undefined}>
+  <div class="mm-search" role="search">
+    <input type="search" class="mm-search-input" placeholder="Найти препарат, класс или название" aria-label="Поиск по карте" autocomplete="off" />
+    <ul class="mm-hits" aria-live="polite" hidden></ul>
+  </div>
   <div class="mm-frame" tabindex="0" role="application" aria-roledescription="интерактивная карта" aria-label="Карта: стрелки двигают, плюс и минус меняют масштаб, ноль вписывает карту в окно, F разворачивает на весь экран, Tab переходит по узлам">
     <div class="mm-canvas" style={`width:${Math.ceil(width)}px;height:${Math.ceil(height)}px`}>
       <svg class="mm-edges" width={Math.ceil(width)} height={Math.ceil(height)} aria-hidden="true">
@@ -48,6 +54,7 @@ const hoverTip = (n: MapNode) => n.hint ?? (n.children?.length ? undefined : n.n
           style={`left:${p.x.toFixed(1)}px;top:${p.y.toFixed(1)}px`}
           data-id={p.node.id}
           data-parent={p.parent}
+          data-q={searchText(p.node)}
           data-tip={p.depth > 0 ? hoverTip(p.node) : undefined}
           aria-controls={`mm-card-${p.node.id}`}
           aria-expanded="false"
@@ -228,14 +235,74 @@ const hoverTip = (n: MapNode) => n.hint ?? (n.children?.length ? undefined : n.n
       back?.focus({ preventScroll: true });
     };
 
+    // --- Поиск: совпадения подсвечивают группы, список ведёт к узлу (группа раскрывается, карточка открывается) ---
+    const search = mm.querySelector<HTMLInputElement>('.mm-search-input')!;
+    const hitList = mm.querySelector<HTMLElement>('.mm-hits')!;
+    const norm = (s: string) => s.toLowerCase().replace(/ё/g, 'е').replace(/\s+/g, ' ').trim();
+    const findHits = () => {
+      const words = norm(search.value).split(' ').filter(Boolean);
+      if (!words.length) return [];
+      return nodes.filter((n) => n !== rootNode && words.every((w) => norm(n.dataset.q ?? '').includes(w)));
+    };
+    const pick = (id: string) => {
+      hitList.hidden = true;
+      select(id, { focusCard: true });
+    };
+    const renderHits = () => {
+      const list = findHits();
+      nodes.forEach((n) => n.classList.remove('is-hit'));
+      list.forEach((n) => {
+        const gid = n.dataset.parent === rootNode.dataset.id ? n.dataset.id : n.dataset.parent;
+        if (gid) byId.get(gid)?.classList.add('is-hit');
+      });
+      hitList.replaceChildren();
+      hitList.hidden = !search.value.trim();
+      if (hitList.hidden) return;
+      if (!list.length) {
+        const li = document.createElement('li');
+        li.className = 'mm-hits-none';
+        li.textContent = 'Ничего не найдено';
+        hitList.append(li);
+        return;
+      }
+      list.slice(0, 8).forEach((n) => {
+        const li = document.createElement('li');
+        const b = document.createElement('button');
+        b.type = 'button';
+        b.dataset.hit = n.dataset.id!;
+        const name = document.createElement('span');
+        name.textContent = n.textContent;
+        b.append(name);
+        const where = n.dataset.parent && n.dataset.parent !== rootNode.dataset.id ? byId.get(n.dataset.parent)?.textContent : '';
+        if (where) {
+          const w = document.createElement('span');
+          w.className = 'mm-hit-where';
+          w.textContent = where;
+          b.append(w);
+        }
+        li.append(b);
+        hitList.append(li);
+      });
+    };
+    search.addEventListener('input', renderHits);
+    search.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') { search.value = ''; renderHits(); }
+      if (e.key === 'Enter') { const first = findHits()[0]; if (first) { e.preventDefault(); pick(first.dataset.id!); } }
+      if (e.key === 'ArrowDown') { e.preventDefault(); hitList.querySelector<HTMLButtonElement>('button')?.focus(); }
+    });
+
     // --- Указатели: один тянет, два масштабируют; клик по узлу не срабатывает, если тянули ---
     const pts = new Map<number, { x: number; y: number }>();
+    // Жест считается перетаскиванием, только если указатель ушёл дальше порога от места нажатия.
+    // Суммарное движение не годится: у пальца при обычном тапе оно быстро набирается, и клик по узлу терялся
+    const TAP = 8;
     let moved = 0;
+    let sx = 0, sy = 0;
     let pinch = 0;
     frame.addEventListener('pointerdown', (e) => {
       if ((e.target as HTMLElement).closest('.mm-panel, .mm-controls')) return;
       pts.set(e.pointerId, { x: e.clientX, y: e.clientY });
-      if (pts.size === 1) moved = 0;
+      if (pts.size === 1) { moved = 0; sx = e.clientX; sy = e.clientY; }
       if (pts.size === 2) { const [a, b] = [...pts.values()]; pinch = Math.hypot(a.x - b.x, a.y - b.y); }
       // Захват только когда пошёл жест: иначе клик достался бы рамке, а не узлу
     });
@@ -245,9 +312,9 @@ const hoverTip = (n: MapNode) => n.hint ?? (n.children?.length ? undefined : n.n
       const dx = e.clientX - p.x, dy = e.clientY - p.y;
       p.x = e.clientX; p.y = e.clientY;
       if (pts.size === 1) {
-        moved += Math.abs(dx) + Math.abs(dy);
         tx += dx; ty += dy;
-        if (moved > 4 && !frame.classList.contains('is-dragging')) { frame.classList.add('is-dragging'); frame.setPointerCapture(e.pointerId); tip.hidden = true; }
+        if (!moved && Math.hypot(e.clientX - sx, e.clientY - sy) > TAP) moved = 99;
+        if (moved && !frame.classList.contains('is-dragging')) { frame.classList.add('is-dragging'); frame.setPointerCapture(e.pointerId); tip.hidden = true; }
         apply();
       } else if (pts.size === 2) {
         const [a, b] = [...pts.values()];
@@ -301,17 +368,26 @@ const hoverTip = (n: MapNode) => n.hint ?? (n.children?.length ? undefined : n.n
     // --- Узлы, кнопки, переходы в карточке ---
     mm.addEventListener('click', (e) => {
       const t = e.target as HTMLElement;
+      const hit = t.closest<HTMLElement>('[data-hit]');
+      if (hit) { pick(hit.dataset.hit!); return; }
       const node = t.closest<HTMLButtonElement>('.mm-node');
       if (node) {
-        if (moved > 4) return; // это был жест, а не нажатие
+        if (moved) return; // это был жест, а не нажатие
         const isGroup = collapsible && node.dataset.parent === rootNode.dataset.id;
         if (isGroup) {
-          const open = !expanded.has(node.dataset.id!);
-          setGroup(node.dataset.id!, open);
+          const id = node.dataset.id!;
+          // Повторное нажатие по раскрытой и выбранной группе сворачивает её и снимает выделение
+          if (node === selected && expanded.has(id)) {
+            setGroup(id, false);
+            syncAll();
+            close();
+            fit();
+            return;
+          }
+          setGroup(id, true);
           syncAll();
-          select(node.dataset.id!, { focusCard: e.detail === 0, center: false });
-          if (open) fitTo([node, ...nodes.filter((c) => c.dataset.parent === node.dataset.id)]);
-          else fit();
+          select(id, { focusCard: e.detail === 0, center: false });
+          fitTo([node, ...nodes.filter((c) => c.dataset.parent === id)]);
           return;
         }
         if (node === selected) { close(); return; }

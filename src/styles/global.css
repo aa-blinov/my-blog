@@ -1457,6 +1457,80 @@ html.mm-locked body {
   color: var(--mm-accent);
   font-weight: 700;
 }
+/* Поиск: группа, в которой есть совпадение, обведена акцентом */
+.mm .mm-node.is-hit {
+  border-color: var(--mm-accent);
+  box-shadow: 0 0 0 2px rgba(var(--pico-primary-rgb), 0.25);
+}
+.mm-search {
+  position: relative;
+  margin: 0 0 0.6rem;
+}
+.mm-search-input {
+  width: 100%;
+  margin: 0;
+  padding: 0.5rem 0.7rem;
+  border: 1px solid var(--mm-rule);
+  border-radius: var(--app-radius-xs);
+  background: var(--mm-bg);
+  color: var(--mm-ink);
+  font-family: inherit;
+  font-size: 16px; /* меньше 16px телефон сам увеличивает поле при фокусе */
+}
+.mm-search-input:focus-visible {
+  outline: 2px solid var(--mm-accent);
+  outline-offset: 1px;
+}
+.mm-hits {
+  position: absolute;
+  z-index: 5;
+  top: 100%;
+  left: 0;
+  right: 0;
+  max-height: 18rem;
+  overflow-y: auto;
+  margin: 0.25rem 0 0;
+  padding: 0;
+  list-style: none;
+  border: 1px solid var(--mm-rule);
+  border-radius: var(--app-radius-xs);
+  background: var(--mm-bg);
+}
+.mm-hits[hidden] {
+  display: none;
+}
+.mm-hits button {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  min-height: 44px;
+  margin: 0;
+  padding: 0.4rem 0.7rem;
+  border: 0;
+  background: transparent;
+  color: var(--mm-ink);
+  font-family: inherit;
+  font-size: var(--app-font-sm);
+  text-align: left;
+  cursor: pointer;
+}
+.mm-hits button:hover,
+.mm-hits button:focus-visible {
+  background: var(--mm-tone);
+  color: var(--mm-accent);
+}
+.mm-hit-where {
+  font-size: var(--app-font-control);
+  color: var(--mm-muted);
+  white-space: nowrap;
+}
+.mm-hits-none {
+  padding: 0.6rem 0.7rem;
+  font-size: var(--app-font-sm);
+  color: var(--mm-muted);
+}
 .mm-short {
   display: none;
 }
