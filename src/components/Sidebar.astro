@@ -282,6 +282,15 @@ function getFolderHref(fullPath: string) {
               const title = (li.getAttribute('data-title') || '').toLowerCase();
               li.style.display = queries.some(q => name.includes(q)) || title.includes(raw) ? '' : 'none';
             });
+            // Совпала папка или «О серии»: показываем всё, что в ней, а не только файлы со словом в названии
+            allFolderItems.forEach(folder => {
+              const label = folder.querySelector(':scope > details > summary .folder-link');
+              const name = (label ? label.textContent : '').toLowerCase().replace(/\/$/, '');
+              const about = folder.querySelector(':scope > details > ul > li[data-filename^="about-"]');
+              if (queries.some(q => name.includes(q)) || (about && about.style.display !== 'none')) {
+                folder.querySelectorAll('li[data-filename]').forEach(li => { li.style.display = ''; });
+              }
+            });
             allFolderItems.forEach(folder => {
               const visibleFiles = folder.querySelectorAll('li[data-filename]:not([style*="display: none"])');
               folder.style.display = visibleFiles.length > 0 ? '' : 'none';
@@ -357,6 +366,14 @@ function getFolderHref(fullPath: string) {
         const name = (li.getAttribute('data-filename') || '').toLowerCase();
         const title = (li.getAttribute('data-title') || '').toLowerCase();
         li.style.display = queries.some(q => name.includes(q)) || title.includes(raw) ? '' : 'none';
+      });
+      // Совпала папка или «О серии»: показываем всё, что в ней, а не только файлы со словом в названии
+      allFolderItems.forEach(folder => {
+        const name = (folder.querySelector(':scope > details > summary .folder-link')?.textContent ?? '').toLowerCase().replace(/\/$/, '');
+        const about = folder.querySelector<HTMLLIElement>(':scope > details > ul > li[data-filename^="about-"]');
+        if (queries.some(q => name.includes(q)) || (about && about.style.display !== 'none')) {
+          folder.querySelectorAll<HTMLLIElement>('li[data-filename]').forEach(li => { li.style.display = ''; });
+        }
       });
       allFolderItems.forEach(folder => {
         const visibleFiles = folder.querySelectorAll<HTMLLIElement>('li[data-filename]:not([style*="display: none"])');
@@ -625,7 +642,13 @@ function getFolderHref(fullPath: string) {
     flex-shrink: 0;
   }
 
+  /* Открытая папка: ▸ повёрнут вниз, как у раскрывашек в статье */
+  .sidebar-nav details[open] > summary .ascii-icon.folder {
+    transform: rotate(90deg);
+  }
   .ascii-icon.folder {
+    display: inline-block;
+    transition: transform var(--app-transition);
     color: var(--pico-primary);
     padding: 0 0.1rem;
     cursor: pointer;

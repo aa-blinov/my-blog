@@ -53,11 +53,7 @@ if (homeEntry) {
     <PostList posts={posts} excerpts />
     
     <div class="all-articles">
-      <h3>
-        <a href={`${BASE}blog/`} class="post-title-link all-articles-link">
-          Смотреть все статьи <Arrow />
-        </a>
-      </h3>
+      <p class="all-articles-line"><a href={`${BASE}blog/`} class="post-title-link all-articles-link">Смотреть все статьи <Arrow /></a></p>
     </div>
   </div>
 
@@ -68,11 +64,7 @@ if (homeEntry) {
       </h2>
       <NoteList notes={recentNotes} />
       <div class="all-articles">
-        <h3>
-          <a href={`${BASE}notes/`} class="post-title-link all-articles-link">
-            Все заметки <Arrow />
-          </a>
-        </h3>
+        <p class="all-articles-line"><a href={`${BASE}notes/`} class="post-title-link all-articles-link">Все заметки <Arrow /></a></p>
       </div>
     </div>
   )}

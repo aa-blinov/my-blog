@@ -37,7 +37,7 @@
     if (!canHover) {
       const hint = document.createElement("span");
       hint.className = "ref-tip-hint";
-      hint.textContent = "нажмите номер ещё раз, чтобы открыть";
+      hint.textContent = "ещё одно нажатие откроет источник";
       tip.append(hint);
     }
     tip.hidden = false;
