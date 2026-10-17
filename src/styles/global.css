@@ -1501,7 +1501,7 @@ html.mm-locked body {
   top: 100%;
   left: 0;
   right: 0;
-  max-height: 18rem;
+  max-height: 12rem; /* список прокручивается сам и не выходит за низ рамки карты */
   overflow-y: auto;
   margin: 0.25rem 0 0;
   padding: 0;
@@ -1519,14 +1519,15 @@ html.mm-locked body {
   align-items: center;
   gap: 0.5rem;
   width: 100%;
-  min-height: 44px;
+  min-height: 30px;
   margin: 0;
-  padding: 0.4rem 0.7rem;
+  padding: 0.2rem 0.55rem;
   border: 0;
   background: transparent;
   color: var(--mm-ink);
   font-family: inherit;
-  font-size: var(--app-font-sm);
+  font-size: var(--app-font-control);
+  line-height: 1.25;
   text-align: left;
   cursor: pointer;
 }
@@ -1555,6 +1556,10 @@ html.mm-locked body {
   .mm .mm-search-input {
     height: 44px;
     min-height: 44px;
+  }
+  .mm-hits button {
+    min-height: 40px; /* на телефоне палец, поэтому не меньше 40px, но без лишнего объёма */
+    padding: 0.3rem 0.6rem;
   }
 }
 .mm-short {
