@@ -10,6 +10,7 @@ export interface MapFact {
   label: string; // «Что это», «Как принимают»
   text: string;
   sources?: MapSource[];
+  more?: boolean; // второстепенное: под раскрывашкой «Подробнее», чтобы карточка не была стеной текста
 }
 
 export interface MapNode {
@@ -20,6 +21,7 @@ export interface MapNode {
   hint?: string; // подсказка при наведении; если нет, у листа показывается note
   facts?: MapFact[];
   link?: { href: string; text: string };
+  docs?: { href: string; text: string }; // полная официальная инструкция
   children?: MapNode[];
 }
 

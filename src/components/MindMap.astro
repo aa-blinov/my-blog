@@ -1,5 +1,6 @@
 ---
 import { layout, flatten, type MindMapData, type MapSource, type MapNode } from '../utils/mindmap';
+import MindMapFact from './MindMapFact.astro';
 
 interface Props {
   data: MindMapData;
@@ -66,12 +67,14 @@ const hoverTip = (n: MapNode) => n.hint ?? (n.children?.length ? undefined : n.n
         <section class="mm-card" id={`mm-card-${p.node.id}`} data-card={p.node.id} hidden>
           <h2 tabindex="-1">{cardTitle(p.node)}</h2>
           {p.node.note && <p class="mm-note">{p.node.note}</p>}
-          {p.node.facts?.map((f) => (
-            <div class="mm-fact">
-              <p class="mm-fact-label">{f.label}</p>
-              <p>{f.text}{f.sources?.length ? <span class="ref-run">{f.sources.map(chip).map((s) => <> <a class="ref" href={s.url} data-tip={s.title} aria-label={`Источник ${s.n}: ${s.title}`}>[{s.n}]</a></>)}</span> : null}</p>
-            </div>
-          ))}
+          {p.node.facts?.filter((f) => !f.more).map((f) => <MindMapFact fact={f} chip={chip} />)}
+          {p.node.facts?.some((f) => f.more) && (
+            <details class="mm-more">
+              <summary>Подробнее: {p.node.facts.filter((f) => f.more).map((f) => f.label[0].toLowerCase() + f.label.slice(1)).join(', ')}</summary>
+              {p.node.facts.filter((f) => f.more).map((f) => <MindMapFact fact={f} chip={chip} />)}
+            </details>
+          )}
+          {p.node.docs && <p class="mm-docs"><a href={p.node.docs.href}>{p.node.docs.text}</a></p>}
           {p.node.link && <p class="mm-link"><a href={p.node.link.href}>{p.node.link.text}</a></p>}
           {p.node.children?.length ? (
             <p class="mm-children">

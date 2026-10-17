@@ -1,0 +1,17 @@
+---
+import type { MapFact, MapSource } from '../utils/mindmap';
+
+// Один пункт карточки карты: подпись, текст и чипы источников с общей нумерацией страницы
+interface Props {
+  fact: MapFact;
+  chip: (s: MapSource) => MapSource & { n: number };
+}
+
+const { fact, chip } = Astro.props;
+const chips = (fact.sources ?? []).map(chip);
+---
+
+<div class="mm-fact">
+  <p class="mm-fact-label">{fact.label}</p>
+  <p>{fact.text}{chips.length > 0 && <span class="ref-run">{chips.map((s) => <> <a class="ref" href={s.url} data-tip={s.title} aria-label={`Источник ${s.n}: ${s.title}`}>[{s.n}]</a></>)}</span>}</p>
+</div>

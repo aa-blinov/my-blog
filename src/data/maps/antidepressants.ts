@@ -115,6 +115,20 @@ export const antidepressants: MindMapData = { root: {
               "text": "Обычная доза 10 мг, максимум 20 мг в сутки; повышать не раньше чем через неделю."
             },
             {
+              "label": "Противопоказания",
+              "text": "Одновременно с ИМАО (в том числе линезолидом) и в течение 14 дней после них; вместе с пимозидом.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Селектра (эсциталопрам), инструкция, раздел «Показания препарата».",
+                  "url": "https://www.vidal.ru/drugs/selectra__23088"
+                },
+                {
+                  "title": "Lexapro (escitalopram), инструкция по применению и руководство для пациента (Medication Guide), одобренные FDA. AbbVie, редакции 2023 и 2024 годов.",
+                  "url": "https://www.rxabbvie.com/pdf/lexapro_pi.pdf"
+                }
+              ]
+            },
+            {
               "label": "Что важно при приёме",
               "text": "В исследовании 20 мг не помогали лучше, чем 10 мг. Пожилым и при болезнях печени обычно 10 мг.",
               "sources": [
@@ -122,7 +136,8 @@ export const antidepressants: MindMapData = { root: {
                   "title": "Lexapro (escitalopram), инструкция по применению и руководство для пациента (Medication Guide), одобренные FDA. AbbVie, редакции 2023 и 2024 годов.",
                   "url": "https://www.rxabbvie.com/pdf/lexapro_pi.pdf"
                 }
-              ]
+              ],
+              "more": true
             },
             {
               "label": "Чем хорош",
@@ -132,7 +147,8 @@ export const antidepressants: MindMapData = { root: {
                   "title": "Cipriani A. et al. Comparative efficacy and acceptability of 21 antidepressant drugs for the acute treatment of adults with major depressive disorder: a systematic review and network meta-analysis. Lancet, 2018.",
                   "url": "https://pubmed.ncbi.nlm.nih.gov/29477251/"
                 }
-              ]
+              ],
+              "more": true
             },
             {
               "label": "Чем платят",
@@ -150,9 +166,14 @@ export const antidepressants: MindMapData = { root: {
                   "title": "MHRA Drug Safety Update. Citalopram and escitalopram: QT interval prolongation, декабрь 2011.",
                   "url": "https://www.gov.uk/drug-safety-update/citalopram-and-escitalopram-qt-interval-prolongation"
                 }
-              ]
+              ],
+              "more": true
             }
           ],
+          "docs": {
+            "href": "https://www.vidal.ru/drugs/selectra__23088",
+            "text": "Полная инструкция: vidal.ru"
+          },
           "link": {
             "href": "/blog/science/mind/antidepressants/why-this-one/#сводная-карта-препаратов",
             "text": "Препарат в сводной карте четвёртой части"
@@ -200,6 +221,20 @@ export const antidepressants: MindMapData = { root: {
               "text": "Начинают с 50 мг, максимум 200 мг в сутки; повышают на величину от 25 до 50 мг не чаще раза в неделю."
             },
             {
+              "label": "Противопоказания",
+              "text": "Одновременно с ИМАО и в течение 14 дней после них; вместе с пимозидом, триптофаном или фенфлурамином; нестабильная эпилепсия; возраст до 6 лет; беременность и кормление грудью.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Серената (сертралин), инструкция, раздел «Показания препарата» (ЛП-№(006156)-(РГ-RU) от 08.07.24).",
+                  "url": "https://www.vidal.ru/drugs/serenata__6638"
+                },
+                {
+                  "title": "Zoloft (sertraline), инструкция по применению: раздел 2.4 о нарушении функции печени. DailyMed, 2025.",
+                  "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=fda754f6-d0f3-4dce-a17a-927d64f912f7"
+                }
+              ]
+            },
+            {
               "label": "Что важно при приёме",
               "text": "Дозу меняют не чаще раза в неделю: половина препарата выводится примерно за сутки, а постоянная концентрация в крови устанавливается примерно за неделю. При лёгком нарушении работы печени дозу уменьшают вдвое, при среднем и тяжёлом сертралин не рекомендован.",
               "sources": [
@@ -207,7 +242,8 @@ export const antidepressants: MindMapData = { root: {
                   "title": "Zoloft (sertraline), инструкция по применению: раздел 2.4 о нарушении функции печени. DailyMed, 2025.",
                   "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=fda754f6-d0f3-4dce-a17a-927d64f912f7"
                 }
-              ]
+              ],
+              "more": true
             },
             {
               "label": "Чем хорош",
@@ -217,7 +253,8 @@ export const antidepressants: MindMapData = { root: {
                   "title": "Cipriani A. et al. Comparative efficacy and acceptability of 21 antidepressant drugs for the acute treatment of adults with major depressive disorder: a systematic review and network meta-analysis. Lancet, 2018.",
                   "url": "https://pubmed.ncbi.nlm.nih.gov/29477251/"
                 }
-              ]
+              ],
+              "more": true
             },
             {
               "label": "Чем платят",
@@ -227,9 +264,14 @@ export const antidepressants: MindMapData = { root: {
                   "title": "Serretti A., Chiesa A. Treatment-emergent sexual dysfunction related to antidepressants: a meta-analysis. Journal of Clinical Psychopharmacology, 2009.",
                   "url": "https://pubmed.ncbi.nlm.nih.gov/19440080/"
                 }
-              ]
+              ],
+              "more": true
             }
           ],
+          "docs": {
+            "href": "https://www.vidal.ru/drugs/serenata__6638",
+            "text": "Полная инструкция: vidal.ru"
+          },
           "link": {
             "href": "/blog/science/mind/antidepressants/why-this-one/#сводная-карта-препаратов",
             "text": "Препарат в сводной карте четвёртой части"
@@ -267,8 +309,23 @@ export const antidepressants: MindMapData = { root: {
               "text": "Начинают с 20 мг, максимум 80 мг в сутки."
             },
             {
+              "label": "Противопоказания",
+              "text": "Одновременно с ИМАО (после отмены флуоксетина до начала ИМАО нужно не меньше 5 недель); вместе с пимозидом или тиоридазином; тяжёлые нарушения работы почек и печени; беременность и кормление грудью; суицидальные мысли.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Профлузак (флуоксетин), инструкция, раздел «Показания препарата».",
+                  "url": "https://www.vidal.ru/drugs/proflusak__1402"
+                },
+                {
+                  "title": "Prozac (fluoxetine), инструкция по применению: противопоказания (тиоридазин) и раздел 5.14 о длительном выведении. DailyMed, Eli Lilly (Dista), 2026.",
+                  "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=c88f33ed-6dfb-4c5e-bc01-d8e36dd97299"
+                }
+              ]
+            },
+            {
               "label": "Когда оценивают эффект",
-              "text": "Повысить дозу можно рассмотреть через несколько недель, если улучшения мало."
+              "text": "Повысить дозу можно рассмотреть через несколько недель, если улучшения мало.",
+              "more": true
             },
             {
               "label": "Что важно при приёме",
@@ -278,7 +335,8 @@ export const antidepressants: MindMapData = { root: {
                   "title": "Prozac (fluoxetine), инструкция по применению: противопоказания (тиоридазин) и раздел 5.14 о длительном выведении. DailyMed, Eli Lilly (Dista), 2026.",
                   "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=c88f33ed-6dfb-4c5e-bc01-d8e36dd97299"
                 }
-              ]
+              ],
+              "more": true
             },
             {
               "label": "Чем хорош",
@@ -288,7 +346,8 @@ export const antidepressants: MindMapData = { root: {
                   "title": "Cipriani A. et al. Comparative efficacy and acceptability of 21 antidepressant drugs for the acute treatment of adults with major depressive disorder: a systematic review and network meta-analysis. Lancet, 2018.",
                   "url": "https://pubmed.ncbi.nlm.nih.gov/29477251/"
                 }
-              ]
+              ],
+              "more": true
             },
             {
               "label": "Чем платят",
@@ -302,9 +361,14 @@ export const antidepressants: MindMapData = { root: {
                   "title": "Serretti A., Chiesa A. Treatment-emergent sexual dysfunction related to antidepressants: a meta-analysis. Journal of Clinical Psychopharmacology, 2009.",
                   "url": "https://pubmed.ncbi.nlm.nih.gov/19440080/"
                 }
-              ]
+              ],
+              "more": true
             }
           ],
+          "docs": {
+            "href": "https://www.vidal.ru/drugs/proflusak__1402",
+            "text": "Полная инструкция: vidal.ru"
+          },
           "link": {
             "href": "/blog/science/mind/antidepressants/why-this-one/#сводная-карта-препаратов",
             "text": "Препарат в сводной карте четвёртой части"
@@ -342,6 +406,20 @@ export const antidepressants: MindMapData = { root: {
               "text": "Начинают с 20 мг, максимум 50 мг в сутки при депрессии; повышают на 10 мг не чаще раза в неделю."
             },
             {
+              "label": "Противопоказания",
+              "text": "Одновременно с ИМАО и в течение 2 недель после них; вместе с тиоридазином или пимозидом (опасные нарушения ритма сердца); возраст до 18 лет.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Паксил (пароксетин), инструкция, раздел «Показания препарата» (ЛП-№(000746)-(РГ-RU) от 04.05.22).",
+                  "url": "https://www.vidal.ru/drugs/paxil__24822"
+                },
+                {
+                  "title": "Paxil (paroxetine), инструкция по применению: разделы о судорогах, кровотечениях, варфарине и тамоксифене. DailyMed, Apotex, 2026.",
+                  "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=ef3b5cbe-f9e1-c1ac-79da-cfe14e3a7e7e"
+                }
+              ]
+            },
+            {
               "label": "Что важно при приёме",
               "text": "Пожилым и при тяжёлых болезнях почек или печени начинают с 10 мг, максимум 40 мг. Отменяют постепенно.",
               "sources": [
@@ -349,7 +427,8 @@ export const antidepressants: MindMapData = { root: {
                   "title": "Paxil (paroxetine), инструкция по применению: разделы о судорогах, кровотечениях, варфарине и тамоксифене. DailyMed, Apotex, 2026.",
                   "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=ef3b5cbe-f9e1-c1ac-79da-cfe14e3a7e7e"
                 }
-              ]
+              ],
+              "more": true
             },
             {
               "label": "Чем хорош",
@@ -359,7 +438,8 @@ export const antidepressants: MindMapData = { root: {
                   "title": "Cipriani A. et al. Comparative efficacy and acceptability of 21 antidepressant drugs for the acute treatment of adults with major depressive disorder: a systematic review and network meta-analysis. Lancet, 2018.",
                   "url": "https://pubmed.ncbi.nlm.nih.gov/29477251/"
                 }
-              ]
+              ],
+              "more": true
             },
             {
               "label": "Чем платят",
@@ -373,7 +453,8 @@ export const antidepressants: MindMapData = { root: {
                   "title": "Henssler J. et al. Incidence of antidepressant discontinuation symptoms: a systematic review and meta-analysis. Lancet Psychiatry, 2024.",
                   "url": "https://pubmed.ncbi.nlm.nih.gov/38851198/"
                 }
-              ]
+              ],
+              "more": true
             },
             {
               "label": "Пожилым",
@@ -383,9 +464,14 @@ export const antidepressants: MindMapData = { root: {
                   "title": "2023 American Geriatrics Society Beers Criteria Update Expert Panel. American Geriatrics Society 2023 updated AGS Beers Criteria for potentially inappropriate medication use in older adults. Journal of the American Geriatrics Society, 2023.",
                   "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12478568/"
                 }
-              ]
+              ],
+              "more": true
             }
           ],
+          "docs": {
+            "href": "https://www.vidal.ru/drugs/paxil__24822",
+            "text": "Полная инструкция: vidal.ru"
+          },
           "link": {
             "href": "/blog/science/mind/antidepressants/why-this-one/#сводная-карта-препаратов",
             "text": "Препарат в сводной карте четвёртой части"
@@ -423,6 +509,20 @@ export const antidepressants: MindMapData = { root: {
               "text": "Начинают с 20 мг, максимум 40 мг в сутки; повышать не раньше чем через неделю."
             },
             {
+              "label": "Противопоказания",
+              "text": "Одновременно с ИМАО (в том числе селегилином, моклобемидом, линезолидом) и в течение 14 дней после них; вместе с лекарствами, удлиняющими интервал QT на ЭКГ (например, пимозидом); врождённое удлинение интервала QT (нарушение ритма сердца); возраст до 18 лет.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Циталопрам, таблетки, инструкция, раздел «Показания препарата» (ЛП-001955 от 25.12.12).",
+                  "url": "https://www.vidal.ru/drugs/citalopram__38632"
+                },
+                {
+                  "title": "Celexa (citalopram), инструкция по применению: разделы 2.3 и 5.2 об интервале QT и дозах. DailyMed, Allergan, 2026.",
+                  "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=4259d9b1-de34-43a4-85a8-41dd214e9177"
+                }
+              ]
+            },
+            {
               "label": "Что важно при приёме",
               "text": "Больше 40 мг нельзя из-за риска нарушения ритма сердца (удлинение QT). Старше 60 лет и при болезнях печени максимум 20 мг.",
               "sources": [
@@ -430,7 +530,8 @@ export const antidepressants: MindMapData = { root: {
                   "title": "Celexa (citalopram), инструкция по применению: разделы 2.3 и 5.2 об интервале QT и дозах. DailyMed, Allergan, 2026.",
                   "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=4259d9b1-de34-43a4-85a8-41dd214e9177"
                 }
-              ]
+              ],
+              "more": true
             },
             {
               "label": "Чем хорош",
@@ -440,7 +541,8 @@ export const antidepressants: MindMapData = { root: {
                   "title": "Cipriani A. et al. Comparative efficacy and acceptability of 21 antidepressant drugs for the acute treatment of adults with major depressive disorder: a systematic review and network meta-analysis. Lancet, 2018.",
                   "url": "https://pubmed.ncbi.nlm.nih.gov/29477251/"
                 }
-              ]
+              ],
+              "more": true
             },
             {
               "label": "Чем платят",
@@ -458,9 +560,14 @@ export const antidepressants: MindMapData = { root: {
                   "title": "Serretti A., Chiesa A. Treatment-emergent sexual dysfunction related to antidepressants: a meta-analysis. Journal of Clinical Psychopharmacology, 2009.",
                   "url": "https://pubmed.ncbi.nlm.nih.gov/19440080/"
                 }
-              ]
+              ],
+              "more": true
             }
           ],
+          "docs": {
+            "href": "https://www.vidal.ru/drugs/citalopram__38632",
+            "text": "Полная инструкция: vidal.ru"
+          },
           "link": {
             "href": "/blog/science/mind/antidepressants/why-this-one/#сводная-карта-препаратов",
             "text": "Препарат в сводной карте четвёртой части"
@@ -498,8 +605,23 @@ export const antidepressants: MindMapData = { root: {
               "text": "При депрессии начинают с 50 или 100 мг, обычно 100 мг, максимум 300 мг в сутки (российская инструкция)."
             },
             {
+              "label": "Противопоказания",
+              "text": "Одновременно с ИМАО и в течение 2 недель после них; вместе с тизанидином, пимозидом, тиоридазином или рамелтеоном; возраст до 18 лет при депрессии (до 8 лет при обсессивно-компульсивном расстройстве).",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Феварин (флувоксамин), инструкция, раздел «Режим дозирования» при депрессии.",
+                  "url": "https://www.vidal.ru/drugs/fevarin__1698"
+                },
+                {
+                  "title": "Fluvoxamine maleate tablets, инструкция по применению: противопоказания и раздел 5.8 о взаимодействиях (клозапин, теофиллин, варфарин, тизанидин). DailyMed, Apotex, 2026.",
+                  "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=6eeb14df-6fcf-a737-5359-5744eb4accea"
+                }
+              ]
+            },
+            {
               "label": "Когда оценивают эффект",
-              "text": "Через три-четыре недели от начала дозу пересматривают."
+              "text": "Через три-четыре недели от начала дозу пересматривают.",
+              "more": true
             },
             {
               "label": "Что важно при приёме",
@@ -513,7 +635,8 @@ export const antidepressants: MindMapData = { root: {
                   "title": "Fluvoxamine maleate tablets, инструкция по применению: противопоказания и раздел 5.8 о взаимодействиях (клозапин, теофиллин, варфарин, тизанидин). DailyMed, Apotex, 2026.",
                   "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=6eeb14df-6fcf-a737-5359-5744eb4accea"
                 }
-              ]
+              ],
+              "more": true
             },
             {
               "label": "Чем платят",
@@ -535,9 +658,14 @@ export const antidepressants: MindMapData = { root: {
                   "title": "Valdoxan (agomelatine): EPAR, сведения о препарате. Европейское агентство лекарственных средств (EMA).",
                   "url": "https://www.ema.europa.eu/en/medicines/human/EPAR/valdoxan"
                 }
-              ]
+              ],
+              "more": true
             }
           ],
+          "docs": {
+            "href": "https://www.vidal.ru/drugs/fevarin__1698",
+            "text": "Полная инструкция: vidal.ru"
+          },
           "link": {
             "href": "/blog/science/mind/antidepressants/why-this-one/#сводная-карта-препаратов",
             "text": "Препарат в сводной карте четвёртой части"
@@ -613,6 +741,20 @@ export const antidepressants: MindMapData = { root: {
               "text": "XR: начинают с 75 мг (иногда сначала от 4 до 7 дней по 37,5 мг), обычно до 225 мг в сутки. Обычные таблетки: начинают с 37,5 мг дважды в день, по российской инструкции максимум 375 мг в сутки, высокие дозы в основном в стационаре."
             },
             {
+              "label": "Противопоказания",
+              "text": "Одновременно с ИМАО (в том числе линезолидом) и в течение 14 дней после них; тяжёлые нарушения работы почек или печени; возраст до 18 лет; беременность и кормление грудью.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Велафакс (венлафаксин), таблетки, раздел «Режим дозирования».",
+                  "url": "https://www.vidal.ru/drugs/velafax__8875"
+                },
+                {
+                  "title": "Effexor XR (venlafaxine extended-release), инструкция по применению: раздел 2 о дозах и приёме. DailyMed, Viatris.",
+                  "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=c848a5d8-ba94-4c84-80e3-0bf35fb8e32e"
+                }
+              ]
+            },
+            {
               "label": "Что важно при приёме",
               "text": "Капсулу глотают целиком, не делят и не разжёвывают; можно высыпать содержимое на ложку яблочного пюре. Отменяют постепенно.",
               "sources": [
@@ -624,7 +766,8 @@ export const antidepressants: MindMapData = { root: {
                   "title": "Справочник Видаль: Велафакс (венлафаксин), таблетки, раздел «Режим дозирования».",
                   "url": "https://www.vidal.ru/drugs/velafax__8875"
                 }
-              ]
+              ],
+              "more": true
             },
             {
               "label": "Чем хорош",
@@ -634,7 +777,8 @@ export const antidepressants: MindMapData = { root: {
                   "title": "Cipriani A. et al. Comparative efficacy and acceptability of 21 antidepressant drugs for the acute treatment of adults with major depressive disorder: a systematic review and network meta-analysis. Lancet, 2018.",
                   "url": "https://pubmed.ncbi.nlm.nih.gov/29477251/"
                 }
-              ]
+              ],
+              "more": true
             },
             {
               "label": "Чем платят",
@@ -660,9 +804,14 @@ export const antidepressants: MindMapData = { root: {
                   "title": "Henssler J. et al. Incidence of antidepressant discontinuation symptoms: a systematic review and meta-analysis. Lancet Psychiatry, 2024.",
                   "url": "https://pubmed.ncbi.nlm.nih.gov/38851198/"
                 }
-              ]
+              ],
+              "more": true
             }
           ],
+          "docs": {
+            "href": "https://www.vidal.ru/drugs/velafax__8875",
+            "text": "Полная инструкция: vidal.ru"
+          },
           "link": {
             "href": "/blog/science/mind/antidepressants/why-this-one/#сводная-карта-препаратов",
             "text": "Препарат в сводной карте четвёртой части"
@@ -710,6 +859,20 @@ export const antidepressants: MindMapData = { root: {
               "text": "Начинают с дозы от 40 до 60 мг в сутки; максимум 120 мг, но выше 60 мг пользы не показано."
             },
             {
+              "label": "Противопоказания",
+              "text": "Одновременно с ИМАО и в течение 14 дней после них; вместе с флувоксамином или ципрофлоксацином; болезни печени с печёночной недостаточностью; тяжёлая почечная недостаточность; неконтролируемое высокое давление; некомпенсированная закрытоугольная глаукома.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Депратал (дулоксетин), разделы «Режим дозирования» и «Противопоказания».",
+                  "url": "https://www.vidal.ru/drugs/depratal"
+                },
+                {
+                  "title": "Duloxetine delayed-release capsules, инструкция по применению: раздел 2 о дозах и приёме. DailyMed, Lupin, 2026.",
+                  "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=829a4f51-c882-4b64-81f3-abfb03a52ebe"
+                }
+              ]
+            },
+            {
               "label": "Что важно при приёме",
               "text": "Капсулу или таблетку глотают целиком: не открывают, не делят и не высыпают на еду, иначе разрушается защитная оболочка. Отменяют постепенно. Нельзя при болезнях печени с печёночной недостаточностью, тяжёлой почечной недостаточности, неконтролируемом давлении, закрытоугольной глаукоме, вместе с ИМАО и с флувоксамином или ципрофлоксацином.",
               "sources": [
@@ -721,7 +884,8 @@ export const antidepressants: MindMapData = { root: {
                   "title": "Справочник Видаль: Депратал (дулоксетин), разделы «Режим дозирования» и «Противопоказания».",
                   "url": "https://www.vidal.ru/drugs/depratal"
                 }
-              ]
+              ],
+              "more": true
             },
             {
               "label": "Чем хорош",
@@ -731,7 +895,8 @@ export const antidepressants: MindMapData = { root: {
                   "title": "Lunn M.P., Hughes R.A., Wiffen P.J. Duloxetine for treating painful neuropathy, chronic pain or fibromyalgia. Cochrane Database of Systematic Reviews, 2014.",
                   "url": "https://pubmed.ncbi.nlm.nih.gov/24385423/"
                 }
-              ]
+              ],
+              "more": true
             },
             {
               "label": "Чем платят",
@@ -745,9 +910,14 @@ export const antidepressants: MindMapData = { root: {
                   "title": "Serretti A., Chiesa A. Treatment-emergent sexual dysfunction related to antidepressants: a meta-analysis. Journal of Clinical Psychopharmacology, 2009.",
                   "url": "https://pubmed.ncbi.nlm.nih.gov/19440080/"
                 }
-              ]
+              ],
+              "more": true
             }
           ],
+          "docs": {
+            "href": "https://www.vidal.ru/drugs/depratal",
+            "text": "Полная инструкция: vidal.ru"
+          },
           "link": {
             "href": "/blog/science/mind/antidepressants/why-this-one/#сводная-карта-препаратов",
             "text": "Препарат в сводной карте четвёртой части"
@@ -785,6 +955,16 @@ export const antidepressants: MindMapData = { root: {
               "text": "50 мг в сутки: это и начальная, и лечебная доза. В исследованиях давали от 50 до 400 мг, но выше 50 мг пользы не прибавлялось, а побочных эффектов становилось больше. Отдельной предельной дозы для взрослых без болезней почек и печени инструкция не называет."
             },
             {
+              "label": "Противопоказания",
+              "text": "Одновременно с ИМАО, в течение 14 дней после их отмены и 7 дней до их начала; начинать при лечении линезолидом или метиленовым синим внутривенно.",
+              "sources": [
+                {
+                  "title": "Pristiq (desvenlafaxine) таблетки с замедленным высвобождением, инструкция по применению: разделы 2.1 и 2.5 о дозах, приёме и отмене. DailyMed, Wyeth (Pfizer), 2026.",
+                  "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=0f43610c-f290-46ea-d186-4f998ed99fce"
+                }
+              ]
+            },
+            {
               "label": "Что важно при приёме",
               "text": "Отменяют постепенно. В стуле можно заметить пустую оболочку таблетки: лекарство из неё к этому моменту уже всосалось.",
               "sources": [
@@ -792,7 +972,8 @@ export const antidepressants: MindMapData = { root: {
                   "title": "Pristiq (desvenlafaxine) таблетки с замедленным высвобождением, инструкция по применению: разделы 2.1 и 2.5 о дозах, приёме и отмене. DailyMed, Wyeth (Pfizer), 2026.",
                   "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=0f43610c-f290-46ea-d186-4f998ed99fce"
                 }
-              ]
+              ],
+              "more": true
             },
             {
               "label": "В России",
@@ -802,7 +983,8 @@ export const antidepressants: MindMapData = { root: {
                   "title": "Справочник Видаль: поиск «дезвенлафаксин», октябрь 2026: зарегистрированных препаратов не найдено.",
                   "url": "https://www.vidal.ru/search?t=all&q=%D0%B4%D0%B5%D0%B7%D0%B2%D0%B5%D0%BD%D0%BB%D0%B0%D1%84%D0%B0%D0%BA%D1%81%D0%B8%D0%BD"
                 }
-              ]
+              ],
+              "more": true
             },
             {
               "label": "Чем платят",
@@ -812,9 +994,14 @@ export const antidepressants: MindMapData = { root: {
                   "title": "Henssler J. et al. Incidence of antidepressant discontinuation symptoms: a systematic review and meta-analysis. Lancet Psychiatry, 2024.",
                   "url": "https://pubmed.ncbi.nlm.nih.gov/38851198/"
                 }
-              ]
+              ],
+              "more": true
             }
           ],
+          "docs": {
+            "href": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=0f43610c-f290-46ea-d186-4f998ed99fce",
+            "text": "Полная инструкция: dailymed.nlm.nih.gov"
+          },
           "link": {
             "href": "/blog/science/mind/antidepressants/how-they-work/#классы-и-их-названия",
             "text": "Классы подробнее во второй части"
@@ -896,8 +1083,19 @@ export const antidepressants: MindMapData = { root: {
               "text": "Начинают с 15 мг, максимум 45 мг в сутки."
             },
             {
+              "label": "Противопоказания",
+              "text": "Возраст до 18 лет; беременность и кормление грудью.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Миртазонал (миртазапин), инструкция, раздел «Показания препарата».",
+                  "url": "https://www.vidal.ru/drugs/mirtazonal__21725"
+                }
+              ]
+            },
+            {
               "label": "Когда оценивают эффект",
-              "text": "Дозу меняют не чаще чем раз в одну-две недели, чтобы успеть оценить ответ."
+              "text": "Дозу меняют не чаще чем раз в одну-две недели, чтобы успеть оценить ответ.",
+              "more": true
             },
             {
               "label": "Что важно при приёме",
@@ -907,7 +1105,8 @@ export const antidepressants: MindMapData = { root: {
                   "title": "Remeron и RemeronSolTab (mirtazapine), инструкция по применению: раздел 2 о дозах и приёме. DailyMed, Organon.",
                   "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=98ad1917-a094-44f5-a28f-a64a8cfcd887"
                 }
-              ]
+              ],
+              "more": true
             },
             {
               "label": "Чем хорош",
@@ -921,7 +1120,8 @@ export const antidepressants: MindMapData = { root: {
                   "title": "Serretti A., Chiesa A. Treatment-emergent sexual dysfunction related to antidepressants: a meta-analysis. Journal of Clinical Psychopharmacology, 2009.",
                   "url": "https://pubmed.ncbi.nlm.nih.gov/19440080/"
                 }
-              ]
+              ],
+              "more": true
             },
             {
               "label": "Чем платят",
@@ -935,7 +1135,8 @@ export const antidepressants: MindMapData = { root: {
                   "title": "Hawton K. et al. Toxicity of antidepressants: rates of suicide relative to prescribing and non-fatal overdose. British Journal of Psychiatry, 2010.",
                   "url": "https://pubmed.ncbi.nlm.nih.gov/20435959/"
                 }
-              ]
+              ],
+              "more": true
             },
             {
               "label": "Редко",
@@ -945,9 +1146,14 @@ export const antidepressants: MindMapData = { root: {
                   "title": "Remeron и RemeronSolTab (mirtazapine), инструкция по применению: раздел 2 о дозах и приёме. DailyMed, Organon.",
                   "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=98ad1917-a094-44f5-a28f-a64a8cfcd887"
                 }
-              ]
+              ],
+              "more": true
             }
           ],
+          "docs": {
+            "href": "https://www.vidal.ru/drugs/mirtazonal__21725",
+            "text": "Полная инструкция: vidal.ru"
+          },
           "link": {
             "href": "/blog/science/mind/antidepressants/why-this-one/#сводная-карта-препаратов",
             "text": "Препарат в сводной карте четвёртой части"
@@ -981,8 +1187,19 @@ export const antidepressants: MindMapData = { root: {
               "text": "Начинают с 30 мг в сутки и повышают каждые несколько дней. Обычная действующая доза от 60 до 90 мг в сутки. Максимальную дозу инструкция не называет."
             },
             {
+              "label": "Противопоказания",
+              "text": "Мания; тяжёлые болезни печени; возраст до 18 лет.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Леривон (миансерин), инструкция.",
+                  "url": "https://www.vidal.ru/drugs/lerivon__5330"
+                }
+              ]
+            },
+            {
               "label": "Когда оценивают эффект",
-              "text": "Ответ ожидают через 2 или 4 недели; если после повышения дозы ещё через 2 или 4 недели ответа нет, препарат отменяют."
+              "text": "Ответ ожидают через 2 или 4 недели; если после повышения дозы ещё через 2 или 4 недели ответа нет, препарат отменяют.",
+              "more": true
             },
             {
               "label": "Что важно при приёме",
@@ -992,7 +1209,8 @@ export const antidepressants: MindMapData = { root: {
                   "title": "Справочник Видаль: Леривон (миансерин), инструкция.",
                   "url": "https://www.vidal.ru/drugs/lerivon__5330"
                 }
-              ]
+              ],
+              "more": true
             },
             {
               "label": "Чем платят",
@@ -1002,7 +1220,8 @@ export const antidepressants: MindMapData = { root: {
                   "title": "Справочник Видаль: Леривон (миансерин), инструкция.",
                   "url": "https://www.vidal.ru/drugs/lerivon__5330"
                 }
-              ]
+              ],
+              "more": true
             },
             {
               "label": "Где встречается",
@@ -1012,9 +1231,14 @@ export const antidepressants: MindMapData = { root: {
                   "title": "Cipriani A. et al. Comparative efficacy and acceptability of 21 antidepressant drugs for the acute treatment of adults with major depressive disorder: a systematic review and network meta-analysis. Lancet, 2018.",
                   "url": "https://pubmed.ncbi.nlm.nih.gov/29477251/"
                 }
-              ]
+              ],
+              "more": true
             }
           ],
+          "docs": {
+            "href": "https://www.vidal.ru/drugs/lerivon__5330",
+            "text": "Полная инструкция: vidal.ru"
+          },
           "link": {
             "href": "/blog/science/mind/antidepressants/cis-practice/#препараты-которые-встречаются-у-нас-чаще-чем-в-западных-руководствах",
             "text": "Подробнее в восьмой части"
@@ -1068,8 +1292,19 @@ export const antidepressants: MindMapData = { root: {
               "text": "Начинают с 25 мг; если через 2 недели нет улучшения, можно 50 мг (две таблетки сразу перед сном)."
             },
             {
+              "label": "Противопоказания",
+              "text": "Печёночная недостаточность, цирроз и активные болезни печени; вместе с флувоксамином, ципрофлоксацином и другими сильными ингибиторами фермента CYP1A2; возраст до 18 лет.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Вальдоксан (агомелатин), раздел «Показания» (ЛП-№(000528)-(РГ-RU) от 25.01.22).",
+                  "url": "https://www.vidal.ru/drugs/valdoxan__29817"
+                }
+              ]
+            },
+            {
               "label": "Когда оценивают эффект",
-              "text": "Через 2 недели решают, повышать ли дозу."
+              "text": "Через 2 недели решают, повышать ли дозу.",
+              "more": true
             },
             {
               "label": "Что важно при приёме",
@@ -1079,7 +1314,8 @@ export const antidepressants: MindMapData = { root: {
                   "title": "Valdoxan (agomelatine), общая характеристика лекарственного препарата (SmPC), раздел 4.2 о дозах и анализах печени. Европейское агентство лекарственных средств (EMA).",
                   "url": "https://www.ema.europa.eu/en/documents/product-information/valdoxan-epar-product-information_en.pdf"
                 }
-              ]
+              ],
+              "more": true
             },
             {
               "label": "Чем хорош",
@@ -1093,7 +1329,8 @@ export const antidepressants: MindMapData = { root: {
                   "title": "Serretti A., Chiesa A. Treatment-emergent sexual dysfunction related to antidepressants: a meta-analysis. Journal of Clinical Psychopharmacology, 2009.",
                   "url": "https://pubmed.ncbi.nlm.nih.gov/19440080/"
                 }
-              ]
+              ],
+              "more": true
             },
             {
               "label": "Чем платят",
@@ -1103,9 +1340,14 @@ export const antidepressants: MindMapData = { root: {
                   "title": "Valdoxan (agomelatine): EPAR, сведения о препарате. Европейское агентство лекарственных средств (EMA).",
                   "url": "https://www.ema.europa.eu/en/medicines/human/EPAR/valdoxan"
                 }
-              ]
+              ],
+              "more": true
             }
           ],
+          "docs": {
+            "href": "https://www.vidal.ru/drugs/valdoxan__29817",
+            "text": "Полная инструкция: vidal.ru"
+          },
           "link": {
             "href": "/blog/science/mind/antidepressants/why-this-one/#сводная-карта-препаратов",
             "text": "Препарат в сводной карте четвёртой части"
@@ -1145,6 +1387,16 @@ export const antidepressants: MindMapData = { root: {
               "text": "Начинают с 10 мг, затем повышают до 20 мг по переносимости; при плохой переносимости 5 мг. По российской инструкции от 5 до 20 мг один раз в день; с 65 лет обычно начинают с 5 мг."
             },
             {
+              "label": "Противопоказания",
+              "text": "Одновременно с ИМАО (в том числе моклобемидом и линезолидом); возраст до 18 лет.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Бринтелликс (вортиоксетин), разделы «Режим дозирования» и «Противопоказания».",
+                  "url": "https://www.vidal.ru/drugs/brintellix"
+                }
+              ]
+            },
+            {
               "label": "Что важно при приёме",
               "text": "Можно прекратить сразу, но с доз от 15 до 20 мг лучше неделю принимать 10 мг. После отмены до ИМАО нужно 21 день.",
               "sources": [
@@ -1156,7 +1408,8 @@ export const antidepressants: MindMapData = { root: {
                   "title": "Справочник Видаль: Бринтелликс (вортиоксетин), разделы «Режим дозирования» и «Противопоказания».",
                   "url": "https://www.vidal.ru/drugs/brintellix"
                 }
-              ]
+              ],
+              "more": true
             },
             {
               "label": "Чем хорош",
@@ -1166,9 +1419,14 @@ export const antidepressants: MindMapData = { root: {
                   "title": "Cipriani A. et al. Comparative efficacy and acceptability of 21 antidepressant drugs for the acute treatment of adults with major depressive disorder: a systematic review and network meta-analysis. Lancet, 2018.",
                   "url": "https://pubmed.ncbi.nlm.nih.gov/29477251/"
                 }
-              ]
+              ],
+              "more": true
             }
           ],
+          "docs": {
+            "href": "https://www.vidal.ru/drugs/brintellix",
+            "text": "Полная инструкция: vidal.ru"
+          },
           "link": {
             "href": "/blog/science/mind/antidepressants/why-this-one/#сводная-карта-препаратов",
             "text": "Препарат в сводной карте четвёртой части"
@@ -1212,6 +1470,20 @@ export const antidepressants: MindMapData = { root: {
               "text": "Начинают со 150 мг в сутки в несколько приёмов, амбулаторно максимум 400 мг (в стационаре до 600 мг)."
             },
             {
+              "label": "Противопоказания",
+              "text": "Желудочковая аритмия и тахикардия; ранний период после инфаркта миокарда; приапизм (длительная болезненная эрекция) в прошлом; беременность и кормление грудью; одновременно с ИМАО и в течение 14 дней после них.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: тразодон (Триттико), разделы «Режим дозирования» и «Противопоказания».",
+                  "url": "https://www.vidal.ru/drugs/trittico__45130"
+                },
+                {
+                  "title": "Trazodone hydrochloride tablets, инструкция по применению: раздел 2 о дозах и приёме. DailyMed, Teva, 2025.",
+                  "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=4006d439-e2de-4590-82e9-fc9d56e3ec1b"
+                }
+              ]
+            },
+            {
               "label": "Что важно при приёме",
               "text": "Таблетку глотают целиком или половинкой по риске, не разжёвывают. Отменяют постепенно. В России продаётся Триттико, таблетки с пролонгированным высвобождением: начинают со 150 мг, основную часть дозы принимают перед сном, по российской инструкции максимум 600 мг; противопоказан при желудочковой аритмии, раннем восстановлении после инфаркта и приапизме в прошлом.",
               "sources": [
@@ -1223,7 +1495,8 @@ export const antidepressants: MindMapData = { root: {
                   "title": "Справочник Видаль: тразодон (Триттико), разделы «Режим дозирования» и «Противопоказания».",
                   "url": "https://www.vidal.ru/drugs/trittico__45130"
                 }
-              ]
+              ],
+              "more": true
             },
             {
               "label": "Чем хорош",
@@ -1233,7 +1506,8 @@ export const antidepressants: MindMapData = { root: {
                   "title": "Shin J.J., Saadabadi A. Trazodone. StatPearls, 2024.",
                   "url": "https://www.ncbi.nlm.nih.gov/books/NBK470560/"
                 }
-              ]
+              ],
+              "more": true
             },
             {
               "label": "Чем платят",
@@ -1247,9 +1521,14 @@ export const antidepressants: MindMapData = { root: {
                   "title": "Trazodone hydrochloride tablets, инструкция по применению: раздел 2 о дозах и приёме. DailyMed, Teva, 2025.",
                   "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=4006d439-e2de-4590-82e9-fc9d56e3ec1b"
                 }
-              ]
+              ],
+              "more": true
             }
           ],
+          "docs": {
+            "href": "https://www.vidal.ru/drugs/trittico__45130",
+            "text": "Полная инструкция: vidal.ru"
+          },
           "link": {
             "href": "/blog/science/mind/antidepressants/why-this-one/#сводная-карта-препаратов",
             "text": "Препарат в сводной карте четвёртой части"
@@ -1303,8 +1582,19 @@ export const antidepressants: MindMapData = { root: {
               "text": "SR: начинают со 150 мг, обычно 300 мг (по 150 мг дважды), максимум 400 мг в сутки. XL: 150 мг, через 4 дня можно 300 мг, максимум 450 мг в сутки."
             },
             {
+              "label": "Противопоказания",
+              "text": "Эпилепсия и другие судорожные расстройства; булимия или анорексия сейчас или в прошлом; резкая отмена алкоголя, бензодиазепинов, барбитуратов или противоэпилептических лекарств; одновременно с ИМАО и в течение 14 дней после них; нельзя начинать во время лечения линезолидом.",
+              "sources": [
+                {
+                  "title": "Wellbutrin XL (bupropion extended-release), инструкция по применению, раздел 1 «Indications and Usage». DailyMed.",
+                  "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=a435da9d-f6e8-4ddc-897d-8cd2bf777b21"
+                }
+              ]
+            },
+            {
               "label": "Когда оценивают эффект",
-              "text": "Максимум (400 мг SR) рассматривают, если после нескольких недель на 300 мг нет улучшения."
+              "text": "Максимум (400 мг SR) рассматривают, если после нескольких недель на 300 мг нет улучшения.",
+              "more": true
             },
             {
               "label": "Что важно при приёме",
@@ -1318,7 +1608,8 @@ export const antidepressants: MindMapData = { root: {
                   "title": "Wellbutrin XL (bupropion extended-release), инструкция по применению: раздел 2 о дозах и приёме. DailyMed, Bausch Health.",
                   "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=a435da9d-f6e8-4ddc-897d-8cd2bf777b21"
                 }
-              ]
+              ],
+              "more": true
             },
             {
               "label": "Чем хорош",
@@ -1332,7 +1623,8 @@ export const antidepressants: MindMapData = { root: {
                   "title": "Serretti A., Chiesa A. Treatment-emergent sexual dysfunction related to antidepressants: a meta-analysis. Journal of Clinical Psychopharmacology, 2009.",
                   "url": "https://pubmed.ncbi.nlm.nih.gov/19440080/"
                 }
-              ]
+              ],
+              "more": true
             },
             {
               "label": "Чем платят",
@@ -1342,9 +1634,14 @@ export const antidepressants: MindMapData = { root: {
                   "title": "Wellbutrin SR (bupropion hydrochloride), инструкция по применению. GlaxoSmithKline, DailyMed.",
                   "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=cbc8c074-f080-4489-a5ae-207b5fadeba3"
                 }
-              ]
+              ],
+              "more": true
             }
           ],
+          "docs": {
+            "href": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=a435da9d-f6e8-4ddc-897d-8cd2bf777b21",
+            "text": "Полная инструкция: dailymed.nlm.nih.gov"
+          },
           "link": {
             "href": "/blog/science/mind/antidepressants/why-this-one/#сводная-карта-препаратов",
             "text": "Препарат в сводной карте четвёртой части"
@@ -1388,8 +1685,23 @@ export const antidepressants: MindMapData = { root: {
               "text": "4 мг два раза в день, то есть 8 мг в сутки, сразу с начала лечения. Если ответ неполный, через 3 или 4 недели можно поднять до 10 мг. Максимум 12 мг в сутки."
             },
             {
+              "label": "Противопоказания",
+              "text": "Кроме аллергии на компоненты, инструкция противопоказаний не называет; детям и подросткам до 18 лет препарат не применяют.",
+              "sources": [
+                {
+                  "title": "Edronax (reboxetine) 4 мг, общая характеристика лекарственного препарата (SmPC), разделы 4.2 и 4.4. electronic medicines compendium (Великобритания), Pfizer, редакция апреля 2025 года.",
+                  "url": "https://www.medicines.org.uk/emc/product/1578/smpc"
+                },
+                {
+                  "title": "Справочник Видаль: Эдронакс (ребоксетин), механизм действия и сведения о регистрации (отмена государственной регистрации).",
+                  "url": "https://www.vidal.ru/drugs/edronax__5809"
+                }
+              ]
+            },
+            {
               "label": "Когда оценивают эффект",
-              "text": "Решение о повышении дозы принимают через 3 или 4 недели, если ответ неполный."
+              "text": "Решение о повышении дозы принимают через 3 или 4 недели, если ответ неполный.",
+              "more": true
             },
             {
               "label": "Что важно при приёме",
@@ -1399,7 +1711,8 @@ export const antidepressants: MindMapData = { root: {
                   "title": "Edronax (reboxetine) 4 мг, общая характеристика лекарственного препарата (SmPC), разделы 4.2 и 4.4. electronic medicines compendium (Великобритания), Pfizer, редакция апреля 2025 года.",
                   "url": "https://www.medicines.org.uk/emc/product/1578/smpc"
                 }
-              ]
+              ],
+              "more": true
             },
             {
               "label": "Чем платят",
@@ -1409,9 +1722,14 @@ export const antidepressants: MindMapData = { root: {
                   "title": "Cipriani A. et al. Comparative efficacy and acceptability of 21 antidepressant drugs for the acute treatment of adults with major depressive disorder: a systematic review and network meta-analysis. Lancet, 2018.",
                   "url": "https://pubmed.ncbi.nlm.nih.gov/29477251/"
                 }
-              ]
+              ],
+              "more": true
             }
           ],
+          "docs": {
+            "href": "https://www.medicines.org.uk/emc/product/1578/smpc",
+            "text": "Полная инструкция: medicines.org.uk"
+          },
           "link": {
             "href": "/blog/science/mind/antidepressants/how-they-work/#классы-и-их-названия",
             "text": "Классы подробнее во второй части"
@@ -1455,6 +1773,16 @@ export const antidepressants: MindMapData = { root: {
               "text": "12,5 мг три раза в день, то есть 37,5 мг в сутки. Превышать рекомендованную дозу запрещено; при тяжёлом циррозе, тяжёлой почечной недостаточности и у ослабленных пожилых с весом меньше 55 кг не больше 2 таблеток в сутки."
             },
             {
+              "label": "Противопоказания",
+              "text": "Возраст до 15 лет (от 15 до 18 лет не рекомендуется); других противопоказаний, кроме аллергии на компоненты, инструкция не называет.",
+              "sources": [
+                {
+                  "title": "Stablon (tianeptine) 12,5 мг, общая характеристика лекарственного препарата (RCP), разделы 4.2, 4.4 и 4.8, условия отпуска. Base de données publique des médicaments (Франция), Servier, редакция ANSM от 09.07.2019.",
+                  "url": "https://base-donnees-publique.medicaments.gouv.fr/medicament/65411280/extrait"
+                }
+              ]
+            },
+            {
               "label": "Что важно при приёме",
               "text": "В России препаратов тианептина в справочнике Видаль сейчас нет, поэтому данные взяты из французской инструкции. В ней прямо сказано о злоупотреблении и зависимости, особенно у людей до 50 лет с зависимостью от лекарств или алкоголя в прошлом. Во Франции его выписывают только на защищённом бланке и не больше чем на 28 дней. Отменяют постепенно, за срок от 7 до 14 дней.",
               "sources": [
@@ -1466,7 +1794,8 @@ export const antidepressants: MindMapData = { root: {
                   "title": "Справочник Видаль: поиск по действующему веществу «тианептин», октябрь 2026.",
                   "url": "https://www.vidal.ru/search?t=all&q=тианептин"
                 }
-              ]
+              ],
+              "more": true
             },
             {
               "label": "Насколько помогает",
@@ -1476,7 +1805,8 @@ export const antidepressants: MindMapData = { root: {
                   "title": "Kasper S., Olié J.P. A meta-analysis of randomized controlled trials of tianeptine versus SSRI in the short-term treatment of depression. European Psychiatry, 2002.",
                   "url": "https://pubmed.ncbi.nlm.nih.gov/15177089/"
                 }
-              ]
+              ],
+              "more": true
             },
             {
               "label": "В России",
@@ -1494,7 +1824,8 @@ export const antidepressants: MindMapData = { root: {
                   "title": "Российское общество психиатров. Клинические рекомендации «Депрессивный эпизод, рекуррентное депрессивное расстройство», редакция 2021 года (ID 301_2 в рубрикаторе Минздрава, в архиве с 26.08.2024), PDF разработчика.",
                   "url": "https://psychiatr.ru/download/6271?view=1"
                 }
-              ]
+              ],
+              "more": true
             },
             {
               "label": "Где встречается",
@@ -1504,9 +1835,14 @@ export const antidepressants: MindMapData = { root: {
                   "title": "Cipriani A. et al. Comparative efficacy and acceptability of 21 antidepressant drugs for the acute treatment of adults with major depressive disorder: a systematic review and network meta-analysis. Lancet, 2018.",
                   "url": "https://pubmed.ncbi.nlm.nih.gov/29477251/"
                 }
-              ]
+              ],
+              "more": true
             }
           ],
+          "docs": {
+            "href": "https://base-donnees-publique.medicaments.gouv.fr/medicament/65411280/extrait",
+            "text": "Полная инструкция: base-donnees-publique.medicaments.gouv.fr"
+          },
           "link": {
             "href": "/blog/science/mind/antidepressants/cis-practice/#препараты-которые-встречаются-у-нас-чаще-чем-в-западных-руководствах",
             "text": "Подробнее в восьмой части"
@@ -1582,8 +1918,23 @@ export const antidepressants: MindMapData = { root: {
               "text": "Амбулаторно начинают с 75 мг в сутки (или от 50 до 100 мг на ночь), максимум 150 мг; в стационаре до 200, редко 300 мг."
             },
             {
+              "label": "Противопоказания",
+              "text": "Одновременно с ИМАО и в течение 14 дней после них; острый и ранний восстановительный период после инфаркта миокарда; тяжёлые нарушения проводимости сердца (блокады); закрытоугольная глаукома; кормление грудью; возраст до 6 лет.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Амитриптилин, таблетки 25 мг, раздел «Показания» (ЛП-№(002245)-(РГ-RU) от 26.04.23).",
+                  "url": "https://www.vidal.ru/drugs/amitriptyline__3916"
+                },
+                {
+                  "title": "Amitriptyline hydrochloride, инструкция по применению: противопоказания и предупреждения о сердце и судорогах. DailyMed, Sun Pharmaceutical, 2026.",
+                  "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=4e520c63-1cf6-40f6-a51c-3f9b0e181342"
+                }
+              ]
+            },
+            {
               "label": "Когда оценивают эффект",
-              "text": "Полный эффект может развиться только примерно через 30 дней; успокаивающее действие появляется раньше."
+              "text": "Полный эффект может развиться только примерно через 30 дней; успокаивающее действие появляется раньше.",
+              "more": true
             },
             {
               "label": "Что важно при приёме",
@@ -1593,7 +1944,8 @@ export const antidepressants: MindMapData = { root: {
                   "title": "Amitriptyline hydrochloride, инструкция по применению: противопоказания и предупреждения о сердце и судорогах. DailyMed, Sun Pharmaceutical, 2026.",
                   "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=4e520c63-1cf6-40f6-a51c-3f9b0e181342"
                 }
-              ]
+              ],
+              "more": true
             },
             {
               "label": "Чем хорош",
@@ -1603,7 +1955,8 @@ export const antidepressants: MindMapData = { root: {
                   "title": "Cipriani A. et al. Comparative efficacy and acceptability of 21 antidepressant drugs for the acute treatment of adults with major depressive disorder: a systematic review and network meta-analysis. Lancet, 2018.",
                   "url": "https://pubmed.ncbi.nlm.nih.gov/29477251/"
                 }
-              ]
+              ],
+              "more": true
             },
             {
               "label": "Чем платят",
@@ -1617,7 +1970,8 @@ export const antidepressants: MindMapData = { root: {
                   "title": "Hawton K. et al. Toxicity of antidepressants: rates of suicide relative to prescribing and non-fatal overdose. British Journal of Psychiatry, 2010.",
                   "url": "https://pubmed.ncbi.nlm.nih.gov/20435959/"
                 }
-              ]
+              ],
+              "more": true
             },
             {
               "label": "Пожилым",
@@ -1627,9 +1981,14 @@ export const antidepressants: MindMapData = { root: {
                   "title": "2023 American Geriatrics Society Beers Criteria Update Expert Panel. American Geriatrics Society 2023 updated AGS Beers Criteria for potentially inappropriate medication use in older adults. Journal of the American Geriatrics Society, 2023.",
                   "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12478568/"
                 }
-              ]
+              ],
+              "more": true
             }
           ],
+          "docs": {
+            "href": "https://www.vidal.ru/drugs/amitriptyline__3916",
+            "text": "Полная инструкция: vidal.ru"
+          },
           "link": {
             "href": "/blog/science/mind/antidepressants/why-this-one/#сводная-карта-препаратов",
             "text": "Препарат в сводной карте четвёртой части"
@@ -1667,8 +2026,23 @@ export const antidepressants: MindMapData = { root: {
               "text": "Амбулаторно максимум 250 мг в сутки (российская и американская инструкции). Начальную дозу американская называет 25 мг в сутки."
             },
             {
+              "label": "Противопоказания",
+              "text": "Одновременно с ИМАО и в течение 14 дней после них; недавний инфаркт миокарда, блокады и аритмии сердца; закрытоугольная глаукома; задержка мочи; тяжёлая печёночная недостаточность; первый триместр беременности и кормление грудью.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Анафранил (кломипрамин), таблетки 25 мг, раздел «Режим дозирования».",
+                  "url": "https://www.vidal.ru/drugs/anafranil__2055"
+                },
+                {
+                  "title": "Anafranil (clomipramine), инструкция по применению: раздел о судорогах. DailyMed, SpecGx, 2024.",
+                  "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=4074b555-7635-41a9-809d-fae3b3610059"
+                }
+              ]
+            },
+            {
               "label": "Когда оценивают эффект",
-              "text": "После подбора дозы между её изменениями ждут две-три недели (американская инструкция)."
+              "text": "После подбора дозы между её изменениями ждут две-три недели (американская инструкция).",
+              "more": true
             },
             {
               "label": "Что важно при приёме",
@@ -1682,7 +2056,8 @@ export const antidepressants: MindMapData = { root: {
                   "title": "Anafranil (clomipramine), инструкция по применению: раздел о судорогах. DailyMed, SpecGx, 2024.",
                   "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=4074b555-7635-41a9-809d-fae3b3610059"
                 }
-              ]
+              ],
+              "more": true
             },
             {
               "label": "Чем платят",
@@ -1692,7 +2067,8 @@ export const antidepressants: MindMapData = { root: {
                   "title": "Cipriani A. et al. Comparative efficacy and acceptability of 21 antidepressant drugs for the acute treatment of adults with major depressive disorder: a systematic review and network meta-analysis. Lancet, 2018.",
                   "url": "https://pubmed.ncbi.nlm.nih.gov/29477251/"
                 }
-              ]
+              ],
+              "more": true
             },
             {
               "label": "Пожилым",
@@ -1702,9 +2078,14 @@ export const antidepressants: MindMapData = { root: {
                   "title": "2023 American Geriatrics Society Beers Criteria Update Expert Panel. American Geriatrics Society 2023 updated AGS Beers Criteria for potentially inappropriate medication use in older adults. Journal of the American Geriatrics Society, 2023.",
                   "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12478568/"
                 }
-              ]
+              ],
+              "more": true
             }
           ],
+          "docs": {
+            "href": "https://www.vidal.ru/drugs/anafranil__2055",
+            "text": "Полная инструкция: vidal.ru"
+          },
           "link": {
             "href": "/blog/science/mind/antidepressants/why-this-one/#сводная-карта-препаратов",
             "text": "Препарат в сводной карте четвёртой части"
@@ -1742,8 +2123,23 @@ export const antidepressants: MindMapData = { root: {
               "text": "Амбулаторно начинают с 75 мг в сутки и доводят до 150 мг; больше 200 мг в сутки не рекомендуют. В больнице начинают со 100 мг и при необходимости доходят до 250 или 300 мг. Пожилым и подросткам начинают с 30 или 40 мг, обычно хватает не больше 100 мг."
             },
             {
+              "label": "Противопоказания",
+              "text": "Одновременно с ИМАО; острый период инфаркта миокарда и сердечная недостаточность; болезни печени, почек и кроветворения; закрытоугольная глаукома; задержка мочи (слабость мочевого пузыря, аденома простаты); первый триместр беременности и кормление грудью.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Мелипрамин (имипрамин), раздел «Показания» (ЛП-№(000221)-(РГ-RU) от 12.05.21).",
+                  "url": "https://www.vidal.ru/drugs/melipramin"
+                },
+                {
+                  "title": "Imipramine hydrochloride tablets, инструкция по применению: показания, противопоказания и раздел о дозах при депрессии. DailyMed, Strides Pharma, 2026.",
+                  "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=51d3b181-0d15-4782-a966-feb137972b18"
+                }
+              ]
+            },
+            {
               "label": "Когда оценивают эффект",
-              "text": "До полного эффекта может пройти от одной до трёх недель."
+              "text": "До полного эффекта может пройти от одной до трёх недель.",
+              "more": true
             },
             {
               "label": "Что важно при приёме",
@@ -1753,7 +2149,8 @@ export const antidepressants: MindMapData = { root: {
                   "title": "Imipramine hydrochloride tablets, инструкция по применению: показания, противопоказания и раздел о дозах при депрессии. DailyMed, Strides Pharma, 2026.",
                   "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=51d3b181-0d15-4782-a966-feb137972b18"
                 }
-              ]
+              ],
+              "more": true
             },
             {
               "label": "Чем платят",
@@ -1771,7 +2168,8 @@ export const antidepressants: MindMapData = { root: {
                   "title": "Hawton K. et al. Toxicity of antidepressants: rates of suicide relative to prescribing and non-fatal overdose. British Journal of Psychiatry, 2010.",
                   "url": "https://pubmed.ncbi.nlm.nih.gov/20435959/"
                 }
-              ]
+              ],
+              "more": true
             },
             {
               "label": "Пожилым",
@@ -1781,9 +2179,14 @@ export const antidepressants: MindMapData = { root: {
                   "title": "2023 American Geriatrics Society Beers Criteria Update Expert Panel. American Geriatrics Society 2023 updated AGS Beers Criteria for potentially inappropriate medication use in older adults. Journal of the American Geriatrics Society, 2023.",
                   "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12478568/"
                 }
-              ]
+              ],
+              "more": true
             }
           ],
+          "docs": {
+            "href": "https://www.vidal.ru/drugs/melipramin",
+            "text": "Полная инструкция: vidal.ru"
+          },
           "link": {
             "href": "/blog/science/mind/antidepressants/how-they-work/#классы-и-их-названия",
             "text": "Классы подробнее во второй части"
@@ -1821,6 +2224,20 @@ export const antidepressants: MindMapData = { root: {
               "text": "Начинают с 25 мг три раза в день или с 75 мг один раз. Обычная лечебная доза от 75 до 150 мг в сутки, максимум 100 мг три раза в день, то есть 300 мг."
             },
             {
+              "label": "Противопоказания",
+              "text": "Одновременно с ИМАО и в течение 14 дней после них; глаукома и склонность к задержке мочи; острый инфаркт миокарда и блокады сердца; тяжёлые болезни печени, почек и крови; беременность и кормление грудью; возраст до 12 лет.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Доксепин, капсулы, раздел «Показания» (ЛП-№(014922)-(РГ-RU) от 20.05.26).",
+                  "url": "https://www.vidal.ru/drugs/doxepin"
+                },
+                {
+                  "title": "Doxepin hydrochloride capsules, инструкция по применению: раздел 2.2 о дозах, противопоказания, раздел 5.4 о сонливости. DailyMed, Amneal, 2026.",
+                  "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=20bfb8af-7933-4e5c-a2b5-010659d9125b"
+                }
+              ]
+            },
+            {
               "label": "Что важно при приёме",
               "text": "Сильно клонит в сон: за руль нельзя, алкоголь усиливает действие, его избегают. Противопоказан при глаукоме и при задержке мочи сейчас или в прошлом.",
               "sources": [
@@ -1828,7 +2245,8 @@ export const antidepressants: MindMapData = { root: {
                   "title": "Doxepin hydrochloride capsules, инструкция по применению: раздел 2.2 о дозах, противопоказания, раздел 5.4 о сонливости. DailyMed, Amneal, 2026.",
                   "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=20bfb8af-7933-4e5c-a2b5-010659d9125b"
                 }
-              ]
+              ],
+              "more": true
             },
             {
               "label": "Чем платят",
@@ -1838,7 +2256,8 @@ export const antidepressants: MindMapData = { root: {
                   "title": "Hawton K. et al. Toxicity of antidepressants: rates of suicide relative to prescribing and non-fatal overdose. British Journal of Psychiatry, 2010.",
                   "url": "https://pubmed.ncbi.nlm.nih.gov/20435959/"
                 }
-              ]
+              ],
+              "more": true
             },
             {
               "label": "Пожилым",
@@ -1848,9 +2267,14 @@ export const antidepressants: MindMapData = { root: {
                   "title": "2023 American Geriatrics Society Beers Criteria Update Expert Panel. American Geriatrics Society 2023 updated AGS Beers Criteria for potentially inappropriate medication use in older adults. Journal of the American Geriatrics Society, 2023.",
                   "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12478568/"
                 }
-              ]
+              ],
+              "more": true
             }
           ],
+          "docs": {
+            "href": "https://www.vidal.ru/drugs/doxepin",
+            "text": "Полная инструкция: vidal.ru"
+          },
           "link": {
             "href": "/blog/science/mind/antidepressants/how-they-work/#классы-и-их-названия",
             "text": "Классы подробнее во второй части"
@@ -1888,6 +2312,16 @@ export const antidepressants: MindMapData = { root: {
               "text": "Обычно 25 мг три или четыре раза в день, начинают с малой дозы и повышают по необходимости. Больше 150 мг в сутки не рекомендуют. Пожилым и подросткам от 30 до 50 мг в сутки."
             },
             {
+              "label": "Противопоказания",
+              "text": "Одновременно с ИМАО и в течение 14 дней после них, начинать при лечении линезолидом; ранний период восстановления после инфаркта миокарда.",
+              "sources": [
+                {
+                  "title": "Pamelor (nortriptyline), инструкция по применению: раздел о дозах и контроле уровня в крови. DailyMed, SpecGx (Mallinckrodt), 2025.",
+                  "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=e17dc299-f52d-414d-ab6e-e809bd6f8acb"
+                }
+              ]
+            },
+            {
               "label": "Что важно при приёме",
               "text": "При дозе выше 100 мг в сутки проверяют уровень нортриптилина в крови: он должен быть от 50 до 150 нг/мл. При серьёзных побочных эффектах или аллергии препарат сразу отменяют.",
               "sources": [
@@ -1895,7 +2329,8 @@ export const antidepressants: MindMapData = { root: {
                   "title": "Pamelor (nortriptyline), инструкция по применению: раздел о дозах и контроле уровня в крови. DailyMed, SpecGx (Mallinckrodt), 2025.",
                   "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=e17dc299-f52d-414d-ab6e-e809bd6f8acb"
                 }
-              ]
+              ],
+              "more": true
             },
             {
               "label": "В России",
@@ -1905,7 +2340,8 @@ export const antidepressants: MindMapData = { root: {
                   "title": "Справочник Видаль: поиск «нортриптилин», октябрь 2026: зарегистрированных препаратов не найдено.",
                   "url": "https://www.vidal.ru/search?t=all&q=%D0%BD%D0%BE%D1%80%D1%82%D1%80%D0%B8%D0%BF%D1%82%D0%B8%D0%BB%D0%B8%D0%BD"
                 }
-              ]
+              ],
+              "more": true
             },
             {
               "label": "Пожилым",
@@ -1915,9 +2351,14 @@ export const antidepressants: MindMapData = { root: {
                   "title": "2023 American Geriatrics Society Beers Criteria Update Expert Panel. American Geriatrics Society 2023 updated AGS Beers Criteria for potentially inappropriate medication use in older adults. Journal of the American Geriatrics Society, 2023.",
                   "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12478568/"
                 }
-              ]
+              ],
+              "more": true
             }
           ],
+          "docs": {
+            "href": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=e17dc299-f52d-414d-ab6e-e809bd6f8acb",
+            "text": "Полная инструкция: dailymed.nlm.nih.gov"
+          },
           "link": {
             "href": "/blog/science/mind/antidepressants/how-they-work/#классы-и-их-названия",
             "text": "Классы подробнее во второй части"
@@ -1957,6 +2398,16 @@ export const antidepressants: MindMapData = { root: {
               "text": "Начинают с 25 или 50 мг в сутки. При хорошей переносимости повышают до 150 или 200 мг в сутки, иногда до 400 мг. Максимум от 400 до 500 мг в сутки. Поддерживающая доза от 25 до 75 мг в сутки."
             },
             {
+              "label": "Противопоказания",
+              "text": "Одновременно с ИМАО; тяжёлая печёночная или почечная недостаточность; беременность и кормление грудью.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Азафен (пипофезин), таблетки 25 мг, разделы «Режим дозирования» и «Особые указания» (ЛП-№(005772)-(РГ-RU) от 14.06.24).",
+                  "url": "https://www.vidal.ru/drugs/azaphen__14737"
+                }
+              ]
+            },
+            {
               "label": "Что важно при приёме",
               "text": "Алкоголь во время лечения запрещён. После ингибиторов МАО нужен перерыв 2 недели. Периодически проверяют работу печени и почек.",
               "sources": [
@@ -1964,7 +2415,8 @@ export const antidepressants: MindMapData = { root: {
                   "title": "Справочник Видаль: Азафен (пипофезин), таблетки 25 мг, разделы «Режим дозирования» и «Особые указания» (ЛП-№(005772)-(РГ-RU) от 14.06.24).",
                   "url": "https://www.vidal.ru/drugs/azaphen__14737"
                 }
-              ]
+              ],
+              "more": true
             },
             {
               "label": "В России",
@@ -1974,11 +2426,13 @@ export const antidepressants: MindMapData = { root: {
                   "title": "Российское общество психиатров. Клинические рекомендации «Депрессивный эпизод, рекуррентное депрессивное расстройство», редакция 2021 года (ID 301_2 в рубрикаторе Минздрава, в архиве с 26.08.2024), PDF разработчика.",
                   "url": "https://psychiatr.ru/download/6271?view=1"
                 }
-              ]
+              ],
+              "more": true
             },
             {
               "label": "Насколько помогает",
-              "text": "Крупных рандомизированных испытаний в международных журналах нет."
+              "text": "Крупных рандомизированных испытаний в международных журналах нет.",
+              "more": true
             },
             {
               "label": "Где встречается",
@@ -1988,9 +2442,14 @@ export const antidepressants: MindMapData = { root: {
                   "title": "Cipriani A. et al. Comparative efficacy and acceptability of 21 antidepressant drugs for the acute treatment of adults with major depressive disorder: a systematic review and network meta-analysis. Lancet, 2018.",
                   "url": "https://pubmed.ncbi.nlm.nih.gov/29477251/"
                 }
-              ]
+              ],
+              "more": true
             }
           ],
+          "docs": {
+            "href": "https://www.vidal.ru/drugs/azaphen__14737",
+            "text": "Полная инструкция: vidal.ru"
+          },
           "link": {
             "href": "/blog/science/mind/antidepressants/cis-practice/#препараты-которые-встречаются-у-нас-чаще-чем-в-западных-руководствах",
             "text": "Подробнее в восьмой части"
@@ -2052,8 +2511,19 @@ export const antidepressants: MindMapData = { root: {
               "text": "Начинают с 300 мг в сутки, максимум 600 мг."
             },
             {
+              "label": "Противопоказания",
+              "text": "Вместе с антидепрессантами, усиливающими серотонин (СИОЗС, трициклики), а также с селегилином, бупропионом, триптанами, трамадолом, петидином, декстрометорфаном и линезолидом; острая спутанность сознания; феохромоцитома (опухоль надпочечника); детский возраст.",
+              "sources": [
+                {
+                  "title": "Manerix (moclobemide) 300 мг, общая характеристика лекарственного препарата (SmPC), разделы 4.2 и 4.4. electronic medicines compendium (Великобритания), редакция февраля 2026 года.",
+                  "url": "https://www.medicines.org.uk/emc/product/6661/smpc"
+                }
+              ]
+            },
+            {
               "label": "Когда оценивают эффект",
-              "text": "Эффект оценивают не раньше чем через четыре-шесть недель; дозу не повышают в первую неделю."
+              "text": "Эффект оценивают не раньше чем через четыре-шесть недель; дозу не повышают в первую неделю.",
+              "more": true
             },
             {
               "label": "Что важно при приёме",
@@ -2067,7 +2537,8 @@ export const antidepressants: MindMapData = { root: {
                   "title": "Справочник Видаль: Аурорикс (моклобемид), сведения о регистрации (РУ П N015213/01 отменено).",
                   "url": "https://www.vidal.ru/drugs/aurorix__5357"
                 }
-              ]
+              ],
+              "more": true
             },
             {
               "label": "Чем хорош",
@@ -2077,7 +2548,8 @@ export const antidepressants: MindMapData = { root: {
                   "title": "Serretti A., Chiesa A. Treatment-emergent sexual dysfunction related to antidepressants: a meta-analysis. Journal of Clinical Psychopharmacology, 2009.",
                   "url": "https://pubmed.ncbi.nlm.nih.gov/19440080/"
                 }
-              ]
+              ],
+              "more": true
             },
             {
               "label": "Чем платят",
@@ -2087,9 +2559,14 @@ export const antidepressants: MindMapData = { root: {
                   "title": "Patel P., Saadabadi A. Monoamine Oxidase Inhibitors (MAOIs). StatPearls, 2025.",
                   "url": "https://www.ncbi.nlm.nih.gov/books/NBK539848/"
                 }
-              ]
+              ],
+              "more": true
             }
           ],
+          "docs": {
+            "href": "https://www.medicines.org.uk/emc/product/6661/smpc",
+            "text": "Полная инструкция: medicines.org.uk"
+          },
           "link": {
             "href": "/blog/science/mind/antidepressants/why-this-one/#сводная-карта-препаратов",
             "text": "Препарат в сводной карте четвёртой части"
@@ -2129,6 +2606,16 @@ export const antidepressants: MindMapData = { root: {
               "text": "Начинают с 50 или 75 мг в сутки, затем постепенно повышают шагами по 25 или 50 мг до 150 или 300 мг в сутки. Максимум 400 мг в сутки."
             },
             {
+              "label": "Противопоказания",
+              "text": "Одновременно с ИМАО и в течение 14 дней после них; острый гепатит; болезни крови.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Пиразидол (пирлиндол), таблетки 25 и 50 мг, разделы «Режим дозирования» и «Противопоказания» (ЛП-№(001788)-(РГ-RU) от 08.02.23).",
+                  "url": "https://www.vidal.ru/drugs/pyrazidol__40373"
+                }
+              ]
+            },
+            {
               "label": "Что важно при приёме",
               "text": "Противопоказан при остром гепатите и заболеваниях крови. Нельзя вместе с ингибиторами МАО и в течение 14 дней после их отмены. Инструкция допускает приём при глаукоме и аденоме простаты.",
               "sources": [
@@ -2136,7 +2623,8 @@ export const antidepressants: MindMapData = { root: {
                   "title": "Справочник Видаль: Пиразидол (пирлиндол), таблетки 25 и 50 мг, разделы «Режим дозирования» и «Противопоказания» (ЛП-№(001788)-(РГ-RU) от 08.02.23).",
                   "url": "https://www.vidal.ru/drugs/pyrazidol__40373"
                 }
-              ]
+              ],
+              "more": true
             },
             {
               "label": "Опасные сочетания",
@@ -2146,7 +2634,8 @@ export const antidepressants: MindMapData = { root: {
                   "title": "Patel P., Saadabadi A. Monoamine Oxidase Inhibitors (MAOIs). StatPearls, 2025.",
                   "url": "https://www.ncbi.nlm.nih.gov/books/NBK539848/"
                 }
-              ]
+              ],
+              "more": true
             },
             {
               "label": "В России",
@@ -2156,7 +2645,8 @@ export const antidepressants: MindMapData = { root: {
                   "title": "Российское общество психиатров. Клинические рекомендации «Депрессивный эпизод, рекуррентное депрессивное расстройство», редакция 2021 года (ID 301_2 в рубрикаторе Минздрава, в архиве с 26.08.2024), PDF разработчика.",
                   "url": "https://psychiatr.ru/download/6271?view=1"
                 }
-              ]
+              ],
+              "more": true
             },
             {
               "label": "Насколько помогает",
@@ -2166,7 +2656,8 @@ export const antidepressants: MindMapData = { root: {
                   "title": "Macedo A., Leiria E., Filipe A. Pirlindole in the treatment of depression: a meta-analysis. Clinical Drug Investigation, 2011.",
                   "url": "https://pubmed.ncbi.nlm.nih.gov/21053988/"
                 }
-              ]
+              ],
+              "more": true
             },
             {
               "label": "Где встречается",
@@ -2176,9 +2667,14 @@ export const antidepressants: MindMapData = { root: {
                   "title": "Cipriani A. et al. Comparative efficacy and acceptability of 21 antidepressant drugs for the acute treatment of adults with major depressive disorder: a systematic review and network meta-analysis. Lancet, 2018.",
                   "url": "https://pubmed.ncbi.nlm.nih.gov/29477251/"
                 }
-              ]
+              ],
+              "more": true
             }
           ],
+          "docs": {
+            "href": "https://www.vidal.ru/drugs/pyrazidol__40373",
+            "text": "Полная инструкция: vidal.ru"
+          },
           "link": {
             "href": "/blog/science/mind/antidepressants/cis-practice/#препараты-которые-встречаются-у-нас-чаще-чем-в-западных-руководствах",
             "text": "Подробнее в восьмой части"
@@ -2222,8 +2718,19 @@ export const antidepressants: MindMapData = { root: {
               "text": "Начинают с 15 мг три раза в день. Довольно быстро повышают хотя бы до 60 мг в сутки, при необходимости до 90 мг. Поддерживающая доза может снижаться до 15 мг в день или через день."
             },
             {
+              "label": "Противопоказания",
+              "text": "Вместе с другими антидепрессантами, ИМАО и буспироном (перерыв не меньше 14 дней, после флуоксетина 5 недель); вместе со стимуляторами, сосудосуживающими, меперидином, декстрометорфаном и алкоголем; продукты с тирамином (выдержанные сыры, вяленые колбасы, пиво, вино); сердечная недостаточность, болезни печени, тяжёлые болезни почек, феохромоцитома (опухоль надпочечника).",
+              "sources": [
+                {
+                  "title": "Nardil (phenelzine), инструкция по применению: противопоказания (продукты с тирамином, опасные сочетания) и раздел о дозах. DailyMed, Parke-Davis (Pfizer), 2025.",
+                  "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=513a41d0-37d4-4355-8a6d-a2c643bce6fa"
+                }
+              ]
+            },
+            {
               "label": "Когда оценивают эффект",
-              "text": "Многим нужно не меньше 4 недель на дозе 60 мг, прежде чем появится ответ."
+              "text": "Многим нужно не меньше 4 недель на дозе 60 мг, прежде чем появится ответ.",
+              "more": true
             },
             {
               "label": "Что важно при приёме",
@@ -2233,7 +2740,8 @@ export const antidepressants: MindMapData = { root: {
                   "title": "Nardil (phenelzine), инструкция по применению: противопоказания (продукты с тирамином, опасные сочетания) и раздел о дозах. DailyMed, Parke-Davis (Pfizer), 2025.",
                   "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=513a41d0-37d4-4355-8a6d-a2c643bce6fa"
                 }
-              ]
+              ],
+              "more": true
             },
             {
               "label": "Чем платят",
@@ -2247,7 +2755,8 @@ export const antidepressants: MindMapData = { root: {
                   "title": "Nardil (phenelzine), инструкция по применению: противопоказания (продукты с тирамином, опасные сочетания) и раздел о дозах. DailyMed, Parke-Davis (Pfizer), 2025.",
                   "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=513a41d0-37d4-4355-8a6d-a2c643bce6fa"
                 }
-              ]
+              ],
+              "more": true
             },
             {
               "label": "В России",
@@ -2257,9 +2766,14 @@ export const antidepressants: MindMapData = { root: {
                   "title": "Справочник Видаль: поиск «фенелзин», октябрь 2026: зарегистрированных препаратов не найдено.",
                   "url": "https://www.vidal.ru/search?t=all&q=%D1%84%D0%B5%D0%BD%D0%B5%D0%BB%D0%B7%D0%B8%D0%BD"
                 }
-              ]
+              ],
+              "more": true
             }
           ],
+          "docs": {
+            "href": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=513a41d0-37d4-4355-8a6d-a2c643bce6fa",
+            "text": "Полная инструкция: dailymed.nlm.nih.gov"
+          },
           "link": {
             "href": "/blog/science/mind/antidepressants/how-they-work/#классы-и-их-названия",
             "text": "Классы подробнее во второй части"
@@ -2327,6 +2841,20 @@ export const antidepressants: MindMapData = { root: {
               ]
             },
             {
+              "label": "Противопоказания",
+              "text": "Опухоли, зависящие от пролактина (пролактинома гипофиза, рак молочной железы), и повышенный пролактин; феохромоцитома (опухоль надпочечника); вместе с леводопой и агонистами дофамина (каберголин, ропинирол); острое отравление алкоголем или снотворными; кормление грудью; возраст до 18 лет для таблеток 200 мг, до 6 лет для капсул.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Эглонил (сульпирид), инструкции к таблеткам 200 мг и капсулам 50 мг.",
+                  "url": "https://www.vidal.ru/drugs/eglonyl__985"
+                },
+                {
+                  "title": "Справочник Видаль: Эглонил (сульпирид), капсулы 50 мг, показания и режим дозирования.",
+                  "url": "https://www.vidal.ru/drugs/eglonyl__984"
+                }
+              ]
+            },
+            {
               "label": "Чем платят",
               "text": "Повышает пролактин: нарушения цикла вплоть до его прекращения, выделения и увеличение груди, в том числе у мужчин, проблемы с эрекцией и оргазмом. Как циталопрам и эсциталопрам, может удлинять интервал QT, поэтому их не рекомендуют сочетать, а если без этого никак, контролируют ЭКГ.",
               "sources": [
@@ -2334,9 +2862,14 @@ export const antidepressants: MindMapData = { root: {
                   "title": "Справочник Видаль: Эглонил (сульпирид), инструкции к таблеткам 200 мг и капсулам 50 мг.",
                   "url": "https://www.vidal.ru/drugs/eglonyl__985"
                 }
-              ]
+              ],
+              "more": true
             }
           ],
+          "docs": {
+            "href": "https://www.vidal.ru/drugs/eglonyl__985",
+            "text": "Полная инструкция: vidal.ru"
+          },
           "link": {
             "href": "/blog/science/mind/antidepressants/cis-practice/#препараты-которые-встречаются-у-нас-чаще-чем-в-западных-руководствах",
             "text": "Подробнее в восьмой части"
@@ -2362,6 +2895,16 @@ export const antidepressants: MindMapData = { root: {
               ]
             },
             {
+              "label": "Противопоказания",
+              "text": "Удлинение интервала QT на ЭКГ (нарушение ритма сердца) и приём лекарств, которые его удлиняют; закрытоугольная глаукома; доброкачественная гиперплазия предстательной железы; порфирия; беременность, роды и кормление грудью; возраст до 3 лет.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Гидроксизин, инструкция (ЛП-№(007303) от 18.10.24).",
+                  "url": "https://www.vidal.ru/drugs/hydroxyzine"
+                }
+              ]
+            },
+            {
               "label": "Чем платят",
               "text": "Риск нарушений ритма: взрослым не больше 100 мг в сутки, пожилым по возможности не назначать, нельзя с препаратами, удлиняющими QT. Российская инструкция прямо запрещает его вместе с циталопрамом и эсциталопрамом.",
               "sources": [
@@ -2373,9 +2916,14 @@ export const antidepressants: MindMapData = { root: {
                   "title": "Справочник Видаль: Гидроксизин, инструкция (ЛП-№(007303) от 18.10.24).",
                   "url": "https://www.vidal.ru/drugs/hydroxyzine"
                 }
-              ]
+              ],
+              "more": true
             }
           ],
+          "docs": {
+            "href": "https://www.vidal.ru/drugs/hydroxyzine",
+            "text": "Полная инструкция: vidal.ru"
+          },
           "link": {
             "href": "/blog/science/mind/antidepressants/cis-practice/#препараты-которые-встречаются-у-нас-чаще-чем-в-западных-руководствах",
             "text": "Подробнее в восьмой части"
@@ -2411,6 +2959,16 @@ export const antidepressants: MindMapData = { root: {
               ]
             },
             {
+              "label": "Противопоказания",
+              "text": "Миастения (болезненная мышечная слабость); закрытоугольная глаукома; тяжёлая хроническая обструктивная болезнь лёгких и острая дыхательная недостаточность; острое отравление алкоголем, опиоидными обезболивающими или снотворными; тяжёлая депрессия; первый триместр беременности, кормление грудью и возраст до 18 лет.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Феназепам, инструкция.",
+                  "url": "https://www.vidal.ru/drugs/phenazepam__21148"
+                }
+              ]
+            },
+            {
               "label": "Насколько помогает",
               "text": "Вместе с антидепрессантом лучше одного антидепрессанта только в первые недели, испытания старые. NICE при генерализованной тревоге допускает бензодиазепины только коротко, при панических атаках не советует.",
               "sources": [
@@ -2422,7 +2980,8 @@ export const antidepressants: MindMapData = { root: {
                   "title": "NICE. Generalised anxiety disorder and panic disorder in adults: management (CG113), рекомендации 1.2.23, 1.2.24, 1.2.26, 1.2.28, 1.3.20, 1.3.25, 1.3.27, 1.3.28.",
                   "url": "https://www.nice.org.uk/guidance/cg113"
                 }
-              ]
+              ],
+              "more": true
             },
             {
               "label": "Опасные сочетания",
@@ -2432,7 +2991,8 @@ export const antidepressants: MindMapData = { root: {
                   "title": "FDA. FDA requiring Boxed Warning updated to improve safe use of benzodiazepine drug class, 2020.",
                   "url": "https://www.fda.gov/drugs/drug-safety-and-availability/fda-requiring-boxed-warning-updated-improve-safe-use-benzodiazepine-drug-class"
                 }
-              ]
+              ],
+              "more": true
             },
             {
               "label": "В России",
@@ -2442,9 +3002,14 @@ export const antidepressants: MindMapData = { root: {
                   "title": "Приказ Минздрава России от 01.09.2023 № 459н о перечне лекарственных средств, подлежащих предметно-количественному учёту, действует с 01.09.2024.",
                   "url": "http://publication.pravo.gov.ru/document/0001202310030013"
                 }
-              ]
+              ],
+              "more": true
             }
           ],
+          "docs": {
+            "href": "https://www.vidal.ru/drugs/phenazepam__21148",
+            "text": "Полная инструкция: vidal.ru"
+          },
           "link": {
             "href": "/blog/science/mind/antidepressants/cis-practice/#препараты-которые-встречаются-у-нас-чаще-чем-в-западных-руководствах",
             "text": "Подробнее в восьмой части"
@@ -2476,6 +3041,16 @@ export const antidepressants: MindMapData = { root: {
               ]
             },
             {
+              "label": "Противопоказания",
+              "text": "Одновременно с ИМАО; беременность и кормление грудью; возраст до 12 лет.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Нейроплант (сухой экстракт травы зверобоя), таблетки 300 мг, раздел «Показания» (ЛП-001603).",
+                  "url": "https://www.vidal.ru/drugs/neuroplant__31582"
+                }
+              ]
+            },
+            {
               "label": "Чем платят",
               "text": "Ускоряет печёночные ферменты и ослабляет многие лекарства: гормональные контрацептивы, разжижающие кровь, препараты после пересадки органов, лекарства от ВИЧ. Вместе с антидепрессантами риск серотонинового синдрома.",
               "sources": [
@@ -2487,7 +3062,8 @@ export const antidepressants: MindMapData = { root: {
                   "title": "Lexapro (escitalopram), инструкция по применению и руководство для пациента (Medication Guide), одобренные FDA. AbbVie, редакции 2023 и 2024 годов.",
                   "url": "https://www.rxabbvie.com/pdf/lexapro_pi.pdf"
                 }
-              ]
+              ],
+              "more": true
             },
             {
               "label": "Что говорят рекомендации",
@@ -2501,9 +3077,14 @@ export const antidepressants: MindMapData = { root: {
                   "title": "Российское общество психиатров. Клинические рекомендации «Депрессивный эпизод, рекуррентное депрессивное расстройство», редакция 2021 года (ID 301_2 в рубрикаторе Минздрава, в архиве с 26.08.2024), PDF разработчика.",
                   "url": "https://psychiatr.ru/download/6271?view=1"
                 }
-              ]
+              ],
+              "more": true
             }
           ],
+          "docs": {
+            "href": "https://www.vidal.ru/drugs/neuroplant__31582",
+            "text": "Полная инструкция: vidal.ru"
+          },
           "link": {
             "href": "/blog/science/mind/antidepressants/cis-practice/#препараты-которые-встречаются-у-нас-чаще-чем-в-западных-руководствах",
             "text": "Подробнее в восьмой части"
@@ -2533,6 +3114,24 @@ export const antidepressants: MindMapData = { root: {
               ]
             },
             {
+              "label": "Противопоказания",
+              "text": "Афобазол: беременность, кормление грудью, возраст до 18 лет. Тенотен: возраст до 18 лет. Глицин: кроме аллергии на компоненты, противопоказаний нет.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Афобазол (фабомотизол), инструкция, раздел «Показания препарата».",
+                  "url": "https://www.vidal.ru/drugs/afobazol__8918"
+                },
+                {
+                  "title": "Справочник Видаль: Тенотен, таблетки для рассасывания, инструкция, раздел «Показания препарата».",
+                  "url": "https://www.vidal.ru/drugs/tenoten__23173"
+                },
+                {
+                  "title": "Справочник Видаль: Глицин, таблетки подъязычные, раздел «Показания» (ЛП-№(006100)-(РГ-RU) от 02.07.24).",
+                  "url": "https://www.vidal.ru/drugs/glycine__4429"
+                }
+              ]
+            },
+            {
               "label": "Что известно",
               "text": "У Афобазола российские испытания, например против диазепама, а испытаний против плацебо в международных журналах нет, в Евросоюзе и США он не зарегистрирован. Единственное испытание Тенотена против плацебо отозвано редакцией. Рандомизированных испытаний глицина при депрессии нет.",
               "sources": [
@@ -2544,13 +3143,19 @@ export const antidepressants: MindMapData = { root: {
                   "title": "Retraction Note: The randomized clinical trial results of the anxiety treatment in patients with somatoform dysfunction and neurasthenia (Тенотен). Scientific Reports, 2022.",
                   "url": "https://www.nature.com/articles/s41598-022-19938-3"
                 }
-              ]
+              ],
+              "more": true
             },
             {
               "label": "Чем опасны",
-              "text": "В основном тем, что на них уходит время: несколько месяцев «чего-то лёгкого», а депрессия не лечится."
+              "text": "В основном тем, что на них уходит время: несколько месяцев «чего-то лёгкого», а депрессия не лечится.",
+              "more": true
             }
           ],
+          "docs": {
+            "href": "https://www.vidal.ru/drugs/afobazol__8918",
+            "text": "Полная инструкция: vidal.ru"
+          },
           "link": {
             "href": "/blog/science/mind/antidepressants/cis-practice/#препараты-которые-встречаются-у-нас-чаще-чем-в-западных-руководствах",
             "text": "Подробнее в восьмой части"
@@ -2613,6 +3218,26 @@ export const antidepressants: MindMapData = { root: {
               ]
             },
             {
+              "label": "Как принимают",
+              "text": "Узкий коридор между рабочей и опасной дозой, поэтому регулярно сдают кровь на уровень лития через 12 часов после приёма; уровень не выше 1,0 ммоль/л, пожилым от 0,4 до 0,6 ммоль/л. Признаки отравления: понос, рвота, крупная дрожь, шаткость, спутанность, это повод срочно обратиться за помощью.",
+              "sources": [
+                {
+                  "title": "NICE. Depression in adults: treatment and management (NG222), рекомендации 1.4.24 (пожилые), от 1.4.25 до 1.4.32 (литий), 1.9 (дальнейшие шаги) и 1.15.2 (эскетамин), 2022.",
+                  "url": "https://www.nice.org.uk/guidance/ng222/chapter/Recommendations"
+                }
+              ]
+            },
+            {
+              "label": "Противопоказания",
+              "text": "Беременность и кормление грудью; лейкоз; тяжёлые операции. Болезни почек, сердца и щитовидной железы инструкция относит к «с осторожностью»: при них лечение особенно тщательно контролируют.",
+              "sources": [
+                {
+                  "title": "Справочник Видаль: Седалит (лития карбонат), раздел «Показания» (ЛП-№(004190)-(РГ-RU) от 27.12.23).",
+                  "url": "https://www.vidal.ru/drugs/sedalit__15786"
+                }
+              ]
+            },
+            {
               "label": "Риск самоубийства",
               "text": "В долгих испытаниях при расстройствах настроения самоубийств на литии было меньше, но в испытании 2022 года у ветеранов после попытки разницы с плацебо не нашли.",
               "sources": [
@@ -2624,19 +3249,25 @@ export const antidepressants: MindMapData = { root: {
                   "title": "Katz I.R. et al. Lithium treatment in the prevention of repeat suicide-related outcomes in veterans with major depression or bipolar disorder: a randomized clinical trial. JAMA Psychiatry, 2022.",
                   "url": "https://pubmed.ncbi.nlm.nih.gov/34787653/"
                 }
-              ]
+              ],
+              "more": true
             },
             {
-              "label": "Как принимают",
-              "text": "Узкий коридор между рабочей и опасной дозой, поэтому регулярно сдают кровь на уровень лития через 12 часов после приёма; уровень не выше 1,0 ммоль/л. Пожилым целевой уровень от 0,4 до 0,6 ммоль/л. Уровень лития поднимают обезвоживание, рвота и понос, обезболивающие вроде ибупрофена и диклофенака, мочегонные и препараты от давления из групп иАПФ и сартанов, поэтому любое новое лекарство согласуют с врачом. Признаки отравления: понос, рвота, крупная дрожь, шаткость, спутанность, это повод срочно обратиться за помощью. Бросать самому нельзя.",
+              "label": "Что важно при приёме",
+              "text": "Уровень лития поднимают обезвоживание, рвота и понос, обезболивающие вроде ибупрофена и диклофенака, мочегонные и препараты от давления из групп иАПФ и сартанов, поэтому любое новое лекарство согласуют с врачом. Бросать самому нельзя.",
               "sources": [
                 {
                   "title": "NICE. Depression in adults: treatment and management (NG222), рекомендации 1.4.24 (пожилые), от 1.4.25 до 1.4.32 (литий), 1.9 (дальнейшие шаги) и 1.15.2 (эскетамин), 2022.",
                   "url": "https://www.nice.org.uk/guidance/ng222/chapter/Recommendations"
                 }
-              ]
+              ],
+              "more": true
             }
           ],
+          "docs": {
+            "href": "https://www.vidal.ru/drugs/sedalit__15786",
+            "text": "Полная инструкция: vidal.ru"
+          },
           "link": {
             "href": "/blog/science/mind/antidepressants/if-it-helps-little/#что-ещё-есть-в-запасе",
             "text": "Подробнее в пятой части"
@@ -2686,6 +3317,16 @@ export const antidepressants: MindMapData = { root: {
               ]
             },
             {
+              "label": "Противопоказания",
+              "text": "Аневризмы сосудов (аорты, мозга, периферических артерий) и артериовенозные мальформации (врождённые сплетения сосудов); перенесённое кровоизлияние в мозг.",
+              "sources": [
+                {
+                  "title": "Spravato (esketamine) nasal spray, инструкция по применению, одобренная FDA. Janssen Pharmaceuticals, DailyMed, редакция 2026 года.",
+                  "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=d81a6a79-a74a-44b7-822c-0dfa3036eaed"
+                }
+              ]
+            },
+            {
               "label": "Чем платят",
               "text": "Диссоциация, сонливость, головокружение, тошнота, подъём давления; есть потенциал злоупотребления. Противопоказан при аневризмах сосудов и кровоизлиянии в мозг в прошлом.",
               "sources": [
@@ -2693,7 +3334,8 @@ export const antidepressants: MindMapData = { root: {
                   "title": "Spravato (esketamine) nasal spray, инструкция по применению, одобренная FDA. Janssen Pharmaceuticals, DailyMed, редакция 2026 года.",
                   "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=d81a6a79-a74a-44b7-822c-0dfa3036eaed"
                 }
-              ]
+              ],
+              "more": true
             },
             {
               "label": "Что говорят рекомендации",
@@ -2707,7 +3349,8 @@ export const antidepressants: MindMapData = { root: {
                   "title": "NICE. Depression in adults: treatment and management (NG222), рекомендации 1.4.24 (пожилые), от 1.4.25 до 1.4.32 (литий), 1.9 (дальнейшие шаги) и 1.15.2 (эскетамин), 2022.",
                   "url": "https://www.nice.org.uk/guidance/ng222/chapter/Recommendations"
                 }
-              ]
+              ],
+              "more": true
             },
             {
               "label": "В России",
@@ -2717,9 +3360,14 @@ export const antidepressants: MindMapData = { root: {
                   "title": "Справочник Видаль: поиск «эскетамин», октябрь 2026: зарегистрированных препаратов не найдено.",
                   "url": "https://www.vidal.ru/search?t=all&q=%D1%8D%D1%81%D0%BA%D0%B5%D1%82%D0%B0%D0%BC%D0%B8%D0%BD"
                 }
-              ]
+              ],
+              "more": true
             }
           ],
+          "docs": {
+            "href": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=d81a6a79-a74a-44b7-822c-0dfa3036eaed",
+            "text": "Полная инструкция: dailymed.nlm.nih.gov"
+          },
           "link": {
             "href": "/blog/science/mind/antidepressants/if-it-helps-little/#что-ещё-есть-в-запасе",
             "text": "Подробнее в пятой части"

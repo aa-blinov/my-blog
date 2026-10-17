@@ -1555,6 +1555,44 @@ main article .content .mm-card h2 {
   font-size: var(--app-font-control);
   color: var(--mm-muted);
 }
+.mm-more {
+  margin: 0 0 var(--app-spacing-md);
+  border-top: 1px solid var(--mm-rule);
+}
+.mm .mm-more > summary {
+  padding: 0.5rem 0 0.4rem;
+  font-size: var(--app-font-control);
+  color: var(--mm-muted);
+  cursor: pointer;
+  list-style: none;
+}
+.mm-more > summary::-webkit-details-marker {
+  display: none;
+}
+.mm .mm-more > summary::after {
+  display: none;
+}
+.mm-more > summary::before {
+  content: "▸";
+  display: inline-block;
+  margin-right: 0.4em;
+  color: var(--mm-accent);
+  transition: transform var(--app-transition);
+}
+.mm-more[open] > summary::before {
+  transform: rotate(90deg);
+}
+.mm-docs {
+  margin: var(--app-spacing-md) 0 0;
+  font-size: var(--app-font-sm);
+}
+@media (max-width: 991px) {
+  .mm .mm-more > summary {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+  }
+}
 .mm-link {
   margin: var(--app-spacing) 0 var(--app-spacing-md);
   font-size: var(--app-font-sm);
