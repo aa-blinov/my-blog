@@ -36,10 +36,6 @@ const hoverTip = (n: MapNode) => n.hint ?? (n.children?.length ? undefined : n.n
 ---
 
 <div class="mm" data-mindmap data-collapsible={collapsible ? "" : undefined}>
-  <div class="mm-search" role="search">
-    <input type="search" class="mm-search-input" placeholder="Найти препарат, класс или название" aria-label="Поиск по карте" autocomplete="off" />
-    <ul class="mm-hits" aria-live="polite" hidden></ul>
-  </div>
   <div class="mm-frame" tabindex="0" role="application" aria-roledescription="интерактивная карта" aria-label="Карта: стрелки двигают, плюс и минус меняют масштаб, ноль вписывает карту в окно, F разворачивает на весь экран, Tab переходит по узлам">
     <div class="mm-canvas" style={`width:${Math.ceil(width)}px;height:${Math.ceil(height)}px`}>
       <svg class="mm-edges" width={Math.ceil(width)} height={Math.ceil(height)} aria-hidden="true">
@@ -69,6 +65,11 @@ const hoverTip = (n: MapNode) => n.hint ?? (n.children?.length ? undefined : n.n
       <button type="button" data-zoom="fit" aria-label="Вписать карту в окно">вписать</button>
       {collapsible && <button type="button" class="mm-all" aria-pressed="false"><span class="mm-long">развернуть всё</span><span class="mm-short">все</span></button>}
       <button type="button" class="mm-full" aria-pressed="false" aria-label="Карта на весь экран"><span class="mm-long">на весь экран</span><span class="mm-short">экран</span></button>
+    </div>
+
+    <div class="mm-search" role="search">
+      <input type="search" class="mm-search-input" placeholder="Найти препарат, класс или название" aria-label="Поиск по карте" autocomplete="off" />
+      <ul class="mm-hits" aria-live="polite" hidden></ul>
     </div>
 
     <div class="mm-panel" role="region" aria-label="Карточка узла" hidden>
@@ -130,12 +131,14 @@ const hoverTip = (n: MapNode) => n.hint ?? (n.children?.length ? undefined : n.n
 
     const apply = () => { canvas.style.transform = `translate(${tx}px, ${ty}px) scale(${s})`; };
     // Видимая область карты: на десктопе карточка справа закрывает часть окна, на телефоне карточка снизу
-    // Сверху ряд кнопок: вписываем ниже него, чтобы верхние узлы не прятались под кнопками
-    const TOP = (mm.querySelector<HTMLElement>('.mm-controls')?.offsetHeight ?? 0) + 8;
+    // Сверху ряд кнопок и на телефоне поле поиска под ним: вписываем ниже них, чтобы верхние узлы не прятались
+    const searchEl = mm.querySelector<HTMLElement>('.mm-search')!;
+    const TOP = () => (mm.querySelector<HTMLElement>('.mm-controls')?.offsetHeight ?? 0) + 8
+      + (matchMedia('(max-width: 600px)').matches ? searchEl.offsetHeight + 8 : 0);
     const viewport = () => {
-      const w = frame.clientWidth, h = frame.clientHeight;
-      if (panel.hidden) return { x: 0, y: TOP, w, h: h - TOP };
-      return matchMedia('(max-width: 991px)').matches ? { x: 0, y: TOP, w, h: h - panel.offsetHeight - TOP } : { x: 0, y: TOP, w: w - panel.offsetWidth, h: h - TOP };
+      const w = frame.clientWidth, h = frame.clientHeight, t = TOP();
+      if (panel.hidden) return { x: 0, y: t, w, h: h - t };
+      return matchMedia('(max-width: 991px)').matches ? { x: 0, y: t, w, h: h - panel.offsetHeight - t } : { x: 0, y: t, w: w - panel.offsetWidth, h: h - t };
     };
     const zoomAt = (px: number, py: number, k: number) => {
       const ns = Math.min(MAX, Math.max(MIN, s * k));
@@ -300,7 +303,7 @@ const hoverTip = (n: MapNode) => n.hint ?? (n.children?.length ? undefined : n.n
     let sx = 0, sy = 0;
     let pinch = 0;
     frame.addEventListener('pointerdown', (e) => {
-      if ((e.target as HTMLElement).closest('.mm-panel, .mm-controls')) return;
+      if ((e.target as HTMLElement).closest('.mm-panel, .mm-controls, .mm-search')) return;
       pts.set(e.pointerId, { x: e.clientX, y: e.clientY });
       if (pts.size === 1) { moved = 0; sx = e.clientX; sy = e.clientY; }
       if (pts.size === 2) { const [a, b] = [...pts.values()]; pinch = Math.hypot(a.x - b.x, a.y - b.y); }
@@ -436,6 +439,7 @@ const hoverTip = (n: MapNode) => n.hint ?? (n.children?.length ? undefined : n.n
     document.addEventListener('fullscreenchange', syncFull);
 
     frame.addEventListener('keydown', (e) => {
+      if ((e.target as HTMLElement).closest('.mm-search')) return; // буквы в поиске не должны двигать и масштабировать карту
       if (e.key === 'Escape' && !panel.hidden) { e.preventDefault(); close(); return; }
       if (e.key === 'Escape' && frame.classList.contains('is-full')) { e.preventDefault(); toggleFull(); return; }
       if (e.key === 'f' && !(e.target as HTMLElement).closest('.mm-panel')) { e.preventDefault(); toggleFull(); return; }
