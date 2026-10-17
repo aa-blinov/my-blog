@@ -113,7 +113,7 @@ function getFolderHref(fullPath: string) {
 ---
 
 <nav class="sidebar-nav" aria-label="Дерево статей">
-  <div class="sidebar-controls">
+  <div class="sidebar-controls needs-js">
     <span class="search-field">
       <input
         type="text"
@@ -135,7 +135,7 @@ function getFolderHref(fullPath: string) {
     {mainEntry && (
       <li class="sidebar-pinned" data-filename="main.md" data-title={mainEntry.title.toLowerCase()} data-date={mainEntry.date.toISOString()}>
         <span class="file-link-wrapper">
-          <a href={BASE} class:list={['file-link', { active: isActive(BASE) }]}>
+          <a href={BASE} class:list={['file-link', { active: isActive(BASE) }]} aria-current={isActive(BASE) ? 'page' : undefined}>
             <span class="file-name" title="main.md">{mainEntry.title}</span>
           </a>
         </span>
@@ -144,7 +144,7 @@ function getFolderHref(fullPath: string) {
     {aboutEntry && (
       <li class="sidebar-pinned" data-filename="about-me.md" data-title={aboutEntry.title.toLowerCase()} data-date={aboutEntry.date.toISOString()}>
         <span class="file-link-wrapper">
-          <a href={`${BASE}about-me/`} class:list={['file-link', { active: isActive(`${BASE}about-me/`) }]}>
+          <a href={`${BASE}about-me/`} class:list={['file-link', { active: isActive(`${BASE}about-me/`) }]} aria-current={isActive(`${BASE}about-me/`) ? 'page' : undefined}>
             <span class="file-name" title="about-me.md">{aboutEntry.title}</span>
           </a>
         </span>
@@ -153,7 +153,7 @@ function getFolderHref(fullPath: string) {
     {notesEntry && (
       <li class="sidebar-pinned" data-filename="notes.md" data-title={notesEntry.title.toLowerCase()} data-date={notesEntry.date.toISOString()}>
         <span class="file-link-wrapper">
-          <a href={`${BASE}notes/`} class:list={['file-link', { active: isActive(`${BASE}notes/`) }]}>
+          <a href={`${BASE}notes/`} class:list={['file-link', { active: isActive(`${BASE}notes/`) }]} aria-current={isActive(`${BASE}notes/`) ? 'page' : undefined}>
             <span class="file-name" title="notes.md">{notesEntry.title}</span>
           </a>
         </span>
@@ -207,7 +207,7 @@ function getFolderHref(fullPath: string) {
           ) : (
             <>
               <span class="file-link-wrapper">
-                <a href={`${BASE}blog/${node.entry?.slug}/`} class:list={['file-link', { active: isActive(`${BASE}blog/${node.entry?.slug}/`) }]}>
+                <a href={`${BASE}blog/${node.entry?.slug}/`} class:list={['file-link', { active: isActive(`${BASE}blog/${node.entry?.slug}/`) }]} aria-current={isActive(`${BASE}blog/${node.entry?.slug}/`) ? 'page' : undefined}>
                         <span class="file-name" title={`${node.entry?.title.replace(/:\s*Об этой секции$/, '')} (${node.name})`} data-short={shortTitle(node.entry?.title ?? '', node.entry?.nav)} data-full={node.entry?.title.replace(/:\s*Об этой секции$/, '')}>{shortTitle(node.entry?.title ?? '', node.entry?.nav)}</span>
                 </a>
               </span>
@@ -276,11 +276,14 @@ function getFolderHref(fullPath: string) {
             
             const queries = [raw];
             if (hasRussian(raw)) queries.push(transliterate(raw));
+            // Сам запрос ищем где угодно в имени файла, транслит только с начала слова: «сон» не должен находить per-SON-as
+            const translit = queries[1];
+            const nameHit = (name) => name.includes(raw) || (!!translit && name.split(/[-_./]/).some(w => w.startsWith(translit)));
             
             allFileItems.forEach(li => {
               const name = (li.getAttribute('data-filename') || '').toLowerCase();
               const title = (li.getAttribute('data-title') || '').toLowerCase();
-              li.style.display = queries.some(q => name.includes(q)) || title.includes(raw) ? '' : 'none';
+              li.style.display = nameHit(name) || title.includes(raw) ? '' : 'none';
             });
             // Совпала папка или «О серии»: показываем всё, что в ней, а не только файлы со словом в названии
             allFolderItems.forEach(folder => {
@@ -362,10 +365,13 @@ function getFolderHref(fullPath: string) {
       tree!.querySelectorAll<HTMLElement>('.file-name[data-full]').forEach(n => { n.textContent = n.dataset.full ?? ''; });
       const queries = [raw];
       if (hasRussian(raw)) queries.push(transliterate(raw));
+      // Сам запрос ищем где угодно в имени файла, транслит только с начала слова: «сон» не должен находить per-SON-as
+      const translit = queries[1];
+      const nameHit = (name: string) => name.includes(raw) || (!!translit && name.split(/[-_./]/).some(w => w.startsWith(translit)));
       allFileItems.forEach(li => {
         const name = (li.getAttribute('data-filename') || '').toLowerCase();
         const title = (li.getAttribute('data-title') || '').toLowerCase();
-        li.style.display = queries.some(q => name.includes(q)) || title.includes(raw) ? '' : 'none';
+        li.style.display = nameHit(name) || title.includes(raw) ? '' : 'none';
       });
       // Совпала папка или «О серии»: показываем всё, что в ней, а не только файлы со словом в названии
       allFolderItems.forEach(folder => {
@@ -388,16 +394,33 @@ function getFolderHref(fullPath: string) {
 
     searchInput.addEventListener('input', performSearch);
 
+    // «/» как в редакторе: к поиску по дереву из любого места страницы (кроме полей ввода); на телефоне заодно открывает дерево
+    document.addEventListener('keydown', (e) => {
+      if (e.key !== '/' || e.ctrlKey || e.metaKey || e.altKey) return;
+      const el = e.target as HTMLElement;
+      if (el.closest('input, textarea, select, [contenteditable="true"]')) return;
+      e.preventDefault();
+      const toggle = document.getElementById('sidebar-toggle');
+      const box = document.getElementById('layout-sidebar');
+      if (toggle && box && toggle.offsetParent !== null && !box.classList.contains('sidebar-shown')) toggle.click();
+      searchInput.focus();
+    });
+
     // --- Текущий файл виден сразу: в sticky-дереве на десктопе и в оверлее на мобиле ---
+    // Поиск закреплён сверху (sticky), поэтому видимая область дерева начинается под ним.
+    // Показываем с заголовка папки текущей статьи: видно, где ты, а не обрывок списка; длинная папка: сама статья на трети высоты
     function revealActive() {
       const active = tree!.querySelector<HTMLElement>('.file-link.active, .folder-link.active');
       const box = document.getElementById('layout-sidebar');
       if (!active || !box) return;
+      const controls = box.querySelector<HTMLElement>('.sidebar-controls');
+      const top = box.getBoundingClientRect().top + (controls?.offsetHeight ?? 0);
+      const height = box.getBoundingClientRect().bottom - top;
       const a = active.getBoundingClientRect();
-      const b = box.getBoundingClientRect();
-      if (a.top < b.top || a.bottom > b.bottom) {
-        box.scrollTop += a.top - b.top - b.height / 3;
-      }
+      if (a.top >= top && a.bottom <= top + height) return;
+      const folder = active.closest('details')?.querySelector<HTMLElement>(':scope > summary');
+      const f = folder?.getBoundingClientRect();
+      box.scrollTop += f && a.bottom - f.top < height * 0.8 ? f.top - top - 8 : a.top - top - height / 3;
     }
     revealActive();
     window.addEventListener('sidebar-state-changed', () => requestAnimationFrame(revealActive));
@@ -464,10 +487,16 @@ function getFolderHref(fullPath: string) {
 <style>
   /* --- Панель поиска и сортировки --- */
   .sidebar-controls {
+    /* Поиск всегда под рукой: дерево прокручивается под ним, а не вместе с ним */
+    position: sticky;
+    top: calc(-1 * var(--sidebar-pad-top, 0px));
+    z-index: 1;
+    padding-block: 0.4rem;
+    background: var(--pico-background-color);
     display: flex;
     align-items: stretch;
     gap: 0.3rem;
-    margin-bottom: 0.4rem;
+    margin-bottom: 0;
     font-family: var(--font-family);
   }
 
@@ -508,7 +537,7 @@ function getFolderHref(fullPath: string) {
     font-family: inherit;
     padding: 0.2rem 0.4rem;
     border: 1px solid var(--pico-muted-border-color);
-    border-radius: 3px;
+    border-radius: var(--app-radius-xs);
     background: transparent;
     color: var(--pico-color);
     /* фокус: общее зелёное кольцо :focus-visible, как у всего интерактивного */
@@ -534,7 +563,7 @@ function getFolderHref(fullPath: string) {
     background: transparent;
     background-color: transparent;
     border: 1px solid var(--pico-muted-border-color);
-    border-radius: 3px;
+    border-radius: var(--app-radius-xs);
     color: var(--pico-muted-color);
     cursor: pointer;
     padding: 0 0.35rem;
@@ -664,7 +693,7 @@ function getFolderHref(fullPath: string) {
     min-width: 0;
     padding: 2px 4px;
     margin: 0 -4px;
-    border-radius: 3px;
+    border-radius: var(--app-radius-xs);
   }
 
   .sidebar-nav a.file-link:hover {
@@ -687,7 +716,7 @@ function getFolderHref(fullPath: string) {
     align-items: center;
     padding: 2px 4px;
     margin: 0 -4px;
-    border-radius: 3px;
+    border-radius: var(--app-radius-xs);
   }
 
   .sidebar-nav summary {

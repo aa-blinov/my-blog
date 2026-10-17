@@ -13,7 +13,8 @@ import { BASE } from '../config';
       </hgroup>
     </div>
     <div class="content">
-      <p>В дереве файлов есть всё, что есть, на телефоне оно за значком ☰. Поиск в нём ищет по названию и имени файла.</p>
+      <p>Поищи по названию или имени файла, результаты появятся в дереве.</p>
+      <p><input type="search" id="nf-search" class="nf-search" placeholder="поиск..." aria-label="Поиск статьи по названию или имени файла" autocomplete="off" /></p>
       <p><a href={BASE}>На главную</a> или <a href={`${BASE}blog/`}>ко всем статьям</a>.</p>
     </div>
   </article>
@@ -24,5 +25,21 @@ import { BASE } from '../config';
   (function () {
     var el = document.getElementById('missing-path');
     if (el && location.pathname && location.pathname !== '/') el.textContent = location.pathname;
+    // Поле на странице ведёт в поиск дерева; на телефоне заодно открывает дерево
+    var q = document.getElementById('nf-search');
+    var tree = document.getElementById('sidebar-search');
+    if (!q || !tree) return;
+    q.addEventListener('input', function () {
+      tree.value = q.value;
+      tree.dispatchEvent(new Event('input', { bubbles: true }));
+    });
+    q.addEventListener('keydown', function (e) {
+      if (e.key !== 'Enter') return;
+      var toggle = document.getElementById('sidebar-toggle');
+      var sb = document.getElementById('layout-sidebar');
+      if (toggle && sb && getComputedStyle(toggle).display !== 'none' && !sb.classList.contains('sidebar-shown')) toggle.click();
+      var first = document.querySelector('#sidebar-tree li[data-filename]:not([style*="display: none"]) a');
+      if (first) first.focus();
+    });
   })();
 </script>

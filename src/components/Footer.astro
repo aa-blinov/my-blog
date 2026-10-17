@@ -7,26 +7,16 @@ const hasNotes = (await getCollection('notes')).some((n) => !n.data.draft);
 ---
 <footer class="site-footer">
   <small>
-    {year} © {SITE.author}
-    {' '}
-    <a href={SITE.github} target="_blank" rel="noopener noreferrer me" aria-label="GitHub, откроется в новой вкладке">GitHub</a>
-    {' | '}
-    <a href={SITE.telegram} target="_blank" rel="noopener noreferrer me" aria-label="Telegram, откроется в новой вкладке">Telegram</a>
-    {' | '}
-    <a href={SITE.linkedin} target="_blank" rel="noopener noreferrer me" aria-label="LinkedIn, откроется в новой вкладке">LinkedIn</a>
-    <br />
-    {hasNotes && (
-      <>
-        <a href={`${BASE}notes/`}>Заметки</a>
-        {' | '}
-      </>
-    )}
-    RSS: <a href={`${BASE}rss.xml`}>статьи</a>
-    {hasNotes && (
-      <>
-        {' | '}
-        <a href={`${BASE}notes.xml`}>заметки</a>
-      </>
-    )}
+    <span class="footer-line">{year} © {SITE.author}</span>
+    <span class="footer-line">
+      <a href={SITE.github} target="_blank" rel="noopener noreferrer me" aria-label="GitHub, откроется в новой вкладке">GitHub</a>
+      <a href={SITE.telegram} target="_blank" rel="noopener noreferrer me" aria-label="Telegram, откроется в новой вкладке">Telegram</a>
+      <a href={SITE.linkedin} target="_blank" rel="noopener noreferrer me" aria-label="LinkedIn, откроется в новой вкладке">LinkedIn</a>
+    </span>
+    <span class="footer-line">
+      {hasNotes && <a href={`${BASE}notes/`}>Заметки</a>}
+      <a href={`${BASE}rss.xml`}>RSS статей</a>
+      {hasNotes && <a href={`${BASE}notes.xml`}>RSS заметок</a>}
+    </span>
   </small>
 </footer>

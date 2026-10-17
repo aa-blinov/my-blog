@@ -69,6 +69,7 @@ const breadcrumbPath = getBreadcrumb(Astro.url.pathname);
     
     <script is:inline>
       (function() {
+        document.documentElement.classList.add('js'); // без JS кнопки панели и поиск не работают: их прячет html:not(.js) .needs-js
         const theme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.dataset.theme = theme;
         

@@ -64,6 +64,7 @@
   /* Scrollbar, radius, z-index, transition */
   --app-scrollbar-size: 10px;
   --app-scrollbar-thumb-radius: 4px; /* шкала DESIGN.md: 0, 3px, 4px */
+  --app-radius-xs: 3px;
   --app-radius-sm: 4px;
   --app-z-navbar: 1000;
   --app-z-sidebar-overlay: 999;
@@ -429,6 +430,7 @@ pre, code {
     scrollbar-width: thin;
     padding-top: var(--app-spacing-md);
     margin-top: calc(-1 * var(--app-spacing-md));
+    --sidebar-pad-top: var(--app-spacing-md); /* закреплённый поиск закрывает и эту полосу */
   }
   main {
     padding-left: var(--app-spacing-page);
@@ -472,6 +474,7 @@ pre, code {
     background: var(--pico-background-color);
     z-index: var(--app-z-sidebar-overlay);
     padding: var(--app-spacing);
+    --sidebar-pad-top: var(--app-spacing);
     overflow-y: auto;
     overscroll-behavior-y: contain;
     -webkit-overflow-scrolling: touch;
@@ -543,7 +546,7 @@ pre, code {
   text-transform: none;
   font-weight: 500;
   opacity: 0.7;
-  transition: all var(--app-transition) ease-in-out;
+  transition: background-color var(--app-transition), border-color var(--app-transition), color var(--app-transition), opacity var(--app-transition); /* было all 0.2s ease ease-in-out: недействительно, перехода не было */
   cursor: pointer;
 }
 .code-block-container:hover .code-copy-btn,
@@ -575,6 +578,9 @@ pre, code {
     display: inline-block;
     padding: 0.6rem 0.25rem;
   }
+  .footer-line {
+    gap: 0 0.5rem; /* на таче у ссылок свой отступ под палец */
+  }
   .site-footer {
     padding-bottom: max(var(--app-spacing-lg), env(safe-area-inset-bottom));
   }
@@ -584,6 +590,19 @@ pre, code {
    Footer, content links, post-title-link, all-articles-link
    ========================================================================== */
 
+/* Строки футера: ссылки через пробел-отступ, а не через «|», который висел в конце строки на телефоне */
+.footer-line {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.25rem 1.25rem;
+}
+.site-footer small {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+}
 .site-footer {
   border-top: 1px solid var(--pico-muted-border-color);
   padding: var(--app-spacing-lg) var(--app-spacing);
@@ -617,7 +636,7 @@ pre, code {
   text-decoration: none;
   font-size: 0.9em;
   font-weight: 500;
-  transition: all var(--app-transition);
+  transition: background-color var(--app-transition), border-color var(--app-transition), color var(--app-transition); /* all анимировал и кольцо фокуса: оно вырастало с нуля */
   vertical-align: middle;
   line-height: inherit;
   margin: 0 0.1rem;
@@ -703,13 +722,22 @@ a.all-articles-link.post-title-link:hover {
 .meta-file {
   display: none;
 }
-@media (max-width: 991px) {
+/* До 1200px колонка узкая: полный путь над H1 рвался на две строки, оставляем имя файла */
+@media (max-width: 1199px) {
   .meta-path {
     display: none;
   }
   .meta-file {
     display: inline;
   }
+}
+/* 992–1199: дерево уже, колонке текста остаётся больше места (на 1024 было около 45 знаков) */
+@media (min-width: 992px) and (max-width: 1199px) {
+  :root {
+    --app-sidebar-width: clamp(240px, 16rem, 300px);
+  }
+}
+@media (max-width: 991px) {
   main article .entry-header h1 {
     font-size: 1.6em;
   }
@@ -1046,6 +1074,26 @@ main article .content .post-list-item .post-title,
   display: none;
 }
 
+/* «Когда срочно к врачу»: отбит линиями сверху и снизу, как шаг схемы, без карточки и заливки */
+.am-urgent {
+  margin: var(--app-spacing-lg) 0;
+  padding: var(--app-spacing) 0;
+  border-block: 1px solid var(--pico-muted-border-color);
+}
+main article .content .am-urgent h2 {
+  margin-top: 0;
+}
+.am-urgent ul {
+  margin-bottom: 0;
+}
+/* Поиск на 404: как поле дерева, но крупнее, это основное действие страницы */
+.nf-search {
+  max-width: 28rem;
+  border: 1px solid var(--pico-muted-border-color);
+  border-radius: var(--app-radius-sm);
+  background: transparent;
+  box-shadow: none;
+}
 /* Шаги схемы: подпись «шаг N» мелким серым, как мета-строка, и линия сверху */
 .am-step {
   padding: var(--app-spacing) 0;
@@ -1124,6 +1172,11 @@ details.am-fold {
 details.am-group:not(:has(+ details.am-group)),
 details.am-fold:not(:has(+ details.am-fold)) {
   border-bottom: 1px solid var(--pico-muted-border-color);
+}
+/* Если сразу за списком идёт разделитель ---, своя нижняя линия не нужна: было две линии подряд */
+details.am-group:has(+ hr),
+details.am-fold:has(+ hr) {
+  border-bottom: none;
 }
 details.am-group > summary,
 details.am-fold > summary,
@@ -1204,9 +1257,9 @@ details.am-why > .am-src {
   margin-left: 0.15em;
   padding: 0 0.3em;
   border: 1px solid var(--pico-muted-border-color);
-  border-radius: 3px;
+  border-radius: var(--app-radius-xs);
   background: var(--pico-code-background-color);
-  font-size: 0.72em;
+  font-size: max(0.72em, 11px); /* на шаге xs чип падал до 10.4px */
   line-height: 1.5;
   vertical-align: 0.15em;
   color: var(--pico-primary);
@@ -1217,6 +1270,10 @@ details.am-why > .am-src {
   background: var(--pico-primary);
   border-color: var(--pico-primary);
   color: var(--pico-primary-inverse);
+}
+/* Без JS эти кнопки и поиск ничего не делают: не показываем мёртвые элементы */
+html:not(.js) .needs-js {
+  display: none !important;
 }
 /* Текст только для скринридера: контекст к одинаковым подписям вроде «Почему так» */
 .sr-only {

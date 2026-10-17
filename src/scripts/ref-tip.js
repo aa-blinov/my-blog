@@ -27,7 +27,6 @@
   };
 
   const show = (a) => {
-    if (current && current !== a) current.removeAttribute("aria-describedby");
     current = a;
     tip.textContent = a.dataset.tip;
     const host = document.createElement("span");
@@ -41,13 +40,11 @@
       tip.append(hint);
     }
     tip.hidden = false;
-    a.setAttribute("aria-describedby", tip.id);
     place();
   };
 
   const hide = () => {
     if (!current) return;
-    current.removeAttribute("aria-describedby");
     current = null;
     tip.hidden = true;
   };

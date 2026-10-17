@@ -8,7 +8,9 @@
   
   const applyThemeUi = (theme) => {
     root.dataset.theme = theme;
+    if (btn) btn.setAttribute("aria-pressed", String(theme === "dark")); // скринридер слышит, какая тема сейчас
   };
+  applyThemeUi(root.dataset.theme || initialTheme);
 
   const copyToClipboard = async (text) => {
     await navigator.clipboard.writeText(text);
@@ -82,13 +84,22 @@
     root.dataset.font = size;
     const index = fontSizes.indexOf(size);
     
-    // Update button states (optional: visual feedback when limits reached)
-    // На границе шкалы кнопка выключена по-настоящему: и видно, и скринридер скажет
-    if (fontDecreaseBtn) fontDecreaseBtn.disabled = index === 0;
-    if (fontIncreaseBtn) fontIncreaseBtn.disabled = index === fontSizes.length - 1;
+    // На границе шкалы кнопка выключена по-настоящему: и видно, и скринридер скажет.
+    // Если фокус был на ней, переводим на соседнюю, иначе он падал на body
+    const atMin = index === 0;
+    const atMax = index === fontSizes.length - 1;
+    if (atMin && document.activeElement === fontDecreaseBtn) fontIncreaseBtn?.focus();
+    if (atMax && document.activeElement === fontIncreaseBtn) fontDecreaseBtn?.focus();
+    if (fontDecreaseBtn) fontDecreaseBtn.disabled = atMin;
+    if (fontIncreaseBtn) fontIncreaseBtn.disabled = atMax;
   };
 
   applyFontUi(initialFont);
+
+  const fontStatus = document.getElementById("font-status");
+  const announceFont = (size) => {
+    if (fontStatus) fontStatus.textContent = `Размер шрифта ${fontSizes.indexOf(size) + 1} из ${fontSizes.length}`;
+  };
 
   if (fontIncreaseBtn) {
     fontIncreaseBtn.addEventListener("click", () => {
@@ -98,6 +109,7 @@
         const nextSize = fontSizes[currentIndex + 1];
         localStorage.setItem("font-size-v2", nextSize);
         applyFontUi(nextSize);
+        announceFont(nextSize);
       }
     });
   }
@@ -110,6 +122,7 @@
         const nextSize = fontSizes[currentIndex - 1];
         localStorage.setItem("font-size-v2", nextSize);
         applyFontUi(nextSize);
+        announceFont(nextSize);
       }
     });
   }
