@@ -1900,6 +1900,38 @@ main article .content .pk-sub {
   color: var(--pico-muted-color);
   cursor: pointer;
 }
+/* Открытые вопросы для врача: под подборщиком, свёрнуты, но видны в заголовке */
+.pk-review {
+  margin: var(--app-spacing-lg) 0 0;
+  padding-top: var(--app-spacing);
+  border-top: 1px solid var(--pico-muted-border-color);
+}
+.pk-review > summary {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.pk-review-list {
+  margin: 0;
+  padding-left: 1.8em;
+  font-size: var(--app-font-sm);
+  line-height: 1.5;
+}
+.pk-review-list > li {
+  margin: 0 0 var(--app-spacing);
+}
+.pk-review-list p {
+  margin: 0 0 0.3rem;
+}
+.pk-review-q {
+  color: var(--pico-contrast);
+}
+.pk-review-src {
+  font-size: var(--app-font-control);
+  color: var(--pico-muted-color);
+}
 .pk-jump {
   display: none;
 }

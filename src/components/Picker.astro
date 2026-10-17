@@ -74,6 +74,23 @@ const client = {
       <div class="pk-lists"></div>
     </section>
   </div>
+  {data.review && (
+    <details class="pk-review">
+      <summary>Для врача: открытые вопросы по правилам ({data.review.items.filter((i) => i.question).length})</summary>
+      <p class="pk-note">{data.review.lead}</p>
+      <ol class="pk-review-list">
+        {data.review.items.map((i) => (
+          <li>
+            <p><strong>{i.title}.</strong> {i.text}</p>
+            {i.question && <p class="pk-review-q">Вопрос: {i.question}</p>}
+            {i.sources.length > 0 && (
+              <p class="pk-review-src">Источники: {i.sources.map((s, n) => (<>{n > 0 && ' · '}<a href={s.url}>{s.title}</a></>))}</p>
+            )}
+          </li>
+        ))}
+      </ol>
+    </details>
+  )}
   <a class="pk-jump" href="#pk-result">к результату ↓</a>
   <script type="application/json" class="pk-data" set:html={JSON.stringify(client).replace(/</g, '\\u003c')} />
 </div>
@@ -197,6 +214,8 @@ const client = {
       });
       io.observe(res);
       io.observe(form);
+      const review = root.querySelector('.pk-review');
+      if (review) io.observe(review);
     }
     form.addEventListener('change', render);
     form.addEventListener('reset', () => setTimeout(render, 0));

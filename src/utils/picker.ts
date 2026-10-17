@@ -34,6 +34,14 @@ export interface PickerAlert {
   sources?: MapSource[];
 }
 
+// Открытые вопросы для врача: видны на странице, чтобы врач мог их разобрать
+export interface PickerReviewItem {
+  title: string;
+  text: string;
+  question: string; // пусто, если пункт только для сведения
+  sources: MapSource[];
+}
+
 export interface PickerData {
   disclaimer: string;
   mapHref?: string; // где лежит карта с карточками препаратов
@@ -43,4 +51,5 @@ export interface PickerData {
   rules: { when: string; effects: PickerEffect[] }[];
   history: { helped: Omit<PickerEffect, 'drugs'>; failed: Omit<PickerEffect, 'drugs'> };
   alerts: PickerAlert[];
+  review?: { lead: string; items: PickerReviewItem[] };
 }
