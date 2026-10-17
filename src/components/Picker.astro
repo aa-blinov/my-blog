@@ -35,8 +35,8 @@ const client = {
   <div class="pk-layout">
     <form class="pk-form" aria-label="Особенности пациента">
       {data.groups.map((g) => (
-        <fieldset class="pk-group">
-          <legend>{g.label}</legend>
+        <details class="pk-group" open>
+          <summary class="pk-group-title">{g.label}<span class="pk-count"></span></summary>
           {data.options.filter((o) => o.group === g.id).map((o) => (
             <label class="pk-opt">
               <input type="checkbox" name="o" value={o.id} />
@@ -44,10 +44,10 @@ const client = {
             </label>
           ))}
           {g.id === 'safety' && <div class="pk-urgent"></div>}
-        </fieldset>
+        </details>
       ))}
-      <fieldset class="pk-group">
-        <legend>Опыт лечения</legend>
+      <details class="pk-group" open>
+        <summary class="pk-group-title">Опыт лечения<span class="pk-count"></span></summary>
         <label class="pk-select">
           <span>Раньше помог</span>
           <select name="helped">
@@ -62,7 +62,7 @@ const client = {
             {data.drugs.map((d) => <option value={d.id}>{d.label}</option>)}
           </select>
         </label>
-      </fieldset>
+      </details>
       <p class="pk-actions"><button type="reset" class="pk-reset">Сбросить отметки</button></p>
     </form>
 
@@ -119,11 +119,19 @@ const client = {
     const alertsBox = root.querySelector<HTMLElement>('.pk-alerts')!;
     const lists = root.querySelector<HTMLElement>('.pk-lists')!;
     const summary = root.querySelector<HTMLElement>('.pk-summary')!;
+    const groups = [...form.querySelectorAll<HTMLDetailsElement>('.pk-group')];
+    const safetyGroup = urgentBox?.closest<HTMLDetailsElement>('.pk-group') ?? null;
     const esc = (s: string) => s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]!));
     const chips = (ns: number[]) => ns.length ? ' <span class="ref-run">' + ns.map((n) => {
       const [t, u] = data.sources[n - 1];
       return `<a class="ref" href="${esc(u)}" data-tip="${esc(t)}" aria-label="Источник ${n}: ${esc(t)}">[${n}]</a>`;
     }).join(' ') + '</span>' : '';
+    // Сколько отмечено в каждой группе: видно в заголовке, даже когда группа свёрнута
+    const updateCounts = () => groups.forEach((g) => {
+      const n = g.querySelectorAll('input:checked').length + [...g.querySelectorAll('select')].filter((s) => s.value).length;
+      const c = g.querySelector('.pk-count');
+      if (c) c.textContent = n ? String(n) : '';
+    });
 
     const render = () => {
       const fd = new FormData(form);
@@ -149,8 +157,11 @@ const client = {
       const alerts = data.alerts.filter((a) => picked.includes(a.w)).sort((a, b) => order[a.l] - order[b.l]);
       const alertHtml = (a: (typeof alerts)[number]) => `<p class="pk-alert pk-alert-${a.l}">${esc(a.t)}${chips(a.s)}</p>`;
       alertsBox.innerHTML = alerts.map(alertHtml).join('');
-      // Срочное дублируем под группой «Безопасность»: на телефоне оно должно быть рядом с отметкой, а не в конце результата
+      // Срочное дублируем под группой «Безопасность»: на телефоне оно должно быть рядом с отметкой, а не в конце результата.
+      // Группа при этом открывается, иначе срочное оказалось бы в свёрнутом блоке
       if (urgentBox) urgentBox.innerHTML = alerts.filter((a) => a.l === 'urgent').map(alertHtml).join('');
+      if (safetyGroup && alerts.some((a) => a.l === 'urgent')) safetyGroup.open = true;
+      updateCounts();
 
       // При равном счёте выше то, что зарегистрировано в России: читателю его реально могут назначить
       const all = [...state.values()].sort((a, b) => b.score - a.score || Number(b.d.ru) - Number(a.d.ru) || a.d.tier - b.d.tier);
@@ -163,22 +174,52 @@ const client = {
       const first = clean.filter(eligible).slice(0, 5);
       const more = clean.filter((x) => !first.includes(x));
 
-      const reasons = (x: (typeof all)[number]) => [...x.avoid, ...x.minus, ...x.notes, ...x.plus]
-        .map((e) => `<li class="pk-r pk-r-${e.k}">${esc(e.r)}${chips(e.s)}</li>`).join('');
-      const row = (x: (typeof all)[number]) => `
+      const reasonsOf = (x: (typeof all)[number]) => [...x.avoid, ...x.minus, ...x.notes, ...x.plus];
+      // Ключ по виду и тексту причины: одна и та же фраза из разных правил считается одной, источники собираются вместе
+      const keyOf = (e: Eff) => `${e.k}|${e.r}`;
+      const reasonItem = (e: Eff) => `<li class="pk-r pk-r-${e.k}">${esc(e.r)}${chips(e.s)}</li>`;
+      // Одна и та же причина у нескольких препаратов одного списка выводится один раз сверху, с перечнем препаратов
+      const list = (items: typeof all) => {
+        const by = new Map<string, { e: Eff; s: number[]; names: string[] }>();
+        items.forEach((x) => {
+          const seen = new Set<string>();
+          reasonsOf(x).forEach((e) => {
+            const k = keyOf(e);
+            if (seen.has(k)) return;
+            seen.add(k);
+            const g = by.get(k) ?? { e, s: [] as number[], names: [] as string[] };
+            g.names.push(x.d.label);
+            g.s = [...new Set([...g.s, ...e.s])];
+            by.set(k, g);
+          });
+        });
+        const shared = new Set([...by].filter(([, g]) => g.names.length > 1).map(([k]) => k));
+        const common = [...by].filter(([k]) => shared.has(k))
+          .map(([, g]) => `<li class="pk-r pk-r-${g.e.k}">${esc(g.e.r)}${chips(g.s)}<span class="pk-common-who">Касается: ${g.names.map(esc).join(', ')}</span></li>`)
+          .join('');
+        const rows = items.map((x) => {
+          const rest = reasonsOf(x).filter((e) => !shared.has(keyOf(e))).map(reasonItem).join('');
+          return `
         <li class="pk-drug">
           <p class="pk-name"><a href="${esc(data.map)}#map-${x.d.id}">${esc(x.d.label)}</a>
             <span class="pk-tier">${TIER_NAME[x.d.tier]}${chips(x.d.src)}${x.d.ru ? '' : ' ~ в России не зарегистрирован'}</span></p>
-          ${reasons(x) ? `<ul class="pk-reasons">${reasons(x)}</ul>` : ''}
+          ${rest ? `<ul class="pk-reasons">${rest}</ul>` : ''}
         </li>`;
-      const block = (title: string, cls: string, items: typeof all, note = '') => items.length
-        ? `<h3 class="pk-sub ${cls}">${title}</h3>${note ? `<p class="pk-note">${note}</p>` : ''}<ul class="pk-list">${items.map(row).join('')}</ul>` : '';
+        }).join('');
+        return { common: common ? `<ul class="pk-reasons pk-common">${common}</ul>` : '', rows: `<ul class="pk-list">${rows}</ul>` };
+      };
+      const block = (title: string, cls: string, items: typeof all, note = '') => {
+        if (!items.length) return '';
+        const l = list(items);
+        return `<h3 class="pk-sub ${cls}">${title}</h3>${note ? `<p class="pk-note">${note}</p>` : ''}${l.common}${l.rows}`;
+      };
+      const moreList = more.length ? list(more) : null;
 
       lists.innerHTML =
         block('Обычно обсуждают первыми', 'pk-sub-first', first, picked.length || helped || failed ? '' : 'Пока ничего не отмечено: это препараты первой линии по рекомендациям. Отметьте особенности в анкете, и список подстроится.') +
         (first.length ? '' : '<p class="pk-note">При отмеченном нет варианта без оговорок. Это повод обсудить выбор с врачом подробнее, а не выбирать из списка ниже самому.</p>') +
         block('Можно, но с осторожностью', 'pk-sub-caution', caution) +
-        (more.length ? `<details class="pk-more"><summary>Другие варианты (${more.length})</summary><p class="pk-note">По отмеченному правил нет. Это не значит, что препарат подходит.</p><ul class="pk-list">${more.map(row).join('')}</ul></details>` : '') +
+        (moreList ? `<details class="pk-more"><summary>Другие варианты (${more.length})</summary><p class="pk-note">По отмеченному правил нет. Это не значит, что препарат подходит.</p>${moreList.common}${moreList.rows}</details>` : '') +
         block('Не подходит при отмеченном', 'pk-sub-avoid', avoid);
       summary.textContent = picked.length || helped || failed
         ? `Учтено отметок: ${picked.length + histCount}. Первыми ${first.length}, с осторожностью ${caution.length}, не подходит ${avoid.length}.`
@@ -201,6 +242,12 @@ const client = {
     for (const k of ['helped', 'failed']) {
       const sel = form.querySelector<HTMLSelectElement>(`select[name="${k}"]`)!;
       if (q.get(k)) sel.value = q.get(k)!;
+    }
+    // На телефоне анкета длинная: группы без отметок сворачиваем, отмеченные оставляем открытыми
+    if (matchMedia('(max-width: 991px)').matches) {
+      groups.forEach((g) => {
+        g.open = !!g.querySelector('input:checked') || [...g.querySelectorAll('select')].some((s) => s.value);
+      });
     }
     // «к результату» не нужна, когда результат уже на экране
     // Ссылка нужна, пока анкета и результат за экраном: иначе она закрывает подписи в анкете

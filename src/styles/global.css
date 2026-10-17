@@ -1821,7 +1821,7 @@ html[data-theme="dark"] .pk {
 }
 .pk-layout {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr);
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.35fr); /* результат шире: там текст и источники */
   gap: var(--app-spacing-xl);
   align-items: start;
 }
@@ -1833,10 +1833,39 @@ html[data-theme="dark"] .pk {
   padding: 0;
   border: none;
 }
-.pk-group legend {
+/* Группа анкеты: свёрнута или раскрыта, в заголовке число отмеченного */
+.pk-group > summary {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
   margin-bottom: 0.35rem;
   font-size: var(--app-font-control);
   color: var(--pico-muted-color);
+  cursor: pointer;
+  list-style: none;
+}
+.pk-group > summary::-webkit-details-marker,
+.pk-group > summary::after {
+  display: none; /* стрелку Pico для details скрываем: своя «▸» слева */
+}
+.pk-group > summary::before {
+  content: "▸";
+  display: inline-block;
+  transition: transform 0.15s;
+}
+.pk-group[open] > summary::before {
+  transform: rotate(90deg);
+}
+.pk-count {
+  margin-left: auto;
+  padding: 0 0.4rem;
+  border: 1px solid var(--pico-primary);
+  border-radius: var(--app-radius-xs);
+  color: var(--pico-primary);
+  font-weight: 700;
+}
+.pk-count:empty {
+  display: none;
 }
 .pk-opt {
   display: flex;
@@ -1994,6 +2023,15 @@ main article .content .pk-sub {
   content: "× ";
   color: var(--pico-muted-color);
 }
+/* Причина, общая для нескольких препаратов списка: выводится один раз сверху */
+.pk-common {
+  margin: 0 0 0.5rem;
+}
+.pk-common-who {
+  display: block;
+  font-size: var(--app-font-control);
+  color: var(--pico-muted-color);
+}
 .pk-more {
   margin: var(--app-spacing) 0 0;
 }
@@ -2070,6 +2108,9 @@ main article .content .pk-sub {
   .pk-opt {
     min-height: 44px;
     align-items: center;
+  }
+  .pk-group > summary {
+    min-height: 44px;
   }
   .pk .pk-opt input[type="checkbox"] {
     margin-top: 0;
