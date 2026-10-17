@@ -1633,7 +1633,7 @@ main article .content .mm-card h2 {
     top: auto;
     left: 0;
     width: auto;
-    height: 58%;
+    height: 70%; /* на телефоне карта при открытой карточке почти не нужна, а читать удобнее */
     border-left: none;
     border-top: 1px solid var(--mm-rule);
   }
