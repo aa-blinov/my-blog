@@ -1431,11 +1431,25 @@ html.mm-locked body {
   border-color: var(--mm-accent);
   color: var(--mm-accent);
 }
+.mm .mm-node.mm-aside {
+  border-style: dashed;
+  color: var(--mm-muted);
+}
+.mm .mm-depth-1.mm-aside {
+  background: var(--mm-bg);
+}
+.mm-edges path.mm-aside {
+  stroke-dasharray: 5 5;
+}
+.mm .mm-node.mm-aside:hover,
+.mm .mm-node.mm-aside.on-path {
+  color: var(--mm-accent);
+}
 .mm .mm-node[hidden] {
   display: none;
 }
-/* Раскрытая группа помечена так же, как путь к выбранному узлу */
-.mm .mm-node.is-open {
+/* Раскрытая группа помечена так же, как путь к выбранному узлу; у групп второго плана рамка остаётся приглушённой */
+.mm .mm-node.is-open:not(.mm-aside) {
   border-color: var(--mm-accent);
 }
 .mm .mm-node.is-selected {

@@ -9,7 +9,7 @@ export const antidepressants: MindMapData = { root: {
   "facts": [
     {
       "label": "Как читать карту",
-      "text": "Вокруг центра пять классов антидепрессантов по механизму действия, дальше препараты других классов, которые встречаются рядом с депрессией: антипсихотики, нормотимики, успокоительные, безрецептурные средства и другие способы усилить лечение. Каждый препарат стоит в своём классе; если он встречается в основном у нас, это отмечено в карточке. В карточке препарата: что это, когда его выбирают, как принимают, чем хорош и чем за него платят."
+      "text": "Вокруг центра пять классов антидепрессантов по механизму действия, дальше препараты других классов, которые встречаются рядом с депрессией: антипсихотики, нормотимики, успокоительные, безрецептурные средства и другие способы усилить лечение. Группы с пунктирной рамкой не антидепрессанты: это препараты, которые встречаются рядом с лечением, а не его замена. Каждый препарат стоит в своём классе; если он встречается в основном у нас, это отмечено в карточке. В карточке препарата: что это, когда его выбирают, как принимают, чем хорош и чем за него платят."
     },
     {
       "label": "Важно",
@@ -2954,6 +2954,7 @@ export const antidepressants: MindMapData = { root: {
           ]
         }
       ],
+      "aside": true,
       "children": [
         {
           "id": "sulpiride",
@@ -3028,7 +3029,8 @@ export const antidepressants: MindMapData = { root: {
           "docs": {
             "href": "https://www.vidal.ru/drugs/eglonyl__985",
             "text": "Полная инструкция: vidal.ru"
-          }
+          },
+          "aside": true
         },
         {
           "id": "aripiprazole",
@@ -3154,7 +3156,8 @@ export const antidepressants: MindMapData = { root: {
           "docs": {
             "href": "https://www.vidal.ru/drugs/abilify__14249",
             "text": "Полная инструкция: vidal.ru"
-          }
+          },
+          "aside": true
         },
         {
           "id": "brexpiprazole",
@@ -3268,7 +3271,8 @@ export const antidepressants: MindMapData = { root: {
           "docs": {
             "href": "https://www.vidal.ru/drugs/reksalty",
             "text": "Полная инструкция: vidal.ru"
-          }
+          },
+          "aside": true
         },
         {
           "id": "cariprazine",
@@ -3374,7 +3378,8 @@ export const antidepressants: MindMapData = { root: {
           "docs": {
             "href": "https://www.vidal.ru/drugs/reagila",
             "text": "Полная инструкция: vidal.ru"
-          }
+          },
+          "aside": true
         },
         {
           "id": "quetiapine",
@@ -3488,7 +3493,8 @@ export const antidepressants: MindMapData = { root: {
           "docs": {
             "href": "https://www.vidal.ru/drugs/quetiapine__41328",
             "text": "Полная инструкция: vidal.ru"
-          }
+          },
+          "aside": true
         },
         {
           "id": "olanzapine",
@@ -3610,7 +3616,8 @@ export const antidepressants: MindMapData = { root: {
           "docs": {
             "href": "https://www.vidal.ru/drugs/olanzapine__43301",
             "text": "Полная инструкция: vidal.ru"
-          }
+          },
+          "aside": true
         },
         {
           "id": "risperidone",
@@ -3716,7 +3723,8 @@ export const antidepressants: MindMapData = { root: {
           "docs": {
             "href": "https://www.vidal.ru/drugs/rispolept__5831",
             "text": "Полная инструкция: vidal.ru"
-          }
+          },
+          "aside": true
         }
       ]
     },
@@ -3737,6 +3745,7 @@ export const antidepressants: MindMapData = { root: {
           ]
         }
       ],
+      "aside": true,
       "children": [
         {
           "id": "lithium",
@@ -3839,7 +3848,8 @@ export const antidepressants: MindMapData = { root: {
           "docs": {
             "href": "https://www.vidal.ru/drugs/sedalit__15786",
             "text": "Полная инструкция: vidal.ru"
-          }
+          },
+          "aside": true
         },
         {
           "id": "lamotrigine",
@@ -3969,7 +3979,8 @@ export const antidepressants: MindMapData = { root: {
           "docs": {
             "href": "https://www.vidal.ru/drugs/lamictal__2650",
             "text": "Полная инструкция: vidal.ru"
-          }
+          },
+          "aside": true
         },
         {
           "id": "valproate",
@@ -4083,7 +4094,8 @@ export const antidepressants: MindMapData = { root: {
           "docs": {
             "href": "https://www.vidal.ru/drugs/depakine_chrono__227",
             "text": "Полная инструкция: vidal.ru"
-          }
+          },
+          "aside": true
         },
         {
           "id": "carbamazepine",
@@ -4201,7 +4213,8 @@ export const antidepressants: MindMapData = { root: {
           "docs": {
             "href": "https://www.vidal.ru/drugs/finlepsin__894",
             "text": "Полная инструкция: vidal.ru"
-          }
+          },
+          "aside": true
         }
       ]
     },
@@ -4226,6 +4239,7 @@ export const antidepressants: MindMapData = { root: {
           ]
         }
       ],
+      "aside": true,
       "children": [
         {
           "id": "hydroxyzine",
@@ -4280,7 +4294,8 @@ export const antidepressants: MindMapData = { root: {
           "docs": {
             "href": "https://www.vidal.ru/drugs/hydroxyzine",
             "text": "Полная инструкция: vidal.ru"
-          }
+          },
+          "aside": true
         },
         {
           "id": "phenazepam",
@@ -4367,7 +4382,8 @@ export const antidepressants: MindMapData = { root: {
           "docs": {
             "href": "https://www.vidal.ru/drugs/phenazepam__21148",
             "text": "Полная инструкция: vidal.ru"
-          }
+          },
+          "aside": true
         },
         {
           "id": "alprazolam",
@@ -4493,7 +4509,8 @@ export const antidepressants: MindMapData = { root: {
           "docs": {
             "href": "https://www.vidal.ru/drugs/alprazolam__13181",
             "text": "Полная инструкция: vidal.ru"
-          }
+          },
+          "aside": true
         },
         {
           "id": "diazepam",
@@ -4619,7 +4636,8 @@ export const antidepressants: MindMapData = { root: {
           "docs": {
             "href": "https://www.vidal.ru/drugs/sibazon__9138",
             "text": "Полная инструкция: vidal.ru"
-          }
+          },
+          "aside": true
         },
         {
           "id": "tofisopam",
@@ -4729,7 +4747,8 @@ export const antidepressants: MindMapData = { root: {
           "docs": {
             "href": "https://www.vidal.ru/drugs/grandaxin",
             "text": "Полная инструкция: vidal.ru"
-          }
+          },
+          "aside": true
         },
         {
           "id": "etifoxine",
@@ -4835,7 +4854,8 @@ export const antidepressants: MindMapData = { root: {
           "docs": {
             "href": "https://www.vidal.ru/drugs/stresam__18291",
             "text": "Полная инструкция: vidal.ru"
-          }
+          },
+          "aside": true
         },
         {
           "id": "pregabalin",
@@ -4953,7 +4973,8 @@ export const antidepressants: MindMapData = { root: {
           "docs": {
             "href": "https://www.vidal.ru/drugs/lyrica__9474",
             "text": "Полная инструкция: vidal.ru"
-          }
+          },
+          "aside": true
         },
         {
           "id": "buspirone",
@@ -5071,7 +5092,8 @@ export const antidepressants: MindMapData = { root: {
           "docs": {
             "href": "https://www.vidal.ru/drugs/spitomin__17681",
             "text": "Полная инструкция: vidal.ru"
-          }
+          },
+          "aside": true
         },
         {
           "id": "phenibut",
@@ -5193,7 +5215,8 @@ export const antidepressants: MindMapData = { root: {
           "docs": {
             "href": "https://www.vidal.ru/drugs/phenibut",
             "text": "Полная инструкция: vidal.ru"
-          }
+          },
+          "aside": true
         }
       ]
     },
@@ -5201,7 +5224,7 @@ export const antidepressants: MindMapData = { root: {
       "id": "otc",
       "label": "Без рецепта и травы",
       "title": "Без рецепта и травы",
-      "hint": "Продаются без рецепта; надёжных доказательств почти ни у кого нет.",
+      "hint": "Не лечат депрессию. Их часто покупают вместо лечения; доказательств почти нет.",
       "facts": [
         {
           "label": "Что это",
@@ -5214,6 +5237,7 @@ export const antidepressants: MindMapData = { root: {
           ]
         }
       ],
+      "aside": true,
       "children": [
         {
           "id": "st-johns-wort",
@@ -5284,7 +5308,8 @@ export const antidepressants: MindMapData = { root: {
           "docs": {
             "href": "https://www.vidal.ru/drugs/neuroplant__31582",
             "text": "Полная инструкция: vidal.ru"
-          }
+          },
+          "aside": true
         },
         {
           "id": "otc-calming",
@@ -5352,7 +5377,8 @@ export const antidepressants: MindMapData = { root: {
             "href": "https://www.vidal.ru/drugs/afobazol__8918",
             "text": "Полная инструкция: vidal.ru"
           },
-          "title": "Афобазол, Тенотен, глицин"
+          "title": "Афобазол, Тенотен, глицин",
+          "aside": true
         },
         {
           "id": "novo-passit",
@@ -5458,101 +5484,8 @@ export const antidepressants: MindMapData = { root: {
           "docs": {
             "href": "https://www.vidal.ru/drugs/novo-passit__597",
             "text": "Полная инструкция: vidal.ru"
-          }
-        },
-        {
-          "id": "persen",
-          "label": "Персен",
-          "note": "Персен, Персен Ночь; без рецепта",
-          "facts": [
-            {
-              "label": "Что это",
-              "text": "Растительное успокоительное: экстракты валерианы, мелиссы и мяты перечной.",
-              "sources": [
-                {
-                  "title": "Справочник Видаль: Персен, таблетки, инструкция (ЛП-№(004127)-(РГ-RU) от 22.12.23).",
-                  "url": "https://www.vidal.ru/drugs/persen"
-                }
-              ]
-            },
-            {
-              "label": "Показания по инструкции",
-              "text": "Повышенная нервная возбудимость, бессонница, раздражительность у взрослых и подростков от 12 лет.",
-              "sources": [
-                {
-                  "title": "Справочник Видаль: Персен, таблетки, инструкция (ЛП-№(004127)-(РГ-RU) от 22.12.23).",
-                  "url": "https://www.vidal.ru/drugs/persen"
-                }
-              ]
-            },
-            {
-              "label": "Когда выбирают",
-              "text": "В российских рекомендациях по депрессии и по генерализованной тревоге не упоминается. По валериане при тревожных расстройствах Cochrane нашёл лишь одно маленькое испытание, и вывода сделать нельзя.",
-              "sources": [
-                {
-                  "title": "Miyasaka L.S., Atallah A.N., Soares B.G. Valerian for anxiety disorders. Cochrane Database of Systematic Reviews, 2006.",
-                  "url": "https://pubmed.ncbi.nlm.nih.gov/17054208/"
-                }
-              ]
-            },
-            {
-              "label": "Как принимают",
-              "text": "Внутрь, запивая водой, независимо от еды; при бессоннице за срок от 30 минут до часа до сна. Подряд не дольше, чем от 1,5 до 2 месяцев.",
-              "sources": [
-                {
-                  "title": "Справочник Видаль: Персен, таблетки, инструкция (ЛП-№(004127)-(РГ-RU) от 22.12.23).",
-                  "url": "https://www.vidal.ru/drugs/persen"
-                }
-              ]
-            },
-            {
-              "label": "Противопоказания",
-              "text": "Низкое давление; холангит, желчнокаменная болезнь и другие болезни желчных путей; аллергия на компоненты.",
-              "sources": [
-                {
-                  "title": "Справочник Видаль: Персен, таблетки, инструкция (ЛП-№(004127)-(РГ-RU) от 22.12.23).",
-                  "url": "https://www.vidal.ru/drugs/persen"
-                }
-              ]
-            },
-            {
-              "label": "Доза по инструкции",
-              "text": "По 2 или 3 таблетки 2 или 3 раза в день; при бессоннице 2 или 3 таблетки перед сном; не больше 12 таблеток в день.",
-              "sources": [
-                {
-                  "title": "Справочник Видаль: Персен, таблетки, инструкция (ЛП-№(004127)-(РГ-RU) от 22.12.23).",
-                  "url": "https://www.vidal.ru/drugs/persen"
-                }
-              ],
-              "more": true
-            },
-            {
-              "label": "Чем платят",
-              "text": "Изредка аллергия и бронхоспазм, при долгом приёме запор, при рефлюксе может усилиться изжога. Синдрома отмены нет.",
-              "sources": [
-                {
-                  "title": "Справочник Видаль: Персен, таблетки, инструкция (ЛП-№(004127)-(РГ-RU) от 22.12.23).",
-                  "url": "https://www.vidal.ru/drugs/persen"
-                }
-              ],
-              "more": true
-            },
-            {
-              "label": "В России",
-              "text": "Продаётся без рецепта.",
-              "sources": [
-                {
-                  "title": "Справочник Видаль: Персен, таблетки, инструкция (ЛП-№(004127)-(РГ-RU) от 22.12.23).",
-                  "url": "https://www.vidal.ru/drugs/persen"
-                }
-              ],
-              "more": true
-            }
-          ],
-          "docs": {
-            "href": "https://www.vidal.ru/drugs/persen",
-            "text": "Полная инструкция: vidal.ru"
-          }
+          },
+          "aside": true
         }
       ]
     },
@@ -5573,6 +5506,7 @@ export const antidepressants: MindMapData = { root: {
           ]
         }
       ],
+      "aside": true,
       "children": [
         {
           "id": "esketamine",
@@ -5675,7 +5609,8 @@ export const antidepressants: MindMapData = { root: {
           "docs": {
             "href": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=d81a6a79-a74a-44b7-822c-0dfa3036eaed",
             "text": "Полная инструкция: dailymed.nlm.nih.gov"
-          }
+          },
+          "aside": true
         },
         {
           "id": "liothyronine",
@@ -5785,7 +5720,8 @@ export const antidepressants: MindMapData = { root: {
           "docs": {
             "href": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=51452b31-ff68-4e0c-b982-c15502ebf1d3",
             "text": "Полная инструкция: dailymed.nlm.nih.gov"
-          }
+          },
+          "aside": true
         },
         {
           "id": "modafinil",
@@ -5891,7 +5827,8 @@ export const antidepressants: MindMapData = { root: {
           "docs": {
             "href": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=e16c26ad-7bc2-d155-3a5d-da83ad6492c8",
             "text": "Полная инструкция: dailymed.nlm.nih.gov"
-          }
+          },
+          "aside": true
         }
       ]
     }
