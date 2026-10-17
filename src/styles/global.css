@@ -731,7 +731,7 @@ a.all-articles-link.post-title-link:hover {
     display: inline;
   }
 }
-/* 992–1199: дерево уже, колонке текста остаётся больше места (на 1024 было около 45 знаков) */
+/* 992 до 1199: дерево уже, колонке текста остаётся больше места (на 1024 было около 45 знаков) */
 @media (min-width: 992px) and (max-width: 1199px) {
   :root {
     --app-sidebar-width: clamp(240px, 16rem, 300px);
@@ -1684,7 +1684,30 @@ main article .content .mm-card h2 {
    Плоско, линии Rule, один акцент; «не подходит» не красным, а зачёркнутой подписью причины
    ========================================================================== */
 .pk {
+  --pk-line: #7d8596; /* граница полей: не ниже 3:1 к фону (WCAG 1.4.11) */
+  --pk-surface: #fbfcfc;
   margin: var(--app-spacing-lg) 0;
+}
+html[data-theme="dark"] .pk {
+  --pk-line: #6f7a8f;
+  --pk-surface: #1c212c;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .pk {
+    --pk-line: #6f7a8f;
+    --pk-surface: #1c212c;
+  }
+}
+/* Без JavaScript отметки не работают: пояснение и ссылка на карту вместо пустой анкеты */
+.pk-noscript {
+  display: none;
+}
+.pk:not(.js) .pk-noscript {
+  display: block;
+}
+.pk:not(.js) .pk-layout,
+.pk:not(.js) .pk-jump {
+  display: none;
 }
 .pk-disclaimer {
   padding: var(--app-spacing) 0;
@@ -1725,7 +1748,17 @@ main article .content .mm-card h2 {
   width: 1.05rem;
   height: 1.05rem;
   margin: 0.15rem 0 0;
+  border-color: var(--pk-line);
   border-radius: var(--app-radius-xs);
+}
+.pk-gloss {
+  margin: 0 0 var(--app-spacing-md);
+  font-size: var(--app-font-control);
+  color: var(--pico-muted-color);
+}
+/* Срочное на телефоне стоит под группой «Безопасность», на десктопе остаётся в результате */
+.pk-urgent {
+  display: none;
 }
 .pk-hint {
   display: block;
@@ -1741,6 +1774,7 @@ main article .content .mm-card h2 {
 .pk .pk-select select {
   margin: 0;
   padding: 0.35rem 0.6rem;
+  border-color: var(--pk-line);
   font-family: inherit;
   font-size: var(--app-font-sm);
   border-radius: var(--app-radius-xs);
@@ -1749,7 +1783,7 @@ main article .content .mm-card h2 {
   width: auto;
   margin: 0;
   padding: 0.35rem 0.8rem;
-  border: 1px solid var(--pico-muted-border-color);
+  border: 1px solid var(--pk-line);
   border-radius: var(--app-radius-xs);
   background: transparent;
   box-shadow: none;
@@ -1767,6 +1801,7 @@ main article .content .mm-card h2 {
   max-height: calc(100vh - 2 * var(--app-spacing));
   overflow-y: auto;
   overscroll-behavior: contain;
+  scroll-margin-top: 3.5rem; /* под фиксированную шапку сайта */
 }
 main article .content .pk-h {
   margin: 0 0 0.3rem;
@@ -1858,6 +1893,9 @@ main article .content .pk-sub {
   margin: var(--app-spacing) 0 0;
 }
 .pk-more > summary {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
   font-size: var(--app-font-sm);
   color: var(--pico-muted-color);
   cursor: pointer;
@@ -1873,6 +1911,24 @@ main article .content .pk-sub {
     position: static;
     max-height: none;
     overflow: visible;
+  }
+  .pk-urgent {
+    display: block;
+    margin: 0 0 var(--app-spacing-md);
+  }
+  .pk-urgent:empty {
+    display: none;
+  }
+  .pk-alerts > .pk-alert-urgent {
+    display: none;
+  }
+  .pk .pk-select select,
+  .pk .pk-reset {
+    min-height: 44px;
+  }
+  .pk-name > a {
+    display: inline-block;
+    padding-block: 0.5rem;
   }
   .pk-opt {
     min-height: 44px;
@@ -1891,7 +1947,7 @@ main article .content .pk-sub {
     padding: 0.6rem 1rem;
     border: 1px solid var(--pico-primary);
     border-radius: var(--app-radius-sm);
-    background: var(--pico-background-color);
+    background: var(--pk-surface);
     font-size: var(--app-font-sm);
   }
 }

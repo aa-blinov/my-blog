@@ -3,7 +3,7 @@
 import type { PickerData } from '../../utils/picker';
 
 export const antidepressants: PickerData = {
-  "disclaimer": "Это не назначение лечения. Инструмент показывает, что по рекомендациям обычно обсуждают с врачом первым, что требует осторожности и что не подходит, с причиной и источником. Препарат и дозу подбирает врач: он учитывает диагноз, тяжесть депрессии, другие болезни и лекарства. Не начинайте, не меняйте и не бросайте лечение самостоятельно. Если есть мысли о самоубийстве, звоните 112. Инструмент учитывает не все лекарства и болезни: назовите врачу всё, что принимаете, включая безрецептурные средства и зверобой.",
+  "disclaimer": "Инструмент показывает, что по рекомендациям обычно обсуждают с врачом первым, что требует осторожности и что не подходит, с причиной и источником. Препарат и дозу подбирает врач: он учитывает диагноз, тяжесть депрессии, другие болезни и лекарства. Не начинайте, не меняйте и не бросайте лечение самостоятельно. Если есть мысли о самоубийстве, звоните 112. Инструмент учитывает не все лекарства и болезни: назовите врачу всё, что принимаете, включая безрецептурные средства и зверобой.",
   "mapHref": "/blog/science/mind/antidepressants/map/",
   "drugs": [
     {
@@ -494,7 +494,7 @@ export const antidepressants: PickerData = {
           "reason": "NICE называет его вторым вариантом после флуоксетина, но российская инструкция до 18 лет его не разрешает",
           "sources": [
             {
-              "title": "Справочник Видаль: Циталопрам, таблетки, инструкция, раздел «Показания препарата» (ЛП-001955 от 25.12.12).",
+              "title": "Справочник Видаль: Циталопрам, таблетки, инструкция (ЛП-001955 от 25.12.12).",
               "url": "https://www.vidal.ru/drugs/citalopram__38632"
             },
             {
@@ -511,7 +511,7 @@ export const antidepressants: PickerData = {
           "reason": "В США разрешён при депрессии с 12 лет, а в России инструкция разрешает его только с 18",
           "sources": [
             {
-              "title": "Справочник Видаль: Селектра (эсциталопрам), инструкция, раздел «Показания препарата».",
+              "title": "Справочник Видаль: Селектра (эсциталопрам), инструкция.",
               "url": "https://www.vidal.ru/drugs/selectra__23088"
             },
             {
@@ -569,7 +569,7 @@ export const antidepressants: PickerData = {
           "reason": "Российская инструкция: противопоказан до 18 лет",
           "sources": [
             {
-              "title": "Справочник Видаль: Миртазонал (миртазапин), инструкция, раздел «Показания препарата».",
+              "title": "Справочник Видаль: Миртазонал (миртазапин), инструкция.",
               "url": "https://www.vidal.ru/drugs/mirtazonal__21725"
             }
           ],
@@ -582,7 +582,7 @@ export const antidepressants: PickerData = {
           "reason": "Российская инструкция: противопоказан до 18 лет",
           "sources": [
             {
-              "title": "Справочник Видаль: Вальдоксан (агомелатин), раздел «Показания» (ЛП-№(000528)-(РГ-RU) от 25.01.22).",
+              "title": "Справочник Видаль: Вальдоксан (агомелатин), инструкция (ЛП-№(000528)-(РГ-RU) от 25.01.22).",
               "url": "https://www.vidal.ru/drugs/valdoxan__29817"
             }
           ],
@@ -839,11 +839,11 @@ export const antidepressants: PickerData = {
           "reason": "Тоже могут снижать натрий в крови; у пожилых это проверяют анализом",
           "sources": [
             {
-              "title": "Trintellix (vortioxetine), инструкция по применению: раздел 2 о дозах и приёме. DailyMed, Takeda.",
+              "title": "Trintellix (vortioxetine), инструкция по применению. DailyMed, Takeda.",
               "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=1a5b68e2-14d0-419d-9ec6-1ca97145e838"
             },
             {
-              "title": "Trazodone hydrochloride tablets, инструкция по применению: раздел 2 о дозах и приёме. DailyMed, Teva, 2025.",
+              "title": "Trazodone hydrochloride tablets, инструкция по применению. DailyMed, Teva, 2025.",
               "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=4006d439-e2de-4590-82e9-fc9d56e3ec1b"
             }
           ],
@@ -857,12 +857,25 @@ export const antidepressants: PickerData = {
           "reason": "Европейская инструкция: от 75 лет не применяют, польза в этом возрасте не доказана",
           "sources": [
             {
-              "title": "Valdoxan (agomelatine), общая характеристика лекарственного препарата (SmPC), раздел 4.2 о дозах и анализах печени. Европейское агентство лекарственных средств (EMA).",
+              "title": "Valdoxan (agomelatine), общая характеристика лекарственного препарата (SmPC). Европейское агентство лекарственных средств (EMA).",
               "url": "https://www.ema.europa.eu/en/documents/product-information/valdoxan-epar-product-information_en.pdf"
             }
           ],
           "drugs": [
             "agomelatine"
+          ]
+        },
+        {
+          "kind": "caution",
+          "reason": "Инструкция: агранулоцитоз чаще всего развивается через 4 до 6 недель лечения и чаще у пожилых; при лихорадке или боли в горле нужен анализ крови",
+          "sources": [
+            {
+              "title": "Справочник Видаль: Леривон (миансерин), инструкция.",
+              "url": "https://www.vidal.ru/drugs/lerivon__5330"
+            }
+          ],
+          "drugs": [
+            "mianserin"
           ]
         }
       ]
@@ -892,7 +905,7 @@ export const antidepressants: PickerData = {
           "reason": "В российской инструкции (Серената) беременность в противопоказаниях; решение только с врачом",
           "sources": [
             {
-              "title": "Справочник Видаль: Серената (сертралин), инструкция, раздел «Показания препарата» (ЛП-№(006156)-(РГ-RU) от 08.07.24).",
+              "title": "Справочник Видаль: Серената (сертралин), инструкция (ЛП-№(006156)-(РГ-RU) от 08.07.24).",
               "url": "https://www.vidal.ru/drugs/serenata__6638"
             }
           ],
@@ -905,7 +918,7 @@ export const antidepressants: PickerData = {
           "reason": "В российской инструкции беременность и кормление в противопоказаниях; решение только с врачом",
           "sources": [
             {
-              "title": "Справочник Видаль: Профлузак (флуоксетин), инструкция, раздел «Показания препарата».",
+              "title": "Справочник Видаль: Профлузак (флуоксетин), инструкция.",
               "url": "https://www.vidal.ru/drugs/proflusak__1402"
             }
           ],
@@ -931,7 +944,7 @@ export const antidepressants: PickerData = {
           "reason": "В российской инструкции беременность в противопоказаниях",
           "sources": [
             {
-              "title": "Справочник Видаль: Миртазонал (миртазапин), инструкция, раздел «Показания препарата».",
+              "title": "Справочник Видаль: Миртазонал (миртазапин), инструкция.",
               "url": "https://www.vidal.ru/drugs/mirtazonal__21725"
             }
           ],
@@ -983,7 +996,7 @@ export const antidepressants: PickerData = {
           "reason": "Данных о беременности мало; европейская инструкция советует при беременности его избегать",
           "sources": [
             {
-              "title": "Valdoxan (agomelatine), общая характеристика лекарственного препарата (SmPC), раздел 4.2 о дозах и анализах печени. Европейское агентство лекарственных средств (EMA).",
+              "title": "Valdoxan (agomelatine), общая характеристика лекарственного препарата (SmPC). Европейское агентство лекарственных средств (EMA).",
               "url": "https://www.ema.europa.eu/en/documents/product-information/valdoxan-epar-product-information_en.pdf"
             },
             {
@@ -1067,6 +1080,19 @@ export const antidepressants: PickerData = {
           "drugs": [
             "fluoxetine"
           ]
+        },
+        {
+          "kind": "caution",
+          "reason": "В российской инструкции: при беременности не следует применять, особенно в I и III триместрах",
+          "sources": [
+            {
+              "title": "Справочник Видаль: Амитриптилин, таблетки 25 мг, инструкция (ЛП-№(002245)-(РГ-RU) от 26.04.23).",
+              "url": "https://www.vidal.ru/drugs/amitriptyline__3916"
+            }
+          ],
+          "drugs": [
+            "amitriptyline"
+          ]
         }
       ]
     },
@@ -1078,7 +1104,7 @@ export const antidepressants: PickerData = {
           "reason": "В российской инструкции (Серената) кормление грудью в противопоказаниях; решение с врачом",
           "sources": [
             {
-              "title": "Справочник Видаль: Серената (сертралин), инструкция, раздел «Показания препарата» (ЛП-№(006156)-(РГ-RU) от 08.07.24).",
+              "title": "Справочник Видаль: Серената (сертралин), инструкция (ЛП-№(006156)-(РГ-RU) от 08.07.24).",
               "url": "https://www.vidal.ru/drugs/serenata__6638"
             }
           ],
@@ -1091,7 +1117,7 @@ export const antidepressants: PickerData = {
           "reason": "В российской инструкции кормление грудью в противопоказаниях",
           "sources": [
             {
-              "title": "Справочник Видаль: Профлузак (флуоксетин), инструкция, раздел «Показания препарата».",
+              "title": "Справочник Видаль: Профлузак (флуоксетин), инструкция.",
               "url": "https://www.vidal.ru/drugs/proflusak__1402"
             }
           ],
@@ -1117,7 +1143,7 @@ export const antidepressants: PickerData = {
           "reason": "В российской инструкции кормление грудью в противопоказаниях",
           "sources": [
             {
-              "title": "Справочник Видаль: Миртазонал (миртазапин), инструкция, раздел «Показания препарата».",
+              "title": "Справочник Видаль: Миртазонал (миртазапин), инструкция.",
               "url": "https://www.vidal.ru/drugs/mirtazonal__21725"
             }
           ],
@@ -1143,7 +1169,7 @@ export const antidepressants: PickerData = {
           "reason": "В российской инструкции кормление грудью в противопоказаниях",
           "sources": [
             {
-              "title": "Справочник Видаль: Амитриптилин, таблетки 25 мг, раздел «Показания» (ЛП-№(002245)-(РГ-RU) от 26.04.23).",
+              "title": "Справочник Видаль: Амитриптилин, таблетки 25 мг, инструкция (ЛП-№(002245)-(РГ-RU) от 26.04.23).",
               "url": "https://www.vidal.ru/drugs/amitriptyline__3916"
             }
           ],
@@ -1169,7 +1195,7 @@ export const antidepressants: PickerData = {
           "reason": "Инструкция: если препарат нужен, кормление грудью прекращают",
           "sources": [
             {
-              "title": "Справочник Видаль: Вальдоксан (агомелатин), раздел «Показания» (ЛП-№(000528)-(РГ-RU) от 25.01.22).",
+              "title": "Справочник Видаль: Вальдоксан (агомелатин), инструкция (ЛП-№(000528)-(РГ-RU) от 25.01.22).",
               "url": "https://www.vidal.ru/drugs/valdoxan__29817"
             }
           ],
@@ -1395,8 +1421,8 @@ export const antidepressants: PickerData = {
           ]
         },
         {
-          "kind": "caution",
-          "reason": "NICE: при ОКР без других расстройств СИОЗСН, ИМАО и трициклические, кроме кломипрамина, обычно не используют",
+          "kind": "note",
+          "reason": "NICE: при ОКР без других расстройств эти препараты обычно не используют; при сочетании с депрессией решает врач",
           "sources": [
             {
               "title": "NICE. Obsessive-compulsive disorder and body dysmorphic disorder: treatment (CG31), рекомендации 1.5.3.1, 1.5.3.8, 1.5.3.13, 1.5.3.15, 1.5.3.20.",
@@ -1468,7 +1494,7 @@ export const antidepressants: PickerData = {
           "reason": "Повышает аппетит и вес; когда депрессия отняла аппетит, это может быть плюсом",
           "sources": [
             {
-              "title": "Remeron и RemeronSolTab (mirtazapine), инструкция по применению: раздел 2 о дозах и приёме. DailyMed, Organon.",
+              "title": "Remeron и RemeronSolTab (mirtazapine), инструкция по применению. DailyMed, Organon.",
               "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=98ad1917-a094-44f5-a28f-a64a8cfcd887"
             },
             {
@@ -1734,6 +1760,19 @@ export const antidepressants: PickerData = {
           "drugs": [
             "desvenlafaxine"
           ]
+        },
+        {
+          "kind": "caution",
+          "reason": "В метаанализе Хенсслера симптомы отмены при нём встречались чаще",
+          "sources": [
+            {
+              "title": "Henssler J. et al. Incidence of antidepressant discontinuation symptoms: a systematic review and meta-analysis. Lancet Psychiatry, 2024.",
+              "url": "https://pubmed.ncbi.nlm.nih.gov/38851198/"
+            }
+          ],
+          "drugs": [
+            "escitalopram"
+          ]
         }
       ]
     },
@@ -1777,10 +1816,6 @@ export const antidepressants: PickerData = {
             {
               "title": "Российское общество психиатров. Клинические рекомендации «Депрессивный эпизод, рекуррентное депрессивное расстройство», редакция 2021 года (ID 301_2 в рубрикаторе Минздрава, в архиве с 26.08.2024), PDF разработчика.",
               "url": "https://psychiatr.ru/download/6271?view=1"
-            },
-            {
-              "title": "Lam R.W. et al. Canadian Network for Mood and Anxiety Treatments (CANMAT) 2023 update on clinical guidelines for management of major depressive disorder in adults. Canadian Journal of Psychiatry, 2024.",
-              "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11351064/"
             }
           ],
           "drugs": [
@@ -1843,7 +1878,7 @@ export const antidepressants: PickerData = {
               "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11351064/"
             },
             {
-              "title": "Effexor XR (venlafaxine extended-release), инструкция по применению: раздел 2 о дозах и приёме. DailyMed, Viatris.",
+              "title": "Effexor XR (venlafaxine extended-release), инструкция по применению. DailyMed, Viatris.",
               "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=c848a5d8-ba94-4c84-80e3-0bf35fb8e32e"
             }
           ],
@@ -1859,7 +1894,7 @@ export const antidepressants: PickerData = {
           "reason": "Российская инструкция: при болезнях сердца с осторожностью",
           "sources": [
             {
-              "title": "Справочник Видаль: Миртазонал (миртазапин), инструкция, раздел «Показания препарата».",
+              "title": "Справочник Видаль: Миртазонал (миртазапин), инструкция.",
               "url": "https://www.vidal.ru/drugs/mirtazonal__21725"
             }
           ],
@@ -1904,6 +1939,19 @@ export const antidepressants: PickerData = {
           ],
           "drugs": [
             "fluoxetine"
+          ]
+        },
+        {
+          "kind": "caution",
+          "reason": "Российская инструкция: с осторожностью при недавнем инфаркте, нестабильной стенокардии, гипертензии и тахикардии; может удлинять QT",
+          "sources": [
+            {
+              "title": "Справочник Видаль: Велафакс (венлафаксин), таблетки, раздел «Режим дозирования».",
+              "url": "https://www.vidal.ru/drugs/velafax__8875"
+            }
+          ],
+          "drugs": [
+            "venlafaxine"
           ]
         }
       ]
@@ -1981,7 +2029,7 @@ export const antidepressants: PickerData = {
           "reason": "Российская инструкция: при нестабильной эпилепсии противопоказан, при эпилепсии с осторожностью",
           "sources": [
             {
-              "title": "Справочник Видаль: Серената (сертралин), инструкция, раздел «Показания препарата» (ЛП-№(006156)-(РГ-RU) от 08.07.24).",
+              "title": "Справочник Видаль: Серената (сертралин), инструкция (ЛП-№(006156)-(РГ-RU) от 08.07.24).",
               "url": "https://www.vidal.ru/drugs/serenata__6638"
             }
           ],
@@ -1994,7 +2042,7 @@ export const antidepressants: PickerData = {
           "reason": "Российская инструкция: при эпилепсии с осторожностью",
           "sources": [
             {
-              "title": "Справочник Видаль: Миртазонал (миртазапин), инструкция, раздел «Показания препарата».",
+              "title": "Справочник Видаль: Миртазонал (миртазапин), инструкция.",
               "url": "https://www.vidal.ru/drugs/mirtazonal__21725"
             }
           ],
@@ -2025,7 +2073,7 @@ export const antidepressants: PickerData = {
           "reason": "Противопоказан при болезнях печени; остальным нужны анализы печени",
           "sources": [
             {
-              "title": "Valdoxan (agomelatine), общая характеристика лекарственного препарата (SmPC), раздел 4.2 о дозах и анализах печени. Европейское агентство лекарственных средств (EMA).",
+              "title": "Valdoxan (agomelatine), общая характеристика лекарственного препарата (SmPC). Европейское агентство лекарственных средств (EMA).",
               "url": "https://www.ema.europa.eu/en/documents/product-information/valdoxan-epar-product-information_en.pdf"
             }
           ],
@@ -2038,7 +2086,7 @@ export const antidepressants: PickerData = {
           "reason": "Инструкция: избегать при хронических болезнях печени, циррозе и злоупотреблении алкоголем",
           "sources": [
             {
-              "title": "Duloxetine delayed-release capsules, инструкция по применению: раздел 2 о дозах и приёме. DailyMed, Lupin, 2026.",
+              "title": "Duloxetine delayed-release capsules, инструкция по применению. DailyMed, Lupin, 2026.",
               "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=829a4f51-c882-4b64-81f3-abfb03a52ebe"
             }
           ],
@@ -2091,7 +2139,7 @@ export const antidepressants: PickerData = {
           "reason": "Российская инструкция: при тяжёлых нарушениях функции печени противопоказан",
           "sources": [
             {
-              "title": "Справочник Видаль: Профлузак (флуоксетин), инструкция, раздел «Показания препарата».",
+              "title": "Справочник Видаль: Профлузак (флуоксетин), инструкция.",
               "url": "https://www.vidal.ru/drugs/proflusak__1402"
             }
           ],
@@ -2191,7 +2239,7 @@ export const antidepressants: PickerData = {
           "reason": "Дозу снижают на четверть или вдвое, при тяжёлой болезни почек и на диализе вдвое и больше",
           "sources": [
             {
-              "title": "Effexor XR (venlafaxine extended-release), инструкция по применению: раздел 2 о дозах и приёме. DailyMed, Viatris.",
+              "title": "Effexor XR (venlafaxine extended-release), инструкция по применению. DailyMed, Viatris.",
               "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=c848a5d8-ba94-4c84-80e3-0bf35fb8e32e"
             }
           ],
@@ -2234,7 +2282,7 @@ export const antidepressants: PickerData = {
           "reason": "При умеренной и тяжёлой болезни почек может понадобиться меньшая доза",
           "sources": [
             {
-              "title": "Remeron и RemeronSolTab (mirtazapine), инструкция по применению: раздел 2 о дозах и приёме. DailyMed, Organon.",
+              "title": "Remeron и RemeronSolTab (mirtazapine), инструкция по применению. DailyMed, Organon.",
               "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=98ad1917-a094-44f5-a28f-a64a8cfcd887"
             }
           ],
@@ -2273,7 +2321,7 @@ export const antidepressants: PickerData = {
           "reason": "При болезнях почек не изучен, назначают с осторожностью",
           "sources": [
             {
-              "title": "Trazodone hydrochloride tablets, инструкция по применению: раздел 2 о дозах и приёме. DailyMed, Teva, 2025.",
+              "title": "Trazodone hydrochloride tablets, инструкция по применению. DailyMed, Teva, 2025.",
               "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=4006d439-e2de-4590-82e9-fc9d56e3ec1b"
             }
           ],
@@ -2286,7 +2334,7 @@ export const antidepressants: PickerData = {
           "reason": "При умеренной и тяжёлой болезни почек данных мало, назначают с осторожностью",
           "sources": [
             {
-              "title": "Valdoxan (agomelatine), общая характеристика лекарственного препарата (SmPC), раздел 4.2 о дозах и анализах печени. Европейское агентство лекарственных средств (EMA).",
+              "title": "Valdoxan (agomelatine), общая характеристика лекарственного препарата (SmPC). Европейское агентство лекарственных средств (EMA).",
               "url": "https://www.ema.europa.eu/en/documents/product-information/valdoxan-epar-product-information_en.pdf"
             }
           ],
@@ -2347,7 +2395,7 @@ export const antidepressants: PickerData = {
               "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=c88f33ed-6dfb-4c5e-bc01-d8e36dd97299"
             },
             {
-              "title": "Справочник Видаль: Профлузак (флуоксетин), инструкция, раздел «Показания препарата».",
+              "title": "Справочник Видаль: Профлузак (флуоксетин), инструкция.",
               "url": "https://www.vidal.ru/drugs/proflusak__1402"
             }
           ],
@@ -2398,7 +2446,7 @@ export const antidepressants: PickerData = {
           "reason": "CANMAT относит его к СИОЗС, но в российской инструкции суицидальная настроенность указана в противопоказаниях",
           "sources": [
             {
-              "title": "Справочник Видаль: Профлузак (флуоксетин), инструкция, раздел «Показания препарата».",
+              "title": "Справочник Видаль: Профлузак (флуоксетин), инструкция.",
               "url": "https://www.vidal.ru/drugs/proflusak__1402"
             },
             {
@@ -2603,7 +2651,7 @@ export const antidepressants: PickerData = {
           "reason": "Умеренно тормозит CYP2D6",
           "sources": [
             {
-              "title": "Duloxetine delayed-release capsules, инструкция по применению: раздел 2 о дозах и приёме. DailyMed, Lupin, 2026.",
+              "title": "Duloxetine delayed-release capsules, инструкция по применению. DailyMed, Lupin, 2026.",
               "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=829a4f51-c882-4b64-81f3-abfb03a52ebe"
             }
           ],
@@ -2673,7 +2721,7 @@ export const antidepressants: PickerData = {
           "reason": "Умеренно тормозит CYP2D6",
           "sources": [
             {
-              "title": "Duloxetine delayed-release capsules, инструкция по применению: раздел 2 о дозах и приёме. DailyMed, Lupin, 2026.",
+              "title": "Duloxetine delayed-release capsules, инструкция по применению. DailyMed, Lupin, 2026.",
               "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=829a4f51-c882-4b64-81f3-abfb03a52ebe"
             }
           ],
@@ -2759,7 +2807,7 @@ export const antidepressants: PickerData = {
           "reason": "Тоже повышает риск кровотечений вместе с такими препаратами",
           "sources": [
             {
-              "title": "Effexor XR (venlafaxine extended-release), инструкция по применению: раздел 2 о дозах и приёме. DailyMed, Viatris.",
+              "title": "Effexor XR (venlafaxine extended-release), инструкция по применению. DailyMed, Viatris.",
               "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=c848a5d8-ba94-4c84-80e3-0bf35fb8e32e"
             }
           ],
@@ -2772,7 +2820,7 @@ export const antidepressants: PickerData = {
           "reason": "Тоже повышает риск кровотечений вместе с такими препаратами",
           "sources": [
             {
-              "title": "Duloxetine delayed-release capsules, инструкция по применению: раздел 2 о дозах и приёме. DailyMed, Lupin, 2026.",
+              "title": "Duloxetine delayed-release capsules, инструкция по применению. DailyMed, Lupin, 2026.",
               "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=829a4f51-c882-4b64-81f3-abfb03a52ebe"
             }
           ],
@@ -2799,7 +2847,7 @@ export const antidepressants: PickerData = {
           "reason": "Тоже повышает риск кровотечений вместе с такими препаратами",
           "sources": [
             {
-              "title": "Trintellix (vortioxetine), инструкция по применению: раздел 2 о дозах и приёме. DailyMed, Takeda.",
+              "title": "Trintellix (vortioxetine), инструкция по применению. DailyMed, Takeda.",
               "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=1a5b68e2-14d0-419d-9ec6-1ca97145e838"
             }
           ],
@@ -2934,7 +2982,7 @@ export const antidepressants: PickerData = {
           "reason": "Вместе с ИМАО и линезолидом противопоказан: риск серотонинового синдрома или резкого подъёма давления. Между препаратами нужен перерыв",
           "sources": [
             {
-              "title": "Effexor XR (venlafaxine extended-release), инструкция по применению: раздел 2 о дозах и приёме. DailyMed, Viatris.",
+              "title": "Effexor XR (venlafaxine extended-release), инструкция по применению. DailyMed, Viatris.",
               "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=c848a5d8-ba94-4c84-80e3-0bf35fb8e32e"
             }
           ],
@@ -2947,7 +2995,7 @@ export const antidepressants: PickerData = {
           "reason": "Вместе с ИМАО и линезолидом противопоказан: риск серотонинового синдрома или резкого подъёма давления. Между препаратами нужен перерыв",
           "sources": [
             {
-              "title": "Duloxetine delayed-release capsules, инструкция по применению: раздел 2 о дозах и приёме. DailyMed, Lupin, 2026.",
+              "title": "Duloxetine delayed-release capsules, инструкция по применению. DailyMed, Lupin, 2026.",
               "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=829a4f51-c882-4b64-81f3-abfb03a52ebe"
             }
           ],
@@ -2986,7 +3034,7 @@ export const antidepressants: PickerData = {
           "reason": "Вместе с ИМАО и линезолидом противопоказан: риск серотонинового синдрома или резкого подъёма давления. Между препаратами нужен перерыв",
           "sources": [
             {
-              "title": "Remeron и RemeronSolTab (mirtazapine), инструкция по применению: раздел 2 о дозах и приёме. DailyMed, Organon.",
+              "title": "Remeron и RemeronSolTab (mirtazapine), инструкция по применению. DailyMed, Organon.",
               "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=98ad1917-a094-44f5-a28f-a64a8cfcd887"
             }
           ],
@@ -2999,7 +3047,7 @@ export const antidepressants: PickerData = {
           "reason": "Вместе с ИМАО и линезолидом противопоказан: риск серотонинового синдрома или резкого подъёма давления. Между препаратами нужен перерыв",
           "sources": [
             {
-              "title": "Trintellix (vortioxetine), инструкция по применению: раздел 2 о дозах и приёме. DailyMed, Takeda.",
+              "title": "Trintellix (vortioxetine), инструкция по применению. DailyMed, Takeda.",
               "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=1a5b68e2-14d0-419d-9ec6-1ca97145e838"
             }
           ],
@@ -3012,7 +3060,7 @@ export const antidepressants: PickerData = {
           "reason": "Вместе с ИМАО и линезолидом противопоказан: риск серотонинового синдрома или резкого подъёма давления. Между препаратами нужен перерыв",
           "sources": [
             {
-              "title": "Trazodone hydrochloride tablets, инструкция по применению: раздел 2 о дозах и приёме. DailyMed, Teva, 2025.",
+              "title": "Trazodone hydrochloride tablets, инструкция по применению. DailyMed, Teva, 2025.",
               "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=4006d439-e2de-4590-82e9-fc9d56e3ec1b"
             }
           ],
@@ -3064,7 +3112,7 @@ export const antidepressants: PickerData = {
           "reason": "Сам ИМАО: с другими ИМАО, селегилином и линезолидом не сочетают",
           "sources": [
             {
-              "title": "Manerix (moclobemide) 300 мг, общая характеристика лекарственного препарата (SmPC), разделы 4.2 и 4.4. electronic medicines compendium (Великобритания), редакция февраля 2026 года.",
+              "title": "Manerix (moclobemide) 300 мг, общая характеристика лекарственного препарата (SmPC). electronic medicines compendium (Великобритания), редакция февраля 2026 года.",
               "url": "https://www.medicines.org.uk/emc/product/6661/smpc"
             }
           ],
@@ -3121,7 +3169,7 @@ export const antidepressants: PickerData = {
           "reason": "Инструкция запрещает сочетать с триптанами и трамадолом",
           "sources": [
             {
-              "title": "Manerix (moclobemide) 300 мг, общая характеристика лекарственного препарата (SmPC), разделы 4.2 и 4.4. electronic medicines compendium (Великобритания), редакция февраля 2026 года.",
+              "title": "Manerix (moclobemide) 300 мг, общая характеристика лекарственного препарата (SmPC). electronic medicines compendium (Великобритания), редакция февраля 2026 года.",
               "url": "https://www.medicines.org.uk/emc/product/6661/smpc"
             }
           ],
@@ -3150,7 +3198,7 @@ export const antidepressants: PickerData = {
           "reason": "Вместе с триптанами и трамадолом выше риск серотонинового синдрома",
           "sources": [
             {
-              "title": "Effexor XR (venlafaxine extended-release), инструкция по применению: раздел 2 о дозах и приёме. DailyMed, Viatris.",
+              "title": "Effexor XR (venlafaxine extended-release), инструкция по применению. DailyMed, Viatris.",
               "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=c848a5d8-ba94-4c84-80e3-0bf35fb8e32e"
             }
           ],
@@ -3163,7 +3211,7 @@ export const antidepressants: PickerData = {
           "reason": "Вместе с триптанами и трамадолом выше риск серотонинового синдрома",
           "sources": [
             {
-              "title": "Duloxetine delayed-release capsules, инструкция по применению: раздел 2 о дозах и приёме. DailyMed, Lupin, 2026.",
+              "title": "Duloxetine delayed-release capsules, инструкция по применению. DailyMed, Lupin, 2026.",
               "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=829a4f51-c882-4b64-81f3-abfb03a52ebe"
             }
           ],
@@ -3189,7 +3237,7 @@ export const antidepressants: PickerData = {
           "reason": "Вместе с триптанами выше риск серотонинового синдрома",
           "sources": [
             {
-              "title": "Remeron и RemeronSolTab (mirtazapine), инструкция по применению: раздел 2 о дозах и приёме. DailyMed, Organon.",
+              "title": "Remeron и RemeronSolTab (mirtazapine), инструкция по применению. DailyMed, Organon.",
               "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=98ad1917-a094-44f5-a28f-a64a8cfcd887"
             }
           ],
@@ -3202,7 +3250,7 @@ export const antidepressants: PickerData = {
           "reason": "Вместе с триптанами и трамадолом выше риск серотонинового синдрома",
           "sources": [
             {
-              "title": "Trintellix (vortioxetine), инструкция по применению: раздел 2 о дозах и приёме. DailyMed, Takeda.",
+              "title": "Trintellix (vortioxetine), инструкция по применению. DailyMed, Takeda.",
               "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=1a5b68e2-14d0-419d-9ec6-1ca97145e838"
             }
           ],
@@ -3215,7 +3263,7 @@ export const antidepressants: PickerData = {
           "reason": "Вместе с триптанами выше риск серотонинового синдрома",
           "sources": [
             {
-              "title": "Trazodone hydrochloride tablets, инструкция по применению: раздел 2 о дозах и приёме. DailyMed, Teva, 2025.",
+              "title": "Trazodone hydrochloride tablets, инструкция по применению. DailyMed, Teva, 2025.",
               "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=4006d439-e2de-4590-82e9-fc9d56e3ec1b"
             }
           ],
@@ -3423,7 +3471,7 @@ export const antidepressants: PickerData = {
       "text": "Во многих российских инструкциях кормление грудью указано в противопоказаниях, хотя за рубежом часть этих препаратов при кормлении применяют. Решение принимают вместе с врачом.",
       "sources": [
         {
-          "title": "Справочник Видаль: Серената (сертралин), инструкция, раздел «Показания препарата» (ЛП-№(006156)-(РГ-RU) от 08.07.24).",
+          "title": "Справочник Видаль: Серената (сертралин), инструкция (ЛП-№(006156)-(РГ-RU) от 08.07.24).",
           "url": "https://www.vidal.ru/drugs/serenata__6638"
         },
         {

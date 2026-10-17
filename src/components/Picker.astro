@@ -30,6 +30,7 @@ const client = {
 
 <div class="pk" data-picker>
   <p class="pk-disclaimer"><strong>Это не назначение.</strong> {data.disclaimer}</p>
+  <p class="pk-noscript">Подборщику нужен JavaScript. Без него отметки не работают. Карточки препаратов есть на <a href={data.mapHref}>карте</a>.</p>
 
   <div class="pk-layout">
     <form class="pk-form" aria-label="Особенности пациента">
@@ -42,6 +43,7 @@ const client = {
               <span>{o.label}{o.hint && <span class="pk-hint">{o.hint}</span>}</span>
             </label>
           ))}
+          {g.id === 'safety' && <div class="pk-urgent"></div>}
         </fieldset>
       ))}
       <fieldset class="pk-group">
@@ -61,24 +63,25 @@ const client = {
           </select>
         </label>
       </fieldset>
-      <p class="pk-actions"><button type="reset" class="pk-reset">сбросить</button></p>
+      <p class="pk-actions"><button type="reset" class="pk-reset">Сбросить отметки</button></p>
     </form>
 
-    <section class="pk-result" id="pk-result" aria-live="polite" aria-label="Что обсудить с врачом">
+    <section class="pk-result" id="pk-result" aria-label="Что обсудить с врачом">
       <div class="pk-alerts"></div>
       <h2 class="pk-h">Что обсудить с врачом</h2>
-      <p class="pk-summary"></p>
+      <p class="pk-gloss">Первая линия: препараты, с которых обычно начинают лечение. СИОЗС: селективные ингибиторы обратного захвата серотонина, основная группа первой линии. Бирс: список лекарств, которых пожилым лучше избегать.</p>
+      <p class="pk-summary" role="status"></p>
       <div class="pk-lists"></div>
     </section>
   </div>
   <a class="pk-jump" href="#pk-result">к результату ↓</a>
-  <script type="application/json" class="pk-data" set:html={JSON.stringify(client)} />
+  <script type="application/json" class="pk-data" set:html={JSON.stringify(client).replace(/</g, '\\u003c')} />
 </div>
 
 <script>
   // Подсчёт на клиенте: линия по рекомендациям даёт основу, отмеченные особенности сдвигают препарат вверх или вниз,
   // «не подходит» исключает. Порядок внутри групп: сумма, потом линия
-  type Eff = { d?: string[]; k: 'prefer' | 'consider' | 'note' | 'caution' | 'avoid'; r: string; s: number[] };
+  type Eff = { d?: string[]; k: 'prefer' | 'consider' | 'note' | 'caution' | 'avoid'; r: string; s: number[]; hist?: boolean };
   type Data = {
     map: string;
     drugs: { id: string; label: string; tier: number; ru: boolean; src: number[] }[];
@@ -92,7 +95,9 @@ const client = {
   const TIER_NAME: Record<number, string> = { 1: 'первая линия', 2: 'вторая линия', 3: 'третья линия' };
 
   document.querySelectorAll<HTMLElement>('[data-picker]').forEach((root) => {
+    root.classList.add('js');
     const data: Data = JSON.parse(root.querySelector('.pk-data')!.textContent!);
+    const urgentBox = root.querySelector<HTMLElement>('.pk-urgent');
     const form = root.querySelector<HTMLFormElement>('.pk-form')!;
     const alertsBox = root.querySelector<HTMLElement>('.pk-alerts')!;
     const lists = root.querySelector<HTMLElement>('.pk-lists')!;
@@ -109,20 +114,26 @@ const client = {
       const helped = String(fd.get('helped') ?? '');
       const failed = String(fd.get('failed') ?? '');
       const state = new Map(data.drugs.map((d) => [d.id, { d, score: TIER_SCORE[d.tier], plus: [] as Eff[], notes: [] as Eff[], minus: [] as Eff[], avoid: [] as Eff[] }]));
-      const apply = (e: Eff, ids: string[]) => ids.forEach((id) => {
+      const apply = (e: Eff, ids: string[], hist = false) => ids.forEach((id) => {
         const st = state.get(id);
         if (!st) return;
         st.score += WEIGHT[e.k];
-        (e.k === 'avoid' ? st.avoid : e.k === 'caution' ? st.minus : e.k === 'note' ? st.notes : st.plus).push(e);
+        const mark = hist ? { ...e, hist: true } : e;
+        (e.k === 'avoid' ? st.avoid : e.k === 'caution' ? st.minus : e.k === 'note' ? st.notes : st.plus).push(mark);
       });
       picked.forEach((o) => (data.rules[o] ?? []).forEach((e) => apply(e, e.d ?? [])));
-      if (helped) apply(data.history.helped, [helped]);
-      if (failed && failed !== helped) apply(data.history.failed, [failed]);
+      // Помог и не помог у одного препарата: противоречие, учитываем неудачу как осторожность
+      if (helped && helped !== failed) apply(data.history.helped, [helped], true);
+      if (failed) apply(data.history.failed, [failed], true);
+      const histCount = (helped && helped !== failed ? 1 : 0) + (failed ? 1 : 0);
 
       // Предупреждения сверху: срочное раньше результата
       const order = { urgent: 0, specialist: 1, info: 2 } as Record<string, number>;
-      alertsBox.innerHTML = data.alerts.filter((a) => picked.includes(a.w)).sort((a, b) => order[a.l] - order[b.l])
-        .map((a) => `<p class="pk-alert pk-alert-${a.l}">${esc(a.t)}${chips(a.s)}</p>`).join('');
+      const alerts = data.alerts.filter((a) => picked.includes(a.w)).sort((a, b) => order[a.l] - order[b.l]);
+      const alertHtml = (a: (typeof alerts)[number]) => `<p class="pk-alert pk-alert-${a.l}">${esc(a.t)}${chips(a.s)}</p>`;
+      alertsBox.innerHTML = alerts.map(alertHtml).join('');
+      // Срочное дублируем под группой «Безопасность»: на телефоне оно должно быть рядом с отметкой, а не в конце результата
+      if (urgentBox) urgentBox.innerHTML = alerts.filter((a) => a.l === 'urgent').map(alertHtml).join('');
 
       // При равном счёте выше то, что зарегистрировано в России: читателю его реально могут назначить
       const all = [...state.values()].sort((a, b) => b.score - a.score || Number(b.d.ru) - Number(a.d.ru) || a.d.tier - b.d.tier);
@@ -131,7 +142,7 @@ const client = {
       const clean = all.filter((x) => !x.avoid.length && !x.minus.length);
       // «Первыми» только зарегистрированное в России и при этом первая линия или прямо рекомендованное при отмеченном:
       // отсутствие правил не значит, что препарат проверен и подходит. Подходящих меньше пяти, значит меньше пяти
-      const eligible = (x: (typeof all)[number]) => x.d.ru && (x.d.tier === 1 || x.plus.some((e) => e.k === 'prefer'));
+      const eligible = (x: (typeof all)[number]) => x.d.ru && (x.d.tier === 1 || x.plus.some((e) => e.k === 'prefer' && !e.hist));
       const first = clean.filter(eligible).slice(0, 5);
       const more = clean.filter((x) => !first.includes(x));
 
@@ -147,13 +158,13 @@ const client = {
         ? `<h3 class="pk-sub ${cls}">${title}</h3>${note ? `<p class="pk-note">${note}</p>` : ''}<ul class="pk-list">${items.map(row).join('')}</ul>` : '';
 
       lists.innerHTML =
-        block('Обычно обсуждают первыми', 'pk-sub-first', first, picked.length || helped || failed ? '' : 'Пока ничего не отмечено: это препараты первой линии по рекомендациям. Отметьте особенности слева, и список подстроится.') +
+        block('Обычно обсуждают первыми', 'pk-sub-first', first, picked.length || helped || failed ? '' : 'Пока ничего не отмечено: это препараты первой линии по рекомендациям. Отметьте особенности в анкете, и список подстроится.') +
         (first.length ? '' : '<p class="pk-note">При отмеченном нет варианта без оговорок. Это повод обсудить выбор с врачом подробнее, а не выбирать из списка ниже самому.</p>') +
         block('Можно, но с осторожностью', 'pk-sub-caution', caution) +
-        (more.length ? `<details class="pk-more"><summary>Другие варианты (${more.length})</summary><ul class="pk-list">${more.map(row).join('')}</ul></details>` : '') +
+        (more.length ? `<details class="pk-more"><summary>Другие варианты (${more.length})</summary><p class="pk-note">По отмеченному правил нет. Это не значит, что препарат подходит.</p><ul class="pk-list">${more.map(row).join('')}</ul></details>` : '') +
         block('Не подходит при отмеченном', 'pk-sub-avoid', avoid);
       summary.textContent = picked.length || helped || failed
-        ? `Учтено отметок: ${picked.length + (helped ? 1 : 0) + (failed ? 1 : 0)}. Первыми ${first.length}, с осторожностью ${caution.length}, не подходит ${avoid.length}.`
+        ? `Учтено отметок: ${picked.length + histCount}. Первыми ${first.length}, с осторожностью ${caution.length}, не подходит ${avoid.length}.`
         : '';
 
       // Отметки в адресе: подборку можно переслать или открыть на приёме
@@ -175,9 +186,18 @@ const client = {
       if (q.get(k)) sel.value = q.get(k)!;
     }
     // «к результату» не нужна, когда результат уже на экране
+    // Ссылка нужна, пока анкета и результат за экраном: иначе она закрывает подписи в анкете
     const jump = root.querySelector<HTMLElement>('.pk-jump');
     const res = root.querySelector<HTMLElement>('.pk-result')!;
-    if (jump) new IntersectionObserver(([e]) => { jump.style.visibility = e.isIntersecting ? 'hidden' : ''; }).observe(res);
+    if (jump) {
+      const seen = new Set<Element>();
+      const io = new IntersectionObserver((es) => {
+        es.forEach((e) => (e.isIntersecting ? seen.add(e.target) : seen.delete(e.target)));
+        jump.style.visibility = seen.size ? 'hidden' : '';
+      });
+      io.observe(res);
+      io.observe(form);
+    }
     form.addEventListener('change', render);
     form.addEventListener('reset', () => setTimeout(render, 0));
     render();
