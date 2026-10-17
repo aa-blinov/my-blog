@@ -74,15 +74,14 @@ const hoverTip = (n: MapNode) => n.hint ?? (n.children?.length ? undefined : n.n
               {p.node.facts.filter((f) => f.more).map((f) => <MindMapFact fact={f} chip={chip} />)}
             </details>
           )}
-          {p.node.docs && <p class="mm-docs"><a href={p.node.docs.href}>{p.node.docs.text}</a></p>}
-          {p.node.link && <p class="mm-link"><a href={p.node.link.href}>{p.node.link.text}</a></p>}
-          {p.node.children?.length ? (
+          {p.depth === 1 && p.node.children?.length ? (
             <p class="mm-children">
-              <span class="mm-fact-label">Дальше по карте</span>
+              <span class="mm-fact-label">Препараты группы</span>
               {p.node.children.map((c) => <button type="button" class="mm-jump" data-jump={c.id}>{c.label}</button>)}
             </p>
           ) : null}
-          {p.parent && <p class="mm-children"><button type="button" class="mm-jump mm-up" data-jump={p.parent}>← {byId.get(p.parent)!.node.label}</button></p>}
+          {p.node.docs && <p class="mm-docs"><a href={p.node.docs.href}>{p.node.docs.text}</a></p>}
+          {p.node.link && <p class="mm-link"><a href={p.node.link.href}>{p.node.link.text}</a></p>}
         </section>
       ))}
     </div>
