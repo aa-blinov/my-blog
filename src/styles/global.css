@@ -1593,10 +1593,6 @@ main article .content .mm-card h2 {
     align-items: center;
   }
 }
-.mm-link {
-  margin: var(--app-spacing) 0 var(--app-spacing-md);
-  font-size: var(--app-font-sm);
-}
 .mm-children {
   display: flex;
   flex-wrap: wrap;

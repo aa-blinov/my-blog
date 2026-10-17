@@ -20,7 +20,6 @@ export interface MapNode {
   note?: string; // строка под заголовком карточки, например торговые названия
   hint?: string; // подсказка при наведении; если нет, у листа показывается note
   facts?: MapFact[];
-  link?: { href: string; text: string };
   docs?: { href: string; text: string }; // полная официальная инструкция
   children?: MapNode[];
 }

@@ -26,10 +26,6 @@ export const antidepressants: MindMapData = { root: {
       ]
     }
   ],
-  "link": {
-    "href": "/blog/science/mind/antidepressants/",
-    "text": "Вся серия «Антидепрессанты по шагам»"
-  },
   "children": [
     {
       "id": "ssri",
@@ -68,10 +64,6 @@ export const antidepressants: MindMapData = { root: {
           ]
         }
       ],
-      "link": {
-        "href": "/blog/science/mind/antidepressants/how-they-work/#классы-и-их-названия",
-        "text": "Классы подробнее во второй части"
-      },
       "children": [
         {
           "id": "escitalopram",
@@ -181,10 +173,6 @@ export const antidepressants: MindMapData = { root: {
           "docs": {
             "href": "https://www.vidal.ru/drugs/selectra__23088",
             "text": "Полная инструкция: vidal.ru"
-          },
-          "link": {
-            "href": "/blog/science/mind/antidepressants/why-this-one/#сводная-карта-препаратов",
-            "text": "Препарат в сводной карте четвёртой части"
           }
         },
         {
@@ -287,10 +275,6 @@ export const antidepressants: MindMapData = { root: {
           "docs": {
             "href": "https://www.vidal.ru/drugs/serenata__6638",
             "text": "Полная инструкция: vidal.ru"
-          },
-          "link": {
-            "href": "/blog/science/mind/antidepressants/why-this-one/#сводная-карта-препаратов",
-            "text": "Препарат в сводной карте четвёртой части"
           }
         },
         {
@@ -392,10 +376,6 @@ export const antidepressants: MindMapData = { root: {
           "docs": {
             "href": "https://www.vidal.ru/drugs/proflusak__1402",
             "text": "Полная инструкция: vidal.ru"
-          },
-          "link": {
-            "href": "/blog/science/mind/antidepressants/why-this-one/#сводная-карта-препаратов",
-            "text": "Препарат в сводной карте четвёртой части"
           }
         },
         {
@@ -503,10 +483,6 @@ export const antidepressants: MindMapData = { root: {
           "docs": {
             "href": "https://www.vidal.ru/drugs/paxil__24822",
             "text": "Полная инструкция: vidal.ru"
-          },
-          "link": {
-            "href": "/blog/science/mind/antidepressants/why-this-one/#сводная-карта-препаратов",
-            "text": "Препарат в сводной карте четвёртой части"
           }
         },
         {
@@ -612,10 +588,6 @@ export const antidepressants: MindMapData = { root: {
           "docs": {
             "href": "https://www.vidal.ru/drugs/citalopram__38632",
             "text": "Полная инструкция: vidal.ru"
-          },
-          "link": {
-            "href": "/blog/science/mind/antidepressants/why-this-one/#сводная-карта-препаратов",
-            "text": "Препарат в сводной карте четвёртой части"
           }
         },
         {
@@ -718,10 +690,6 @@ export const antidepressants: MindMapData = { root: {
           "docs": {
             "href": "https://www.vidal.ru/drugs/fevarin__1698",
             "text": "Полная инструкция: vidal.ru"
-          },
-          "link": {
-            "href": "/blog/science/mind/antidepressants/why-this-one/#сводная-карта-препаратов",
-            "text": "Препарат в сводной карте четвёртой части"
           }
         }
       ]
@@ -757,10 +725,6 @@ export const antidepressants: MindMapData = { root: {
           ]
         }
       ],
-      "link": {
-        "href": "/blog/science/mind/antidepressants/how-they-work/#классы-и-их-названия",
-        "text": "Классы подробнее во второй части"
-      },
       "children": [
         {
           "id": "venlafaxine",
@@ -872,10 +836,6 @@ export const antidepressants: MindMapData = { root: {
           "docs": {
             "href": "https://www.vidal.ru/drugs/velafax__8875",
             "text": "Полная инструкция: vidal.ru"
-          },
-          "link": {
-            "href": "/blog/science/mind/antidepressants/why-this-one/#сводная-карта-препаратов",
-            "text": "Препарат в сводной карте четвёртой части"
           }
         },
         {
@@ -991,10 +951,6 @@ export const antidepressants: MindMapData = { root: {
           "docs": {
             "href": "https://www.vidal.ru/drugs/depratal",
             "text": "Полная инструкция: vidal.ru"
-          },
-          "link": {
-            "href": "/blog/science/mind/antidepressants/why-this-one/#сводная-карта-препаратов",
-            "text": "Препарат в сводной карте четвёртой части"
           }
         },
         {
@@ -1076,10 +1032,6 @@ export const antidepressants: MindMapData = { root: {
           "docs": {
             "href": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=0f43610c-f290-46ea-d186-4f998ed99fce",
             "text": "Полная инструкция: dailymed.nlm.nih.gov"
-          },
-          "link": {
-            "href": "/blog/science/mind/antidepressants/how-they-work/#классы-и-их-названия",
-            "text": "Классы подробнее во второй части"
           }
         }
       ]
@@ -1105,10 +1057,6 @@ export const antidepressants: MindMapData = { root: {
           ]
         }
       ],
-      "link": {
-        "href": "/blog/science/mind/antidepressants/how-they-work/#классы-и-их-названия",
-        "text": "Классы подробнее во второй части"
-      },
       "children": [
         {
           "id": "mirtazapine",
@@ -1229,10 +1177,6 @@ export const antidepressants: MindMapData = { root: {
           "docs": {
             "href": "https://www.vidal.ru/drugs/mirtazonal__21725",
             "text": "Полная инструкция: vidal.ru"
-          },
-          "link": {
-            "href": "/blog/science/mind/antidepressants/why-this-one/#сводная-карта-препаратов",
-            "text": "Препарат в сводной карте четвёртой части"
           }
         },
         {
@@ -1315,10 +1259,6 @@ export const antidepressants: MindMapData = { root: {
           "docs": {
             "href": "https://www.vidal.ru/drugs/lerivon__5330",
             "text": "Полная инструкция: vidal.ru"
-          },
-          "link": {
-            "href": "/blog/science/mind/antidepressants/cis-practice/#препараты-которые-встречаются-у-нас-чаще-чем-в-западных-руководствах",
-            "text": "Подробнее в восьмой части"
           }
         },
         {
@@ -1425,10 +1365,6 @@ export const antidepressants: MindMapData = { root: {
           "docs": {
             "href": "https://www.vidal.ru/drugs/valdoxan__29817",
             "text": "Полная инструкция: vidal.ru"
-          },
-          "link": {
-            "href": "/blog/science/mind/antidepressants/why-this-one/#сводная-карта-препаратов",
-            "text": "Препарат в сводной карте четвёртой части"
           }
         },
         {
@@ -1505,10 +1441,6 @@ export const antidepressants: MindMapData = { root: {
           "docs": {
             "href": "https://www.vidal.ru/drugs/brintellix",
             "text": "Полная инструкция: vidal.ru"
-          },
-          "link": {
-            "href": "/blog/science/mind/antidepressants/why-this-one/#сводная-карта-препаратов",
-            "text": "Препарат в сводной карте четвёртой части"
           }
         },
         {
@@ -1615,10 +1547,6 @@ export const antidepressants: MindMapData = { root: {
           "docs": {
             "href": "https://www.vidal.ru/drugs/trittico__45130",
             "text": "Полная инструкция: vidal.ru"
-          },
-          "link": {
-            "href": "/blog/science/mind/antidepressants/why-this-one/#сводная-карта-препаратов",
-            "text": "Препарат в сводной карте четвёртой части"
           }
         },
         {
@@ -1734,10 +1662,6 @@ export const antidepressants: MindMapData = { root: {
           "docs": {
             "href": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=a435da9d-f6e8-4ddc-897d-8cd2bf777b21",
             "text": "Полная инструкция: dailymed.nlm.nih.gov"
-          },
-          "link": {
-            "href": "/blog/science/mind/antidepressants/why-this-one/#сводная-карта-препаратов",
-            "text": "Препарат в сводной карте четвёртой части"
           }
         },
         {
@@ -1823,10 +1747,6 @@ export const antidepressants: MindMapData = { root: {
           "docs": {
             "href": "https://www.medicines.org.uk/emc/product/1578/smpc",
             "text": "Полная инструкция: medicines.org.uk"
-          },
-          "link": {
-            "href": "/blog/science/mind/antidepressants/how-they-work/#классы-и-их-названия",
-            "text": "Классы подробнее во второй части"
           }
         },
         {
@@ -1937,10 +1857,6 @@ export const antidepressants: MindMapData = { root: {
           "docs": {
             "href": "https://base-donnees-publique.medicaments.gouv.fr/medicament/65411280/extrait",
             "text": "Полная инструкция: base-donnees-publique.medicaments.gouv.fr"
-          },
-          "link": {
-            "href": "/blog/science/mind/antidepressants/cis-practice/#препараты-которые-встречаются-у-нас-чаще-чем-в-западных-руководствах",
-            "text": "Подробнее в восьмой части"
           }
         }
       ]
@@ -1976,10 +1892,6 @@ export const antidepressants: MindMapData = { root: {
           ]
         }
       ],
-      "link": {
-        "href": "/blog/science/mind/antidepressants/how-they-work/#классы-и-их-названия",
-        "text": "Классы подробнее во второй части"
-      },
       "children": [
         {
           "id": "amitriptyline",
@@ -2096,10 +2008,6 @@ export const antidepressants: MindMapData = { root: {
           "docs": {
             "href": "https://www.vidal.ru/drugs/amitriptyline__3916",
             "text": "Полная инструкция: vidal.ru"
-          },
-          "link": {
-            "href": "/blog/science/mind/antidepressants/why-this-one/#сводная-карта-препаратов",
-            "text": "Препарат в сводной карте четвёртой части"
           }
         },
         {
@@ -2206,10 +2114,6 @@ export const antidepressants: MindMapData = { root: {
           "docs": {
             "href": "https://www.vidal.ru/drugs/anafranil__2055",
             "text": "Полная инструкция: vidal.ru"
-          },
-          "link": {
-            "href": "/blog/science/mind/antidepressants/why-this-one/#сводная-карта-препаратов",
-            "text": "Препарат в сводной карте четвёртой части"
           }
         },
         {
@@ -2320,10 +2224,6 @@ export const antidepressants: MindMapData = { root: {
           "docs": {
             "href": "https://www.vidal.ru/drugs/melipramin",
             "text": "Полная инструкция: vidal.ru"
-          },
-          "link": {
-            "href": "/blog/science/mind/antidepressants/how-they-work/#классы-и-их-названия",
-            "text": "Классы подробнее во второй части"
           }
         },
         {
@@ -2421,10 +2321,6 @@ export const antidepressants: MindMapData = { root: {
           "docs": {
             "href": "https://www.vidal.ru/drugs/doxepin",
             "text": "Полная инструкция: vidal.ru"
-          },
-          "link": {
-            "href": "/blog/science/mind/antidepressants/how-they-work/#классы-и-их-названия",
-            "text": "Классы подробнее во второй части"
           }
         },
         {
@@ -2506,10 +2402,6 @@ export const antidepressants: MindMapData = { root: {
           "docs": {
             "href": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=e17dc299-f52d-414d-ab6e-e809bd6f8acb",
             "text": "Полная инструкция: dailymed.nlm.nih.gov"
-          },
-          "link": {
-            "href": "/blog/science/mind/antidepressants/how-they-work/#классы-и-их-названия",
-            "text": "Классы подробнее во второй части"
           }
         },
         {
@@ -2598,10 +2490,6 @@ export const antidepressants: MindMapData = { root: {
           "docs": {
             "href": "https://www.vidal.ru/drugs/azaphen__14737",
             "text": "Полная инструкция: vidal.ru"
-          },
-          "link": {
-            "href": "/blog/science/mind/antidepressants/cis-practice/#препараты-которые-встречаются-у-нас-чаще-чем-в-западных-руководствах",
-            "text": "Подробнее в восьмой части"
           }
         }
       ]
@@ -2623,10 +2511,6 @@ export const antidepressants: MindMapData = { root: {
           ]
         }
       ],
-      "link": {
-        "href": "/blog/science/mind/antidepressants/how-they-work/#классы-и-их-названия",
-        "text": "Классы подробнее во второй части"
-      },
       "children": [
         {
           "id": "moclobemide",
@@ -2721,10 +2605,6 @@ export const antidepressants: MindMapData = { root: {
           "docs": {
             "href": "https://www.medicines.org.uk/emc/product/6661/smpc",
             "text": "Полная инструкция: medicines.org.uk"
-          },
-          "link": {
-            "href": "/blog/science/mind/antidepressants/why-this-one/#сводная-карта-препаратов",
-            "text": "Препарат в сводной карте четвёртой части"
           }
         },
         {
@@ -2830,10 +2710,6 @@ export const antidepressants: MindMapData = { root: {
           "docs": {
             "href": "https://www.vidal.ru/drugs/pyrazidol__40373",
             "text": "Полная инструкция: vidal.ru"
-          },
-          "link": {
-            "href": "/blog/science/mind/antidepressants/cis-practice/#препараты-которые-встречаются-у-нас-чаще-чем-в-западных-руководствах",
-            "text": "Подробнее в восьмой части"
           }
         },
         {
@@ -2935,10 +2811,6 @@ export const antidepressants: MindMapData = { root: {
           "docs": {
             "href": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=513a41d0-37d4-4355-8a6d-a2c643bce6fa",
             "text": "Полная инструкция: dailymed.nlm.nih.gov"
-          },
-          "link": {
-            "href": "/blog/science/mind/antidepressants/how-they-work/#классы-и-их-названия",
-            "text": "Классы подробнее во второй части"
           }
         }
       ]
@@ -2954,10 +2826,6 @@ export const antidepressants: MindMapData = { root: {
           "text": "Их назначают вместе с антидепрессантами или покупают вместо них. Важно знать, с чем они опасно сочетаются."
         }
       ],
-      "link": {
-        "href": "/blog/science/mind/antidepressants/cis-practice/#препараты-которые-встречаются-у-нас-чаще-чем-в-западных-руководствах",
-        "text": "Подробнее в восьмой части"
-      },
       "children": [
         {
           "id": "sulpiride",
@@ -3032,10 +2900,6 @@ export const antidepressants: MindMapData = { root: {
           "docs": {
             "href": "https://www.vidal.ru/drugs/eglonyl__985",
             "text": "Полная инструкция: vidal.ru"
-          },
-          "link": {
-            "href": "/blog/science/mind/antidepressants/cis-practice/#препараты-которые-встречаются-у-нас-чаще-чем-в-западных-руководствах",
-            "text": "Подробнее в восьмой части"
           }
         },
         {
@@ -3091,10 +2955,6 @@ export const antidepressants: MindMapData = { root: {
           "docs": {
             "href": "https://www.vidal.ru/drugs/hydroxyzine",
             "text": "Полная инструкция: vidal.ru"
-          },
-          "link": {
-            "href": "/blog/science/mind/antidepressants/cis-practice/#препараты-которые-встречаются-у-нас-чаще-чем-в-западных-руководствах",
-            "text": "Подробнее в восьмой части"
           }
         },
         {
@@ -3182,10 +3042,6 @@ export const antidepressants: MindMapData = { root: {
           "docs": {
             "href": "https://www.vidal.ru/drugs/phenazepam__21148",
             "text": "Полная инструкция: vidal.ru"
-          },
-          "link": {
-            "href": "/blog/science/mind/antidepressants/cis-practice/#препараты-которые-встречаются-у-нас-чаще-чем-в-западных-руководствах",
-            "text": "Подробнее в восьмой части"
           }
         },
         {
@@ -3257,10 +3113,6 @@ export const antidepressants: MindMapData = { root: {
           "docs": {
             "href": "https://www.vidal.ru/drugs/neuroplant__31582",
             "text": "Полная инструкция: vidal.ru"
-          },
-          "link": {
-            "href": "/blog/science/mind/antidepressants/cis-practice/#препараты-которые-встречаются-у-нас-чаще-чем-в-западных-руководствах",
-            "text": "Подробнее в восьмой части"
           }
         },
         {
@@ -3329,10 +3181,6 @@ export const antidepressants: MindMapData = { root: {
             "href": "https://www.vidal.ru/drugs/afobazol__8918",
             "text": "Полная инструкция: vidal.ru"
           },
-          "link": {
-            "href": "/blog/science/mind/antidepressants/cis-practice/#препараты-которые-встречаются-у-нас-чаще-чем-в-западных-руководствах",
-            "text": "Подробнее в восьмой части"
-          },
           "title": "Афобазол, Тенотен, глицин"
         }
       ]
@@ -3348,10 +3196,6 @@ export const antidepressants: MindMapData = { root: {
           "text": "Ходы, к которым переходят, если не помогли два препарата подряд. Решает и ведёт врач."
         }
       ],
-      "link": {
-        "href": "/blog/science/mind/antidepressants/if-it-helps-little/#что-ещё-есть-в-запасе",
-        "text": "Подробнее в пятой части"
-      },
       "children": [
         {
           "id": "lithium",
@@ -3454,10 +3298,6 @@ export const antidepressants: MindMapData = { root: {
           "docs": {
             "href": "https://www.vidal.ru/drugs/sedalit__15786",
             "text": "Полная инструкция: vidal.ru"
-          },
-          "link": {
-            "href": "/blog/science/mind/antidepressants/if-it-helps-little/#что-ещё-есть-в-запасе",
-            "text": "Подробнее в пятой части"
           }
         },
         {
@@ -3561,10 +3401,6 @@ export const antidepressants: MindMapData = { root: {
           "docs": {
             "href": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=d81a6a79-a74a-44b7-822c-0dfa3036eaed",
             "text": "Полная инструкция: dailymed.nlm.nih.gov"
-          },
-          "link": {
-            "href": "/blog/science/mind/antidepressants/if-it-helps-little/#что-ещё-есть-в-запасе",
-            "text": "Подробнее в пятой части"
           }
         }
       ]

@@ -81,7 +81,6 @@ const hoverTip = (n: MapNode) => n.hint ?? (n.children?.length ? undefined : n.n
             </p>
           ) : null}
           {p.node.docs && <p class="mm-docs"><a href={p.node.docs.href}>{p.node.docs.text}</a></p>}
-          {p.node.link && <p class="mm-link"><a href={p.node.link.href}>{p.node.link.text}</a></p>}
         </section>
       ))}
     </div>
