@@ -1475,14 +1475,19 @@ html.mm-locked body {
   box-shadow: 0 0 0 2px rgba(var(--pico-primary-rgb), 0.25);
 }
 /* Поиск под рядом кнопок, слева. Карточка справа от верха до низа, поиск левее неё и не под ней */
+/* Поиск: по умолчанию под рядом кнопок, на всю ширину. В один ряд с кнопками он встаёт, только когда для него
+   есть место: проверяется ширина самой рамки карты (контейнерный запрос), а не окна. Pico ставит [role=search]
+   ширину 100%, поэтому ширина и отступы заданы явно */
+.mm-frame {
+  container-type: inline-size;
+}
 .mm-search {
   position: absolute;
   top: 3.4rem;
   left: 0.5rem;
   right: 0.5rem;
   z-index: 3;
-  width: auto; /* Pico ставит [role=search] ширину 100%, а поиск растягивается между левым и правым краями */
-  max-width: 22rem;
+  width: auto;
   margin: 0;
   user-select: text;
   -webkit-user-select: text;
@@ -1497,6 +1502,25 @@ html.mm-locked body {
   }
   .mm-frame:has(.mm-panel:not([hidden])) .mm-controls .mm-short {
     display: inline;
+  }
+  .mm-frame:has(.mm-panel:not([hidden])) .mm-controls button {
+    padding-inline: 0.45rem;
+  }
+}
+/* Карточки нет: поиск в ряд с кнопками справа, если рамка шире 640px */
+@container (min-width: 640px) {
+  .mm-frame:not(:has(.mm-panel:not([hidden]))) .mm-search {
+    top: 0.5rem;
+    left: auto;
+    width: 7rem;
+  }
+}
+/* Карточка открыта: поиск в ряд у края карточки, если рамка шире 840px (места хватает на кнопки и поле) */
+@container (min-width: 840px) {
+  .mm-frame:has(.mm-panel:not([hidden])) .mm-search {
+    top: 0.5rem;
+    left: auto;
+    width: 7rem;
   }
 }
 .mm-search-input {
