@@ -51,5 +51,6 @@ export interface PickerData {
   rules: { when: string; effects: PickerEffect[] }[];
   history: { helped: Omit<PickerEffect, 'drugs'>; failed: Omit<PickerEffect, 'drugs'> };
   alerts: PickerAlert[];
+  urgentLine?: string; // срочная строка под заголовком дисклеймера, номер 112 ссылкой
   review?: { lead: string; items: PickerReviewItem[] };
 }

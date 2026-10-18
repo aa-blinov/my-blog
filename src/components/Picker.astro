@@ -29,7 +29,13 @@ const client = {
 ---
 
 <div class="pk" data-picker>
-  <p class="pk-disclaimer"><strong>Это не назначение.</strong> {data.disclaimer}</p>
+  <div class="pk-disclaimer pk-disclaimer-box">
+    <p class="pk-urgent-line" set:html={(data.urgentLine ?? '').replace('112', '<a href="tel:112">112</a>')}></p>
+    <details class="pk-disclaimer-more" open>
+      <summary><strong>Это не назначение.</strong> <span class="pk-more-link">Подробнее</span></summary>
+      <p>{data.disclaimer}</p>
+    </details>
+  </div>
   <p class="pk-noscript">Подборщику нужен JavaScript. Без него отметки не работают. Карточки препаратов есть на <a href={data.mapHref}>карте</a>.</p>
 
   <div class="pk-layout">
@@ -69,13 +75,26 @@ const client = {
     <section class="pk-result" id="pk-result" aria-label="Что обсудить с врачом">
       <div class="pk-alerts"></div>
       <h2 class="pk-h">Что обсудить с врачом</h2>
-      <p class="pk-gloss">Первая линия: препараты, с которых обычно начинают лечение. СИОЗС: селективные ингибиторы обратного захвата серотонина, основная группа первой линии. Бирс: список лекарств, которых пожилым лучше избегать.</p>
+      <details class="pk-gloss">
+        <summary>Словарь: первая линия, СИОЗС и другие сокращения</summary>
+        <p><strong>Первая линия:</strong> препараты, с которых обычно начинают лечение.</p>
+        <p><strong>СИОЗС:</strong> селективные ингибиторы обратного захвата серотонина, основная группа первой линии, например сертралин и эсциталопрам.</p>
+        <p><strong>СИОЗСН:</strong> то же для серотонина и норадреналина, например венлафаксин и дулоксетин.</p>
+        <p><strong>ИМАО:</strong> старая группа антидепрессантов с жёсткими ограничениями по лекарствам и питанию.</p>
+        <p><strong>Бирс:</strong> список лекарств, которых пожилым людям лучше избегать.</p>
+        <p><strong>QT:</strong> интервал на ЭКГ; часть препаратов его удлиняет.</p>
+        <p><strong>CYP2D6:</strong> фермент печени, который перерабатывает часть лекарств.</p>
+        <p><strong>НПВП:</strong> нестероидные противовоспалительные, например ибупрофен и диклофенак.</p>
+        <p><strong>CANMAT:</strong> канадские рекомендации по лечению депрессии, один из основных источников.</p>
+        <p><strong>ОКР:</strong> обсессивно-компульсивное расстройство.</p>
+      </details>
       <p class="pk-summary" role="status"></p>
       <div class="pk-lists"></div>
+      <p class="pk-to-review"><a href="#pk-review">Открытые вопросы для врача</a>, внизу подборщика.</p>
     </section>
   </div>
   {data.review && (
-    <details class="pk-review">
+    <details class="pk-review" id="pk-review">
       <summary>Для врача: открытые вопросы по правилам ({data.review.items.filter((i) => i.question).length})</summary>
       <p class="pk-note">{data.review.lead}</p>
       <ol class="pk-review-list">
@@ -156,7 +175,7 @@ const client = {
       // Предупреждения сверху: срочное раньше результата
       const order = { urgent: 0, specialist: 1, info: 2 } as Record<string, number>;
       const alerts = data.alerts.filter((a) => picked.includes(a.w)).sort((a, b) => order[a.l] - order[b.l]);
-      const alertHtml = (a: (typeof alerts)[number]) => `<p class="pk-alert pk-alert-${a.l}">${esc(a.t)}${chips(a.s)}</p>`;
+      const alertHtml = (a: (typeof alerts)[number]) => `<p class="pk-alert pk-alert-${a.l}">${esc(a.t).replace('112', '<a href="tel:112">112</a>')}${chips(a.s)}</p>`;
       alertsBox.innerHTML = alerts.map(alertHtml).join('');
       // Срочное дублируем под группой «Безопасность»: на телефоне оно должно быть рядом с отметкой, а не в конце результата.
       // Группа при этом открывается, иначе срочное оказалось бы в свёрнутом блоке
@@ -225,15 +244,22 @@ const client = {
         return `<details class="pk-block" data-key="${key}"${open ? ' open' : ''}><summary><h3 class="pk-sub ${cls}">${title} (${items.length})</h3></summary>${l.common}${l.rows}</details>`;
       };
 
-      lists.innerHTML =
+      const legend = first.length || caution.length || avoid.length
+        ? '<p class="pk-legend">В причинах: <b>+</b> довод за препарат, <b>!</b> довод против, <b>~</b> обратить внимание, <b>×</b> не подходит.</p>'
+        : '';
+      lists.innerHTML = legend +
         block('Обычно обсуждают первыми', 'pk-sub-first', first, picked.length || helped || failed ? '' : 'Пока ничего не отмечено: это препараты первой линии по рекомендациям. Отметьте особенности в анкете, и список подстроится.') +
-        (first.length ? '' : '<p class="pk-note">При отмеченном нет варианта без оговорок. Это повод обсудить выбор с врачом подробнее, а не выбирать из списка ниже самому.</p>') +
+        (first.length ? '' : `<p class="pk-note">При отмеченном нет варианта без оговорок.${caution.length ? ` Ближе всего к рекомендации, с оговорками: ${caution.slice(0, 2).map((x) => esc(x.d.label)).join(' и ')}.` : ''} Это повод обсудить выбор с врачом подробнее, а не выбирать из списка ниже самому.</p>`) +
         fold('caution', 'Можно, но с осторожностью', 'pk-sub-caution', caution) +
         (moreList ? `<details class="pk-more"><summary>Другие варианты (${more.length})</summary><p class="pk-note">По отмеченному правил нет. Это не значит, что препарат подходит.</p>${moreList.common}${moreList.rows}</details>` : '') +
         fold('avoid', 'Не подходит при отмеченном', 'pk-sub-avoid', avoid);
       summary.textContent = picked.length || helped || failed
         ? `Учтено отметок: ${picked.length + histCount}. Первыми ${first.length}, с осторожностью ${caution.length}, не подходит ${avoid.length}.`
         : '';
+
+      // Кнопка «к результату» показывает, сколько отмечено: видно и без прокрутки к анкете
+      const marked = picked.length + histCount;
+      if (jump) jump.textContent = marked ? `к результату ↓ · отмечено ${marked}` : 'к результату ↓';
 
       // Отметки в адресе: подборку можно переслать или открыть на приёме
       const q = new URLSearchParams();
@@ -258,6 +284,10 @@ const client = {
       groups.forEach((g) => {
         g.open = !!g.querySelector('input:checked') || [...g.querySelectorAll('select')].some((s) => s.value);
       });
+      // Первая группа открыта сразу, чтобы анкета начиналась на первом экране; дисклеймер на телефоне свёрнут, срочная строка видна
+      if (groups[0]) groups[0].open = true;
+      const disc = root.querySelector<HTMLDetailsElement>('.pk-disclaimer-more');
+      if (disc) disc.open = false;
     }
     // «к результату» не нужна, когда результат уже на экране
     // Ссылка нужна, пока анкета и результат за экраном: иначе она закрывает подписи в анкете
@@ -279,6 +309,11 @@ const client = {
       const d = e.target as HTMLDetailsElement;
       if (d.dataset.key) pref[d.dataset.key] = d.open;
     }, true);
+    // Ссылка на открытые вопросы для врача раскрывает их
+    root.querySelectorAll<HTMLAnchorElement>('a[href="#pk-review"]').forEach((a) => a.addEventListener('click', () => {
+      const r = root.querySelector<HTMLDetailsElement>('#pk-review');
+      if (r) r.open = true;
+    }));
     form.addEventListener('change', render);
     form.addEventListener('reset', () => setTimeout(render, 0));
     render();
