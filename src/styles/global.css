@@ -1298,7 +1298,7 @@ html:not(.js) .needs-js {
   .content a.ref::before {
     content: "";
     position: absolute;
-    inset: -12px -6px;
+    inset: -13px -6px; /* зона касания около 45px по высоте */
   }
 }
 /* Цепочка чипов вместе со знаком препинания после неё не рвётся: точка не остаётся одна на строке */
@@ -1455,6 +1455,13 @@ html.mm-locked body {
 /* Раскрытая группа помечена так же, как путь к выбранному узлу; у групп второго плана рамка остаётся приглушённой */
 .mm .mm-node.is-open:not(.mm-aside) {
   border-color: var(--mm-accent);
+}
+/* Касание на телефоне: узел крупнее за счёт отступов самой кнопки, а не невидимой зоны рядом.
+   Невидимая зона перекрывала соседние узлы и уводила нажатие на чужой узел */
+@media (hover: none) {
+  .mm .mm-node {
+    padding: 0.55rem 0.8rem;
+  }
 }
 .mm .mm-node.is-selected {
   background: rgba(var(--pico-primary-rgb), 0.1);
@@ -1770,7 +1777,7 @@ main article .content .mm-card h2 {
     top: auto;
     left: 0;
     width: auto;
-    height: 70%; /* на телефоне карта при открытой карточке почти не нужна, а читать удобнее */
+    height: 60%; /* на телефоне карточка 60%, а не 70%: карте нужна полоса, чтобы группы не уходили под кнопки */
     border-left: none;
     border-top: 1px solid var(--mm-rule);
   }
@@ -1793,19 +1800,11 @@ main article .content .mm-card h2 {
    Плоско, линии Rule, один акцент; «не подходит» не красным, а зачёркнутой подписью причины
    ========================================================================== */
 .pk {
-  --pk-line: #7d8596; /* граница полей: не ниже 3:1 к фону (WCAG 1.4.11) */
-  --pk-surface: #fbfcfc;
+  /* Граница полей и фон берутся из токенов темы, поэтому в тёмной теме меняются сами.
+     Граница не слабее 3:1 к фону (WCAG 1.4.11), проверено замером */
+  --pk-line: color-mix(in srgb, var(--pico-muted-color) 85%, var(--pico-background-color));
+  --pk-surface: var(--pico-background-color);
   margin: var(--app-spacing-lg) 0;
-}
-html[data-theme="dark"] .pk {
-  --pk-line: #6f7a8f;
-  --pk-surface: #1c212c;
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .pk {
-    --pk-line: #6f7a8f;
-    --pk-surface: #1c212c;
-  }
 }
 /* Без JavaScript отметки не работают: пояснение и ссылка на карту вместо пустой анкеты */
 .pk-noscript {

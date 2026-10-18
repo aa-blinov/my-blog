@@ -148,7 +148,7 @@ const hoverTip = (n: MapNode) => n.hint ?? (n.children?.length ? undefined : n.n
       apply();
     };
     // Вписать целиком; на узком экране (телефон) так подписи нечитаемы, поэтому не мельче READABLE с корнем в центре, дальше пальцем
-    const READABLE = 0.5;
+    const READABLE = 0.65; // на узком экране узлы не мельче, а касание по ним больше (см. .mm-node::after)
     const rootNode = nodes[0];
     // Рамка видимых узлов: в свёрнутом режиме вписываем только то, что раскрыто
     const bbox = (list: HTMLElement[]) => {
