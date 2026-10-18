@@ -133,8 +133,7 @@ const hoverTip = (n: MapNode) => n.hint ?? (n.children?.length ? undefined : n.n
     // Видимая область карты: на десктопе карточка справа закрывает часть окна, на телефоне карточка снизу
     // Сверху ряд кнопок и на телефоне поле поиска под ним: вписываем ниже них, чтобы верхние узлы не прятались
     const searchEl = mm.querySelector<HTMLElement>('.mm-search')!;
-    const TOP = () => (mm.querySelector<HTMLElement>('.mm-controls')?.offsetHeight ?? 0) + 8
-      + (matchMedia('(max-width: 600px)').matches ? searchEl.offsetHeight + 8 : 0);
+    const TOP = () => (mm.querySelector<HTMLElement>('.mm-controls')?.offsetHeight ?? 0) + 8 + searchEl.offsetHeight + 8;
     const viewport = () => {
       const w = frame.clientWidth, h = frame.clientHeight, t = TOP();
       if (panel.hidden) return { x: 0, y: t, w, h: h - t };
