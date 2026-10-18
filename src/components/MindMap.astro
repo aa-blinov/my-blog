@@ -466,7 +466,11 @@ const hoverTip = (n: MapNode) => n.hint ?? (n.children?.length ? undefined : n.n
 
     fit();
     const fromHash = location.hash.startsWith('#map-') ? location.hash.slice(5) : '';
-    if (fromHash && byId.has(decodeURIComponent(fromHash))) select(decodeURIComponent(fromHash));
+    if (fromHash && byId.has(decodeURIComponent(fromHash))) {
+      select(decodeURIComponent(fromHash));
+      // Переход из подборщика по ссылке: прокручиваем к карте, иначе карточка открывается, а экран остаётся на тексте статьи
+      window.scrollTo({ top: frame.getBoundingClientRect().top + window.scrollY - 64, behavior: 'auto' });
+    }
     let lastW = frame.clientWidth;
     new ResizeObserver(() => { if (Math.abs(frame.clientWidth - lastW) > 40) { lastW = frame.clientWidth; selected ? focusOn(selected, s) : fit(); } }).observe(frame);
   });
