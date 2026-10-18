@@ -1894,6 +1894,10 @@ html[data-theme="dark"] .pk {
 .pk-group[open] > summary::before {
   transform: rotate(90deg);
 }
+/* Свёрнутые группы плотнее: на телефоне их семь подряд, пустой зазор между ними не нужен */
+.pk-group:not([open]) {
+  margin-bottom: 0;
+}
 .pk-count {
   margin-left: auto;
   padding: 0 0.4rem;
@@ -1935,8 +1939,18 @@ html[data-theme="dark"] .pk {
   cursor: pointer;
   list-style: none;
 }
-.pk-gloss > summary::-webkit-details-marker {
+.pk-gloss > summary::-webkit-details-marker,
+.pk-gloss > summary::after {
   display: none;
+}
+.pk-gloss > summary::before {
+  content: "▸";
+  margin-right: 0.4em;
+  display: inline-block;
+  transition: transform 0.15s;
+}
+.pk-gloss[open] > summary::before {
+  transform: rotate(90deg);
 }
 .pk-gloss > p {
   margin: 0 0 0.3rem;
