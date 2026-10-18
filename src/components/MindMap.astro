@@ -27,8 +27,8 @@ const edgePath = (from: { x: number; y: number }, to: { x: number; y: number }) 
   return `M${from.x.toFixed(1)},${from.y.toFixed(1)} Q${cx.toFixed(1)},${cy.toFixed(1)} ${to.x.toFixed(1)},${to.y.toFixed(1)}`;
 };
 const cardTitle = (n: MapNode) => n.title ?? n.label;
-// Поиск по карте: подпись, заголовок карточки, торговые названия и подсказка; описания показаний в поиске не участвуют
-const searchText = (n: MapNode) => [n.label, cardTitle(n), n.note, n.hint].filter(Boolean).join(' ');
+// Поиск по карте: латинский идентификатор (действующее вещество), подпись, заголовок карточки, торговые названия и подсказка; показания в поиске не участвуют
+const searchText = (n: MapNode) => [n.id, n.label, cardTitle(n), n.note, n.hint].filter(Boolean).join(' ');
 // Много листьев: стартуем свёрнутыми, видны центр и группы; группа раскрывается по нажатию
 const collapsible = nodes.filter((p) => !p.node.children?.length).length > 24;
 // Подсказка при наведении: у класса короткое описание (hint), у вещества торговые названия; врачу видно сразу, без нажатия

@@ -1549,8 +1549,8 @@ html.mm-locked body {
   position: absolute;
   z-index: 5;
   top: 100%;
-  left: 0;
   right: 0;
+  width: max(100%, 16rem); /* список шире поля: названия с классом не должны обрезаться; вправо, к краю карточки */
   max-height: 12rem; /* список прокручивается сам и не выходит за низ рамки карты */
   overflow-y: auto;
   margin: 0.25rem 0 0;
