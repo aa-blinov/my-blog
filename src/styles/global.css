@@ -1523,6 +1523,13 @@ html.mm-locked body {
     width: 7rem;
   }
 }
+/* На весь экран места больше, поле шире. Специфичность выше правил для рамки и карточки, иначе они его перебьют */
+@media (min-width: 992px) {
+  .mm .mm-frame:fullscreen .mm-search,
+  .mm .mm-frame.is-full .mm-search {
+    width: 16rem;
+  }
+}
 .mm-search-input {
   width: 100%;
   margin: 0;
