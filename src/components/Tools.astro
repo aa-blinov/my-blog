@@ -1,0 +1,231 @@
+---
+import { pickers } from '../data/pickers';
+import { questionsByOption, timeline, interactions, verdictLabel } from '../data/tools/antidepressants';
+
+const pk = pickers.antidepressants;
+// Для сравнения нужны только препараты, особенности и правила с причинами
+const cmp = {
+  drugs: pk.drugs.map((d) => ({ id: d.id, label: d.label })),
+  options: pk.options.map((o) => ({ id: o.id, label: o.label, group: o.group })),
+  rules: pk.rules.flatMap((r) => r.effects.map((e) => ({ when: r.when, d: e.drugs, k: e.kind, r: e.reason }))),
+};
+const order = ['no', 'doctor', 'monitor', 'use'] as const;
+const sortedInteractions = [...interactions].sort((a, b) => order.indexOf(a.verdict) - order.indexOf(b.verdict));
+const escJson = (v: unknown) => JSON.stringify(v).replace(/</g, '\\u003c');
+---
+
+<section class="tools pk" data-tools>
+  <h2 class="tools-h">Инструменты для разговора с врачом</h2>
+  <p class="tools-lead">Ничего здесь не назначает и не заменяет врача. Инструменты помогают подготовиться к приёму: что спросить, какие сроки проверки и что обычно учитывают при сочетаниях. Данные в дневнике хранятся только в вашем браузере.</p>
+
+  <!-- 1. Чеклист к приёму -->
+  <div class="tools-block" id="tools-checklist">
+    <h3 class="tools-sub">Вопросы к врачу</h3>
+    <p class="tools-note">Отметьте, что относится к вам. Появятся вопросы, которые стоит задать на приёме.</p>
+    <fieldset class="tools-opts">
+      <legend class="visually-hidden">Особенности, которые относятся к вам</legend>
+      {pk.options.map((o) => (
+        <label class="pk-opt">
+          <input type="checkbox" name="ck" value={o.id} data-ck />
+          <span>{o.label}</span>
+        </label>
+      ))}
+    </fieldset>
+    <label class="tools-field">
+      <span>Что вы принимаете сейчас (препараты, добавки, травы)</span>
+      <textarea rows="3" data-meds placeholder="например: витамин D, ибупрофен по необходимости"></textarea>
+    </label>
+    <ol class="tools-questions" data-questions aria-live="polite"></ol>
+    <script type="application/json" data-q-data set:html={escJson(questionsByOption)} />
+    <button type="button" class="tools-btn" data-copy>Скопировать список</button>
+    <span class="tools-status" data-copy-status role="status"></span>
+  </div>
+
+  <!-- 2. Контрольные точки -->
+  <div class="tools-block" id="tools-timeline">
+    <h3 class="tools-sub">Контрольные точки</h3>
+    <p class="tools-note">Что рекомендации предлагают проверять и когда. Это не прогноз: скорость эффекта у каждого своя.</p>
+    <label class="tools-field">
+      <span data-tl-when>{timeline[0].when}</span>
+      <input type="range" min="0" max={timeline.length - 1} step="1" value="0" data-tl aria-valuetext={timeline[0].when} />
+    </label>
+    <p class="tools-tl-text" data-tl-text aria-live="polite">{timeline[0].text}</p>
+    <p class="tools-src" data-tl-src>
+      {timeline[0].sources.map((s) => <a href={s.url}>{s.title}</a>)}
+    </p>
+    <script type="application/json" data-tl-data set:html={escJson(timeline)} />
+  </div>
+
+  <!-- 3. Сочетания -->
+  <div class="tools-block" id="tools-interactions">
+    <h3 class="tools-sub">Сочетания с основным препаратом</h3>
+    <p class="tools-note">Основной препарат СИОЗС или СИОЗСН. Отметьте, что вы принимаете или собираетесь принимать вместе с ним. Вердикт идёт по указанным ниже источникам, по вашему конкретному препарату уточняйте у врача.</p>
+    <fieldset class="tools-opts">
+      <legend class="visually-hidden">Препараты, которые вы принимаете вместе</legend>
+      {interactions.map((x, i) => (
+        <label class="pk-opt">
+          <input type="checkbox" name="ix" value={String(i)} data-ix />
+          <span>{x.item}</span>
+        </label>
+      ))}
+    </fieldset>
+    <ul class="tools-verdicts" data-verdicts aria-live="polite">
+      {sortedInteractions.length > 0 && <li class="tools-hint">Отметьте препарат, и здесь появится вердикт с причиной и источником.</li>}
+    </ul>
+    <script type="application/json" data-ix-data set:html={escJson(interactions.map((x) => ({ ...x, label: verdictLabel[x.verdict] })))} />
+  </div>
+
+  <!-- 4. Сравнение препаратов -->
+  <div class="tools-block" id="tools-compare">
+    <h3 class="tools-sub">Сравнение препаратов</h3>
+    <p class="tools-note">Выберите до трёх препаратов, и таблица покажет, что о каждом говорят правила подборщика по вашим особенностям.</p>
+    <fieldset class="tools-opts tools-opts-row">
+      <legend class="visually-hidden">Препараты для сравнения</legend>
+      {cmp.drugs.map((d) => (
+        <label class="pk-opt">
+          <input type="checkbox" name="cmp" value={d.id} data-cmp />
+          <span>{d.label}</span>
+        </label>
+      ))}
+    </fieldset>
+    <div class="tools-table-wrap" data-cmp-out aria-live="polite"></div>
+    <script type="application/json" data-cmp-data set:html={escJson(cmp)} />
+  </div>
+
+  <!-- 5. Дневник -->
+  <div class="tools-block" id="tools-diary">
+    <h3 class="tools-sub">Дневник самочувствия</h3>
+    <p class="tools-note">Запишите сон, настроение и побочные эффекты по дням и покажите записи врачу. Хранится только в этом браузере, на сервер ничего не уходит.</p>
+    <form class="tools-form" data-diary-form>
+      <label class="tools-field"><span>Дата</span><input type="date" name="date" required /></label>
+      <label class="tools-field"><span>Сон (1 плохо, 5 хорошо)</span><select name="sleep"><option>1</option><option>2</option><option selected>3</option><option>4</option><option>5</option></select></label>
+      <label class="tools-field"><span>Настроение (1 очень плохо, 5 хорошо)</span><select name="mood"><option>1</option><option>2</option><option selected>3</option><option>4</option><option>5</option></select></label>
+      <label class="tools-field"><span>Побочные эффекты</span><textarea name="side" rows="2"></textarea></label>
+      <label class="tools-field"><span>Заметки</span><textarea name="note" rows="2"></textarea></label>
+      <button type="submit" class="tools-btn">Добавить запись</button>
+    </form>
+    <p class="tools-status" data-diary-status role="status"></p>
+    <ul class="tools-diary" data-diary-list></ul>
+    <button type="button" class="tools-btn" data-diary-export>Скачать записи текстом</button>
+  </div>
+</section>
+
+<script>
+  const esc = (s: string) => s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]!));
+  const KIND: Record<string, string> = { prefer: 'в приоритете', consider: 'можно', note: 'обратить внимание', caution: 'с осторожностью', avoid: 'не подходит' };
+  const VERDICT_ORDER = ['no', 'doctor', 'monitor', 'use'];
+
+  document.querySelectorAll<HTMLElement>('[data-tools]').forEach((root) => {
+    // 1. Чеклист
+    const ckBoxes = [...root.querySelectorAll<HTMLInputElement>('[data-ck]')];
+    const meds = root.querySelector<HTMLTextAreaElement>('[data-meds]')!;
+    const qList = root.querySelector<HTMLElement>('[data-questions]')!;
+    const labelOf = (id: string) => ckBoxes.find((b) => b.value === id)?.closest('label')?.querySelector('span')?.textContent?.trim() ?? id;
+    const questions: Record<string, string[]> = {};
+    Object.assign(questions, JSON.parse(root.querySelector('[data-q-data]')?.textContent || '{}'));
+    const renderQ = () => {
+      const checked = ckBoxes.filter((b) => b.checked);
+      qList.innerHTML = checked.map((b) => {
+        const qs = questions[b.value] ?? ['Как это учитывается в моём лечении?'];
+        return `<li><strong>${esc(labelOf(b.value))}</strong><ul>${qs.map((q) => `<li>${esc(q)}</li>`).join('')}</ul></li>`;
+      }).join('');
+    };
+    ckBoxes.forEach((b) => b.addEventListener('change', renderQ));
+    root.querySelector<HTMLButtonElement>('[data-copy]')!.addEventListener('click', async () => {
+      const lines = ['Вопросы к врачу', ...ckBoxes.filter((b) => b.checked).map((b) => `- ${labelOf(b.value)}`), '', 'Что принимаю:', meds.value.trim() || '(не указано)'];
+      const status = root.querySelector<HTMLElement>('[data-copy-status]')!;
+      try { await navigator.clipboard.writeText(lines.join('\n')); status.textContent = 'Скопировано'; }
+      catch { status.textContent = 'Не удалось скопировать, выделите текст вручную'; }
+    });
+
+    // 2. Контрольные точки
+    const tlData: { when: string; text: string; sources: { title: string; url: string }[] }[] = JSON.parse(root.querySelector('[data-tl-data]')!.textContent || '[]');
+    const tl = root.querySelector<HTMLInputElement>('[data-tl]')!;
+    tl.addEventListener('input', () => {
+      const x = tlData[Number(tl.value)];
+      root.querySelector('[data-tl-when]')!.textContent = x.when;
+      root.querySelector('[data-tl-text]')!.textContent = x.text;
+      tl.setAttribute('aria-valuetext', x.when);
+      root.querySelector('[data-tl-src]')!.innerHTML = x.sources.map((s) => `<a href="${esc(s.url)}">${esc(s.title)}</a>`).join(' ');
+    });
+
+    // 3. Сочетания
+    const ixData: { item: string; verdict: string; reason: string; label: string; sources: { title: string; url: string }[] }[] = JSON.parse(root.querySelector('[data-ix-data]')!.textContent || '[]');
+    const ixBoxes = [...root.querySelectorAll<HTMLInputElement>('[data-ix]')];
+    const verdicts = root.querySelector<HTMLElement>('[data-verdicts]')!;
+    const renderIx = () => {
+      const picked = ixBoxes.filter((b) => b.checked).map((b) => ixData[Number(b.value)]);
+      if (!picked.length) { verdicts.innerHTML = '<li class="tools-hint">Отметьте препарат, и здесь появится вердикт с причиной и источником.</li>'; return; }
+      picked.sort((a, b) => VERDICT_ORDER.indexOf(a.verdict) - VERDICT_ORDER.indexOf(b.verdict));
+      verdicts.innerHTML = picked.map((x) => `<li class="tools-verdict tools-v-${esc(x.verdict)}"><strong>${esc(x.item)}: ${esc(x.label)}.</strong> ${esc(x.reason)} <span class="tools-src">${x.sources.map((s) => `<a href="${esc(s.url)}">${esc(s.title)}</a>`).join(' · ')}</span></li>`).join('');
+    };
+    ixBoxes.forEach((b) => b.addEventListener('change', renderIx));
+
+    // 4. Сравнение препаратов
+    const cmp: { drugs: { id: string; label: string }[]; options: { id: string; label: string; group: string }[]; rules: { when: string; d: string[]; k: string; r: string }[] } = JSON.parse(root.querySelector('[data-cmp-data]')!.textContent || '{}');
+    const cmpBoxes = [...root.querySelectorAll<HTMLInputElement>('[data-cmp]')];
+    const out = root.querySelector<HTMLElement>('[data-cmp-out]')!;
+    const renderCmp = () => {
+      const picked = cmpBoxes.filter((b) => b.checked).map((b) => b.value);
+      cmpBoxes.forEach((b) => { b.disabled = !b.checked && picked.length >= 3; });
+      if (!picked.length) { out.innerHTML = ''; return; }
+      const names = picked.map((id) => cmp.drugs.find((d) => d.id === id)?.label ?? id);
+      const optLabel = (id: string) => cmp.options.find((o) => o.id === id)?.label ?? id;
+      const rows = cmp.options.map((o) => {
+        const cells = picked.map((id) => {
+          const hits = cmp.rules.filter((r) => r.when === o.id && r.d.includes(id));
+          if (!hits.length) return '<td>нет правил</td>';
+          return `<td>${hits.map((h) => `<span class="tools-kind tools-k-${esc(h.k)}">${esc(KIND[h.k] ?? h.k)}</span> ${esc(h.r)}`).join('<br>')}</td>`;
+        });
+        return cells.some((c) => c !== '<td>нет правил</td>') ? `<tr><th scope="row">${esc(optLabel(o.id))}</th>${cells.join('')}</tr>` : '';
+      }).filter(Boolean).join('');
+      out.innerHTML = `<table class="tools-table"><caption>Что говорят правила подборщика по вашим особенностям</caption><thead><tr><th scope="col">Особенность</th>${names.map((n) => `<th scope="col">${esc(n)}</th>`).join('')}</tr></thead><tbody>${rows || '<tr><td colspan="4">По этим препаратам правил для отмеченных особенностей нет. Это не значит, что препарат подходит.</td></tr>'}</tbody></table>`;
+    };
+    cmpBoxes.forEach((b) => b.addEventListener('change', renderCmp));
+
+    // 5. Дневник самочувствия (только localStorage, с защитой от недоступного хранилища)
+    const KEY = 'tools-diary-v1';
+    type Entry = { date: string; sleep: string; mood: string; side: string; note: string };
+    const load = (): Entry[] => { try { return JSON.parse(localStorage.getItem(KEY) || '[]'); } catch { return []; } };
+    const save = (list: Entry[]) => { try { localStorage.setItem(KEY, JSON.stringify(list)); return true; } catch { return false; } };
+    const form = root.querySelector<HTMLFormElement>('[data-diary-form]')!;
+    const dateInput = form.querySelector<HTMLInputElement>('input[name="date"]')!;
+    dateInput.value = new Date().toISOString().slice(0, 10);
+    const diaryStatus = root.querySelector<HTMLElement>('[data-diary-status]')!;
+    const list = root.querySelector<HTMLElement>('[data-diary-list]')!;
+    const renderDiary = () => {
+      const entries = load().sort((a, b) => b.date.localeCompare(a.date));
+      list.innerHTML = entries.length ? entries.map((e, i) => `<li><strong>${esc(e.date)}</strong>: сон ${esc(e.sleep)}, настроение ${esc(e.mood)}${e.side ? `. Побочные: ${esc(e.side)}` : ''}${e.note ? `. Заметки: ${esc(e.note)}` : ''} <button type="button" class="tools-link" data-del="${i}">удалить</button></li>`).join('') : '<li class="tools-hint">Записей пока нет.</li>';
+    };
+    form.addEventListener('submit', (ev) => {
+      ev.preventDefault();
+      const fd = new FormData(form);
+      const entry: Entry = { date: String(fd.get('date')), sleep: String(fd.get('sleep')), mood: String(fd.get('mood')), side: String(fd.get('side') || '').trim(), note: String(fd.get('note') || '').trim() };
+      const ok = save([...load(), entry]);
+      diaryStatus.textContent = ok ? 'Запись добавлена' : 'Браузер не разрешает сохранять. Скопируйте запись вручную.';
+      form.querySelector<HTMLTextAreaElement>('textarea[name="side"]')!.value = '';
+      form.querySelector<HTMLTextAreaElement>('textarea[name="note"]')!.value = '';
+      renderDiary();
+    });
+    list.addEventListener('click', (ev) => {
+      const t = ev.target as HTMLElement;
+      const idx = t.dataset.del;
+      if (idx === undefined) return;
+      const entries = load().sort((a, b) => b.date.localeCompare(a.date));
+      entries.splice(Number(idx), 1);
+      save(entries);
+      renderDiary();
+    });
+    root.querySelector<HTMLButtonElement>('[data-diary-export]')!.addEventListener('click', () => {
+      const entries = load().sort((a, b) => a.date.localeCompare(b.date));
+      const text = entries.length ? entries.map((e) => `${e.date}: сон ${e.sleep}/5, настроение ${e.mood}/5${e.side ? `, побочные: ${e.side}` : ''}${e.note ? `, заметки: ${e.note}` : ''}`).join('\n') : 'Записей нет';
+      const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'дневник-самочувствия.txt';
+      a.click();
+      URL.revokeObjectURL(a.href);
+    });
+    renderDiary();
+  });
+</script>
