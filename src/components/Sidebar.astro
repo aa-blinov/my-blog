@@ -808,7 +808,9 @@ function getFolderHref(fullPath: string) {
     .sidebar-nav .folder-link, 
     .sidebar-nav summary {
       font-size: 1rem;
-      padding: 12px 4px; /* ~41px tap row */
+      padding: 12px 4px;
+      min-height: 44px; /* строка папки не ниже 44px на таче, как у остальных мобильных нажатий */
+      box-sizing: border-box;
     }
   }
 </style>
