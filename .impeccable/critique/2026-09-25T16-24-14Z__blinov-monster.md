@@ -2,7 +2,7 @@
 target: blinov.monster (весь сайт)
 total_score: 28
 max_score: 40
-na_heuristics: 
+na_heuristics:
 p0_count: 0
 p1_count: 3
 target_identity: "url:https://blinov.monster/"

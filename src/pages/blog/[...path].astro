@@ -21,7 +21,7 @@ type Props = { kind: 'file'; entry: BlogEntry; path?: never } | { kind: 'folder'
 
 export async function getStaticPaths() {
   const entries = await getCollection('blog');
-  
+
   // 1. Routes for individual files
   const filePaths = entries.map((entry) => ({
     params: { path: entry.id },
@@ -80,9 +80,9 @@ let AboutContent: Awaited<ReturnType<typeof render>>['Content'] | null = null;
 if (kind === 'folder') {
   const allEntries = await getCollection('blog');
   const entriesInFolder = allEntries.filter((e) => !e.data.draft && e.id.startsWith(path + '/'));
-  
+
   const groups: Record<string, BlogEntry[]> = {};
-  
+
   entriesInFolder.forEach(entry => {
     const relativeSlug = entry.id.slice(path.length + 1);
     const parts = relativeSlug.split('/');
@@ -102,8 +102,8 @@ if (kind === 'folder') {
   if (folderAbout) AboutContent = (await render(folderAbout)).Content;
   if (folderSeries) directEntries = folderSeries.parts;
   subGroups = Object.entries(groups)
-    .map(([name, entries]) => ({ 
-      name, 
+    .map(([name, entries]) => ({
+      name,
       entries: sortByDateDesc(entries),
       maxDate: Math.max(...entries.map(e => e.data.date.getTime()))
     }))
@@ -161,7 +161,7 @@ const title = entry ? entry.data.title : (folderAbout?.data.title.replace(/:\s*Ð
           <AboutContent />
         </div>
       )}
-      
+
       {directEntries.length > 0 && (
         <section class="section-block">
           <PostList posts={directEntries} numbered={!!folderSeries} level={2} />

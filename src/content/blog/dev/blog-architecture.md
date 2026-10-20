@@ -37,16 +37,16 @@ graph TD
 
     Blog -->|Fetch| CC
     Pages -->|Fetch| CC
-    
+
     CC -->|Blog Data| Router
     CC -->|Pages Data| Statics
     CC -->|Sidebar Data| Layout
-    
+
     Router -->|Injected into| Layout
     Statics -->|Injected into| Layout
-    
+
     Layout -->|Build| HTML[Static HTML Files]
-    
+
     subgraph "Развертывание"
         HTML --> Web[GitHub Pages]
     end

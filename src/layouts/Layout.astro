@@ -65,13 +65,13 @@ const breadcrumbPath = getBreadcrumb(Astro.url.pathname);
     <meta name="description" content={desc} />
     <link rel="alternate" type="application/rss+xml" title="Статьи" href={`${BASE}rss.xml`} />
     <link rel="alternate" type="application/rss+xml" title="Заметки" href={`${BASE}notes.xml`} />
-    
+
     <script is:inline>
       (function() {
         document.documentElement.classList.add('js'); // без JS кнопки панели и поиск не работают: их прячет html:not(.js) .needs-js
         const theme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.dataset.theme = theme;
-        
+
         // Тот же ключ, что у кнопок в theme.js: иначе страница рисуется в md и перескакивает, когда модуль применит сохранённый размер
         const font = localStorage.getItem('font-size-v2');
         document.documentElement.dataset.font = ['xs', 'sm', 'md', 'lg', 'xl'].includes(font) ? font : 'md';

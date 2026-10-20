@@ -2,7 +2,7 @@
 target: "blinov.monster (весь сайт, фокус: серия антидепрессантов, дерево, всплывашка, мобильная)"
 total_score: 26
 max_score: 40
-na_heuristics: 
+na_heuristics:
 p0_count: 0
 p1_count: 2
 target_identity: "url:https://blinov.monster/"

@@ -161,7 +161,7 @@ function getFolderHref(fullPath: string) {
         </span>
       </li>
     )}
-    
+
     {/* Рекурсивный рендеринг дерева */}
     {function renderTree(node: TreeNode, inSeries = false) {
       // Папка-серия (у детей есть part): части по номеру, about-* сверху; иначе по алфавиту
@@ -169,8 +169,8 @@ function getFolderHref(fullPath: string) {
       const childrenArr = Object.values(node.children || {}).sort((a, b) =>
         isSeriesFolder ? seriesRank(a) - seriesRank(b) : a.name.localeCompare(b.name),
       );
-      
-      // Calculate order values for CSS. 
+
+      // Calculate order values for CSS.
       // We use timestamps in seconds to keep them within safe integer range for CSS.
       // desc: higher date = smaller order value
       // asc: lower date = smaller order value
@@ -181,20 +181,20 @@ function getFolderHref(fullPath: string) {
       const dateVal = node.entry?.date.getTime() || 0;
       const minDateVal = node.minDate?.getTime() || 0;
       const maxDateVal = node.maxDate?.getTime() || 0;
-      
+
       return (
-        <li 
-          class:list={[{ 'folder-item': node.kind === 'folder', 'sortable-item': true }]} 
+        <li
+          class:list={[{ 'folder-item': node.kind === 'folder', 'sortable-item': true }]}
           style={{
             '--order-desc': isSectionRootFile ? orderPinTop : partOrder ?? (node.kind === 'file' ? -Math.floor(dateVal / 100000) : -Math.floor(maxDateVal / 100000)),
             '--order-asc': isSectionRootFile ? orderPinTop : partOrder ?? (node.kind === 'file' ? Math.floor(dateVal / 100000) : Math.floor(minDateVal / 100000))
           }}
-          data-date-min={node.minDate?.toISOString()} 
+          data-date-min={node.minDate?.toISOString()}
           data-date-max={node.maxDate?.toISOString()}
-          {...(node.kind === 'file' ? { 
-            'data-filename': node.name, 
+          {...(node.kind === 'file' ? {
+            'data-filename': node.name,
             'data-title': node.entry?.title.toLowerCase(),
-            'data-date': node.entry?.date.toISOString() 
+            'data-date': node.entry?.date.toISOString()
           } : {})}
         >
           {node.kind === 'folder' ? (
@@ -276,13 +276,13 @@ function getFolderHref(fullPath: string) {
 
             const allFileItems = tree.querySelectorAll('li[data-filename]');
             const allFolderItems = tree.querySelectorAll('li.folder-item');
-            
+
             const queries = [raw];
             if (hasRussian(raw)) queries.push(transliterate(raw));
             // Сам запрос ищем где угодно в имени файла, транслит только с начала слова: «сон» не должен находить per-SON-as
             const translit = queries[1];
             const nameHit = (name) => name.includes(raw) || (!!translit && name.split(/[-_./]/).some(w => w.startsWith(translit)));
-            
+
             allFileItems.forEach(li => {
               const name = (li.getAttribute('data-filename') || '').toLowerCase();
               const title = (li.getAttribute('data-title') || '').toLowerCase();
@@ -347,7 +347,7 @@ function getFolderHref(fullPath: string) {
       const raw = searchInput.value.toLowerCase().trim();
       const allFileItems = tree!.querySelectorAll<HTMLLIElement>('li[data-filename]');
       const allFolderItems = tree!.querySelectorAll<HTMLLIElement>('li.folder-item');
-      
+
       // Фильтр живёт в рамках вкладки: на следующий день дерево снова целое
       sessionStorage.setItem('sidebar-search', raw);
       if (clearBtn) clearBtn.hidden = !raw;
@@ -472,7 +472,7 @@ function getFolderHref(fullPath: string) {
       sortBtn!.setAttribute('aria-pressed', sortOrder === 'desc' ? 'false' : 'true');
       sortBtn!.classList.toggle('active', sortOrder !== 'desc');
       sortBtn!.setAttribute('data-label', state.label);
-      
+
       // Update global sort attribute on the list for CSS sorting
       if (sortOrder === 'none') tree!.removeAttribute('data-sort'); else tree!.setAttribute('data-sort', sortOrder);
     }
@@ -625,7 +625,7 @@ function getFolderHref(fullPath: string) {
     padding: 0;
     display: grid;
   }
-  
+
   /* Сортировка по дате: только внутри разделов; сами разделы (dev/, science/, ...) не двигаем */
   #sidebar-tree[data-sort="desc"] > .sidebar-pinned,
   #sidebar-tree[data-sort="asc"] > .sidebar-pinned {
@@ -804,8 +804,8 @@ function getFolderHref(fullPath: string) {
     .sidebar-nav summary .folder-link {
       flex: 1;
     }
-    .sidebar-nav a.file-link, 
-    .sidebar-nav .folder-link, 
+    .sidebar-nav a.file-link,
+    .sidebar-nav .folder-link,
     .sidebar-nav summary {
       font-size: 1rem;
       padding: 12px 4px;

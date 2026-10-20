@@ -5,7 +5,7 @@
   const storedTheme = localStorage.getItem("theme");
   const systemDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
   const initialTheme = storedTheme || (systemDark ? "dark" : "light");
-  
+
   const applyThemeUi = (theme) => {
     root.dataset.theme = theme;
     if (btn) btn.setAttribute("aria-pressed", String(theme === "dark")); // скринридер слышит, какая тема сейчас
@@ -28,7 +28,7 @@
       // We wrap EVERY pre in a dedicated container to ensure consistent positioning
       const container = document.createElement("div");
       container.className = "code-block-container";
-      
+
       // Insert container before pre, then move pre into container
       pre.parentNode.insertBefore(container, pre);
       container.appendChild(pre);
@@ -46,7 +46,7 @@
           await navigator.clipboard.writeText(codeText);
           copyBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" /></svg>`;
           copyBtn.classList.add("copied");
-          
+
           window.setTimeout(() => {
             copyBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 0 1-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 0 1 1.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 0 0-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 0 1-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 0 0-3.375-3.375h-1.5a1.125 1.125 0 0 1-1.125-1.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H9.75" /></svg>`;
             copyBtn.classList.remove("copied");
@@ -75,15 +75,15 @@
   const fontIncreaseBtn = document.getElementById("font-increase");
   const fontDecreaseBtn = document.getElementById("font-decrease");
   const fontSizes = ["xs", "sm", "md", "lg", "xl"];
-  
+
   // Default to 'md' if nothing is stored
   const storedFont = localStorage.getItem("font-size-v2");
   const initialFont = fontSizes.includes(storedFont) ? storedFont : "md";
-  
+
   const applyFontUi = (size) => {
     root.dataset.font = size;
     const index = fontSizes.indexOf(size);
-    
+
     // На границе шкалы кнопка выключена по-настоящему: и видно, и скринридер скажет.
     // Если фокус был на ней, переводим на соседнюю, иначе он падал на body
     const atMin = index === 0;
@@ -157,12 +157,12 @@
 
         const existingContainer = pre.closest(".code-block-container");
         const nodeToWrap = existingContainer || pre;
-        
+
         const toggleWrapper = document.createElement("div");
         toggleWrapper.className = "mermaid-toggle-wrapper";
-        
+
         nodeToWrap.parentNode.insertBefore(toggleWrapper, nodeToWrap);
-        
+
         const diagramWrapper = document.createElement("div");
         diagramWrapper.className = "mermaid-wrapper highlight";
         diagramWrapper.style.display = "flex";
@@ -176,7 +176,7 @@
         diagramWrapper.style.padding = "1rem";
         diagramWrapper.style.borderRadius = "var(--app-radius-sm)";
         diagramWrapper.title = "Нажмите, чтобы увидеть код исходника";
-        
+
         // Add code button on Mermaid wrapper
         const diagramToggleBtn = document.createElement("button");
         diagramToggleBtn.type = "button";
@@ -185,21 +185,21 @@
         diagramToggleBtn.setAttribute("aria-label", "Показать исходник диаграммы");
         diagramToggleBtn.title = "Показать исходник диаграммы";
         diagramToggleBtn.style.right = "0.5rem"; // Use same offset as usual since there is no copy button here
-        
+
         diagramWrapper.appendChild(diagramToggleBtn);
-        
+
         const div = document.createElement("div");
         div.className = "mermaid";
         div.textContent = el.textContent;
         div.id = `mermaid-${index}`;
         diagramWrapper.appendChild(div);
-        
+
         const codeWrapper = document.createElement("div");
         codeWrapper.className = "code-block-container mermaid-code-wrapper"; // reuse styles
         codeWrapper.style.display = "none";
-        
+
         codeWrapper.appendChild(nodeToWrap);
-        
+
         // Add the toggle back button
         const toggleBtn = document.createElement("button");
         toggleBtn.type = "button";
@@ -208,7 +208,7 @@
         toggleBtn.setAttribute("aria-label", "Показать диаграмму");
         toggleBtn.title = "Показать диаграмму";
         toggleBtn.style.right = "3.5rem"; // Offset from copy button
-        
+
         // Add a copy button since we skipped it in enhanceCodeBlocks
         const copyBtn = document.createElement("button");
         copyBtn.type = "button";
@@ -216,7 +216,7 @@
         copyBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 0 1-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 0 1 1.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 0 0-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 0 1-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 0 0-3.375-3.375h-1.5a1.125 1.125 0 0 1-1.125-1.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H9.75" /></svg>`;
         copyBtn.setAttribute("aria-label", "Скопировать код");
         copyBtn.title = "Скопировать";
-        
+
         copyBtn.addEventListener("click", async () => {
           const codeText = pre.innerText.trimEnd();
           try {
@@ -229,10 +229,10 @@
             }, 2000);
           } catch (_) {}
         });
-        
+
         codeWrapper.appendChild(toggleBtn);
         codeWrapper.appendChild(copyBtn);
-        
+
         toggleWrapper.appendChild(diagramWrapper);
         toggleWrapper.appendChild(codeWrapper);
 

@@ -1,262 +1,191 @@
 # blinov.monster
 
-Personal website and content-driven blog built with [Astro](https://astro.build/).
+The personal site and blog of Alexander Blinov: long articles on software
+engineering, language models, science and life, with a feed of short notes
+between them. It is a static Astro build published on GitHub Pages, and it is
+navigated like a project in an editor, with every article a Markdown file in a
+folder.
 
-The project is designed as a static site with a custom content model, a file-tree blog navigator, theme and font controls, code block enhancements, and GitHub Pages deployment behind the `blinov.monster` custom domain.
+[![License](https://img.shields.io/badge/license-All%20Rights%20Reserved-lightgrey.svg)](LICENSE)
+[![Deploy](https://github.com/aa-blinov/my-blog/actions/workflows/deploy.yml/badge.svg)](https://github.com/aa-blinov/my-blog/actions/workflows/deploy.yml)
 
-Live site: [https://blinov.monster](https://blinov.monster)
+The site lives at [https://blinov.monster](https://blinov.monster). The
+articles are in Russian, and the documents in this repository are in English.
 
-## Status
-
-Active personal project.
-
-This repository is not an open source template or starter kit. Source code and content are published for operational use of the site only. See [License](#license).
-
-## Highlights
-
-- Static Astro site with content collections and typed frontmatter
-- Homepage and About page sourced from markdown content entries
-- Blog routing powered by a catch-all route for nested sections and article pages
-- File-tree sidebar with search, active-state highlighting, and date sorting
-- Theme toggle and article font-size controls stored in `localStorage`
-- Mobile navigation with fixed top navbar and overlay sidebar
-- Syntax highlighting with light/dark Chroma themes
-- Copy-to-clipboard buttons for code blocks
-- Mermaid diagram rendering with diagram/code toggle
-- GitHub Pages deployment via GitHub Actions
-- Custom domain configured through `public/CNAME`
-
-## Tech Stack
-
-- Astro 7
-- TypeScript
-- Astro Content Collections with Zod schemas
-- Pico CSS plus custom global styling
-- Mermaid loaded on demand from CDN
-- GitHub Actions for CI/CD
-
-## Project Structure
-
-```text
-.
-|- public/
-|  |- CNAME
-|  |- robots.txt
-|  |- theme.js
-|  `- css/
-|- src/
-|  |- components/
-|  |- content/
-|  |  |- blog/
-|  |  `- pages/
-|  |- layouts/
-|  |- pages/
-|  |- styles/
-|  `- utils/
-|- .github/workflows/deploy.yml
-|- astro.config.mts
-`- package.json
-```
-
-## Routing Model
-
-The current site structure is:
-
-- `/` from `src/pages/index.astro`
-- `/about-me/` from `src/pages/about-me/index.astro`
-- `/blog/` from `src/pages/blog/index.astro`
-- `/blog/<path>/` from `src/pages/blog/[...path].astro`
-
-The catch-all blog route handles both:
-
-- final article pages
-- intermediate folder pages inside the blog tree
-
-## Content Model
-
-The project uses two Astro content collections defined in [src/content/config.ts](src/content/config.ts):
-
-- `pages`
-- `blog`
-
-### Pages collection
-
-Current page entries live in:
-
-- `src/content/pages/main.md`
-- `src/content/pages/about-me.md`
-
-Required frontmatter:
-
-```yaml
-title: string
-date: date
-```
-
-Optional frontmatter:
-
-```yaml
-summary: string
-draft: boolean
-```
-
-### Blog collection
-
-Blog entries live under `src/content/blog/**`.
-
-Required frontmatter:
-
-```yaml
-title: string
-date: date
-```
-
-Optional frontmatter:
-
-```yaml
-summary: string
-draft: boolean
-section: string
-```
-
-Notes:
-
-- If `section` is omitted, the physical directory structure is used as the section path.
-- If `section` is present, it acts as a virtual path override for blog grouping and navigation.
-- Draft entries are excluded from the generated site.
-
-### Example blog entry
-
-```md
----
-title: "My New Article"
-date: 2026-03-11
-draft: false
-summary: "Short description shown in lists and previews."
-section: "dev"
 ---
 
-Write your content in Markdown here.
-```
-
-## Features by Area
-
-### Content and navigation
-
-- Sidebar tree is generated from blog content paths
-- Section overview files such as `about-*.md` are pinned to the top of their section
-- Search and sort state are restored from `localStorage`
-
-### Reading experience
-
-- Theme switching is handled in `public/theme.js`
-- Font scale controls update `data-font` on the root element
-- Code blocks receive copy buttons at runtime
-- Mermaid blocks are rendered lazily and can be toggled back to source code
-
-### Site metadata
-
-Core site metadata is defined in [src/config.ts](src/config.ts):
-
-- site title
-- description
-- author
-- social links
-- canonical site URL
-
-## Local Development
-
-### Requirements
-
-- Node.js 20 or newer
-- npm
-
-### Install
+## Quick start
 
 ```bash
 npm install
-```
-
-### Start the dev server
-
-```bash
 npm run dev
 ```
 
-Default local URL:
+The dev server comes up on http://localhost:4321. Node 22 and npm are what the
+deploy workflow uses, and nothing in `package.json` pins a range.
 
-```text
-http://localhost:4321
-```
-
-### Production build
+To build the site the way CI does:
 
 ```bash
+npm run check
 npm run build
 ```
 
-### Preview the built site
+`npm run build` writes static HTML into `dist/`, and `npm run preview` serves
+that directory.
 
-```bash
-npm run preview
+## What it does
+
+- **A file tree instead of a menu.** The sidebar is the content tree: sections
+  are folders, articles are `.md` files, and `main.md`, `about-me.md` and
+  `notes.md` are pinned at the top.
+- **Search that transliterates.** A query in Cyrillic is matched against the
+  Latin file names as well, and the transliteration is compared with the start
+  of each word.
+- **Three orders for the tree.** Newest first by default, oldest first, or by
+  name. The order is remembered in the browser. The search box is not: it
+  belongs to the tab.
+- **Series with their own table of contents.** A folder whose articles carry
+  `part` in the frontmatter becomes a series, with a numbered index, a "part N
+  of M" line under the heading and links to the neighbouring parts. Three are
+  live: `dev/agent/` with nine parts, `science/body-and-environment/` with six
+  and `science/mind/antidepressants/` with eight.
+- **Interactive blocks inside the articles.** The antidepressants series
+  carries a radial map of the drugs, a picker that sorts them by the
+  constraints a reader ticks off, and a checklist of questions to take to a
+  doctor. Every claim in them points at a guideline or a drug label.
+- **Reading aids.** An article with six or more second-level headings gets a
+  table of contents, every code block gets a copy button, and a Mermaid block
+  renders as a diagram with a toggle back to the source.
+- **Two feeds.** `/rss.xml` carries the articles, `/notes.xml` the short
+  notes.
+- **Reader controls.** A light and a dark theme, and five font sizes. Both are
+  kept in the browser.
+
+## How it works
+
+```
+src/content/**.md -> collections -> pages -> dist/ -> GitHub Pages
 ```
 
-## Deployment
+Three content collections are defined in
+[src/content.config.ts](src/content.config.ts) with the glob loader, and each
+one has a Zod schema: `blog` for the articles, `pages` for the home page and
+the about page, `notes` for the short feed. A schema failure stops the build,
+so a missing `title` or an unparseable `date` is caught before anything is
+published.
 
-Deployment is configured in [.github/workflows/deploy.yml](.github/workflows/deploy.yml).
+The routing is one catch-all. The file
+[src/pages/blog/[...path].astro](src/pages/blog/[...path].astro) produces a
+route per article and a route per folder in the tree, so a new article needs
+neither a new page file nor an entry in a router. The same file renders both
+cases, and the branch is the `kind` prop that `getStaticPaths` sets.
 
-Current behavior:
+The sidebar is built on every page from the same collection, so the tree
+cannot drift from the content. A file called `about-<name>.md` is the intro
+text of its folder rather than an article: it stays out of the tree, out of the
+blog index and out of the article lists, and its text becomes the intro of the
+folder page.
 
-- output target is static
-- GitHub Pages deploy runs on pushes to the `master` branch
-- workflow installs dependencies with `npm ci`
-- build output is published from `dist/`
-- custom domain is set through `public/CNAME`
+Three folders are series, because at least one article in them carries
+`part`. The folder page lists the parts of the series, each part links to the
+next, and the parts keep their order in the tree whatever the sort order is.
 
-Astro configuration lives in [astro.config.mts](astro.config.mts) and uses:
+The interface is three columns. A fixed vertical toolbar holds the home link,
+the theme toggle and the font size buttons, the tree stands next to it, and the
+article is the third. Under 992 pixels the toolbar becomes a top bar and the
+tree becomes an overlay, with the page behind it marked `inert` so that Tab
+does not wander into it.
 
-- `output: "static"`
-- the sitemap integration
-- `SITE.url` from `src/config.ts`
+Two scripts run in the browser.
+[src/scripts/theme.js](src/scripts/theme.js) holds the theme, the font size,
+the copy buttons and the Mermaid rendering, while
+[src/scripts/ref-tip.js](src/scripts/ref-tip.js) shows the source behind a
+reference chip on hover, on focus and on a second tap. The theme and the font
+size are applied by an inline script in the head of the layout, before the
+first paint.
 
-## Operational Notes
+The interactive blocks are data, not pages.
+[src/data/maps](src/data/maps) holds the mind maps,
+[src/data/pickers](src/data/pickers) the pickers and
+[src/data/tools](src/data/tools) the checklists. The layout of a map is
+computed at build time in [src/utils/mindmap.ts](src/utils/mindmap.ts), and the
+controller runs in the browser.
 
-- There is currently no automated test suite in the repository.
-- The main verification step is a successful `npm run build`.
-- `dist/` is a generated artifact and should be treated as build output, not source of truth.
-- Site behavior is split across Astro templates, `public/theme.js`, and `src/styles/global.css`.
+## Configuration
 
-## Customization Guide
+Site metadata lives in [src/config.ts](src/config.ts):
 
-### Update site metadata
+| Key | What it does |
+| --- | --- |
+| `SITE.title` | The name of the site, used in the browser title bar and in the feeds. |
+| `SITE.description` | The default meta description. |
+| `SITE.author` | The name in the footer and under every article. |
+| `SITE.github`, `SITE.telegram`, `SITE.linkedin` | The contact links in the footer. |
+| `SITE.url` | The canonical address, used by the sitemap and the feeds. |
+| `SECTION_TITLES` | The heading of a section folder. A folder missing from it shows its own name. |
+| `RECENT_POSTS_LIMIT` | How many articles the home page lists. The default is 7. |
 
-Edit [src/config.ts](src/config.ts).
+[Astro configuration](astro.config.mts) sets the output to `static`, the base
+path to `/`, adds the sitemap integration, and holds the redirects for the
+addresses that changed. Ten are there now: the nine old `dev/agent-*` paths
+and the old map of the antidepressants series.
 
-### Add or edit pages
+The frontmatter of an article:
 
-Edit markdown files in [src/content/pages](src/content/pages).
+| Field | Collections | What it does |
+| --- | --- | --- |
+| `title` | `blog`, `pages` | Required. The headline of the article. |
+| `date` | all three | Required. The publication date, in UTC. |
+| `draft` | all three | Optional, `false` by default. A draft is left out of the build. |
+| `summary` | `blog`, `pages` | Optional. One line under the headline. |
+| `section` | `blog` | Optional. Replaces the folder path in the tree. |
+| `part` | `blog` | Optional. The position of the article in a series. |
+| `map` | `blog` | Optional. The key of a map in `src/data/maps`. |
+| `picker` | `blog` | Optional. The key of a picker in `src/data/pickers`. |
+| `tools` | `blog` | Optional. The key of a tools block in `src/data/tools`. |
 
-### Add or edit blog posts
+The browser keeps a few choices of the reader. `theme`, `font-size-v2` and
+`sidebar-sort-v2` live in local storage, and the text of the search box lives
+in session storage, so the order is per browser and the search is per tab.
 
-Create or update markdown files in [src/content/blog](src/content/blog).
+## Development
 
-### Change layout or navigation behavior
+```bash
+npm install      # install
+npm run dev      # dev server on http://localhost:4321
+npm run check    # astro check: types and templates
+npm run build    # the static site into dist/
+npm run preview  # serve dist/
+```
 
-Review:
+There is no test suite. `npm run check` and `npm run build` are the
+verification, and the deploy workflow runs the same two.
 
-- [src/layouts/Layout.astro](src/layouts/Layout.astro)
-- [src/components/NavBar.astro](src/components/NavBar.astro)
-- [src/components/Sidebar.astro](src/components/Sidebar.astro)
-- [src/styles/global.css](src/styles/global.css)
+| Path | What it holds |
+| --- | --- |
+| `src/content/blog/` | The articles, one Markdown file each, 115 of them. |
+| `src/content/pages/` | The home page (`main.md`) and the about page (`about-me.md`). |
+| `src/content/notes/` | The short notes, one file per note, named after the UTC minute. |
+| `src/content.config.ts` | The three collections and their schemas. |
+| `src/pages/blog/[...path].astro` | The route for every article and every folder. |
+| `src/components/Sidebar.astro` | The tree, the search and the sort control. |
+| `src/components/MindMap.astro`, `Picker.astro`, `Tools.astro` | The interactive blocks. |
+| `src/data/` | The data behind those blocks. |
+| `src/scripts/` | The theme, the font size, the copy buttons, the Mermaid rendering. |
+| `src/utils/` | Dates, series, breadcrumbs, the layout of a map. |
+| `src/styles/global.css` | The visual system, over Pico CSS. |
+| `src/config.ts` | The site metadata and the section headings. |
+| `DESIGN.md` | The design system, with the tokens and the rules. |
 
-### Change theme, font, code block, or Mermaid behavior
-
-Edit [public/theme.js](public/theme.js).
+Read the design system before changing the interface.
+[DESIGN.md](DESIGN.md) holds the colours, the type scale and the rules the
+interface is held to, and the comments in the code say which rule each part of
+it serves.
 
 ## License
 
-This project is licensed under a proprietary, all-rights-reserved license.
-
-No permission is granted to copy, modify, distribute, sublicense, reuse, or create derivative works from this repository without prior written permission from the copyright holder.
-
-See [LICENSE](LICENSE) for the full text.
+All rights reserved. Copyright (c) 2026 Alexander Blinov. The code, the text,
+the design and the assets in this repository may not be copied, modified or
+redistributed without the written permission of the author. See
+[LICENSE](LICENSE).

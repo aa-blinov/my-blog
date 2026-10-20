@@ -97,13 +97,13 @@ interface Props {
     root.classList.remove('sidebar-open');
     body.classList.remove('sidebar-open');
   }
- 
+
   function syncIcons() {
     const isShown = sidebar?.classList.contains('sidebar-shown');
     const isMobile = isMobileViewport();
     const expanded = isMobile ? !!isShown : !sidebar?.classList.contains('sidebar-hidden');
     sidebarToggle?.setAttribute('aria-expanded', String(expanded));
-    
+
     if (openIcon && closeIcon) {
       if (isMobile) {
         openIcon.style.display = isShown ? 'none' : 'block';
