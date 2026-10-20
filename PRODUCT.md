@@ -14,8 +14,8 @@ documents in the repository are in English.
 
 ## Users
 
-The home page and the repository description name two audiences, and both read
-in Russian.
+The owner's record of the product names two audiences, and both read in
+Russian.
 
 - A broad audience of popular science readers. They arrive from a link or
   from a search engine for one article about the body, travel, language models
@@ -68,8 +68,8 @@ opinion and the guideline are kept apart.
   and `src/content/notes/`. The frontmatter is `title` and `date`, then
   `draft`, `summary`, `section`, `part`, `map`, `picker` and `tools` where
   they apply. The sections are `ai`, `dev`, `ideas`, `knowledge`, `life`,
-  `mgmt`, `projects` and `science`, the last with subfolders, and each has an
-  `about-<section>.md`.
+  `mgmt`, `projects` and `science`, the last with subfolders. Most of them
+  carry an `about-<section>.md`.
 - Stack: Astro 7 with the content layer and the glob loader, Pico CSS, JetBrains
   Mono, Shiki for the code, Mermaid for the diagrams, rendered in the
   browser by `src/scripts/theme.js`. A static build, deployed to GitHub Pages
@@ -96,7 +96,7 @@ Present now, confirmed by the code:
   source, a sitemap.
 - The notes feed at `/notes/`: a `notes.md` pin in the tree, one file per note
   at `src/content/notes/YYYY-MM-DD-HHMM.md`, frontmatter of `date` and `draft`
-  only, an anchor for every note, the latest three on the home page.
+  only, an anchor for every note, and up to the latest three on the home page.
 - Two feeds: `/rss.xml` for the articles, `/notes.xml` for the notes, with
   `rel=alternate` links in the head of the page and a line in the footer.
 - Series: a folder whose files carry `part`, with `about-<folder>.md` giving

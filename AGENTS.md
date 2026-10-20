@@ -26,7 +26,7 @@ else. The deploy workflow runs the same two commands, on Node 22.
 
 | Path | What it holds |
 | --- | --- |
-| `src/content/blog/` | The articles, one Markdown file each, 115 of them in eight sections. |
+| `src/content/blog/` | 115 Markdown files in eight sections: the articles, one per file, and the `about-<section>.md` intro of a section. |
 | `src/content/pages/` | The home page (`main.md`) and the about page (`about-me.md`). |
 | `src/content/notes/` | The short notes, one file per note, named after the UTC minute. |
 | `src/content.config.ts` | The three collections, their glob loaders and their Zod schemas. |
