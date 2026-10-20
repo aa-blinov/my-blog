@@ -1,6 +1,6 @@
 ---
-name: Личный сайт Александра Блинова
-description: Блог-«цифровой сад», собранный как открытый проект в IDE: дерево файлов, моноширинный текст, один зелёный акцент
+name: blinov.monster
+description: The blog as an open project in an editor: a file tree, one monospaced family and a single green accent.
 colors:
   monster-green: "#95d600"
   monster-green-deep: "#7ab800"
@@ -56,11 +56,6 @@ typography:
     fontSize: "0.7rem"
     fontWeight: 400
     lineHeight: 1.7
-  control:
-    fontFamily: "JetBrains Mono Variable, JetBrains Mono, Cascadia Code, Consolas, monospace"
-    fontSize: "0.75rem"
-    fontWeight: 400
-    lineHeight: 1
 rounded:
   none: "0px"
   hairline: "3px"
@@ -79,353 +74,376 @@ components:
     textColor: "{colors.ink-muted}"
     size: "40px"
     rounded: "{rounded.none}"
-    padding: "0"
   nav-button-hover:
     backgroundColor: "transparent"
     textColor: "{colors.monster-green}"
   search-input:
     backgroundColor: "transparent"
     textColor: "{colors.ink}"
-    typography: "{typography.control}"
+    border: "{colors.paper-rule}"
     rounded: "{rounded.hairline}"
-    padding: "0.2rem 0.4rem"
   search-input-focus:
-    backgroundColor: "transparent"
-    textColor: "{colors.ink}"
+    border: "{colors.monster-green-ink}"
   sort-button:
     backgroundColor: "transparent"
     textColor: "{colors.ink-muted}"
-    typography: "{typography.label}"
+    border: "{colors.paper-rule}"
     rounded: "{rounded.hairline}"
-    padding: "0 0.35rem"
-  sort-button-active:
-    backgroundColor: "transparent"
-    textColor: "{colors.monster-green}"
   file-link:
     backgroundColor: "transparent"
     textColor: "{colors.ink-contrast}"
     typography: "{typography.label}"
-    rounded: "{rounded.hairline}"
-    padding: "2px 4px"
-  file-link-hover:
-    backgroundColor: "{colors.paper-code}"
-    textColor: "{colors.monster-green}"
   file-link-active:
     backgroundColor: "rgba(149, 214, 0, 0.1)"
     textColor: "{colors.monster-green}"
-  code-copy-button:
-    backgroundColor: "rgba(255, 255, 255, 0.1)"
-    textColor: "{colors.editor-text}"
-    rounded: "{rounded.sm}"
-    padding: "0.25rem 0.6rem"
-  code-copy-button-copied:
-    backgroundColor: "{colors.monster-green}"
-    textColor: "{colors.on-accent}"
   code-block:
     backgroundColor: "{colors.editor-block}"
     textColor: "{colors.editor-text}"
     rounded: "{rounded.sm}"
-  internal-link-chip:
+  link-chip:
     backgroundColor: "{colors.paper-code}"
     textColor: "{colors.monster-green}"
+    border: "{colors.paper-rule}"
     rounded: "{rounded.sm}"
-    padding: "0.1rem 0.5rem"
   post-title-link:
     backgroundColor: "transparent"
     textColor: "{colors.ink-contrast}"
     typography: "{typography.title}"
-  post-title-link-hover:
-    backgroundColor: "transparent"
-    textColor: "{colors.monster-green}"
-  note-anchor:
-    backgroundColor: "transparent"
-    textColor: "{colors.ink-muted}"
-    typography: "{typography.control}"
-  note-anchor-hover:
-    backgroundColor: "transparent"
-    textColor: "{colors.monster-green-ink}"
-  note-arrival:
-    backgroundColor: "{colors.paper-code}"
-    textColor: "{colors.ink}"
-    rounded: "{rounded.sm}"
-    padding: "1.5rem 1rem"
-  series-line:
-    backgroundColor: "transparent"
-    textColor: "{colors.ink-muted}"
-    typography: "{typography.control}"
-    padding: "0.5rem 0 0"
-  series-nav-link:
-    backgroundColor: "transparent"
-    textColor: "{colors.ink-contrast}"
-    typography: "{typography.body}"
-  series-nav-link-hover:
-    backgroundColor: "transparent"
-    textColor: "{colors.monster-green}"
-  toc:
-    backgroundColor: "transparent"
-    textColor: "{colors.ink}"
-    rounded: "{rounded.none}"
-    padding: "1rem 1.5rem"
-  author-line:
-    backgroundColor: "transparent"
-    textColor: "{colors.ink}"
-    padding: "2rem 0 0"
-  search-clear:
-    backgroundColor: "transparent"
-    textColor: "{colors.ink-muted}"
-    typography: "{typography.title}"
-    width: "1.6rem"
-    padding: "0"
-  search-clear-hover:
-    backgroundColor: "transparent"
-    textColor: "{colors.monster-green}"
-  nav-button-disabled:
-    backgroundColor: "transparent"
-    textColor: "{colors.ink-muted}"
-    size: "40px"
-    padding: "0"
-  series-label:
-    backgroundColor: "transparent"
-    textColor: "{colors.ink-muted}"
-    typography: "{typography.control}"
-  read-line:
-    backgroundColor: "transparent"
-    textColor: "{colors.ink-muted}"
-    typography: "{typography.control}"
-    padding: "0.5rem 0 0"
 ---
 
-# Design System: Личный сайт Александра Блинова
+# Design system: blinov.monster
 
 ## Overview
 
-**Creative North Star: "Открытый проект в IDE"**
+**Creative North Star: "an open project in an IDE"**
 
-Сайт ведёт себя как рабочее окно редактора, в котором открыт проект блога. Слева узкая вертикальная панель инструментов, за ней дерево файлов с папками-разделами и статьями в виде `.md`-файлов с датами, справа сам текст. Всё набрано одним моноширинным шрифтом, включая заголовки и интерфейс, и единственный цвет в системе, Monster Green, работает как подсветка синтаксиса: он метит активный файл, курсор в поиске, ссылку под наведением и ничего больше. Интерфейс не украшает чтение, он его обслуживает и уходит с дороги.
+The site behaves like an editor window with the blog open in it. A narrow
+vertical toolbar holds the home link, the theme toggle and the font size
+buttons. Next to it stands a tree of folders and `.md` files with their dates.
+The text is on the right, in a column of about 92 characters.
 
-Плотность высокая, но воздух есть: дерево файлов набрано мелко и плотно, как в IDE, а колонка текста ограничена 92ch (около 85 знаков mono), с межстрочным 1.6 и абзацами через строку. Поверхности плоские: страница, сайдбар и панель инструментов лежат в одной плоскости и разделены только волосяными линиями. Тёмная тема не отдельная тема, а та же система на тёмной бумаге: те же линии, тот же зелёный, те же пропорции.
+Everything is set in one monospaced family, headings included. The single
+colour of the system, Monster Green, works the way a syntax highlight works:
+it marks the active file, the caret in the search field, a link under the
+pointer, and nothing else. The interface serves the reading and then gets out
+of the way.
 
-**Key Characteristics:**
-- Одно семейство шрифта на всё: JetBrains Mono для текста, заголовков, дат, кнопок и полей.
-- Один акцент, Monster Green, только на состояниях и метках; никаких цветных поверхностей.
-- Плоскость без исключений: ни теней, ни градиентов, глубина только линиями и тональными подложками.
-- Навигация как файловая система: папки, файлы и треугольники вместо меню; текстовый знак `▸` стоит только там, где что-то раскрывается: у папки в дереве и у «Содержания».
-- Две темы из одной палитры: бумага и ночь, зелёный один на обе.
-- Читатель управляет чтением: тема, размер шрифта в пять шагов, поиск и сортировка дерева.
-- Статья не обрывается на последней строке: серия ведёт к соседней части, папка к соседним статьям, автор к себе.
-- Главная показывает свежие статьи первыми, а карту блога строкой тегов с числом статей в конце.
+The density is high and the air is there anyway. The tree is small and tight,
+like an editor, and the text column is limited to 92ch with a line height of
+1.6 and a blank line between the paragraphs. The surfaces are flat: the page,
+the tree and the toolbar lie in one plane and are separated by hairlines. The
+dark theme is the same system on dark paper, with the same lines, the same
+green and the same proportions.
+
+The reader is given the controls. The theme, the font size in five steps, the
+order of the tree and the search box are all kept in the browser, and an
+article never ends on its last line: a series leads to the neighbouring part,
+a folder to the neighbouring articles, and the author to himself.
+
+**Key characteristics:**
+
+- One family for everything, JetBrains Mono
+- One chromatic colour, Monster Green, on states and links only
+- Flat surfaces, with depth carried by hairlines and tonal fills
+- Navigation shaped like a file system: folders, files and a disclosure mark
+- Two themes out of one palette, paper and night, with the same green in both
+- The reader controls the reading: theme, five font sizes, search and order
 
 ## Colors
 
-Палитра почти монохромная: нейтральная бумага или ночь, чернила трёх степеней плотности и один ярко-зелёный акцент, который встречается редко и потому заметен.
+The tokens live in `src/styles/global.css` under the `app-` prefix, so they
+cannot collide with the Pico CSS the site is built on.
 
 ### Primary
-- **Monster Green** (#95d600): единственный акцент. Активный файл в дереве, треугольник папки и треугольник `▸`/`▾` у «Содержания», поле поиска в фокусе, ссылка под наведением, кнопка копирования в состоянии «скопировано», стрелка раздела в ряду папки под наведением, внешние и внутренние ссылки в тексте, заголовки статей в списках под наведением. Никогда не заливает крупные поверхности.
-- **Monster Green Ink** (#4d7a00): тот же оттенок, затемнённый до чернил. Единственный зелёный для текста на бумаге в светлой теме: ссылки в статье и футере, имя активного файла, треугольник папки, значок сортировки. Даёт 5.1:1 на белом и 4.7:1 на подложке Paper Code.
-- **Monster Green Ink Deep** (#3f6600): наведение на текстовые ссылки в светлой теме.
-- **Monster Green Bright** (#a8e00a): наведение в тёмной теме, чуть светлее, чтобы читаться на ночном фоне. В тёмной теме Monster Green читается как текст сам (10:1 на Night), чернильный вариант не нужен.
-- **Monster Green Deep** (#7ab800): исторический оттенок наведения, оставлен в токенах, в интерфейсе не используется.
-- **On Accent** (#ffffff): текст на заливке Monster Green Ink в светлой теме: кнопка «скопировано», чип внутренней ссылки под наведением.
-- **On Accent Night** (#13171f): текст на заливке Monster Green в тёмной теме, там белый на лайме не читается (1.4:1).
 
-### Neutral, светлая тема «бумага»
-- **Paper** (#ffffff): фон всего: страницы, сайдбара, панели инструментов.
-- **Paper Code** (#f3f4f7): тональная подложка второго уровня: фон строки дерева под наведением, фон внутренней ссылки-чипа в тексте.
-- **Paper Rule** (#e7eaf0): все разделители: правая граница панели инструментов, вертикальная линия между сайдбаром и текстом, подчёркивание заголовка статьи, рамка поиска, линии вложенности в дереве, верх футера.
-- **Ink** (#373c44): основной текст статьи.
-- **Ink Heading** (#2d3138): заголовки статей.
-- **Ink Contrast** (#181c25): имена файлов в дереве, заголовки статей в списках, ссылки «Смотреть все статьи →» и «Весь раздел →», ссылки на соседние части серии; самый плотный текст.
-- **Ink Muted** (#646b79): мета-строка «дата ~ путь», строка серии и строка чтения под заголовком, заголовок и номера «Содержания», подписи «← часть N» у ссылок серии, иконки панели инструментов в покое, имена папок, плейсхолдер и крестик очистки поиска.
+- **Monster Green** (`#95d600`): the accent of the system. It marks the
+  active file, the focus of the search field, a link under the pointer and
+  the button that says the text was copied.
+- **Monster Green Deep** (`#7ab800`) and **Monster Green Bright** (`#a8e00a`):
+  the hover of the accent, in the light and the dark theme.
+- **Monster Green Ink** (`#4d7a00`) and **Monster Green Ink Deep**
+  (`#3f6600`): the green that may be used as text in the light theme.
 
-### Neutral, тёмная тема «ночь»
-- **Night** (#13171f): фон всего.
-- **Night Code** (#1a1e28): тональная подложка второго уровня, роль как у Paper Code.
-- **Night Rule** (#202632): все разделители, роль как у Paper Rule.
-- **Night Ink** (#c2c7d0): основной текст.
-- **Night Heading** (#f0f1f3): заголовки статей.
-- **Night Contrast** (#dfe3eb): имена файлов и заголовки в списках.
-- **Night Muted** (#7b8495): мета, иконки, папки, плейсхолдеры.
+The lime cannot be text. `#95d600` on white measures 2.1:1, so everything
+that is read as text in the light theme is set in Monster Green Ink, and the
+lime is left for fills, for tinted backgrounds and for the dark theme.
 
-### Editor block, общий для обеих тем
-- **Editor Block** (#24292e): фон блоков кода и диаграмм mermaid. Один и тот же в светлой и тёмной теме: код всегда живёт в тёмном окне редактора, как в GitHub Dark.
-- **Editor Text** (#e1e4e8): базовый цвет кода внутри блока; подсветка синтаксиса поверх него из темы Shiki github-dark.
+### Neutral, the paper theme
 
-### Named Rules
-**The Single Highlight Rule.** Monster Green единственный хроматический цвет системы. Он появляется только как реакция на состояние (активно, наведено, в фокусе, скопировано) или как метка ссылки. Второй акцентный цвет не вводится ни под какую задачу.
+- **Paper** (`#ffffff`): the page.
+- **Paper Code** (`#f3f4f7`): the fill of a code chip and of a hovered row.
+- **Paper Rule** (`#e7eaf0`): the 1px line that separates two things.
+- **Ink** (`#373c44`): the body text.
+- **Ink Heading** (`#2d3138`): the headings.
+- **Ink Contrast** (`#181c25`): the strongest ink, for a link that has to
+  stand out from its neighbours.
+- **Ink Muted** (`#646b79`): the dates, the meta lines and the placeholders.
 
-**The Ink Rule.** Лайм #95d600 на белом даёт 2.1:1 и текстом быть не может. В светлой теме всё, что читается как текст или тонкий знак, набирается Monster Green Ink; лайм остаётся заливкам, подложкам с прозрачностью и тёмной теме. Один оттенок, две плотности, а не два цвета.
+### Neutral, the night theme
 
-**The Dark Editor Rule.** Блок кода тёмный в любой теме. Он не подстраивается под светлую бумагу, потому что это окно редактора внутри документа, а не часть документа.
+- **Night** (`#13171f`): the page.
+- **Night Code** (`#1a1e28`): the fill of a code chip.
+- **Night Rule** (`#202632`): the 1px line.
+- **Night Ink** (`#c2c7d0`): the body text.
+- **Night Heading** (`#f0f1f3`): the headings.
+- **Night Contrast** (`#dfe3eb`): the strongest ink.
+- **Night Muted** (`#7b8495`): the dates and the meta lines.
 
-**The Pico Boundary Rule.** Pico лежит в своём слое и красит по тегам, поэтому у него две границы, которые нельзя переступать. Первая: `<nav>` получает стили горизонтального меню (`nav ul`, `nav li`), так что в `<nav>` живёт только настоящая навигация со сброшенным списком (дерево файлов, prev/next серии), а структурные блоки, «Содержание» и «После статьи», это `details` и `aside`. Вторая: внутри `<a>` Pico переопределяет `--pico-color` на primary, поэтому ссылка, которая должна быть цвета текста, берёт цвет от родителя (`color: inherit`), а цвет ставится на список или абзац; ссылке `var(--pico-color)` не пишется.
+### The editor block
+
+Code and diagrams live in a dark window in both themes: the block is
+`#24292e` and its text is `#e1e4e8`. It does not follow the theme, because it
+is a window of an editor inside the document rather than a part of the
+document.
+
+### Named rules
+
+**The Single Highlight Rule.** Monster Green is the only chromatic colour in
+the system. It appears as a reaction to a state, active, hovered, focused,
+copied, or as the mark on a link. A second accent is not introduced for any
+task.
+
+**The Ink Rule.** The lime is a highlight rather than a text colour. In the
+light theme, everything that is read as text or as a thin mark is set in
+Monster Green Ink and checked against 4.5:1. One hue in two densities.
+
+**The Dark Editor Rule.** A block of code is dark in either theme.
+
+**The Pico Boundary Rule.** Pico lives in its own cascade layer and paints by
+tag, so there are two borders it may not cross. A `<nav>` receives the styles
+of a horizontal menu, so only real navigation goes in one, with its list
+reset, while the structural blocks, the table of contents and the footer of
+an article are `details` and `aside`. Inside an `<a>` Pico replaces
+`--pico-color` with the primary, so a link that has to carry the colour of
+the text takes it from its parent with `color: inherit`.
 
 ## Typography
 
-**Display Font:** JetBrains Mono Variable (self-hosted через @fontsource-variable, ось wght от 100 до 800; фолбэк JetBrains Mono, Cascadia Code, Consolas, monospace)
-**Body Font:** JetBrains Mono Variable (та же гарнитура)
-**Label/Mono Font:** та же гарнитура; отдельного пропорционального шрифта в системе нет
+One family does the whole site: JetBrains Mono Variable, with the fallbacks
+`'JetBrains Mono', 'Cascadia Code', Consolas, monospace`. It is shipped with
+the site through `@fontsource-variable/jetbrains-mono`, with the latin,
+latin-ext, cyrillic, cyrillic-ext, greek and vietnamese subsets, the weight
+axis from 100 to 800 and `font-display: swap`. The Cyrillic subsets are not
+optional, since the articles are in Russian.
 
-**Character:** Один моноширинный шрифт на всё делает сайт похожим на исходник, а не на публикацию. Заголовки отличаются от текста только весом и размером, дерево файлов от статьи только кеглем. Базовый кегль уменьшен до 90% браузерного (14.4px при стандартных настройках), потому что моноширинный текст шире пропорционального.
+No proportional family appears anywhere: not in a heading, not in a button,
+not in the footer. The hierarchy is built from weight, 400 and 700, and from
+size.
 
 ### Hierarchy
-- **Display** (700, 2em от кегля статьи, line-height 1.125): заголовок статьи. Масштабируется вместе с текстом при смене размера шрифта читателем; ниже 992px 1.6em, чтобы длинное название не съедало первый экран.
-- **Headline** (700, 1.5rem, 1.2): заголовки разделов на главной, `/blog/` и страницах папок; в блоке «Ещё в разделе» уменьшен до 1.15rem. Внутри статьи своя шкала от кегля статьи: `h2` 1.35em с межстрочным 1.25 и отступом 2.25em сверху, 0.6em снизу; `h3` 1.15em, 1.3, отступ 1.75em / 0.5em; `h4` 1em, отступ 1.5em / 0.5em. У `h2` и `h3` `scroll-margin-top` 2rem, чтобы приход по якорю из «Содержания» не прилипал к верху окна.
-- **Title** (700, 1.15rem, 1.3): заголовки статей в списках и на главной.
-- **Масштаб:** кнопки +/− в навбаре ставят `data-font` на `html`, а он задаёт `--app-zoom` (xs 1, sm 1.1, md 1.2, lg 1.3, xl 1.45; дефолт md = 1.2), на который умножается корневой `font-size` (90%, от 1440px 100%). Все rem-токены, статья, заголовки, мета, дерево и теги масштабируются вместе; `--app-article-font` равен 1rem. Ширина сайдбара `clamp(300px, 19rem, 400px)` растёт вместе со шрифтом, высота мобильной панели в px. Ключ localStorage `font-size-v2` (старые значения из `font-size` не читаются).
-- **Свежие статьи** на главной: семь последних, под заголовком строка-выдержка Small цветом Ink Muted, первый абзац текста до 160 символов по слову, только когда нет `summary`.
-- **Body** (400, 1rem, 1.6): текст статьи. Пять фиксированных шагов для читателя: 0.8rem, 0.9rem, 1rem, 1.15rem, 1.3rem, переключаются кнопками в панели инструментов и запоминаются.
-- **Label** (400, 0.8rem, 1.2): дерево файлов, на десктопе `0.8 × кегль статьи`, следует за регулятором. На мобильном поднимается до 1rem ради тапа.
-- **Control** (400, 0.75rem, 1): поле поиска, кнопка сортировки, кнопка копирования кода, мета-строка в списках статей, строка серии и строка чтения «≈ N минут ~ M разделов» под заголовком, подпись «← часть N» над названием соседней части, заголовок «Содержание» и номера его пунктов. На мобильном поле поиска и сортировка берут 1.15rem: это не меньше 16px, и iOS Safari не зумит поле при фокусе.
-- **Caption** (400, 0.7rem, 1.25): даты в дереве файлов, на десктопе `0.7 × кегль статьи`, цветом Ink Muted без прозрачности; подпись «по имени / новые / старые» у сортировки тем же кеглем с opacity 0.8. Прозрачность на дате не используется: Ink Muted и так на грани 4.5:1.
-- **Small** (400, 0.9rem): мета-строка над статьёй и в карте блога цветом Ink Muted, пункты «Содержания» и строка автора после статьи цветом текста. Это кегль футера, а не мелкая серая подпись.
 
-### Named Rules
-**The One Typeface Rule.** Пропорциональный шрифт не появляется нигде, ни в заголовках, ни в кнопках, ни в футере. Иерархия строится весом (400/700) и кеглем, не сменой гарнитуры.
+- **Display, 2em, 700, 1.125**: the title of an article.
+- **Headline, 1.5rem, 700, 1.2**: the headings of the sections on the home
+  page, on `/blog/` and on a folder page. Inside an article the scale is the
+  article's own: h2 1.35em, h3 1.15em, h4 1em.
+- **Title, 1.15rem, 700, 1.3**: the title of an article in a list.
+- **Body, 1rem, 400, 1.6**: the text of an article.
+- **Label, 0.8rem, 400**: the tree of files, 0.8 of the article's size on a
+  desktop and 1rem on a phone.
+- **Caption, 0.7rem, 400**: the dates in the tree and the label of the sort
+  control.
+- **Control, 0.8rem, 400**: the search field, the sort button, the copy
+  button, the meta line of a list, the series line and the read line. On a
+  phone the control is 1.15rem, so that iOS does not zoom the field.
 
-**The Layer Rule.** Pico подключён в cascade layer `pico`, поэтому любое своё правило перекрывает его без `!important`. В коде `!important` не используется; если рука тянется, значит нужен более точный селектор или правило стоит выше по каскаду.
+### The reader scale
 
-**The Reader Scale Rule.** Размер текста статьи задаёт читатель, а не дизайнер: заголовок, мета и контент масштабируются от одного корневого значения, интерфейс при этом остаётся на месте.
+The size of the article text belongs to the reader. The root carries a
+`data-font` attribute with one of five steps, and the article scales from it:
+0.8rem, 0.9rem, 1rem, 1.15rem and 1.3rem. The choice is stored in the browser
+under `font-size-v2`, and the inline script in the head of the layout applies
+it before the first paint. The interface stays at its own size while the
+article grows and shrinks.
+
+The root font size is 90% of the browser default, and 100% from 1440px
+wide, because a tree and a meta line get small on a dense laptop screen. The
+zoom factor multiplies it.
+
+### Named rules
+
+**The One Typeface Rule.** The hierarchy is built from weight and size, never
+from a change of family.
+
+**The Reader Scale Rule.** One root value sets the size of the article, and
+the interface does not follow it.
+
+**The Layer Rule.** Pico is imported into the cascade layer `pico`, so any
+rule of ours beats it without `!important`. The stylesheet uses no
+`!important`: a hand that reaches for it wants a more exact selector or a
+rule that sits higher in the cascade.
 
 ## Layout
 
-Три колонки на десктопе от 992px: фиксированная панель инструментов 64px слева на всю высоту, дерево файлов 320px, дальше текст с максимальной шириной 92ch (около 85 знаков mono, `--app-main-max-width`) и отступом 2rem. Дерево липкое: `position: sticky; top: 0`, не выше 100vh, прокручивается само с `overscroll-behavior: contain` и тонким скроллбаром, при открытии страницы подкручивается так, чтобы активный файл был виден. Оно остаётся на экране на всей длине лонгрида. Между сайдбаром и текстом проведена волосяная вертикальная линия на всю высоту контейнера. Внешние отступы страницы 2rem со всех сторон.
+Three columns on a desktop: a toolbar of 64px, the tree at
+`clamp(300px, 19rem, 400px)`, and the article in a column of 55.2em, which is
+about 92 characters of JetBrains Mono. The measure is in `em` rather than in
+`ch`, because `ch` is measured with the fallback font while the real one is
+still loading, and the column jumped.
 
-Ниже 992px раскладка становится одноколоночной: панель инструментов превращается в верхнюю полосу высотой 48px с кнопками 44px, дерево файлов скрывается и открывается кнопкой поверх контента как оверлей от полосы до низа экрана, контент получает отступ 52px сверху и 1rem по бокам. Поле поиска, крестик очистки и сортировка на мобильном растут до 44px под палец, строки дерева до ~41px; даты в дереве скрываются, ширина нужна названию. Ссылки prev/next серии складываются в колонку. Мета-строка показывает только имя файла, заголовок статьи уменьшается до 1.6em, «Содержание» свёрнуто до тапа, а стрелка раздела в ряду папки дерева вырастает до 44×44 с иконкой 18px и полной непрозрачностью.
+The breakpoint is 992px. Below it the toolbar becomes a top bar of 48px and
+the tree becomes an overlay, with the page behind it marked `inert` so that
+Tab cannot wander into it. The table of contents is open on a desktop and
+closed on a phone, and the summary is at least 44px tall so a finger can
+reach it.
 
-Ритм отступов: 0.15 / 0.25 / 0.5 / 1 / 1.5 / 2rem. Заголовок статьи отделён от текста волосяной линией с отступом 1rem под ней и 1.5rem до текста. Между статьями в списках 2rem. Блоки после текста (prev/next серии, «После статьи») отделены линией сверху с отступом 3rem до неё и 1.5rem после. Футер отделён линией сверху и отступом 3rem от контента.
+The spacing steps are 0.15rem, 0.25rem, 0.5rem, 1rem, 1.5rem and 2rem, and
+the page padding is 2rem. The width of the tree is remembered, and the
+structure column of an article can be dragged between 192px and 480px.
+
+### Named rules
+
+**Three Columns.** The toolbar, the tree and the text, in that order. Under
+992px the toolbar moves to the top and the tree becomes an overlay.
+
+**The Tree Is The Navigation.** There is no menu of sections. The tree is
+the content, and it is built from the same collection as the pages.
 
 ## Elevation & Depth
 
-Система плоская без исключений. Ни одна поверхность не отбрасывает тени, градиентов нет, размытий нет. Глубина передаётся двумя способами: волосяными линиями (1px, Paper Rule или Night Rule) между зонами и тональной подложкой второго уровня (Paper Code или Night Code) под элементом, который сейчас важен: строка дерева под наведением, чип внутренней ссылки, блок кода как тёмное окно.
+There is none. `box-shadow`, `text-shadow`, `filter: drop-shadow`,
+`backdrop-filter` and every gradient are switched off, including on hover
+and in the mobile overlay. Where two things have to be told apart, a line is
+drawn; where one thing has to be marked, a background is laid under it or
+the colour of the text changes.
 
-### Named Rules
-**The Flat Rule.** `box-shadow`, `text-shadow`, `filter: drop-shadow`, `backdrop-filter` и любые градиенты не используются, включая состояния наведения и мобильные оверлеи. Если нужно отделить, проводится линия; если нужно выделить, кладётся подложка или меняется цвет текста.
+The keyboard focus is one outline: 2px of the primary with an offset of 2px,
+and no shadow. The one box-shadow left in the stylesheet is on a node of
+the map that a search has hit.
 
 ## Shapes
 
-Прямоугольники с едва скруглёнными углами. Три радиуса: 0 у панелей и линий, 3px у элементов дерева и поиска, 4px у кнопки копирования, блоков кода и чипов ссылок. Скругление читается как смягчение, а не как форма. Рамки только волосяные 1px в цвете разделителя; кнопки в панели инструментов без рамки и без заливки, только иконка. Иконки в тексте и дереве текстовые: `▸` перед папкой, `▸`/`▾` у «Содержания», `~` как разделитель, `→` и `←` в ссылках «все статьи» и в подписях prev/next, `×` в кнопке очистки поиска, `↕` `↓` `↑` у сортировки. `▸` стоит только там, где что-то раскрывается; заголовки разделов идут без знака. SVG-иконки живут в панели инструментов и в одном месте дерева: контурная Heroicons `arrow-right` в ряду папки ведёт в раздел, той же семьи и того же штриха 1.5, наследует цвет текста. В контенте графических иконок нет.
+The radius scale has three steps and nothing else:
+
+| Token | px | Role |
+| --- | --- | --- |
+| `none` | 0px | A line rather than a box: the rule of the table of contents, the divider under a heading. |
+| `hairline` | 3px | The search field, the sort button, a row of the tree. |
+| `sm` | 4px | The code block, the copy button, a link chip, the thumb of the scrollbar. |
+
+Pico rounds its own elements at 0.25rem, which is 4.8px and off the scale,
+so `--pico-border-radius` is set to 4px.
+
+A circle is not a shape in this system. The scrollbar is 10px wide and its
+thumb is 4px round, which is a rectangle with soft ends.
 
 ## Components
 
-Все контролы ведут себя как инструменты редактора: видимые, утилитарные, без заливки в покое, реагируют зелёным.
+### The toolbar
 
-### Панель инструментов (Navigation bar)
-- **Форма:** на десктопе вертикальная полоса 64px с правой волосяной линией; на мобильном горизонтальная полоса 48px с нижней линией. Кнопка дерева лежит в `li.mobile-only` и на десктопе скрыта.
-- **Кнопки:** квадрат 40px (44px на мобильном), без рамки и фона, контурная SVG-иконка цвета Ink Muted с opacity 0.85 (3.9:1, у иконок порог 3:1).
-- **Отключено:** кнопка размера шрифта на краю шкалы получает `:disabled`: opacity 0.3, курсор обычный, цвет Ink Muted без наведения. Это единственное неактивное состояние в системе.
-- **Наведение:** opacity 1 и Monster Green, переход 0.2s.
-- **Состав:** сверху «домой» и, на мобильном, кнопка дерева; снизу уменьшить шрифт (−), увеличить шрифт (+), тема, в этом порядке на десктопе и на мобильном, без перестановки. Иконка темы меняется на солнце в тёмной теме и луну в светлой.
+- **Shape:** a vertical bar of 64px on a desktop, 48px at the top on a phone.
+- **Buttons:** 40px, no background, an outline icon in the muted ink, and
+  Monster Green under the pointer.
+- **At the end of a scale:** the font size button that cannot go further is
+  switched off with an opacity of 0.3, and it says so to a screen reader.
 
-### Дерево файлов (Sidebar tree)
-- **Без JS:** `html.js` ставит инлайновый скрипт в `<head>`; элементы `.needs-js` (кнопка дерева на мобильном, кнопки шрифта и темы, поиск и сортировка) без него скрыты, чтобы не показывать мёртвые кнопки. Кнопка темы несёт `aria-pressed` (тёмная тема включена), смена шрифта объявляется в `#font-status` (`aria-live`), а если кнопка шрифта стала `disabled` на краю шкалы, фокус переходит на соседнюю.
-- **Кегль:** `0.8 × кегль статьи` на десктопе (следует за регулятором), 1rem на мобильном; вложенность отбита 0.75rem и волосяной линией слева, строки с межстрочным 1 и отступом 1px.
-- **Папка:** `summary` flex-строка жирным цветом Ink Muted, перед ней `▸` цветом Monster Green (Ink в светлой). Имя папки с косой чертой это текст внутри `summary` (`span.folder-link`, не ссылка: ссылка внутри кнопки раскрытия ломает скринридеры, axe nested-interactive) и штатно раскрывает и сворачивает папку. Цвет имени Ink Muted у открытой и закрытой папки одинаковый (Pico по умолчанию приглушает открытую, это переопределено). Отдельной стрелки в раздел в ряду нет: страница раздела открывается из хлебных крошек, со списка разделов на главной и на `/blog/`, а у серии первым пунктом серии в дереве. Раскрыты только `blog/` (всегда) и папки на пути к текущей странице (`data-default-open`); остальные свёрнуты. Поиск раскрывает папки с совпадениями, очистка возвращает их к исходному раскрытию. Пустая папка, где кроме `about-*.md` ничего нет, в дереве не показывается. В папке-серии (есть файлы с `part`) первым пунктом идёт название серии: это `about-*.md` серии со ссылкой на страницу папки (оглавление), затем части по номеру, затем прочие файлы серии вроде карты, иначе на оглавление серии из дерева не попасть.
-- **Файл:** ровно название статьи, то же, что в её заголовке, без сокращений и обрезки (короткие подписи и обрезка до «: » расходились с заголовком) цветом Ink Contrast, переносится и показывается целиком, без обрезки (на таче подсказки нет, обрезанный конец было не увидеть); полное название и имя файла также в подсказке `title` вида «Полное название (файл.md)». Обе формы лежат в `data-short` и `data-full`: пока поиск фильтрует, строка показывает полное название, чтобы было видно, чем совпало; на очистке возвращается короткая. Дат в дереве нет, как в дереве файлов IDE: колонка даты съедала почти половину ширины, и названия переносились на три-четыре строки. Дата живёт в мета-строке статьи и в списках; сортировка «новые / старые» по-прежнему работает по дате.
-- **Наведение:** текст Monster Green, подложка Paper Code или Night Code, радиус 3px, отступ 2px 4px с отрицательным внешним, чтобы подложка вылезала за текст; переход 0.15s.
-- **Активный файл или папка:** Monster Green, жирный, подложка зелёного с прозрачностью 10%.
-- **Пины:** «Главная» (`main.md`), «Обо мне» (`about-me.md`) и «Заметки» (`notes.md`) всегда сверху вне дерева, в этом порядке, без даты у первых двух. «Заметки» показывает дату последней заметки и не выводится, если опубликованных заметок нет.
-- **Порядок:** разделы по алфавиту, файлы внутри по умолчанию новые сверху (`data-sort="desc"` в разметке), кнопка переключает по кругу новые → старые → по имени. `about-*.md` в дереве не показывается: это вводный текст раздела, он читается на странице раздела, куда ведёт имя папки. Папка-серия (у файлов есть `part`) идёт по номеру части при любой сортировке. Сортировка по дате двигает файлы только внутри разделов, сами разделы верхнего уровня на месте.
+### The search field
 
-### Поиск и сортировка (Search + Sort)
-- **Блок поиска:** `.sidebar-controls` закреплён (`position: sticky`) вверху прокручиваемого дерева на подложке страницы, точка закрепления сдвинута на внутренний отступ контейнера; при открытии дерево прокручивается к заголовку папки текущей статьи (или к самой статье на трети высоты, если папка длинная). Клавиша `/` из любого места страницы ставит курсор в поиск, на телефоне заодно открывает дерево. Транслит запроса совпадает только с началом слова в имени файла, сам запрос с любой частью; совпавшая папка или название серии показывает всё содержимое папки. У активного пункта `aria-current="page"`. Мобильный оверлей дерева модальный: `aria-modal`, `main`, футер и skip-link получают `inert`.
-- **Поле:** прозрачный фон, волосяная рамка, радиус 3px, кегль 0.75rem, плейсхолдер `поиск...` Ink Muted (интерфейс русский) без прозрачности (5.4:1 на бумаге, 4.8:1 на ночи); в фокусе рамка Monster Green без свечения и общее кольцо `:focus-visible`. На мобильном 44px высотой и 1.15rem кеглем.
-- **Очистка:** кнопка `×` внутри поля справа, 1.6rem шириной (44px на мобильном), без рамки и фона, Ink Muted, зелёная при наведении; появляется, когда в поле есть текст; Escape в поле тоже очищает.
-- **Кнопка сортировки:** тот же контур, значок `↓` `↑` `↕` и подпись «новые / старые / по имени» из `data-label` кеглем Caption с opacity 0.8, по кругу в этом порядке; умолчание «новые» не подсвечивается (`aria-pressed="false"`, без `.active`), рамка и значок зелёные только у отличия от него. На мобильном 44px высотой, ширина по содержимому не уже 44px, подпись не переносится (`white-space: nowrap`).
-- **Отклик:** под контролами строка Ink Muted тем же кеглем, что дерево: «показано N из M» при совпадениях, подсказка «ничего не найдено…» при нуле; обе `role="status"`.
-- **Поведение:** поиск по названию и имени файла с транслитерацией, кириллический запрос находит латинское имя; сортировка помнится в localStorage, фильтр поиска в sessionStorage, то есть живёт в рамках вкладки.
+- **Style:** transparent, a 1px rule, a 3px corner, 0.75rem of text.
+- **Focus:** the rule moves to Monster Green Ink.
+- **The clear button:** a cross on the right, which appears with the text.
+- **Below it:** a line that says how many of how many entries the query
+  matched, or a hint when the query matched nothing.
 
-### Блок кода (Code block)
-- **Фон:** Editor Block (#24292e) в обеих темах, радиус 4px, текст Editor Text, подсветка Shiki github-dark, кегль 0.875 от текста.
-- **Перенос:** длинные строки переносятся, горизонтальной прокрутки нет.
-- **Кнопка копирования:** в правом верхнем углу, 0.75rem, фон белого с прозрачностью 10%, рамка белого 20%, радиус 4px, opacity 0.7, в покое почти незаметна, при наведении на блок opacity 1, при наведении на кнопку фон 20% и рамка 50%; после копирования заливка Monster Green и белый текст.
-- **Mermaid:** диаграмма рендерится в такой же тёмный блок с отступом 1rem, кнопка переключает диаграмму и исходник, у исходника своя кнопка копирования.
+### The sort control
 
-### Ссылки в тексте
-- **Внешняя:** Monster Green Ink (светлая) или Monster Green (тёмная) с полупрозрачным подчёркиванием того же цвета; при наведении цвет уходит в Ink Deep или Bright, подчёркивание становится плотным. После текста контурная иконка «внешняя ссылка» 12px цветом текста.
-- **Внутренняя:** чип: подложка Paper Code или Night Code, волосяная рамка, радиус 4px, отступ 0.1rem 0.5rem, текст зелёный 0.9em без подчёркивания; при наведении сплошная зелёная заливка и текст On Accent или On Accent Night.
-- **Ссылка на источник `[n]`:** `a.ref` сразу за словом без пробела, номер в квадратных скобках ведёт прямо на источник, описание источника (авторы, название, журнал, год) лежит в `data-tip`. При наведении и фокусе `src/scripts/ref-tip.js` показывает всплывашку `.ref-tip`: подложка страницы, волосяная рамка Paper Rule или Night Rule, радиус 4px, без тени, кегль Small с межстрочным 1.5, текст Ink Contrast, ширина не больше 28rem; ниже описания домен источника цветом Ink Muted. Встаёт под чипом, если внизу нет места, над ним, по горизонтали не выходит за отступ 16px от края окна; скрывается при уходе курсора, Escape и прокрутке. При переходе по Tab к чипу ниже экрана всплывашка едет за чипом, а не гаснет. На устройствах без наведения первый тап по чипу показывает всплывашку с подсказкой «нажмите номер ещё раз, чтобы открыть» Ink Muted, второй тап по тому же чипу открывает источник, тап мимо закрывает; фокус от касания всплывашку не открывает. Цепочка чипов вместе со знаком препинания после неё обёрнута в `span.ref-run` с `white-space: nowrap`, чтобы точка не переносилась одна. Значок внешней ссылки и цвета внешней ссылки на чип не распространяются (`:not(.ref)`). Списка источников в конце статьи нет. Маленький чип: кегль 0.72em, приподнят на 0.15em, отступ 0 0.3em, волосяная рамка Paper Rule или Night Rule, радиус 3px, подложка Paper Code или Night Code, текст зелёный (Monster Green Ink в светлой); при наведении сплошная зелёная заливка и текст On Accent или On Accent Night, как у чипа внутренней ссылки. Не переносится (`white-space: nowrap`). Номера идут с 1 по порядку первого упоминания на странице; у каждой части серии своя нумерация. Внутри HTML-блоков (`details`, карточки) ссылки и чипы пишутся тегом `<a>`, а не markdown: markdown там не разбирается.
-- **Фокус с клавиатуры:** у всего интерактивного одна рамка `outline` 2px зелёного с отступом 2px, без свечения и box-shadow.
-- **Заголовок статьи в списке:** Ink Contrast без подчёркивания, при наведении Monster Green. Ссылки «Смотреть все статьи →», «Все заметки →» и «Весь раздел →» такие же: Ink Contrast в покое, зелёные при наведении; это та же ссылка, что заголовок в списке, а не CTA.
-- **Тихая ссылка:** в строке серии и строке автора ссылка наследует цвет строки и подчёркнута волосяным цветом Paper Rule или Night Rule со смещением 0.2em; при наведении текст и подчёркивание зелёные. Тот же приём, что у якоря заметки.
+Three states in a circle: newest first, oldest first, by name. The default
+is not marked, because it is the default, and the outline and the icon turn
+green only for a state that differs from it.
 
-### Мета-строка (Meta line)
-Одно правило `.meta` на весь сайт: flex-строка с промежутком 0.6em, переносится при нехватке места, кегль Small (0.9rem), цвет Ink Muted; в списках статей 0.75rem. Над каждой статьёй строка `ГГГГ-ММ-ДД ~ раздел/файл.md`; тильда `.meta-sep` с opacity 0.55, не выделяется мышью, скрыта от читалок. Путь набран двумя `span`: полный `раздел/файл.md` на десктопе (`.meta-path`) и только `файл.md` ниже 992px (`.meta-file`): папки видны в дереве, а слаг в две строки над H1 мешал читать. То же в списках. Тот же формат на других страницах: `раздел ~ dev/` или `серия ~ dev/agent/` над папкой, `часть N ~ дата ~ файл.md` в оглавлении серии, `404 ~ file not found` на странице ошибки. Тильда единственный разделитель на сайте: она же в строке серии, строке автора и метке заметки; в дереве файлов её нет. Даты всюду `ГГГГ-ММ-ДД` в UTC, как во frontmatter.
+### The tree
 
-### Строка чтения (Read line)
-Под заголовком статьи (после строки серии, если она есть) `p.read-line`: «≈ N минут» и, когда в статье три и больше `h2`, через тильду «M разделов». Та же анатомия, что у строки серии: flex с промежутком 0.6em, кегль Control, Ink Muted, отступ 0.5rem сверху. Минуты считаются из markdown при сборке: 180 слов в минуту, блоки кода и адреса ссылок не считаются, минимум 1. Склонения через общий `plural()`, тот же, что у «N статей» в карте блога.
+- **Folders** open and close by their name at any width. The name is text
+  inside the summary and not a link, because a link inside a disclosure
+  button breaks the screen readers. The `▸` turns 90 degrees when the
+  folder is open. On a phone the row is at least 44px tall and the name is
+  set at 1rem. The page of a section is reached from the breadcrumbs, from
+  the list of the sections and from the first item of a series in the tree.
+- **Files** carry the Russian name of the article, the full name in the
+  tooltip, and the date as `YYYY-MM-DD`.
+- **The active file** is green and bold on a 10% green fill.
+- **The order** is new first, and it is applied by the stylesheet through
+  `--order-desc` and `--order-asc`, so the markup stays alphabetical.
 
-### Заголовок раздела (Section heading)
-`h2.section-heading` на главной, `/blog/`, страницах папок и в «Ещё в разделе»: flex-строка, 1.5rem жирным, без знака перед текстом; рядом при необходимости серый слаг папки на базовой линии кеглем 0.9rem. `▸` здесь не ставится: заголовок ничего не раскрывает.
+### The code block
 
-### Карта блога (Site map)
-На главной у шапки нет мета-строки (`hideMeta` у `PageFromEntry`): дата файла `main.md` ничего не говорит читателю. Порядок блоков: интро в два коротких абзаца, затем `div.recent-posts.recent-first` «Свежие статьи» без верхней волосяной линии и с отступом 2rem, чтобы первая статья попадала в первый экран, затем блок «Заметки», когда они есть, и в конце `div.site-map` «Разделы» с волосяной линией сверху. Разделы это `ul.section-tags`: строка тегов-ссылок в тонкой рамке Ink Muted Border с радиусом 0.35rem, кегль Small, минимальная высота 2.25rem, внутри название раздела и серым Control-кеглем число статей; при наведении рамка и текст зелёные. Сначала верхние разделы по убыванию числа статей, потом серии «Серия «…»» с числом частей. Теги исключены из правила чипов внутренних ссылок и из маркеров списка. Счёт без `about-*.md`, пустые папки не показываются.
+- **Shape:** a 4px corner, the dark editor fill, the text in the editor
+  colour, in both themes.
+- **Copy button:** in the top right corner, a 4px corner, and it turns green
+  with the word "copied" once the text is on the clipboard.
+- **Long lines** wrap rather than scroll, so the reader never has to move
+  the block sideways.
 
-### Серия (Series)
-Серия это папка, у файлов которой есть `part`; `about-<папка>.md` даёт ей название и вводный текст, иначе название берётся из `SECTION_TITLES`.
-- **Строка под заголовком:** `Серия «…» ~ часть N из M` внутри шапки статьи, кегль Control, Ink Muted, отступ 0.5rem от заголовка; название серии тихая ссылка на страницу папки.
-- **Соседние части:** после текста `nav.series-nav`: волосяная линия сверху, отступ 3rem до неё и 1.5rem после. Каждая ссылка flex-колонка не ниже 44px: сверху подпись `.series-label` «← часть 2» или «часть 4 →» кеглем Control цветом Ink Muted, под ней настоящее название части жирным 700 цветом Ink Contrast без подчёркивания, зелёное при наведении; у крайних частей подпись «← серия» / «серия →» и название «Оглавление». Правая ссылка выровнена по правому краю, каждая не шире 48%. Ниже 992px колонка с промежутком 1rem, обе ссылки слева.
-- **Оглавление:** страница папки: мета `серия ~ путь/`, H1 из about-файла, вводный текст, затем список частей по номеру с `часть N` в мета-строке. У части серии блок «Ещё в разделе» не показывается, соседей заменяют prev/next.
+### The link chip
 
-### Содержание (TOC)
-Только у статей с шестью и более `h2`, сразу под шапкой, перед текстом. `details.toc#toc`: от левого края, без линии и отступов, 2rem до текста, кегль 0.9rem. `summary.toc-title` «Содержание, N разделов» кеглем 0.9rem цветом Ink Muted, перед ней текстовый `▸` (`span.toc-chevron`) цветом Monster Green (Ink в светлой), поворачивается на 90° при раскрытии, системный маркер скрыт; тот же знак и тот же поворот, что у папок дерева и раскрывашек серии; в раскрытом состоянии 0.5rem до списка. Раскрыто на десктопе от 992px инлайновым скриптом, на мобильном свёрнуто, чтобы текст статьи попадал на первый экран; там `summary` не ниже 44px под палец. Ниже `ol` с десятичными номерами, номера Ink Muted кеглем Control, пункты с межстрочным 1.5. Номер стоит в отступе списка, а статья обрезает всё левее (`overflow-x: clip`), поэтому у списка с 10 и более пунктами отступ шире (`:has(> li:nth-child(10))`: 2.4em у «Содержания», 2.8em у нумерованных списков в тексте), иначе у «10.» терялась первая цифра. Ссылки без подчёркивания цвета текста (цвет задан на списке, см. The Pico Boundary Rule), зелёные при наведении. Только `h2`: карта лонгрида, не дерево подзаголовков.
+A link to another article inside the text: a chip on the code fill, with a
+1px rule, in Monster Green. Under the pointer it fills with green and the
+text turns white.
 
-### Раскрывающиеся пункты в статье (am-*)
-Для справочных лонгридов, где на телефоне иначе выходит стена текста (первый случай: «Карта антидепрессантов»). Пункты идут списком через волосяную линию Paper Rule или Night Rule, как записи ленты заметок; у последнего пункта линия и снизу. Раскрываемый пункт это `details`: в `summary` жирное название и под ним одна строка резюме Ink Muted кеглем Small, слева текстовый `▸` цветом Monster Green (Ink в светлой), поворачивается на 90° при раскрытии, как у «Содержания»; системный маркер и шеврон Pico скрыты, цвет `summary` наследуется, на мобильном не ниже 44px. Внутри текст с отступом под знаком. Шаги схемы подписаны «шаг N» кеглем Control цветом Ink Muted над жирным заголовком шага. Метки «Плюс:» и «Цена:» просто жирные, без цвета. Карточек, рамок, заливок и цвета на класс не бывает (The Single Highlight Rule, Don't рисовать карточки).
+### The meta line
 
-### После статьи (Article footer)
-`aside.article-footer`: волосяная линия сверху, отступ 3rem до неё и 1.5rem после.
-- **Ещё в разделе:** заголовок `Ещё в разделе «Название» папка/` кеглем 1.15rem с серым слагом, без `▸`; три последние статьи обычным списком, затем `Весь раздел` со стрелкой Heroicons arrow-right жирным в стиле «все статьи». Соседи берутся из папки самой статьи (название из её `about-*.md` без хвоста «: Об этой секции», иначе из `SECTION_TITLES`); если в папке меньше двух других статей, пул расширяется до верхнего раздела и слаг в заголовке меняется на него. Не показывается у частей серии и у `about-*.md`.
-- **Строка автора:** `Александр Блинов, руководитель разработки в EORA. Обо мне ~ Заметки ~ RSS` кеглем 0.9rem цветом текста (не Ink Muted), отступ 2rem сверху; ссылки тихие, подчёркнуты волосяным цветом, зелёные при наведении. «Заметки» с тильдой выводится только при наличии опубликованных заметок. Это подпись автора, а не мелкая серая сноска.
+The line above a title in a list: the date, a tilde and the path of the
+file. On a phone the path is replaced by the name of the file. The tilde is
+the separator; a middle dot is not used.
 
-### 404
-Своя страница в той же шапке статьи: мета `404 ~ file not found`, где вторая часть инлайновым скриптом заменяется на запрошенный `location.pathname`, чтобы опечатка была видна сразу; H1 «Такого файла нет», `summary` «Ссылка устарела или в адресе опечатка.», абзац про дерево и поиск и две внутренние ссылки-чипы «На главную» и «ко всем статьям». Дерево слева как везде; никаких иллюстраций.
+### The article header
 
-### Лента заметок (Notes feed)
-Лента как git log: записи новыми сверху, у каждой только метка времени и текст. Ни карточек, ни рамок, ни подложек в покое; между записями волосяная линия Paper Rule или Night Rule, у последней записи линии нет. Отступ записи 1.5rem сверху и снизу, у первой 0.5rem сверху, чтобы прижаться к линии под заголовком.
-- **Метка времени:** строка `ГГГГ-ММ-ДД ~ ЧЧ:ММ` в `<time>` кеглем Control (0.75rem) цветом Ink Muted, отступ 0.5rem до текста. Она же якорь-ссылка на запись: подчёркивание волосяного цвета Paper Rule или Night Rule со смещением 0.2em, цвет наследуется от мета-строки; при наведении текст и подчёркивание становятся Monster Green Ink (светлая) или Monster Green (тёмная), переход 0.2s. На тач-экранах ссылка получает вертикальный отступ 0.6rem с отрицательным внешним, чтобы тап-цель выросла без сдвига строки.
-- **Текст:** обычный Body, тот же markdown, что в статьях: ссылки, код, диаграммы наследуют свои стили; у последнего абзаца нижний отступ снят.
-- **Приход по якорю:** запись `:target` получает тональную подложку Paper Code или Night Code с радиусом 4px, которая держится 60% из 3s и гаснет до прозрачного (`note-arrive`, ease-out). Подложка выдвинута за текст отрицательным горизонтальным внешним отступом 1rem (0.5rem ниже 992px) с таким же внутренним, чтобы текст не сдвигался. При `prefers-reduced-motion` анимации нет, подложка остаётся статичной. Никаких рамок и теней (The Flat Rule). `scroll-margin-top` 2rem, чтобы запись не прилипала к верху окна.
-- **Где живёт:** страница `/notes/` с шапкой как у статьи: мета `дата последней  notes.md`, h1 «Заметки», волосяная линия, сразу первая запись; при нуле заметок строка «Пока ничего нет.» без мета-строки. На главной блок «Заметки» с тремя последними записями и ссылкой «Все заметки →» в стиле «все статьи». В дереве пин `notes.md`.
+The meta line, the title, and a 1px rule under them.
 
-### Футер
-Одна строка `small` по центру: год, © и имя, затем GitHub | Telegram | LinkedIn зелёными ссылками; со следующей строки `Заметки | RSS: статьи | заметки`, три зелёные ссылки на `/notes/`, `/rss.xml` и `/notes.xml` (оба фида объявлены в `<head>` как `rel="alternate"`); пока опубликованных заметок нет, строка сокращается до `RSS: статьи`. На тач-экранах ссылки получают отступ 0.6rem по вертикали под палец. Волосяная линия сверху, отступ 3rem от контента.
+### The series line
 
-### Интерактивная mind-карта (MindMap)
-Статья подключает карту полем `map: <имя>` во frontmatter, данные лежат в `src/data/maps/<имя>.ts` (дерево узлов: подпись, заголовок карточки, строка под ним, факты с источниками, ссылка на полную инструкцию, дети), раскладка радиальная и считается при сборке (`src/utils/mindmap.ts`): корень в центре, уровни на своих кругах, сектор узла пропорционален числу листьев. Рамка `.mm-frame` с волосяной линией Rule и радиусом 4px, высота от 440px до 780px (на телефоне до 78svh). Узлы это кнопки моноширинным кеглем Small на подложке страницы с рамкой Rule и радиусом 3px; корень крупнее, жирный, с рамкой Monster Green; классы (первый уровень) жирные на подложке Paper Code. Рёбра дугами цветом Ink Muted с прозрачностью 0.45. Выбранный узел: зелёный текст, жирный, подложка зелёного 10%; путь от него к корню (рёбра и узлы) зелёный. Без теней. Цвета карты свои (`--mm-*` на `.mm`): внутри кнопок Pico подменяет `--pico-background-color` на акцент.
-Узлы второго плана (поле `aside`: не основная тема карты, например не антидепрессанты на карте антидепрессантов) рисуются пунктирной рамкой цветом Ink Muted, их рёбра пунктиром, раскрытая группа второго плана не получает зелёную рамку: на карте они не должны выглядеть равноценной заменой основным. Основные группы идут на круге подряд, второй план после них. Если листьев больше 24, карта стартует свёрнутой: видны центр и группы, нажатие на группу раскрывает её препараты (рёбра и узлы появляются, группа получает зелёную рамку `.is-open`) и вписывает группу в окно; кнопка «развернуть всё» («все» на узком экране) раскрывает и сворачивает все группы; переход к препарату по ссылке `#map-<id>` сам раскрывает его группу. Группы на круге через одну ближе и дальше, листья при многих узлах в три ряда, чтобы подписи не сталкивались; вписывание учитывает ряд кнопок сверху. На экранах уже 600px подписи кнопок короткие («все», «экран»). Управление: тянуть мышью или пальцем, щипок или Ctrl/⌘ + колесо масштабирует (обычное колесо листает страницу), кнопки «+», «−», «вписать» слева сверху, стрелки, «+», «−», «0» с клавиатуры, Tab по узлам, Enter открывает карточку и переводит в неё фокус, Escape закрывает и возвращает фокус на узел. На узком экране начальный масштаб не мельче 0.5 с корнем в центре. Карточка `.mm-panel` справа (на телефоне снизу, 70% высоты), в ней факты подписью Control цветом Ink Muted, источники чипами `[n]` с общей всплывашкой, в карточке группы кнопки «Препараты группы» (переход к препарату); переходов «назад» и «дальше» нет, карта рядом. Поиск (`.mm-search`, поле `.mm-search-input` с подсказкой «Поиск», высотой 36px, на телефоне 44px, кегль 16px, чтобы телефон не увеличивал поле) стоит в первом ряду с кнопками, справа у края карточки: при открытой карточке он у её левого края с зазором 10px, кнопки при этом с меньшими отступами и короткими подписями. Встаёт в ряд только когда для него есть место: проверяется ширина рамки карты контейнерным запросом (от 640px без карточки, от 840px с карточкой), иначе поиск под рядом кнопок на всю ширину. Ширина 7rem и отступы заданы явно, потому что Pico ставит `[role=search]` ширину 100%. Карточка `.mm-panel` на компьютере от верха до низа рамки, шириной `var(--mm-panel-w)` (440px или 48%); поиск при открытой карточке сам сдвигается левее неё (`:has`), подписи кнопок короткие («все», «экран»), чтобы ряд не уходил под карточку. Поле ищет по действующему веществу (русское название подписи и латинский идентификатор узла, например sertraline), по заголовку карточки, торговым названиям и подсказке, не по показаниям; до восьми совпадений списком `.mm-hits` под полем (ширина не меньше 16rem, выравнен по правому краю поля, чтобы названия не обрезались), группа с совпадением обведена акцентом `.is-hit`; нажатие или Enter ведёт к узлу (группа раскрывается, карточка открывается), Escape очищает поле. Нажатия клавиш в поле не доходят до карты (буквы не масштабируют и не включают полный экран). Повторное нажатие по раскрытой и выбранной группе сворачивает её и снимает выделение. Касание с движением до 8px считается нажатием, а не перетаскиванием. Выбор узла пишется в адрес `#map-<id>`, по такой ссылке карта открывается на нужной карточке. При наведении мышью и при фокусе с клавиатуры над узлом всплывает `.mm-tip`: у класса короткое описание (поле `hint`), у вещества торговые названия (поле `note`); в карточке вещества сверху главное в постоянном порядке: что это (у препаратов внутри класса одна строка «Класс: …»), показания по инструкции (только российские), когда выбирают, как принимают, противопоказания (длинный список: три главных, остальное ниже); остальное (показания в других странах, доза по инструкции, что важно при приёме, чем хорош, чем платят, остальные противопоказания, пожилым, в России) свёрнуто в `details.mm-more` «Подробнее: …» со списком того, что внутри, линия Rule сверху и `▸` как у остальных раскрытий; последней строкой ссылка «Полная инструкция: домен» на официальный текст; плашка Paper Code или Night Code, рамка Rule, радиус 4px, кегль Small, без тени, внутри рамки карты (видна и на весь экран), прячется при уходе курсора, начале перетаскивания и масштабировании; на таче её нет, названия в карточке. Кнопка «на весь экран» (и клавиша F) разворачивает рамку штатным Fullscreen API, а где его нет (iPhone) классом `.is-full` поверх страницы с блокировкой прокрутки; выход по Escape (сначала закрывается открытая карточка), той же кнопкой «выйти» или системным жестом; всплывашка источников в полноэкранном режиме живёт внутри рамки. Подсказка по управлению под рамкой; под картой та же информация списком в раскрывашке «Вся карта списком» для чтения подряд и скринридеров.
+Under the heading of a series: the name of the series, a tilde and "part N
+of M". After the text, the neighbouring parts, with a label of 0.75rem in
+the muted ink over the name of the article in the strong ink, and a column
+at least 44px tall.
 
-### Подборщик (Picker)
-Статья подключает подборщик полем `picker: <имя>` во frontmatter, данные в `src/data/pickers/<имя>.ts` (`src/utils/picker.ts`: препараты с линией по рекомендациям и регистрацией в России, особенности пациента по группам, правила «особенность → препараты: prefer, consider, caution, avoid» с причиной и источниками, правила по прошлому опыту, предупреждения). Это шпаргалка к разговору с врачом: доз нет, сверху `.pk-disclaimer-box` между двумя линиями Rule: срочная строка про 112 (ссылка `tel:112`) видна всегда, остальной текст раскрывается (на телефоне свёрнут). Тот же порог срочного везде: в статье, в дисклеймере и в предупреждении «Риск передозировки». Под заголовком результата словарь сокращений раскрывающимся блоком `.pk-gloss`; над списками легенда знаков причин (+ за, ! против, ~ обратить внимание, × не подходит); ссылка на открытые вопросы для врача. Слева анкета из `details.pk-group` (заголовок группы кеглем Control цветом Ink Muted со стрелкой `▸` слева и счётчиком отмеченного справа; на телефоне группы без отметок свёрнуты, группа с срочным раскрывается сама; флажки с подсказкой мельче), два выпадающих списка «Раньше помог» и «Не подошёл», кнопка «сбросить» в стиле контролов карты; справа результат `.pk-result` (на десктопе sticky и прокручивается сам, `aria-live`). Подсчёт: линия даёт 3/2/1, prefer +2, consider +1, caution −1 и попадание в «Можно, но с осторожностью», avoid в «Не подходит при отмеченном»; «Обычно обсуждают первыми» это до пяти лучших без оговорок, только зарегистрированные в России и при этом первой линии или прямо рекомендованные при отмеченном (отсутствие правил не считается проверкой), остальные чистые варианты в раскрывашке «Другие варианты»; при равном счёте выше зарегистрированное в России, потом линия. Сверху результата предупреждения `.pk-alert`: срочное с рамкой акцентом и жирным текстом, к специалисту на тональной подложке, без красных заливок. Одна и та же причина у нескольких препаратов одного списка выводится один раз сверху, со строкой «Касается: …» и объединённым списком источников (`.pk-common`), а в карточках остаются только отличия. Колонки анкеты и результата 0.9 к 1.35, результат шире, потому что там текст и источники. Строка препарата: название чипом-ссылкой на карточку карты `#map-<id>`, линия и регистрация через `~` мелким Ink Muted, причины списком с маркерами `+` (акцент), `!` и `×` (Ink Muted) и чипами источников. Отметки пишутся в адрес `?o=…&helped=…&failed=…`, подборку можно переслать. Ниже 992px одна колонка, строки флажков не ниже 44px, плавающая ссылка «к результату ↓», которая прячется, когда результат на экране.
+### The table of contents
 
-### Инструменты (Tools)
-Статья подключает набор полем `tools: <имя>` во frontmatter, блок `src/components/Tools.astro` выводится под текстом статьи, данные в `src/data/tools/<имя>.ts`. Внутри одна секция `.tools` с пятью блоками: вопросы к врачу (флажки по особенностям из подборщика, `.tools-questions`, кнопка «Скопировать список»), сроки проверки (ползунок по этапам `timeline`, у каждого пункта источники), сочетания (флажки и вердикты `.tools-verdict` без цветных полос: нельзя / только под решение врача / с контролем / используют по рекомендациям, сортировка от строгого к мягкому), сравнение до трёх препаратов (таблица по правилам подборщика, метки «в приоритете», «можно», «обратить внимание», «с осторожностью», «не подходит»), дневник (записи только в `localStorage` под ключом `tools-diary-v1`, `try/catch`, экспорт в `.txt`). Одна колонка на всех ширинах; ниже 992px строки флажков и кнопки не ниже 44px. Смысл вердикта держит текст, цвет не нужен.
+A `details` with the summary "Содержание, N разделов" and a green `▸`
+that turns 90 degrees when it opens. It appears in an article with six or
+more second-level headings, from the left edge of the text with no rule and
+no margins of its own, and the numbers are in the muted ink. The summary is
+at least 44px tall on a phone.
+
+### The note entry
+
+A short note in the feed: the time as an anchor, the text, and a rule under
+it. Arriving at an anchor tints the note for three seconds and lets the
+tint go.
 
 ## Do's and Don'ts
 
-### Do:
-- **Do** набирать всё JetBrains Mono, включая заголовки, кнопки, даты и футер.
-- **Do** использовать Monster Green только на состояниях и ссылках: активный файл, фокус, наведение, скопировано.
-- **Do** брать для зелёного текста в светлой теме Monster Green Ink и проверять пару на 4.5:1.
-- **Do** разделять зоны волосяной линией 1px цвета Paper Rule или Night Rule и выделять элементы подложкой Paper Code или Night Code.
-- **Do** держать блоки кода и диаграммы в тёмном окне #24292e в обеих темах.
-- **Do** показывать статьи как файлы: имя `.md`, дата в формате `ГГГГ-ММ-ДД`, путь раздела в мета-строке; между датой и путём тильда, не «·».
-- **Do** отдавать читателю размер текста и тему и запоминать выбор.
-- **Do** давать тап-целям на мобильном не меньше 44px.
-- **Do** держать структурные блоки (содержание в `details`, «после статьи» в `aside`) вне `<nav>`, а `<nav>` оставлять настоящей навигации со сброшенным списком.
-- **Do** задавать цвет текстовой ссылки на родителе и писать ссылке `color: inherit`: внутри `<a>` Pico подменяет `--pico-color`.
-- **Do** вести читателя дальше после текста: соседняя часть серии, три соседние статьи из своей папки, строка автора.
-- **Do** ставить текстовый знак `▸` только там, где что-то раскрывается: папка в дереве и «Содержание»; заголовки разделов без знака.
-- **Do** раскрывать папку по имени на любой ширине; в раздел вести из хлебных крошек, со списков разделов и первым пунктом серии в дереве, а не ссылкой внутри `summary`.
-- **Do** показывать в мета-строке на мобильном только имя файла, полный путь на десктопе.
-- **Do** сворачивать «Содержание» на мобильном и раскрывать на десктопе; `summary` не ниже 44px.
-
-### Don't:
-- **Don't** использовать тени, свечения, размытия и градиенты ни на одной поверхности и ни в одном состоянии.
-- **Don't** вводить второй акцентный цвет или заливать зелёным крупные области.
-- **Don't** писать лаймом #95d600 по белому и белым по лайму.
-- **Don't** рисовать карточки: статьи в списках это заголовок с мета-строкой, без рамок и подложек.
-- **Don't** заменять текстовые знаки `▸`, `→`, `~` на графические и добавлять эмодзи в интерфейс; SVG допустим только в панели инструментов и в стрелке «→» у ссылок «Смотреть все». Знак раскрытия везде один: текстовый `▸`, повёрнутый на 90° в раскрытом состоянии.
-- **Don't** добавлять пропорциональный шрифт ради «читаемости» заголовков.
-- **Don't** заставлять читателя листать код по горизонтали: длинные строки переносятся.
-- **Don't** оборачивать в `<nav>` блоки, которые не меню: Pico разложит их список в горизонтальную строку.
-- **Don't** показывать в дереве пустые папки и имена `.md` вместо названий: файл в подсказке, название в строке.
+- **Do** set everything in JetBrains Mono, the headings, the buttons, the
+  dates and the footer included.
+- **Do** use Monster Green on states and on links: the active file, the
+  focus, the hover, the copy.
+- **Do** use Monster Green Ink for green text in the light theme, and check
+  the pair against 4.5:1.
+- **Do** separate two zones with a 1px rule in Paper Rule or Night Rule, and
+  mark an element with a fill in Paper Code or Night Code.
+- **Do** keep the code blocks and the diagrams in the dark window, in both
+  themes.
+- **Do** show the articles as files: the name of the `.md` file, the date as
+  `YYYY-MM-DD` and the path of the section in the meta line.
+- **Do** give the reader the size of the text and the theme, and remember
+  the choice.
+- **Do** give a tap target at least 44px on a phone.
+- **Do** keep the structural blocks out of a `<nav>`: the table of contents
+  in a `details`, the footer of an article in an `aside`.
+- **Do** set the colour of a text link on the parent and give the link
+  `color: inherit`.
+- **Do** carry the reader past the end of the text: the neighbouring part of
+  the series, three neighbouring articles from the same folder, the line of
+  the author.
+- **Do** put the `▸` only where something opens, a folder in the tree and the
+  table of contents.
+- **Don't** use shadows, glows, blurs or gradients on any surface, in any
+  state.
+- **Don't** introduce a second accent colour, and don't fill a large area
+  with green.
+- **Don't** set lime `#95d600` on white, or white on lime.
+- **Don't** draw cards: an article in a list is a title and a meta line, with
+  no frame and no fill.
+- **Don't** replace the text marks `▸`, `→` and `~` with graphics, and
+  don't put emoji in the interface.
+- **Don't** add a proportional family for the sake of the headings.
+- **Don't** make the reader scroll a block of code sideways.
