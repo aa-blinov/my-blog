@@ -118,8 +118,7 @@ Deliberately not true, and worth knowing before a change:
   server-side part and talks to no third party.
 - The interface, the articles and the feeds are in Russian. An English version
   is not planned.
-- The licence is proprietary: all rights reserved, with no permission granted
-  to copy, modify or redistribute.
+- The licence is MIT, like every repository in the collection.
 - There is no automated test suite. `npm run check` and `npm run build` are
   the verification.
 - The repository is published for the operation of the site. It is neither a

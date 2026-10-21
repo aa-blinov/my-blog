@@ -6,7 +6,7 @@ between them. It is a static Astro build published on GitHub Pages, and it is
 navigated like a project in an editor, with every article a Markdown file in a
 folder.
 
-[![License](https://img.shields.io/badge/license-All%20Rights%20Reserved-lightgrey.svg)](LICENSE)
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![Deploy](https://github.com/aa-blinov/my-blog/actions/workflows/deploy.yml/badge.svg)](https://github.com/aa-blinov/my-blog/actions/workflows/deploy.yml)
 
 The site lives at [https://blinov.monster](https://blinov.monster). The
@@ -185,7 +185,5 @@ it serves.
 
 ## License
 
-All rights reserved. Copyright (c) 2026 Alexander Blinov. The code, the text,
-the design and the assets in this repository may not be copied, modified or
-redistributed without the written permission of the author. See
-[LICENSE](LICENSE).
+MIT, © Alexander Blinov. Use it, fork it, build something on it; do not
+claim you made it. See [LICENSE](LICENSE).

@@ -128,9 +128,9 @@ else. The deploy workflow runs the same two commands, on Node 22.
   author reads them as tics once they repeat.
 - **Comments explain why.** The comments in this codebase are about the
   reason and silent about the mechanics. Keep them that way.
-- **The licence is proprietary.** The code, the text, the design and the
-  assets are all rights reserved. A dependency added here is one the author
-  has to keep current.
+- **The licence is MIT.** The code, the text, the design and the assets are
+  covered by it. A dependency added here is one the author has to keep
+  current.
 
 ## Where the product truth lives
 
