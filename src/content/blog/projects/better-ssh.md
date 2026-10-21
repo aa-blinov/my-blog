@@ -1,8 +1,6 @@
-<!-- house-style: emoji-ok -->
-<!-- The emoji in this file are a vocabulary the document defines:
-     a legend, a column in a table, a flag in a report. Removing them
-     would take the meaning with them. See docs/house-style.md. -->
 ---
+# house-style: emoji-ok — the star marks a server's priority in the table
+# below. Removing it would take the meaning with it.
 title: "better-ssh: потому что я устал вспоминать IP-адреса"
 date: 2026-04-11T03:34:00Z
 draft: false
