@@ -1,14 +1,14 @@
 ---
 title: "Почему назначили именно этот препарат"
-summary: "Карта выбора: как врач подбирает препарат под конкретного человека."
+summary: "Почему одному дают эсциталопрам, а другому миртазапин: что врач учитывает, с чего начинает и что меняет, если таблетка не помогла."
 part: 4
 date: 2026-10-16T12:00:00Z
 draft: false
 ---
 
-**Что уже знаем.** Во [второй части](/blog/science/mind/antidepressants/how-they-work/) классы и механизмы, в [третьей](/blog/science/mind/antidepressants/strength-and-price/) сила и цена препаратов. Теперь сложим это в карту: от чего отталкивается врач и почему одному дают эсциталопрам, а другому миртазапин.
+Почему одному дают эсциталопрам, а другому миртазапин? Классы и механизмы разобраны во [второй части](/blog/science/mind/antidepressants/how-they-work/), сила и цена препаратов в [третьей](/blog/science/mind/antidepressants/strength-and-price/). Здесь разберём, от чего врач отталкивается, когда выбирает препарат.
 
-Это не инструкция. Препарат и дозу подбирает врач: он смотрит на историю болезни, другие лекарства, беременность, сопутствующие болезни. Номер в квадратных скобках ведёт на источник. Что это за источник, видно при наведении, а на телефоне по первому нажатию.
+Это не инструкция. Препарат и дозу подбирает врач: он смотрит на историю болезни, другие лекарства, беременность, сопутствующие болезни. Номер в квадратных скобках ведёт на источник. Что это за источник, видно при наведении, а на телефоне хватит одного нажатия.
 
 ## Карта выбора
 
@@ -73,22 +73,22 @@ draft: false
 </div>
 
 <div class="am-step" data-n="4">
-<h3 class="am-step-title">Помогает мало: что меняют</h3>
+<h3 class="am-step-title">Помогает мало: поднять дозу, сменить или добавить?</h3>
 <p>Сначала проверяют, правильно ли подобрана доза и регулярно ли человек принимает препарат. Дальше по ситуации<span class="ref-run"><a class="ref" href="https://pmc.ncbi.nlm.nih.gov/articles/PMC11351064/" data-tip="Lam R.W. et al. Canadian Network for Mood and Anxiety Treatments (CANMAT) 2023 update on clinical guidelines for management of major depressive disorder in adults. Canadian Journal of Psychiatry, 2024." aria-label="Источник 1: Lam R.W. et al. Canadian Network for Mood and Anxiety Treatments (CANMAT) 2023 update on clinical guidelines for management of major depressive disorder in adults. Canadian Journal of Psychiatry, 2024.">[1]</a>:</span></p>
 <p><strong>Переносится, но улучшения мало:</strong> повышают дозу.<br><strong>Ответа нет совсем, повышение дозы не помогло или мешают побочные эффекты:</strong> меняют препарат.<br><strong>Помог частично, баллы снизились, но меньше чем наполовину, и хорошо переносится:</strong> добавляют второй препарат.</p>
 <p>Подробно в <a href="/blog/science/mind/antidepressants/if-it-helps-little/">пятой части</a>.</p>
 </div>
 
 <div class="am-step" data-n="5">
-<h3 class="am-step-title">Не помогли несколько препаратов</h3>
+<h3 class="am-step-title">Не помогли несколько препаратов: что дальше?</h3>
 <p>Проверяют срок лечения и сам диагноз, дальше решает психиатр: другие классы препаратов, добавление второго препарата, психотерапия, а при самой тяжёлой депрессии ЭСТ<span class="ref-run"><a class="ref" href="https://pmc.ncbi.nlm.nih.gov/articles/PMC11351064/" data-tip="Lam R.W. et al. Canadian Network for Mood and Anxiety Treatments (CANMAT) 2023 update on clinical guidelines for management of major depressive disorder in adults. Canadian Journal of Psychiatry, 2024." aria-label="Источник 1: Lam R.W. et al. Canadian Network for Mood and Anxiety Treatments (CANMAT) 2023 update on clinical guidelines for management of major depressive disorder in adults. Canadian Journal of Psychiatry, 2024.">[1]</a>.</span> Работа Чиприани<span class="ref-run"><a class="ref" href="https://pubmed.ncbi.nlm.nih.gov/29477251/" data-tip="Cipriani A. et al. Comparative efficacy and acceptability of 21 antidepressant drugs for the acute treatment of adults with major depressive disorder: a systematic review and network meta-analysis. Lancet, 2018." aria-label="Источник 3: Cipriani A. et al. Comparative efficacy and acceptability of 21 antidepressant drugs for the acute treatment of adults with major depressive disorder: a systematic review and network meta-analysis. Lancet, 2018.">[3]</a></span> таких пациентов почти не включала, поэтому из неё здесь выводов не сделать.</p>
 </div>
 
 </div>
 
-## Другие особые обстоятельства
+## Что ещё меняет выбор
 
-Схема упрощает. Ниже обстоятельства, которые в неё не поместились, но часто меняют выбор. Беременность, пожилой возраст и подростки разобраны в <a href="/blog/science/mind/antidepressants/special-groups/">седьмой части</a>, взаимодействия с другими лекарствами в частых вопросах <a href="/blog/science/mind/antidepressants/you-were-prescribed/">первой части</a>. Нажмите на заголовок, чтобы раскрыть блок.
+Схема упрощает. Ниже обстоятельства, которые в неё не поместились, но часто меняют выбор. Беременность, пожилой возраст и подростки разобраны в <a href="/blog/science/mind/antidepressants/special-groups/">седьмой части</a>, сочетания с другими лекарствами в частых вопросах <a href="/blog/science/mind/antidepressants/you-were-prescribed/">первой части</a>. Нажмите на заголовок, чтобы раскрыть блок.
 
 <details class="am-fold">
 <summary><strong>Кроме депрессии, сильная тревога или панические атаки</strong><span class="am-names">подходят те же препараты первого выбора; в начале тревога может ненадолго усилиться</span></summary>
@@ -115,7 +115,7 @@ draft: false
 <summary><strong>Эпилепсия и судороги в прошлом</strong><span class="am-names">СИОЗС в обычных дозах в целом безопасны; бупропион противопоказан, с трициклическими осторожно</span></summary>
 <p>Долго считалось, что любой антидепрессант провоцирует судороги. Для СИОЗС и СИОЗСН в обычных дозах это не подтвердилось. Кеннет Алпер, психиатр Центра эпилепсии Нью-Йоркского университета, собрал данные FDA об испытаниях психотропных препаратов с 1985 по 2004 год, всего 75 873 участника: у получавших антидепрессанты судороги случались примерно вдвое реже, чем на плацебо<span class="ref-run"><a class="ref" href="https://pubmed.ncbi.nlm.nih.gov/17223086/" data-tip="Alper K. et al. Seizure incidence in psychopharmacological clinical trials: an analysis of Food and Drug Administration (FDA) summary basis of approval reports. Biological Psychiatry, 2007." aria-label="Источник 28: Alper K. et al. Seizure incidence in psychopharmacological clinical trials: an analysis of Food and Drug Administration (FDA) summary basis of approval reports. Biological Psychiatry, 2007.">[28]</a>.</span> Исключениями оказались кломипрамин и бупропион в форме быстрого высвобождения. Андрес Каннер, невролог Университета Майами, в обзоре пишет, что СИОЗС и СИОЗСН безопасны для людей с эпилепсией в лечебных дозах, а судороги провоцируют только в токсических, при передозировке<span class="ref-run"><a class="ref" href="https://pubmed.ncbi.nlm.nih.gov/27236241/" data-tip="Kanner A.M. Most antidepressant drugs are safe for patients with epilepsy at therapeutic doses: a review of the evidence. Epilepsy &amp; Behavior, 2016." aria-label="Источник 29: Kanner A.M. Most antidepressant drugs are safe for patients with epilepsy at therapeutic doses: a review of the evidence. Epilepsy &amp; Behavior, 2016.">[29]</a>.</span> Инструкции всё равно просят применять их при эпилепсии с осторожностью<span class="ref-run"><a class="ref" href="https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=ef3b5cbe-f9e1-c1ac-79da-cfe14e3a7e7e" data-tip="Paxil (paroxetine), инструкция по применению: разделы о судорогах, кровотечениях, варфарине и тамоксифене. DailyMed, Apotex, 2026." aria-label="Источник 30: Paxil (paroxetine), инструкция по применению: разделы о судорогах, кровотечениях, варфарине и тамоксифене. DailyMed, Apotex, 2026.">[30]</a>.</span></p>
 <p>Бупропион при эпилепсии противопоказан. Риск судорог у него зависит от дозы: у формы с замедленным высвобождением примерно 0,1%, то есть 1 человек из 1000, на дозах до 300 мг в сутки и около 0,4% на максимальной дозе 400 мг<span class="ref-run"><a class="ref" href="https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=cbc8c074-f080-4489-a5ae-207b5fadeba3" data-tip="Wellbutrin SR (bupropion hydrochloride), инструкция по применению. GlaxoSmithKline, DailyMed." aria-label="Источник 10: Wellbutrin SR (bupropion hydrochloride), инструкция по применению. GlaxoSmithKline, DailyMed.">[10]</a>.</span> У трициклических риск тоже есть. У кломипрамина судороги названы главным риском препарата: в испытаниях до регистрации на дозах до 300 мг в сутки их накопленная частота составила 0,64% за 90 дней и 1,45% за год<span class="ref-run"><a class="ref" href="https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=4074b555-7635-41a9-809d-fae3b3610059" data-tip="Anafranil (clomipramine), инструкция по применению: раздел о судорогах. DailyMed, SpecGx, 2024." aria-label="Источник 31: Anafranil (clomipramine), инструкция по применению: раздел о судорогах. DailyMed, SpecGx, 2024.">[31]</a>.</span> Амитриптилин инструкция советует применять с осторожностью, если судороги были раньше<span class="ref-run"><a class="ref" href="https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=4e520c63-1cf6-40f6-a51c-3f9b0e181342" data-tip="Amitriptyline hydrochloride, инструкция по применению: противопоказания и предупреждения о сердце и судорогах. DailyMed, Sun Pharmaceutical, 2026." aria-label="Источник 26: Amitriptyline hydrochloride, инструкция по применению: противопоказания и предупреждения о сердце и судорогах. DailyMed, Sun Pharmaceutical, 2026.">[26]</a>.</span> При передозировке трициклические сами вызывают судороги<span class="ref-run"><a class="ref" href="https://pmc.ncbi.nlm.nih.gov/articles/PMC11351064/" data-tip="Lam R.W. et al. Canadian Network for Mood and Anxiety Treatments (CANMAT) 2023 update on clinical guidelines for management of major depressive disorder in adults. Canadian Journal of Psychiatry, 2024." aria-label="Источник 1: Lam R.W. et al. Canadian Network for Mood and Anxiety Treatments (CANMAT) 2023 update on clinical guidelines for management of major depressive disorder in adults. Canadian Journal of Psychiatry, 2024.">[1]</a>.</span></p>
-<p>Врачу нужно знать и о противоэпилептических препаратах: CANMAT советует при сопутствующих болезнях сокращать число лекарств и проверять их взаимодействия<span class="ref-run"><a class="ref" href="https://pmc.ncbi.nlm.nih.gov/articles/PMC11351064/" data-tip="Lam R.W. et al. Canadian Network for Mood and Anxiety Treatments (CANMAT) 2023 update on clinical guidelines for management of major depressive disorder in adults. Canadian Journal of Psychiatry, 2024." aria-label="Источник 1: Lam R.W. et al. Canadian Network for Mood and Anxiety Treatments (CANMAT) 2023 update on clinical guidelines for management of major depressive disorder in adults. Canadian Journal of Psychiatry, 2024.">[1]</a>.</span></p>
+<p>Врачу нужно знать и о противоэпилептических препаратах: CANMAT советует при сопутствующих болезнях сокращать число лекарств и проверять, как они сочетаются с остальными<span class="ref-run"><a class="ref" href="https://pmc.ncbi.nlm.nih.gov/articles/PMC11351064/" data-tip="Lam R.W. et al. Canadian Network for Mood and Anxiety Treatments (CANMAT) 2023 update on clinical guidelines for management of major depressive disorder in adults. Canadian Journal of Psychiatry, 2024." aria-label="Источник 1: Lam R.W. et al. Canadian Network for Mood and Anxiety Treatments (CANMAT) 2023 update on clinical guidelines for management of major depressive disorder in adults. Canadian Journal of Psychiatry, 2024.">[1]</a>.</span></p>
 </details>
 
 <details class="am-fold">
@@ -258,7 +258,7 @@ draft: false
 
 </div>
 
-Если в пункте нет строки «Плюс» или «Цена», это значит только то, что в источниках серии ничего заметного по ней не нашлось. Цена может быть и у этих препаратов. В России популярны и тианептин, и пипофезин, но ни в одном из источников серии их нет, поэтому на этой карте их тоже нет.
+Если в пункте нет строки «Плюс» или «Цена», это значит только то, что в источниках серии ничего заметного по ней не нашлось. У этих препаратов тоже может быть своя цена. В России популярны и тианептин, и пипофезин, но ни в одном из источников серии их нет, поэтому на этой карте их тоже нет.
 
 ---
 
