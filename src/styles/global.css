@@ -1507,22 +1507,24 @@ html.mm-locked body {
     padding-inline: 0.45rem;
   }
 }
+/* Рамка до 800px: подписи кнопок короткие, как при открытой карточке, чтобы поле поиска встало в ряд без наложения */
+@container (max-width: 799px) {
+  .mm-controls .mm-long {
+    display: none;
+  }
+  .mm-controls .mm-short {
+    display: inline;
+  }
+}
 /* Карточки нет: поиск в ряд с кнопками справа, если рамка шире 640px */
 @container (min-width: 640px) {
   .mm-frame:not(:has(.mm-panel:not([hidden]))) .mm-search {
     top: 0.5rem;
     left: auto;
-    width: 7rem;
+    width: 16rem;
   }
 }
-/* Карточка открыта: поиск в ряд у края карточки, если рамка шире 840px (места хватает на кнопки и поле) */
-@container (min-width: 840px) {
-  .mm-frame:has(.mm-panel:not([hidden])) .mm-search {
-    top: 0.5rem;
-    left: auto;
-    width: 7rem;
-  }
-}
+/* Карточка открыта: поиск идёт под кнопками и тянется до карточки. В ряд с кнопками он ужимался до 134px */
 /* На весь экран места больше, поле шире. Специфичность выше правил для рамки и карточки, иначе они его перебьют */
 @media (min-width: 992px) {
   .mm .mm-frame:fullscreen .mm-search,
@@ -1557,7 +1559,7 @@ html.mm-locked body {
   z-index: 5;
   top: 100%;
   right: 0;
-  width: max(100%, 16rem); /* список шире поля: названия с классом не должны обрезаться; вправо, к краю карточки */
+  width: min(max(100%, 18rem), calc(100cqw - 1rem)); /* шире поля, но не шире рамки: названия переносятся, а не обрезаются */
   max-height: 12rem; /* список прокручивается сам и не выходит за низ рамки карты */
   overflow-y: auto;
   margin: 0.25rem 0 0;
@@ -1569,6 +1571,11 @@ html.mm-locked body {
 }
 .mm-hits[hidden] {
   display: none;
+}
+/* Карточка открыта: поле узкое, список начинается с его левого края и уходит вправо, а не вылезает за левый край рамки */
+.mm-frame:has(.mm-panel:not([hidden])) .mm-hits {
+  left: 0;
+  right: auto;
 }
 .mm-hits button {
   display: flex;
@@ -1593,10 +1600,15 @@ html.mm-locked body {
   background: var(--mm-tone);
   color: var(--mm-accent);
 }
+.mm-hits button {
+  border-radius: var(--app-radius-xs); /* общие кнопки сайта дают пилюлю с зелёной тенью, в списке это лишнее */
+  box-shadow: none;
+  white-space: normal;
+}
 .mm-hit-where {
   font-size: var(--app-font-control);
   color: var(--mm-muted);
-  white-space: nowrap;
+  white-space: normal;
 }
 .mm-hits-none {
   padding: 0.6rem 0.7rem;
