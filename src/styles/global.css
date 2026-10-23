@@ -1802,6 +1802,48 @@ main article .content .mm-card h2 {
 .mm-list li p {
   margin: 0.15rem 0 0;
 }
+/* Телефон: сначала список, карта по кнопке (на узком экране узлы у края не читаются) */
+.mm-show {
+  scroll-margin-top: 4rem;
+  width: auto;
+  min-height: 44px;
+  margin: 0 0 var(--app-spacing);
+  padding: 0 1rem;
+  border: 1px solid var(--pico-primary);
+  background: transparent;
+  color: var(--pico-primary);
+}
+@media (max-width: 991px) {
+  .mm.mm-listfirst {
+    display: flex;
+    flex-direction: column;
+  }
+  /* Кнопка наверху, карта сразу под ней (когда открыта), список ниже */
+  .mm.mm-listfirst .mm-show {
+    order: -3;
+  }
+  .mm.mm-listfirst.mm-map-open .mm-frame,
+  .mm.mm-listfirst.mm-map-open .mm-hint {
+    order: -2;
+  }
+  .mm.mm-listfirst .mm-list {
+    order: -1;
+  }
+  .mm.mm-listfirst .mm-frame,
+  .mm.mm-listfirst .mm-hint {
+    display: none;
+  }
+  .mm.mm-listfirst.mm-map-open .mm-frame,
+  .mm.mm-listfirst.mm-map-open .mm-hint {
+    display: block;
+  }
+  .mm .mm-list li {
+    font-size: 1rem;
+  }
+  .mm .mm-list .mm-list-depth-2 {
+    padding-left: 0.8em;
+  }
+}
 .mm-list .mm-list-depth-1 {
   margin-top: var(--app-spacing);
   font-size: var(--app-font-base, 1rem);
@@ -1812,6 +1854,13 @@ main article .content .mm-card h2 {
 @media (max-width: 991px) {
   .mm-frame {
     height: clamp(420px, 78svh, 720px);
+  }
+}
+/* Телефон в горизонтальном положении: рамка по высоте экрана, иначе она выходит за него */
+@media (max-width: 991px) and (orientation: landscape) {
+  .mm-frame {
+    height: 80svh;
+    min-height: 240px;
   }
   .mm-panel {
     top: auto;
@@ -2220,6 +2269,68 @@ main article .content .pk-sub {
   font-size: var(--app-font-control);
   color: var(--pico-muted-color);
 }
+/* Шаги анкеты: на широком экране и без JS не нужны */
+.pk-steps {
+  display: none;
+}
+.pk .is-off {
+  display: none !important;
+}
+@media (max-width: 991px) {
+  /* Телефон: одна группа на экране, внизу «Назад» и «Дальше», последним шагом результат */
+  .pk[data-steps] .pk-steps {
+    position: sticky;
+    bottom: 0;
+    z-index: 2;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--app-spacing-md);
+    margin: var(--app-spacing) 0 0;
+    padding: var(--app-spacing-md) 0 max(var(--app-spacing-md), env(safe-area-inset-bottom));
+    border-top: 1px solid var(--pico-muted-border-color);
+    background: var(--pico-background-color);
+  }
+  .pk[data-steps] .pk-steps-where {
+    margin: 0;
+    font-size: var(--app-font-sm);
+    color: var(--pico-muted-color);
+  }
+  .pk[data-steps] .pk-steps-btns {
+    display: flex;
+    gap: var(--app-spacing-md);
+  }
+  .pk[data-steps] .pk-steps button {
+    width: auto;
+    min-height: 44px;
+    margin: 0;
+    padding: 0 1.1rem;
+  }
+  .pk[data-steps] .pk-steps-prev {
+    background: transparent;
+    color: var(--pico-primary);
+  }
+  .pk[data-steps] .pk-group {
+    margin: 0;
+  }
+  .pk[data-steps] .pk-group > summary {
+    min-height: 44px;
+    margin-bottom: var(--app-spacing-md);
+    font-size: var(--app-font-base, 1rem);
+    color: var(--pico-contrast);
+    cursor: default;
+  }
+  .pk[data-steps] .pk-group > summary::before {
+    display: none;
+  }
+  .pk[data-steps] .pk-jump {
+    display: none;
+  }
+  .pk[data-steps] .pk-layout {
+    scroll-margin-top: 4rem;
+  }
+}
 .pk-jump {
   display: none;
 }
@@ -2239,7 +2350,8 @@ main article .content .pk-sub {
   .pk-urgent:empty {
     display: none;
   }
-  .pk-alerts > .pk-alert-urgent {
+  /* Срочное в результате скрываем только без шагов: по шагам оно нужно и в результате, а не только под группой */
+  .pk:not([data-steps]) .pk-alerts > .pk-alert-urgent {
     display: none;
   }
   .pk .pk-select select,

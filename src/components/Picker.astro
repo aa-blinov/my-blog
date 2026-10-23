@@ -92,6 +92,13 @@ const client = {
       <div class="pk-lists"></div>
       <p class="pk-to-review"><a href="#pk-review">Открытые вопросы для врача</a>, внизу подборщика.</p>
     </section>
+    <nav class="pk-steps" aria-label="Шаги анкеты">
+      <p class="pk-steps-where" aria-live="polite"></p>
+      <div class="pk-steps-btns">
+        <button type="button" class="pk-steps-prev">Назад</button>
+        <button type="button" class="pk-steps-next">Дальше</button>
+      </div>
+    </nav>
   </div>
   {data.review && (
     <details class="pk-review" id="pk-review">
@@ -234,13 +241,12 @@ const client = {
         return `<h3 class="pk-sub ${cls}">${title}</h3>${note ? `<p class="pk-note">${note}</p>` : ''}${l.common}${l.rows}`;
       };
       const moreList = more.length ? list(more) : null;
-      // На телефоне «С осторожностью» и «Не подходит» свёрнуты в строки с числом: сначала главное, остальное по нажатию.
-      // Что открыл читатель вручную, сохраняем при пересчёте
-      const phone = () => matchMedia('(max-width: 991px)').matches;
+      // Блоки результата открыты сразу: на телефоне результат идёт отдельным шагом, и свёрнутый блок там прячет нужное.
+      // Что закрыл читатель вручную, сохраняем при пересчёте
       const fold = (key: string, title: string, cls: string, items: typeof all) => {
         if (!items.length) return '';
         const l = list(items);
-        const open = pref[key] ?? !phone();
+        const open = pref[key] ?? true;
         return `<details class="pk-block" data-key="${key}"${open ? ' open' : ''}><summary><h3 class="pk-sub ${cls}">${title} (${items.length})</h3></summary>${l.common}${l.rows}</details>`;
       };
 
@@ -279,13 +285,8 @@ const client = {
       const sel = form.querySelector<HTMLSelectElement>(`select[name="${k}"]`)!;
       if (q.get(k)) sel.value = q.get(k)!;
     }
-    // На телефоне анкета длинная: группы без отметок сворачиваем, отмеченные оставляем открытыми
+    // На телефоне дисклеймер свёрнут, срочная строка видна. Анкета по шагам настраивается ниже
     if (matchMedia('(max-width: 991px)').matches) {
-      groups.forEach((g) => {
-        g.open = !!g.querySelector('input:checked') || [...g.querySelectorAll('select')].some((s) => s.value);
-      });
-      // Первая группа открыта сразу, чтобы анкета начиналась на первом экране; дисклеймер на телефоне свёрнут, срочная строка видна
-      if (groups[0]) groups[0].open = true;
       const disc = root.querySelector<HTMLDetailsElement>('.pk-disclaimer-more');
       if (disc) disc.open = false;
     }
@@ -314,8 +315,49 @@ const client = {
       const r = root.querySelector<HTMLDetailsElement>('#pk-review');
       if (r) r.open = true;
     }));
+    // Телефон: анкета по шагам. На экране одна группа, внизу «Назад» и «Дальше», последним шагом результат.
+    // На широком экране и без JS всё стоит целиком, как раньше
+    const stepMq = matchMedia('(max-width: 991px)');
+    const last = groups.length; // шаг с результатом
+    const nav = root.querySelector<HTMLElement>('.pk-steps')!;
+    const where = nav.querySelector<HTMLElement>('.pk-steps-where')!;
+    const prev = nav.querySelector<HTMLButtonElement>('.pk-steps-prev')!;
+    const next = nav.querySelector<HTMLButtonElement>('.pk-steps-next')!;
+    const actions = form.querySelector<HTMLElement>('.pk-actions');
+    const reviewBox = root.querySelector<HTMLElement>('.pk-review');
+    let cur = 0;
+    const marked = () => form.querySelectorAll('input:checked').length + [...form.querySelectorAll('select')].filter((s) => s.value).length;
+    const showStep = () => {
+      const on = stepMq.matches;
+      root.toggleAttribute('data-steps', on);
+      if (!on) {
+        groups.forEach((g) => g.classList.remove('is-off'));
+        [res, actions, reviewBox].forEach((el) => el?.classList.remove('is-off'));
+        return;
+      }
+      cur = Math.min(cur, last);
+      groups.forEach((g, i) => { g.open = true; g.classList.toggle('is-off', i !== cur); });
+      const isResult = cur === last;
+      res.classList.toggle('is-off', !isResult);
+      actions?.classList.toggle('is-off', !isResult);
+      reviewBox?.classList.toggle('is-off', !isResult);
+      where.textContent = isResult ? `Результат · отмечено ${marked()}` : `Шаг ${cur + 1} из ${last} · отмечено ${marked()}`;
+      prev.classList.toggle('is-off', cur === 0);
+      prev.textContent = isResult ? 'К анкете' : 'Назад';
+      next.classList.toggle('is-off', isResult);
+      next.textContent = cur === last - 1 ? 'К результату' : 'Дальше';
+    };
+    const go = (to: number) => { cur = to; showStep(); root.querySelector('.pk-layout')?.scrollIntoView({ block: 'start' }); };
+    // Заголовок группы на телефоне не сворачивает её: группа и так на экране одна
+    groups.forEach((g) => g.querySelector('summary')?.addEventListener('click', (e) => { if (stepMq.matches) e.preventDefault(); }));
+    prev.addEventListener('click', () => go(cur - 1));
+    next.addEventListener('click', () => go(cur + 1));
+    stepMq.addEventListener('change', showStep);
+    form.addEventListener('change', showStep);
+    form.addEventListener('reset', () => setTimeout(showStep, 0));
     form.addEventListener('change', render);
     form.addEventListener('reset', () => setTimeout(render, 0));
     render();
+    showStep();
   });
 </script>

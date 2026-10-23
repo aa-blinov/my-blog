@@ -99,6 +99,7 @@ const hoverTip = (n: MapNode) => n.hint ?? (n.children?.length ? undefined : n.n
 
   <p class="mm-hint" aria-hidden="true"><span class="mm-hint-mouse">тяни мышью, Ctrl + колесо для масштаба, клик по группе раскрывает её, по узлу открывает карточку</span><span class="mm-hint-touch">тяни пальцем, щипок для масштаба, тап по группе раскрывает её, по узлу открывает карточку</span></p>
 
+  <button type="button" class="mm-show" hidden aria-expanded="false">Показать карту</button>
   <details class="am-fold mm-list">
     <summary><strong>Вся карта списком</strong><span class="am-names">то же самое без карты: для чтения подряд и для скринридера</span></summary>
     <ul>
@@ -174,6 +175,8 @@ const hoverTip = (n: MapNode) => n.hint ?? (n.children?.length ? undefined : n.n
     };
     const visible = () => nodes.filter((n) => !n.hidden);
     const fit = (whole = false) => fitTo(visible(), whole);
+    // Открытая на телефоне или на весь экран карта вписывается целиком: иначе READABLE обрезает края
+    const wholeNow = () => mm.classList.contains('mm-map-open') || frame.classList.contains('is-full');
 
     // Свёрнутый режим: листья группы видны, только когда группа раскрыта
     const collapsible = mm.hasAttribute('data-collapsible');
@@ -427,7 +430,7 @@ const hoverTip = (n: MapNode) => n.hint ?? (n.children?.length ? undefined : n.n
       fullBtn.innerHTML = on ? '<span class="mm-long">выйти</span><span class="mm-short">выйти</span>' : '<span class="mm-long">на весь экран</span><span class="mm-short">экран</span>';
       fullBtn.setAttribute('aria-label', on ? 'Выйти из полноэкранного режима' : 'Карта на весь экран');
       document.documentElement.classList.toggle('mm-locked', frame.classList.contains('is-full'));
-      requestAnimationFrame(() => (selected ? focusOn(selected, s) : fit()));
+      requestAnimationFrame(() => (selected ? focusOn(selected, s) : fit(wholeNow())));
     };
     const toggleFull = async () => {
       if (isFull()) {
@@ -471,7 +474,30 @@ const hoverTip = (n: MapNode) => n.hint ?? (n.children?.length ? undefined : n.n
       // Переход из подборщика по ссылке: прокручиваем к карте, иначе карточка открывается, а экран остаётся на тексте статьи
       window.scrollTo({ top: frame.getBoundingClientRect().top + window.scrollY - 64, behavior: 'auto' });
     }
+    // Телефон: сначала список, карта открывается кнопкой. Когда карта появляется, ResizeObserver ниже пересчитает масштаб
+    const phoneQ = matchMedia('(max-width: 991px)');
+    const showBtn = mm.querySelector<HTMLButtonElement>('.mm-show');
+    const listBox = mm.querySelector<HTMLDetailsElement>('.mm-list');
+    const phoneView = () => {
+      const on = phoneQ.matches;
+      mm.classList.toggle('mm-listfirst', on);
+      if (showBtn) showBtn.hidden = !on;
+      if (on && listBox) listBox.open = true;
+      if (!on) mm.classList.remove('mm-map-open');
+    };
+    showBtn?.addEventListener('click', () => {
+      const open = mm.classList.toggle('mm-map-open');
+      showBtn.textContent = open ? 'Скрыть карту' : 'Показать карту';
+      showBtn.setAttribute('aria-expanded', String(open));
+      if (open) {
+        // Рамка была скрыта, масштаб не считался: вписываем заново и прокручиваем к кнопке, карта сразу под ней
+        requestAnimationFrame(() => (selected ? focusOn(selected, s) : fit(true)));
+        showBtn.scrollIntoView({ block: 'start' });
+      }
+    });
+    phoneQ.addEventListener('change', phoneView);
+    phoneView();
     let lastW = frame.clientWidth;
-    new ResizeObserver(() => { if (Math.abs(frame.clientWidth - lastW) > 40) { lastW = frame.clientWidth; selected ? focusOn(selected, s) : fit(); } }).observe(frame);
+    new ResizeObserver(() => { if (Math.abs(frame.clientWidth - lastW) > 40) { lastW = frame.clientWidth; selected ? focusOn(selected, s) : fit(wholeNow()); } }).observe(frame);
   });
 </script>
