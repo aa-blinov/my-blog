@@ -230,6 +230,12 @@ No proportional family appears anywhere: not in a heading, not in a button,
 not in the footer. The hierarchy is built from weight, 400 and 700, and from
 size.
 
+Page type is set in the tokens of the "Tokens and icons" section. Inside a component a
+size may be written in `em` so that it follows the text around it: a disclosure
+summary, a table-of-contents line, the caption of a card. These `em` values are
+deliberate. They are the only literal font sizes in the stylesheet, and each one
+sits in a component that sets its own text size.
+
 ### Hierarchy
 
 - **Display, 2em, 700, 1.125**: the title of an article.
