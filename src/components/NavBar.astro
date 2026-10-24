@@ -1,4 +1,5 @@
 ---
+import Icon from './Icon.astro';
 import { BASE } from '../config';
 
 interface Props {
@@ -53,6 +54,11 @@ interface Props {
       </button>
     </li>
     <!-- Theme Toggle -->
+    <li>
+      <button id="width-toggle" class="contrast" aria-label="Ширина текста: обычная. Нажмите, чтобы сменить" title="Ширина текста: обычная">
+        <Icon name="width-normal" />
+      </button>
+    </li>
     <li>
       <button id="theme-toggle" class="contrast" aria-label="Тёмная тема" aria-pressed="false">
         <!-- Heroicons: Sun (Outline) -->

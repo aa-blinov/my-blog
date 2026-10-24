@@ -75,6 +75,10 @@ const breadcrumbPath = getBreadcrumb(Astro.url.pathname);
         // Тот же ключ, что у кнопок в theme.js: иначе страница рисуется в md и перескакивает, когда модуль применит сохранённый размер
         const font = localStorage.getItem('font-size-v2');
         document.documentElement.dataset.font = ['xs', 'sm', 'md', 'lg', 'xl'].includes(font) ? font : 'md';
+
+        // Ширина колонки текста: узкая, обычная или широкая; тот же ключ, что в theme.js
+        const width = localStorage.getItem('reading-width');
+        document.documentElement.dataset.width = ['narrow', 'normal', 'wide'].includes(width) ? width : 'normal';
       })();
     </script>
   </head>

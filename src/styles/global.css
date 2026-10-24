@@ -284,6 +284,9 @@ html[data-font="md"] { --app-zoom: 1.2; }
 html[data-font="lg"] { --app-zoom: 1.3; }
 html[data-font="xl"] { --app-zoom: 1.45; }
 :root { --app-zoom: 1.2; --app-article-font: 1rem; }
+/* Ширина колонки текста: три режима, кнопка рядом с темой. Обычная = значение токена выше */
+:root[data-width="narrow"] { --app-main-max-width: 40em; }
+:root[data-width="wide"] { --app-main-max-width: 74em; }
 
 main article .entry-header,
 main article .content {

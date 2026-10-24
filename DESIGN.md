@@ -288,7 +288,8 @@ reach it.
 
 The spacing steps are 0.15rem, 0.25rem, 0.5rem, 1rem, 1.5rem, 2rem, 3rem and
 4rem, and the page padding is 2rem. Every margin, padding and gap in the
-stylesheet uses one of these tokens; see Tokens and icons below. The width of the tree is remembered, and the
+stylesheet uses one of these tokens; see Tokens and icons below. The reading width has three modes (narrow 40em, normal 55.2em, wide 74em) set by the
+button beside the theme switch and remembered in the browser. The width of the tree is remembered, and the
 structure column of an article can be dragged between 192px and 480px.
 
 ### Named rules

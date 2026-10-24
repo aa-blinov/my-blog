@@ -712,6 +712,12 @@ function getFolderHref(fullPath: string) {
     background-color: rgba(var(--pico-primary-rgb), 0.1);
   }
 
+  /* Верхние пункты (Главная, Обо мне, Заметки) без шеврона: их текст встаёт на колонку шевронов верхнего уровня, а не на имена папок.
+     Сдвиг в em, как и сам шеврон, чтобы выравнивание держалось при любом размере шрифта дерева */
+  .sidebar-nav .sidebar-pinned a.file-link {
+    margin-left: calc(-4px - 0.7em);
+  }
+
   /* --- Folder Links --- */
   .sidebar-nav .folder-link {
     text-decoration: none;

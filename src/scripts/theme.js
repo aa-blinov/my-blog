@@ -1,3 +1,5 @@
+import { iconSvg } from '../utils/icons';
+
 (() => {
   const root = document.documentElement;
   const btn = document.getElementById("theme-toggle");
@@ -68,6 +70,32 @@
       const next = root.dataset.theme === "dark" ? "light" : "dark";
       localStorage.setItem("theme", next);
       applyThemeUi(next);
+    });
+  }
+
+  // === Reading width: узкая, обычная, широкая. Кнопка рядом с темой ===
+  const widthBtn = document.getElementById("width-toggle");
+  const widthModes = ["narrow", "normal", "wide"];
+  const widthLabels = { narrow: "узкая", normal: "обычная", wide: "широкая" };
+  const widthIcons = { narrow: "arrows-pointing-in", normal: "width-normal", wide: "arrows-pointing-out" };
+
+  const applyWidthUi = (mode) => {
+    root.dataset.width = mode;
+    if (!widthBtn) return;
+    const label = `Ширина текста: ${widthLabels[mode]}. Нажмите, чтобы сменить`;
+    widthBtn.innerHTML = iconSvg(widthIcons[mode]);
+    widthBtn.setAttribute("aria-label", label);
+    widthBtn.title = `Ширина текста: ${widthLabels[mode]}`;
+  };
+  const storedWidth = localStorage.getItem("reading-width");
+  applyWidthUi(widthModes.includes(storedWidth) ? storedWidth : "normal");
+
+  if (widthBtn) {
+    widthBtn.addEventListener("click", () => {
+      const current = widthModes.indexOf(root.dataset.width || "normal");
+      const next = widthModes[(current + 1) % widthModes.length];
+      localStorage.setItem("reading-width", next);
+      applyWidthUi(next);
     });
   }
 
