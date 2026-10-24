@@ -1,4 +1,5 @@
 ---
+import Icon from './Icon.astro';
 import type { MarkdownHeading } from 'astro';
 
 interface Props {
@@ -13,7 +14,7 @@ const word = n % 10 === 1 && n % 100 !== 11 ? 'раздел' : n % 10 >= 2 && n 
 
 {n > 0 && (
   <details class="toc" id="toc">
-    <summary class="toc-title"><span class="toc-chevron" aria-hidden="true">▸</span>Содержание, {n} {word}</summary>
+    <summary class="toc-title"><span class="toc-chevron" aria-hidden="true"><Icon name="chevron-right" /></span>Содержание, {n} {word}</summary>
     <ol class="toc-list">
       {items.map((h) => (
         <li><a href={`#${h.slug}`}>{h.text}</a></li>

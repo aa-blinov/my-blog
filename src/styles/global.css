@@ -45,6 +45,13 @@
   --app-spacing-lg: 1.5rem;
   --app-spacing-xl: 2rem;
   --app-spacing-page: 2rem;
+  --app-spacing-2xl: 3rem;
+  --app-spacing-3xl: 4rem;
+
+  /* Touch target and icons: one size and one set everywhere (see DESIGN.md) */
+  --app-touch-target: 44px;
+  --app-icon-size: 1em;
+  --app-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m8.25 4.5 7.5 7.5-7.5 7.5'/%3E%3C/svg%3E");
 
   /* Editor block: code and diagrams live in a dark window in both themes */
   --app-editor-bg: #24292e;
@@ -342,7 +349,13 @@ main article .content h4 {
 .toc-title::after {
   display: none;
 }
-.toc-chevron { /* тот же текстовый ▸, что у папок дерева и раскрывашек серии */
+.icon {
+  width: var(--app-icon-size);
+  height: var(--app-icon-size);
+  flex-shrink: 0;
+  vertical-align: -0.125em;
+}
+.toc-chevron { /* тот же шеврон, что у папок дерева и раскрывашек серии (общий набор иконок) */
   display: inline-block;
   flex-shrink: 0;
   color: var(--pico-primary);
@@ -359,7 +372,7 @@ main article .content h4 {
     --app-scroll-offset: calc(var(--app-navbar-mobile-height) + var(--app-spacing));
   }
   .toc-title {
-    min-height: 44px;
+    min-height: var(--app-touch-target);
   }
 }
 .toc-list {
@@ -606,7 +619,7 @@ pre, code {
 .site-footer {
   border-top: 1px solid var(--pico-muted-border-color);
   padding: var(--app-spacing-lg) var(--app-spacing);
-  margin-top: 3rem;
+  margin-top: var(--app-spacing-2xl);
   text-align: center;
   display: flex;
   align-items: center;
@@ -779,7 +792,7 @@ a.all-articles-link.post-title-link:hover {
   display: flex;
   justify-content: space-between;
   gap: var(--app-spacing-xl);
-  margin-top: 3rem;
+  margin-top: var(--app-spacing-2xl);
   padding-top: var(--app-spacing-lg);
   border-top: 1px solid var(--pico-muted-border-color);
   font-weight: 700;
@@ -789,7 +802,7 @@ a.all-articles-link.post-title-link:hover {
   display: flex;
   flex-direction: column;
   gap: var(--app-spacing-xs);
-  min-height: 44px;
+  min-height: var(--app-touch-target);
   color: var(--pico-contrast);
   text-decoration: none;
   transition: color var(--app-transition);
@@ -844,7 +857,7 @@ a.all-articles-link.post-title-link:hover {
    ========================================================================== */
 
 .article-footer {
-  margin-top: 3rem;
+  margin-top: var(--app-spacing-2xl);
   padding-top: var(--app-spacing-lg);
   border-top: 1px solid var(--pico-muted-border-color);
 }
@@ -991,7 +1004,7 @@ main article .content .post-list-item .post-title,
   margin-top: 0.45em;
 }
 .section-block {
-  margin-top: 3rem;
+  margin-top: var(--app-spacing-2xl);
 }
 .section-block:first-of-type {
   margin-top: var(--app-spacing-xl);
@@ -1051,7 +1064,7 @@ main article .content .post-list-item .post-title,
 }
 
 .recent-posts {
-  margin-top: 4rem;
+  margin-top: var(--app-spacing-3xl);
   border-top: 1px solid var(--pico-muted-border-color);
   padding-top: var(--app-spacing-xl);
 }
@@ -1209,7 +1222,12 @@ details.am-why > summary::after {
 details.am-group > summary::before,
 details.am-fold > summary::before,
 details.am-why > summary::before {
-  content: "▸";
+  content: "";
+  width: 0.7em;
+  height: 0.7em;
+  background: currentColor;
+  -webkit-mask: var(--app-chevron) center / contain no-repeat;
+  mask: var(--app-chevron) center / contain no-repeat;
   position: absolute;
   left: 0.15em;
   color: var(--pico-primary);
@@ -1250,7 +1268,7 @@ details.am-why > .am-src {
   details.am-group > summary,
   details.am-fold > summary,
   details.am-why > summary {
-    min-height: 44px;
+    min-height: var(--app-touch-target);
   }
 }
 
@@ -1618,7 +1636,7 @@ html.mm-locked body {
 @media (max-width: 600px) {
   .mm .mm-search-input {
     height: 44px;
-    min-height: 44px;
+    min-height: var(--app-touch-target);
   }
   .mm-hits button {
     min-height: 40px; /* на телефоне палец, поэтому не меньше 40px, но без лишнего объёма */
@@ -1724,7 +1742,7 @@ html.mm-locked body {
   top: 0;
   float: right;
   min-width: 44px;
-  min-height: 44px;
+  min-height: var(--app-touch-target);
   font-size: var(--app-font-lg);
 }
 main article .content .mm-card h2 {
@@ -1773,7 +1791,12 @@ main article .content .mm-card h2 {
   display: none;
 }
 .mm-more > summary::before {
-  content: "▸";
+  content: "";
+  width: 0.7em;
+  height: 0.7em;
+  background: currentColor;
+  -webkit-mask: var(--app-chevron) center / contain no-repeat;
+  mask: var(--app-chevron) center / contain no-repeat;
   display: inline-block;
   margin-right: 0.4em;
   color: var(--mm-accent);
@@ -1788,7 +1811,7 @@ main article .content .mm-card h2 {
 }
 @media (max-width: 991px) {
   .mm .mm-more > summary {
-    min-height: 44px;
+    min-height: var(--app-touch-target);
     display: flex;
     align-items: center;
   }
@@ -1816,9 +1839,9 @@ main article .content .mm-card h2 {
 }
 /* Телефон: сначала список, карта по кнопке (на узком экране узлы у края не читаются) */
 .mm-show {
-  scroll-margin-top: 4rem;
+  scroll-margin-top: var(--app-spacing-3xl);
   width: auto;
-  min-height: 44px;
+  min-height: var(--app-touch-target);
   margin: 0 0 var(--app-spacing);
   padding: 0 1rem;
   border: 1px solid var(--pico-primary);
@@ -1884,10 +1907,10 @@ main article .content .mm-card h2 {
   }
   .mm .mm-controls button {
     min-width: 44px;
-    min-height: 44px;
+    min-height: var(--app-touch-target);
   }
   .mm .mm-jump {
-    min-height: 44px;
+    min-height: var(--app-touch-target);
   }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -1987,7 +2010,12 @@ main article .content .mm-card h2 {
   display: none; /* стрелку Pico для details скрываем: своя «▸» слева */
 }
 .pk-group > summary::before {
-  content: "▸";
+  content: "";
+  width: 0.7em;
+  height: 0.7em;
+  background: currentColor;
+  -webkit-mask: var(--app-chevron) center / contain no-repeat;
+  mask: var(--app-chevron) center / contain no-repeat;
   display: inline-block;
   transition: transform 0.15s;
 }
@@ -2033,7 +2061,7 @@ main article .content .mm-card h2 {
   color: var(--pico-muted-color);
 }
 .pk-gloss > summary {
-  min-height: 44px;
+  min-height: var(--app-touch-target);
   display: flex;
   align-items: center;
   cursor: pointer;
@@ -2044,7 +2072,12 @@ main article .content .mm-card h2 {
   display: none;
 }
 .pk-gloss > summary::before {
-  content: "▸";
+  content: "";
+  width: 0.7em;
+  height: 0.7em;
+  background: currentColor;
+  -webkit-mask: var(--app-chevron) center / contain no-repeat;
+  mask: var(--app-chevron) center / contain no-repeat;
   margin-right: 0.4em;
   display: inline-block;
   transition: transform 0.15s;
@@ -2218,7 +2251,7 @@ main article .content .pk-sub {
   display: flex;
   align-items: center;
   gap: 0.4rem;
-  min-height: 44px;
+  min-height: var(--app-touch-target);
   cursor: pointer;
   list-style: none;
 }
@@ -2227,7 +2260,12 @@ main article .content .pk-sub {
   display: none;
 }
 .pk-block > summary::before {
-  content: "▸";
+  content: "";
+  width: 0.7em;
+  height: 0.7em;
+  background: currentColor;
+  -webkit-mask: var(--app-chevron) center / contain no-repeat;
+  mask: var(--app-chevron) center / contain no-repeat;
   display: inline-block;
   color: var(--pico-muted-color);
   transition: transform 0.15s;
@@ -2244,7 +2282,7 @@ main article .content .pk-sub {
 .pk-more > summary {
   display: flex;
   align-items: center;
-  min-height: 44px;
+  min-height: var(--app-touch-target);
   font-size: var(--app-font-sm);
   color: var(--pico-muted-color);
   cursor: pointer;
@@ -2258,7 +2296,7 @@ main article .content .pk-sub {
 .pk-review > summary {
   display: flex;
   align-items: center;
-  min-height: 44px;
+  min-height: var(--app-touch-target);
   font-weight: 700;
   cursor: pointer;
 }
@@ -2315,7 +2353,7 @@ main article .content .pk-sub {
   }
   .pk[data-steps] .pk-steps button {
     width: auto;
-    min-height: 44px;
+    min-height: var(--app-touch-target);
     margin: 0;
     padding: 0 1.1rem;
   }
@@ -2327,7 +2365,7 @@ main article .content .pk-sub {
     margin: 0;
   }
   .pk[data-steps] .pk-group > summary {
-    min-height: 44px;
+    min-height: var(--app-touch-target);
     margin-bottom: var(--app-spacing-md);
     font-size: var(--app-font-base, 1rem);
     color: var(--pico-contrast);
@@ -2340,7 +2378,7 @@ main article .content .pk-sub {
     display: none;
   }
   .pk[data-steps] .pk-layout {
-    scroll-margin-top: 4rem;
+    scroll-margin-top: var(--app-spacing-3xl);
   }
 }
 .pk-jump {
@@ -2368,18 +2406,18 @@ main article .content .pk-sub {
   }
   .pk .pk-select select,
   .pk .pk-reset {
-    min-height: 44px;
+    min-height: var(--app-touch-target);
   }
   .pk-name > a {
     display: inline-block;
     padding-block: 0.5rem;
   }
   .pk-opt {
-    min-height: 44px;
+    min-height: var(--app-touch-target);
     align-items: center;
   }
   .pk-group > summary {
-    min-height: 44px;
+    min-height: var(--app-touch-target);
   }
   .pk .pk-opt input[type="checkbox"] {
     margin-top: 0;
@@ -2437,7 +2475,7 @@ main article .content .pk-sub {
 }
 @media (max-width: 991px) {
   .tools-opts .pk-opt {
-    min-height: 44px;
+    min-height: var(--app-touch-target);
     align-items: center;
   }
 }
@@ -2455,7 +2493,7 @@ main article .content .pk-sub {
 }
 .tools-btn {
   width: auto;
-  min-height: 44px;
+  min-height: var(--app-touch-target);
   margin: 0 0.5rem 0 0;
   padding: 0 0.9rem;
   border: 1px solid var(--pk-line);
@@ -2472,7 +2510,7 @@ main article .content .pk-sub {
 }
 .tools-link {
   width: auto;
-  min-height: 44px;
+  min-height: var(--app-touch-target);
   margin: 0 0 0 0.5rem;
   padding: 0 0.3rem;
   border: none;

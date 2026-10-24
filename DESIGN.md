@@ -286,8 +286,9 @@ Tab cannot wander into it. The table of contents is open on a desktop and
 closed on a phone, and the summary is at least 44px tall so a finger can
 reach it.
 
-The spacing steps are 0.15rem, 0.25rem, 0.5rem, 1rem, 1.5rem and 2rem, and
-the page padding is 2rem. The width of the tree is remembered, and the
+The spacing steps are 0.15rem, 0.25rem, 0.5rem, 1rem, 1.5rem, 2rem, 3rem and
+4rem, and the page padding is 2rem. Every margin, padding and gap in the
+stylesheet uses one of these tokens; see Tokens and icons below. The width of the tree is remembered, and the
 structure column of an article can be dragged between 192px and 480px.
 
 ### Named rules
@@ -409,6 +410,37 @@ at least 44px tall on a phone.
 A short note in the feed: the time as an anchor, the text, and a rule under
 it. Arriving at an anchor tints the note for three seconds and lets the
 tint go.
+
+## Tokens and icons
+
+Every value that a component reuses is a token in `:root` of
+`src/styles/global.css`. The scales are:
+
+| Group | Tokens | Values |
+| --- | --- | --- |
+| Spacing | `--app-spacing-xs` to `--app-spacing-3xl` | 0.15rem, 0.25rem, 0.5rem, 1rem, 1.5rem, 2rem, 3rem, 4rem |
+| Type | `--app-font-control`, `--app-font-caption`, `--app-font-xs` to `--app-font-xl` | 0.8rem, 0.7rem, then 0.8rem, 0.9rem, 1rem, 1.15rem, 1.3rem |
+| Radius | `--app-radius-xs`, `--app-radius-sm` | 3px, 4px |
+| Touch | `--app-touch-target` | 44px, the smallest height of any control on a touch screen |
+| Icon | `--app-icon-size` | 1em, so an icon follows the text it sits beside |
+
+Where a component needs one value that the scales do not cover, it is named
+in the stylesheet and the token is added here, not left as a literal.
+
+The interface draws its icons from one set: outline, a 24-unit grid, a
+1.5 stroke and `currentColor`. The paths are in `src/utils/icons.ts`, the
+`Icon` component puts them on the page, and the `.icon` class sets the size.
+The set is the Heroicons outline set, which is MIT licensed.
+
+Text characters are not used as interface icons. The disclosure chevron of
+a tree folder, a summary, the table of contents or a filter is the chevron
+of the set, drawn as a mask in the colour of the text, and it turns when
+the block opens. The sort control shows an arrow up, an arrow down or the
+two-way arrows. The close control of a card is the cross of the set.
+
+Three text characters remain on purpose: the arrows and the crosses in the
+text of an article, which are words, and the markers of the legend of the
+picker (`+`, `!`, `~`, `×`), which are the legend itself.
 
 ## Do's and Don'ts
 

@@ -1,4 +1,5 @@
 ---
+import Icon from './Icon.astro';
 import type { PickerData } from '../utils/picker';
 import type { MapSource } from '../utils/mindmap';
 
@@ -117,11 +118,12 @@ const client = {
       </ol>
     </details>
   )}
-  <a class="pk-jump" href="#pk-result">к результату ↓</a>
+  <a class="pk-jump" href="#pk-result">к результату <Icon name="arrow-down" /></a>
   <script type="application/json" class="pk-data" set:html={JSON.stringify(client).replace(/</g, '\\u003c')} />
 </div>
 
 <script>
+  import { iconSvg } from '../utils/icons';
   // Подсчёт на клиенте: линия по рекомендациям даёт основу, отмеченные особенности сдвигают препарат вверх или вниз,
   // «не подходит» исключает. Порядок внутри групп: сумма, потом линия
   type Eff = { d?: string[]; k: 'prefer' | 'consider' | 'note' | 'caution' | 'avoid'; r: string; s: number[]; hist?: boolean };
@@ -265,7 +267,7 @@ const client = {
 
       // Кнопка «к результату» показывает, сколько отмечено: видно и без прокрутки к анкете
       const marked = picked.length + histCount;
-      if (jump) jump.textContent = marked ? `к результату ↓ · отмечено ${marked}` : 'к результату ↓';
+      if (jump) jump.innerHTML = (marked ? `к результату · отмечено ${marked} ` : 'к результату ') + iconSvg('arrow-down');
 
       // Отметки в адресе: подборку можно переслать или открыть на приёме
       const q = new URLSearchParams();

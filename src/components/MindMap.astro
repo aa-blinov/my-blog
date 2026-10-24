@@ -1,4 +1,5 @@
 ---
+import Icon from './Icon.astro';
 import { layout, flatten, type MindMapData, type MapSource, type MapNode } from '../utils/mindmap';
 import MindMapFact from './MindMapFact.astro';
 
@@ -73,7 +74,7 @@ const hoverTip = (n: MapNode) => n.hint ?? (n.children?.length ? undefined : n.n
     </div>
 
     <div class="mm-panel" role="region" aria-label="Карточка узла" hidden>
-      <button type="button" class="mm-close" aria-label="Закрыть карточку">×</button>
+      <button type="button" class="mm-close" aria-label="Закрыть карточку"><Icon name="x-mark" /></button>
       {nodes.map((p) => (
         <section class="mm-card" id={`mm-card-${p.node.id}`} data-card={p.node.id} hidden>
           <h2 tabindex="-1">{cardTitle(p.node)}</h2>

@@ -1,4 +1,5 @@
 ---
+import Icon from './Icon.astro';
 import { BASE } from '../config';
 
 interface BlogEntry {
@@ -124,10 +125,10 @@ function getFolderHref(fullPath: string) {
         autocomplete="off"
         aria-label="Поиск по названию и имени файла"
       />
-      <button id="sidebar-search-clear" class="search-clear" type="button" aria-label="Очистить поиск" hidden>×</button>
+      <button id="sidebar-search-clear" class="search-clear" type="button" aria-label="Очистить поиск" hidden><Icon name="x-mark" /></button>
     </span>
     <button id="sort-date-btn" class="sort-btn" title="Новые сверху" aria-label="Новые сверху" aria-pressed="false" data-label="новые">
-      <span class="sort-icon" aria-hidden="true">↓</span>
+      <span class="sort-icon" aria-hidden="true"><Icon name="arrow-down" /></span>
     </button>
   </div>
   <p id="sidebar-empty" class="sidebar-empty" role="status" hidden>ничего не найдено. Ищу по названию и имени файла, попробуй другое слово</p>
@@ -200,7 +201,7 @@ function getFolderHref(fullPath: string) {
           {node.kind === 'folder' ? (
             <details open={isOnActivePath(node.fullPath || '')} data-default-open={isOnActivePath(node.fullPath || '') ? 'true' : 'false'}>
               <summary class="contrast">
-                <span class="ascii-icon folder">▸</span>
+                <span class="ascii-icon folder"><Icon name="chevron-right" /></span>
                 <span class:list={['folder-link', { active: isActive(getFolderHref(node.fullPath || '')) }]}>{node.name}/</span>
               </summary>
               <ul class="sortable-list">
@@ -238,14 +239,14 @@ function getFolderHref(fullPath: string) {
           const icon = sortBtn.querySelector('.sort-icon');
           if (icon) {
             if (sortOrder === 'none') {
-              icon.textContent = '↕';
+              icon.innerHTML = '<svg class="icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" d="M3 7.5 7.5 3m0 0L12 7.5M7.5 3v13.5m13.5 0L16.5 21m0 0L12 16.5m4.5 4.5V7.5"/></svg>';
               sortBtn.setAttribute('title', 'По разделам и имени');
               sortBtn.setAttribute('aria-label', 'По разделам и имени');
               sortBtn.setAttribute('aria-pressed', 'true');
               sortBtn.classList.add('active');
               sortBtn.setAttribute('data-label', 'по имени');
             } else if (sortOrder === 'asc') {
-              icon.textContent = '↑';
+              icon.innerHTML = '<svg class="icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" d="M12 19.5v-15m0 0-6.75 6.75M12 4.5l6.75 6.75"/></svg>';
               sortBtn.setAttribute('title', 'Старые сверху');
               sortBtn.setAttribute('aria-label', 'Старые сверху');
               sortBtn.setAttribute('aria-pressed', 'true');
@@ -320,6 +321,7 @@ function getFolderHref(fullPath: string) {
 </nav>
 
 <script>
+  import { iconSvg, type IconName } from '../utils/icons';
   document.addEventListener('DOMContentLoaded', () => {
     const searchInput = document.getElementById('sidebar-search') as HTMLInputElement;
     const clearBtn = document.getElementById('sidebar-search-clear') as HTMLButtonElement | null;
@@ -458,14 +460,14 @@ function getFolderHref(fullPath: string) {
     let sortOrder: SortOrder = (localStorage.getItem('sidebar-sort-v2') as SortOrder) || 'desc';
     const sortIcon = sortBtn.querySelector('.sort-icon') as HTMLSpanElement;
     const sortStates: Record<SortOrder, { icon: string; title: string; label: string }> = {
-      'none': { icon: '↕', title: 'По разделам и имени', label: 'по имени' },
-      'desc': { icon: '↓', title: 'Новые сверху', label: 'новые' },
-      'asc':  { icon: '↑', title: 'Старые сверху', label: 'старые' },
+      'none': { icon: 'arrows-up-down', title: 'По разделам и имени', label: 'по имени' },
+      'desc': { icon: 'arrow-down', title: 'Новые сверху', label: 'новые' },
+      'asc':  { icon: 'arrow-up', title: 'Старые сверху', label: 'старые' },
     };
 
     function updateSortUI() {
       const state = sortStates[sortOrder];
-      sortIcon.textContent = state.icon;
+      sortIcon.innerHTML = iconSvg(state.icon as IconName);
       sortBtn!.setAttribute('title', state.title);
       sortBtn!.setAttribute('aria-label', state.title);
       // Умолчание «новые сверху» не подсвечивается: зелёный только у отличия от него
