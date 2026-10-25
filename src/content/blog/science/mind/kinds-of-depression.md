@@ -13,7 +13,23 @@ draft: false
 
 Депрессивный эпизод в МКБ-11 описан так: одновременно пять или больше симптомов, большую часть дня почти каждый день, не меньше двух недель, и обязательно хотя бы один симптом из аффективной группы. [МКБ-11](https://icd.who.int/browse/2025-01/mms/en#76398729) Тот же критерий приведён в руководстве ВОЗ по клиническим описаниям 2024 года. [ВОЗ, 2024](https://iris.who.int/handle/10665/375767) В исследовании 2023 года, где создавали опросник по этим критериям, он приведён по английскому тексту ВОЗ. [Авторы, 2023](https://doi.org/10.1002/jclp.23446) В русском тексте МКБ-11 тот же порог: «который длится не менее двух недель». [МКБ-11, русская версия](https://icd.who.int/browse/2025-01/mms/ru#578635574)
 
+<details>
+<summary>Английский оригинал и мой перевод: количество симптомов</summary>
+
+<p>Оригинал (<a href="https://icd.who.int/browse/2025-01/mms/en#76398729">МКБ-11, английский текст</a>): “The concurrent presence of at least five of the following characteristic symptoms occurring most of the day, nearly every day during a period lasting at least 2 weeks. At least one symptom from the Affective cluster must be present.”</p>
+<p>Мой перевод: «Одновременно присутствуют не менее пяти из перечисленных характерных симптомов. Они беспокоят большую часть дня почти каждый день в течение не менее двух недель. Обязательно должен быть хотя бы один симптом из аффективной группы.»</p>
+
+</details>
+
 Сниженное настроение бывает нормальной реакцией на тяжёлые события: развод, потерю работы. Такое случается часто. Эпизод от такой реакции отличают тяжестью, набором симптомов и длительностью. [МКБ-11](https://icd.who.int/browse/2025-01/mms/en#76398729) После смерти близкого эпизод не ставят, если горе остаётся нормальным: в первые полгода после утраты, а дольше, если так принято в культуре. [МКБ-11](https://icd.who.int/browse/2025-01/mms/en#76398729)
+
+<details>
+<summary>Английский оригинал и мой перевод: норма и горе</summary>
+
+<p>Оригинал (<a href="https://icd.who.int/browse/2025-01/mms/en#76398729">МКБ-11, английский текст</a>): “Some depression of mood is a normal reaction to severe adverse life events and problems (e.g., divorce, job loss), and is common in the community. A Depressive Episode is differentiated from this common experience by the severity, range, and duration of symptoms.” Про горе: “A Depressive Episode should not be considered to be present if the individual is exhibiting normal grief symptoms, including some level of depressive symptoms, and the individual has experienced the death of a loved one within the past 6 months, or longer if a more extended period of bereavement is consistent with the normative response for grieving within the individual’s religious and cultural context.”</p>
+<p>Мой перевод: «Сниженное настроение бывает нормальной реакцией на тяжёлые неблагоприятные события и проблемы, например развод или потерю работы, и встречается в популяции часто. Депрессивный эпизод отличают от этого распространённого опыта тяжестью, набором и длительностью симптомов.» Про горе: «Депрессивный эпизод не ставят, если симптомы горя нормальны, в том числе есть какая-то степень депрессивных симптомов, и если близкий человек умер в течение последних 6 месяцев. Срок может быть больше, если такой период горя соответствует норме в религиозном и культурном контексте человека.»</p>
+
+</details>
 
 ## Один эпизод или повторяющийся
 
@@ -25,6 +41,14 @@ draft: false
 
 В МКБ-11 её называют Dysthymic disorder (6A72). Это устойчиво сниженное настроение два года и больше, большую часть дня и в большинстве дней. В первые два года не было двухнедельного периода, который подходил бы под эпизод, и не было перерывов без симптомов дольше двух месяцев. [МКБ-11](https://icd.who.int/browse/2025-01/mms/en#810797047)
 
+<details>
+<summary>Английский оригинал и мой перевод: двухнедельные и двухмесячные правила для дистимии</summary>
+
+<p>Оригинал (<a href="https://icd.who.int/browse/2025-01/mms/en#810797047">МКБ-11, английский текст</a>): “During the first 2 years of the disorder, there has never been a 2-week period during which the number and duration of symptoms were sufficient to meet the diagnostic requirements for a Depressive Episode.” “…there have never been any prolonged symptom-free periods (e.g., lasting 2 months or more) since the onset of the disorder.”</p>
+<p>Мой перевод: «В первые два года расстройства не было ни одного двухнедельного периода, в который число и длительность симптомов были бы достаточными для депрессивного эпизода.» «С начала расстройства не было длительных периодов без симптомов, например дольше двух месяцев.»</p>
+
+</details>
+
 Отличают её от одиночного эпизода по числу симптомов и по течению: хроническое состояние устойчиво, а эпизод ограничен по времени. [МКБ-11](https://icd.who.int/browse/2025-01/mms/en#578635574)
 
 ## Тревожная депрессия
@@ -33,9 +57,25 @@ draft: false
 
 Если реакция на стресс подходит под критерии эпизода, ставят эпизод, а не адаптационное расстройство, даже когда стрессор хорошо виден. [МКБ-11](https://icd.who.int/browse/2025-01/mms/en#578635574) Адаптационное расстройство обычно начинается в течение месяца после стрессора, хотя возможно и более позднее начало. Его длительность сильно различается. [ВОЗ, 2024](https://iris.who.int/handle/10665/375767)
 
+<details>
+<summary>Английский оригинал и мой перевод: адаптационное расстройство</summary>
+
+<p>Оригинал (<a href="https://iris.who.int/handle/10665/375767">ВОЗ, клинические описания МКБ-11 2024, английский текст</a>): “Onset of adjustment disorder usually occurs within 1 month after exposure to a stressful life event (i.e. illness, marital distress). However, onset can occur after a longer delay (e.g. 3 months after exposure).” “The intensity and duration of adjustment disorder varies widely.”</p>
+<p>Мой перевод: «Начало адаптационного расстройства обычно наступает в течение 1 месяца после стрессового события, например болезни или семейного конфликта. Но начало может быть позже, например через 3 месяца после события. Интенсивность и длительность адаптационного расстройства сильно различаются.»</p>
+
+</details>
+
 ## Насколько тяжело
 
 В МКБ-11 тяжесть описана через то, сколько симптомов и насколько сильных. При лёгком эпизоде ни один симптом не выражен сильно, но в одной или нескольких сферах жизни бывает трудно. При среднем несколько симптомов выражены заметно или много симптомов послабее, и трудности заметны в нескольких сферах. При тяжёлом большинство симптомов заметны или меньшее число выражено сильно, и трудности в большинстве сфер жизни. [МКБ-11](https://icd.who.int/browse/2025-01/mms/en#76398729)
+
+<details>
+<summary>Английский оригинал и мой перевод: степени тяжести</summary>
+
+<p>Оригинал (<a href="https://icd.who.int/browse/2025-01/mms/en#76398729">МКБ-11, английский текст</a>): “Mild Depressive Episode: None of the symptoms of a Depressive Episode should be present to an intense degree… has some difficulty in continuing to function in one or more domains… There are no delusions or hallucinations during the episode.” “Moderate Depressive Episode… Several symptoms of a Depressive Episode are present to a marked degree, or a large number of depressive symptoms of lesser severity are present overall… considerable difficulty functioning in multiple domains.” “Severe Depressive Episode… Many or most symptoms of a Depressive Episode are present to a marked degree, or a smaller number of symptoms are present and manifest to an intense degree… serious difficulty continuing to function in most domains.”</p>
+<p>Мой перевод: лёгкий эпизод: «Ни один симптом не выражен в сильной степени. Человеку обычно трудно из-за симптомов, и в одной или нескольких сферах жизни есть некоторые трудности. Бреда и галлюцинаций в эпизоде нет.» Средний: «Несколько симптомов выражены заметно, или много симптомов выражены слабее. Человеку обычно сильно трудно функционировать во многих сферах.» Тяжёлый: «Большинство симптомов выражены заметно, или меньшее число симптомов выражено сильно. Человеку серьёзно трудно продолжать привычную деятельность в большинстве сфер.»</p>
+
+</details>
 
 РОП считает иначе: по числу симптомов. Лёгкий эпизод: два или три основных и два или больше дополнительных. Средний: два или три основных и три или больше дополнительных. Тяжёлый: три основных и четыре или больше дополнительных. [РОП, таблица 1](https://psychiatr.ru/download/6271?view=1) Эти цифры относятся к системе МКБ-10, которой РОП пользуется, и их нельзя переносить на МКБ-11.
 
@@ -45,17 +85,41 @@ draft: false
 
 В МКБ-11 есть спецификатор «с меланхолией» (6A80.3). Он ставится, если в худший период несколько из перечисленного: ангедония, отсутствие эмоциональной реактивности, раннее пробуждение за два часа и больше до обычного, утреннее ухудшение, выраженная психомоторная заторможенность или возбуждение, выраженная потеря аппетита или веса. [МКБ-11](https://icd.who.int/browse/2025-01/mms/en#578635574)
 
+<details>
+<summary>Английский оригинал и мой перевод: меланхолия</summary>
+
+<p>Оригинал (<a href="https://icd.who.int/browse/2025-01/mms/en#578635574">МКБ-11, английский текст</a>): “current Depressive Episode with melancholia (6A80.3): several of the following symptoms have been present during the worst period of the current episode: Loss of interest or pleasure in most activities that are normally enjoyable to the individual (i.e., pervasive anhedonia); Lack of emotional reactivity (i.e., mood does not brighten even transiently with exposure); Terminal insomnia, i.e., waking in the morning 2 hours or more before the usual time; Depressive symptoms are worse in the morning; Marked psychomotor retardation or agitation; Marked loss of appetite or loss of weight.”</p>
+<p>Мой перевод: «Текущий эпизод с меланхолией (6A80.3): в худший период эпизода несколько из перечисленного. Потеря интереса или удовольствия почти от всех обычно приятных занятий (ангедония). Отсутствие эмоциональной реактивности: настроение не улучшается даже кратковременно в ответ на приятные события. Раннее пробуждение утром, за два часа и больше до обычного времени. Депрессивные симптомы хуже по утрам. Выраженная психомоторная заторможенность или возбуждение. Выраженная потеря аппетита или веса.»</p>
+
+</details>
+
 В РОП другой набор: соматический синдром депрессии по МКБ-10, если есть не меньше четырёх из восьми симптомов. Среди них снижение интереса, отсутствие обычной реакции на события, раннее пробуждение, утренняя тяжесть, психомоторные нарушения, заметное снижение аппетита, потеря веса пять процентов и больше за месяц, снижение либидо. [РОП](https://psychiatr.ru/download/6271?view=1) Эти два набора не совпадают, и смешивать их не стоит.
 
 ## Сезонная депрессия
 
 В МКБ-11 сезонный паттерн означает регулярный сезонный ритм начала и ремиссии эпизодов: большинство эпизодов совпадает с определённым временем года. Его отличают от эпизода, который случайно совпал с сезоном или вызван регулярным стрессом именно этого времени года, например сезонной безработицей. [МКБ-11](https://icd.who.int/browse/2025-01/mms/en#1194756772)
 
+<details>
+<summary>Английский оригинал и мой перевод: сезонный паттерн</summary>
+
+<p>Оригинал (<a href="https://icd.who.int/browse/2025-01/mms/en#1194756772">МКБ-11, английский текст</a>): “A substantial majority of Depressive Episodes should correspond with the seasonal pattern. A seasonal pattern should be differentiated from an episode that is coincidental with a particular season but predominantly related to a psychological stressor that regularly occurs at that time of the year (e.g., seasonal unemployment).”</p>
+<p>Мой перевод: «Большинство эпизодов должны совпадать с сезонным паттерном. Сезонный паттерн отличают от эпизода, который случайно совпал с определённым временем года, но в основном вызван психологическим стрессором, регулярно возникающим в это время года (например, сезонной безработицей).»</p>
+
+</details>
+
 РОП советует светотерапию прежде всего при сезонном аффективном расстройстве, подтипе повторяющейся депрессии, при котором эпизоды приходятся на осенне-зимний период. Уровень убедительности рекомендации B. [РОП](https://psychiatr.ru/download/6271?view=1)
 
 ## После родов
 
 В МКБ-11 эпизод, который начался во время беременности или примерно в течение шести недель после родов, дополнительно кодируется как 6E20 без психотических симптомов или 6E21 с ними. Лёгкую кратковременную симптоматику сразу после родов, так называемый baby blues, этим кодом не обозначают. [МКБ-11](https://icd.who.int/browse/2025-01/mms/en#578635574)
+
+<details>
+<summary>Английский оригинал и мой перевод: кратковременная симптоматика после родов</summary>
+
+<p>Оригинал (<a href="https://icd.who.int/browse/2025-01/mms/en#578635574">МКБ-11, английский текст</a>): “This designation should not be used to describe mild and transient depressive symptoms… which may occur soon after delivery (so-called postpartum blues).”</p>
+<p>Мой перевод: «Этот код не используют для описания лёгкой и кратковременной депрессивной симптоматики, которая может возникнуть сразу после родов (так называемый postpartum blues).»</p>
+
+</details>
 
 По данным ВОЗ, более 10% беременных и недавно родивших женщин переживают депрессию. [ВОЗ](https://www.who.int/news-room/fact-sheets/detail/depression) В РОП есть раздел о ведении депрессии во время беременности, отдельного раздела о послеродовой депрессии в этом документе нет. [РОП](https://psychiatr.ru/download/6271?view=1)
 
@@ -69,13 +133,37 @@ draft: false
 
 Депрессивный синдром от действия вещества или лекарства на нервную систему, включая отмену, диагностируют как вызванное веществом расстройство. Продолжающиеся нарушения после окончания физиологического действия оценивают отдельно. [МКБ-11](https://icd.who.int/browse/2025-01/mms/en#578635574)
 
+<details>
+<summary>Английский оригинал и мой перевод: вещество или лекарство</summary>
+
+<p>Оригинал (<a href="https://icd.who.int/browse/2025-01/mms/en#578635574">МКБ-11, английский текст</a>): “A depressive syndrome due to the effects of a substance or medication on the central nervous system (e.g., benzodiazepines), including withdrawal effects (e.g., from stimulants) should be diagnosed as Substance-Induced Mood Disorder rather than Single Episode Depressive Disorder.”</p>
+<p>Мой перевод: «Депрессивный синдром, вызванный действием вещества или лекарства на центральную нервную систему (например, бензодиазепинов), включая эффекты отмены (например, стимуляторов), диагностируют как вызванное веществом расстройство настроения, а не как одиночный депрессивный эпизод.»</p>
+
+</details>
+
 РОП предлагает проверять две вещи. Первая: ТТГ, свободный Т3 и свободный Т4 при первом выявленном эпизоде или повторяющейся депрессии, а также при клинических показаниях. Уровень убедительности рекомендации A. [РОП](https://psychiatr.ru/download/6271?view=1) Вторая: прием психоактивных веществ и лекарств перед эпизодом, а также осмотр кожи на следы инъекций. [РОП](https://psychiatr.ru/download/6271?view=1)
 
 ## Биполярность
 
 Биполярное расстройство часто начинается с депрессивного эпизода. Факторы, которые повышают риск перехода: более ранний возраст начала, семейный анамнез биполярного расстройства и психотические симптомы. [МКБ-11](https://icd.who.int/browse/2025-01/mms/en#578635574)
 
+<details>
+<summary>Английский оригинал и мой перевод: риск перехода к биполярности</summary>
+
+<p>Оригинал (<a href="https://icd.who.int/browse/2025-01/mms/en#578635574">МКБ-11, английский текст</a>): “Individuals with Bipolar Disorders often present initially with a Depressive Episode. Vulnerability factors associated with transition from a Depressive Disorder to a Bipolar Disorder include earlier age at onset, a family history of Bipolar Disorders, and the presence of psychotic symptoms.”</p>
+<p>Мой перевод: «Люди с биполярным расстройством часто впервые обращаются с депрессивным эпизодом. Факторы уязвимости, связанные с переходом от депрессивного расстройства к биполярному, включают более ранний возраст начала, семейный анамнез биполярного расстройства и наличие психотических симптомов.»</p>
+
+</details>
+
 Гипомания длится не меньше нескольких дней, мания не меньше недели, если лечение её не укоротило. Одна гипомания без других эпизодов не даёт диагноза расстройства настроения. [МКБ-11](https://icd.who.int/browse/2025-01/mms/en#76398729)
+
+<details>
+<summary>Английский оригинал и мой перевод: длительность эпизодов подъёма</summary>
+
+<p>Оригинал (<a href="https://icd.who.int/browse/2025-01/mms/en#76398729">МКБ-11, английский текст</a>): Hypomanic Episode: “…persisting for most of the day, nearly every day, for at least several days…” Manic Episode: “…during a period of at least 1 week, unless shortened by a treatment intervention.” “The occurrence of one or more Hypomanic Episodes in the absence of a history of other types of Mood Episodes (i.e., Manic, Depressive, or Mixed Episodes) is not a sufficient basis for a diagnosis of a Mood Disorder.”</p>
+<p>Мой перевод: гипоманиакальный эпизод: признаки держатся большую часть дня почти каждый день не меньше нескольких дней. Маниакальный эпизод: не меньше одной недели, если лечение не укоротило его. «Один или несколько гипоманиакальных эпизодов без других эпизодов настроения (маниакальных, депрессивных или смешанных) не дают достаточного основания для диагноза расстройства настроения.»</p>
+
+</details>
 
 РОП советует при первом или повторном депрессивном эпизоде целенаправленно спрашивать о маниакальных, гипоманиакальных и смешанных эпизодах в прошлом. [РОП](https://psychiatr.ru/download/6271?view=1) В РОП есть и оговорка: короткие эпизоды лёгкого приподнятого настроения сразу после депрессии не исключают повторяющегося расстройства. В критериях МКБ-11, которые я смотрел, такой оговорки нет. [РОП](https://psychiatr.ru/download/6271?view=1)
 
