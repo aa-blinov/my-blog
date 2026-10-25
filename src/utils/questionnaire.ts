@@ -41,7 +41,7 @@ export interface QuestionnaireResult {
   safetyFlag: boolean;
 }
 
-// answers: индекс пункта -> выбранный балл (0–3); пункты без ответа в массиве не учитываются
+// answers: индекс пункта -> выбранный балл (от 0 до 3); пункты без ответа в массиве не учитываются
 export function scoreQuestionnaire(data: QuestionnaireData, answers: (number | null)[]): QuestionnaireResult | null {
   if (answers.length !== data.items.length || answers.some((a) => a === null)) return null;
   const values = answers as number[];
