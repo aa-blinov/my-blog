@@ -10,6 +10,8 @@ import { maps } from '../../data/maps';
 import Picker from '../../components/Picker.astro';
 import Tools from '../../components/Tools.astro';
 import { pickers } from '../../data/pickers';
+import Questionnaire from '../../components/Questionnaire.astro';
+import { questionnaires } from '../../data/questionnaires';
 import type { MarkdownHeading } from 'astro';
 import { formatDate, readingMinutes, plural } from '../../utils/date';
 import { sortByDateDesc } from '../../utils/date';
@@ -141,6 +143,7 @@ const title = entry ? entry.data.title : (folderAbout?.data.title.replace(/:\s*Ð
         {entry.data.map && maps[entry.data.map] && <MindMap data={maps[entry.data.map]} />}
         {entry.data.picker && pickers[entry.data.picker] && <Picker data={pickers[entry.data.picker]} />}
         {entry.data.tools === 'antidepressants' && <Tools />}
+        {entry.data.questionnaire && questionnaires[entry.data.questionnaire] && <Questionnaire data={questionnaires[entry.data.questionnaire]} />}
       </div>
       {series && <SeriesNav series={series} entry={entry} where="foot" />}
       <ArticleFooter entry={entry} inSeries={!!series} />

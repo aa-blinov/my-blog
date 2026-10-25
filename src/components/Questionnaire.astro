@@ -1,0 +1,183 @@
+---
+import type { QuestionnaireData } from '../utils/questionnaire';
+
+interface Props {
+  data: QuestionnaireData;
+}
+
+const { data } = Astro.props;
+---
+
+<script>
+  import { scoreQuestionnaire, type QuestionnaireData } from '../utils/questionnaire';
+
+  // Один опросник на странице: ответы живут только в памяти вкладки, никуда не отправляются
+  function setup(root: HTMLElement) {
+    const dataEl = root.querySelector<HTMLScriptElement>('[data-qn-data]');
+    const form = root.querySelector<HTMLFormElement>('[data-qn-form]');
+    const result = root.querySelector<HTMLElement>('[data-qn-result]');
+    const urgent = root.querySelector<HTMLElement>('[data-qn-urgent]');
+    const reset = root.querySelector<HTMLButtonElement>('[data-qn-reset]');
+    if (!dataEl || !form || !result || !urgent || !reset) return;
+    root.querySelector('.qn-noscript')?.remove();
+
+    const data = JSON.parse(dataEl.textContent ?? '') as QuestionnaireData;
+    const answers: (number | null)[] = data.items.map(() => null);
+
+    const show = (box: HTMLElement, text: string) => {
+      box.textContent = text;
+      box.hidden = false;
+    };
+
+    const render = () => {
+      // Пункт о безопасности показываем сразу, не дожидаясь остальных ответов
+      const safety = answers[data.safetyIndex];
+      if (safety !== null && safety > 0) show(urgent, data.safetyText);
+      else urgent.hidden = true;
+
+      const res = scoreQuestionnaire(data, answers);
+      result.replaceChildren();
+      if (!res) {
+        const left = answers.filter((a) => a === null).length;
+        show(result, `Осталось ответить: ${left}. Результат появится, когда ответы будут на все пункты.`);
+        return;
+      }
+      const heading = document.createElement('h4');
+      heading.textContent = `Сумма: ${res.total} из ${res.max}. ${res.band.title}`;
+      const band = document.createElement('p');
+      band.textContent = res.band.text;
+      const screen = document.createElement('p');
+      const screenMax = data.screenCount * 3;
+      screen.textContent = `Короткий скрининг (первые ${data.screenCount} вопроса): ${res.screenTotal} из ${screenMax}. ${res.screenPositive ? `Порог ${data.screenCutoff} и больше достигнут.` : `Порог ${data.screenCutoff} и больше не достигнут.`}`;
+      result.append(heading, band, screen);
+    };
+
+    form.addEventListener('change', (event) => {
+      const input = event.target as HTMLInputElement;
+      const index = data.items.findIndex((_, i) => input.name === `${root.dataset.qnId}-${i}`);
+      if (index < 0) return;
+      answers[index] = Number(input.value);
+      render();
+    });
+
+    reset.addEventListener('click', () => {
+      form.reset();
+      answers.fill(null);
+      render();
+    });
+
+    render();
+  }
+
+  document.querySelectorAll<HTMLElement>('[data-qn]').forEach(setup);
+</script>
+
+<section class="qn" data-qn data-qn-id={`qn-${data.id}`} aria-labelledby={`qn-${data.id}-title`}>
+  <div class="pk-disclaimer pk-disclaimer-box">
+    <p class="pk-urgent-line" data-qn-urgent hidden></p>
+    <p>{data.disclaimer}</p>
+  </div>
+  <h3 id={`qn-${data.id}-title`}>{data.title}</h3>
+  <p>{data.intro}</p>
+  <p class="qn-noscript">Подсчёту нужен JavaScript. Без него сложите баллы: за каждый пункт от 0 до 3, сумма от 0 до {data.items.length * 3}. Порог для разговора с врачом 10 баллов.</p>
+  <form class="qn-form" data-qn-form>
+    <p class="qn-instruction">{data.instruction}</p>
+    {data.items.map((item, i) => (
+      <fieldset class="qn-item">
+        <legend><span class="qn-num">{i + 1}.</span> {item.text}</legend>
+        <div class="qn-options">
+          {data.scale.map((label, v) => (
+            <label class="qn-opt">
+              <input type="radio" name={`qn-${data.id}-${i}`} value={v} />
+              <span class="qn-score">{v}</span>
+              <span>{label}</span>
+            </label>
+          ))}
+        </div>
+      </fieldset>
+    ))}
+  </form>
+  <div class="qn-result" aria-live="polite" data-qn-result></div>
+  <p><button type="button" class="secondary outline" data-qn-reset>Сбросить ответы</button></p>
+  <script type="application/json" data-qn-data set:html={JSON.stringify(data)}></script>
+
+  <p class="qn-sources">
+    Источники:{' '}
+    {data.sources.map((s, i) => (
+      <>{i > 0 && ', '}<a href={s.url}>{s.title}</a></>
+    ))}.
+  </p>
+</section>
+
+<style>
+  .qn {
+    margin-block: var(--app-spacing-lg);
+  }
+
+  .qn h3 {
+    margin-bottom: var(--app-spacing-xs);
+  }
+
+  .qn-item {
+    min-width: 0;
+    margin: 0 0 var(--app-spacing-md);
+    padding: 0;
+    border: 0;
+  }
+
+  .qn-item legend {
+    float: none;
+    width: 100%;
+    margin-bottom: var(--app-spacing-xs);
+    padding: 0;
+    font-weight: 600;
+  }
+
+  .qn-options {
+    display: grid;
+    gap: var(--app-spacing-xs);
+  }
+
+  @media (min-width: 40em) {
+    .qn-options {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  .qn-opt {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: var(--app-touch-target);
+    margin: 0;
+    padding: 0 0.6rem;
+    border: 1px solid var(--pico-muted-border-color);
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  .qn-opt:has(input:checked) {
+    border-color: var(--pico-primary);
+  }
+
+  .qn-opt input {
+    margin: 0;
+  }
+
+  .qn-score {
+    min-width: 1ch;
+    font-weight: 700;
+  }
+
+  .qn-result {
+    margin-block: var(--app-spacing-md);
+  }
+
+  .qn-result h4 {
+    margin-bottom: var(--app-spacing-xs);
+  }
+
+  .qn-sources {
+    font-size: var(--app-font-sm);
+  }
+</style>

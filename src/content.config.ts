@@ -14,6 +14,7 @@ const blog = defineCollection({
     map: z.string().optional(), // интерактивная карта из src/data/maps/<имя>.ts под текстом статьи
     picker: z.string().optional(), // подборщик из src/data/pickers/<имя>.ts под текстом статьи
     tools: z.string().optional(), // набор инструментов из src/components/Tools.astro под текстом статьи
+    questionnaire: z.string().optional(), // скрининговый опросник из src/data/questionnaires/<имя>.ts под текстом статьи
   }),
 });
 
