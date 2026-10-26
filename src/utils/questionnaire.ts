@@ -23,11 +23,11 @@ export interface QuestionnaireData {
   instruction: string;
   scale: string[];
   items: QuestionnaireItem[];
-  screenCount: number; // сколько первых пунктов образуют короткий скрининг
-  screenCutoff: number; // порог короткого скрининга
-  safetyIndex: number; // номер пункта о мыслях о самоубийстве или самоповреждении
+  screenCount?: number; // сколько первых пунктов образуют короткий скрининг, если он есть
+  screenCutoff?: number; // порог короткого скрининга
+  safetyIndex?: number; // номер пункта о мыслях о самоубийстве или самоповреждении, если он есть
   bands: QuestionnaireBand[];
-  safetyText: string;
+  safetyText?: string; // текст при положительном ответе на пункт о безопасности
   disclaimer: string;
   sources: QuestionnaireSource[];
 }
@@ -36,8 +36,8 @@ export interface QuestionnaireResult {
   total: number;
   max: number;
   band: QuestionnaireBand;
-  screenTotal: number;
-  screenPositive: boolean;
+  screenTotal: number | null;
+  screenPositive: boolean | null;
   safetyFlag: boolean;
 }
 
@@ -47,13 +47,14 @@ export function scoreQuestionnaire(data: QuestionnaireData, answers: (number | n
   const values = answers as number[];
   const total = values.reduce((sum, v) => sum + v, 0);
   const band = data.bands.find((b) => total >= b.from && total <= b.to) ?? data.bands[data.bands.length - 1];
-  const screenTotal = values.slice(0, data.screenCount).reduce((sum, v) => sum + v, 0);
+  const hasScreen = data.screenCount !== undefined && data.screenCutoff !== undefined;
+  const screenTotal = hasScreen ? values.slice(0, data.screenCount).reduce((sum, v) => sum + v, 0) : null;
   return {
     total,
     max: data.items.length * 3,
     band,
     screenTotal,
-    screenPositive: screenTotal >= data.screenCutoff,
-    safetyFlag: values[data.safetyIndex] > 0,
+    screenPositive: screenTotal === null ? null : screenTotal >= (data.screenCutoff as number),
+    safetyFlag: data.safetyIndex !== undefined && values[data.safetyIndex] > 0,
   };
 }

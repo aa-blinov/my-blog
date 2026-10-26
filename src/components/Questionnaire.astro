@@ -31,8 +31,8 @@ const { data } = Astro.props;
 
     const render = () => {
       // Пункт о безопасности показываем сразу, не дожидаясь остальных ответов
-      const safety = answers[data.safetyIndex];
-      if (safety !== null && safety > 0) show(urgent, data.safetyText);
+      const safety = data.safetyIndex === undefined ? null : answers[data.safetyIndex];
+      if (safety !== null && safety > 0 && data.safetyText) show(urgent, data.safetyText);
       else urgent.hidden = true;
 
       const res = scoreQuestionnaire(data, answers);
@@ -46,10 +46,14 @@ const { data } = Astro.props;
       heading.textContent = `Сумма: ${res.total} из ${res.max}. ${res.band.title}`;
       const band = document.createElement('p');
       band.textContent = res.band.text;
-      const screen = document.createElement('p');
-      const screenMax = data.screenCount * 3;
-      screen.textContent = `Короткий скрининг (первые ${data.screenCount} вопроса): ${res.screenTotal} из ${screenMax}. ${res.screenPositive ? `Порог ${data.screenCutoff} и больше достигнут.` : `Порог ${data.screenCutoff} и больше не достигнут.`}`;
-      result.append(heading, band, screen);
+      const parts: HTMLElement[] = [heading, band];
+      if (res.screenTotal !== null && res.screenPositive !== null && data.screenCount !== undefined) {
+        const screen = document.createElement('p');
+        const screenMax = data.screenCount * 3;
+        screen.textContent = `Короткий скрининг (первые ${data.screenCount} вопроса): ${res.screenTotal} из ${screenMax}. ${res.screenPositive ? `Порог ${data.screenCutoff} и больше достигнут.` : `Порог ${data.screenCutoff} и больше не достигнут.`}`;
+        parts.push(screen);
+      }
+      result.append(...parts);
     };
 
     form.addEventListener('change', (event) => {
