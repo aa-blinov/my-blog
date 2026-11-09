@@ -1,6 +1,6 @@
 ---
 name: blinov.monster
-description: A quiet personal blog with a chronological archive, one monospaced family and a single green accent.
+description: A quiet personal blog with a chronological archive, Literata prose, a monospaced interface and one green accent.
 colors:
   monster-green: "#95d600"
   monster-green-deep: "#7ab800"
@@ -42,7 +42,7 @@ typography:
     fontWeight: 700
     lineHeight: 1.3
   body:
-    fontFamily: "JetBrains Mono Variable, JetBrains Mono, Cascadia Code, Consolas, monospace"
+    fontFamily: "Literata Variable, Literata, Georgia, serif"
     fontSize: "1rem"
     fontWeight: 400
     lineHeight: 1.6
@@ -115,10 +115,10 @@ components:
 
 ## Overview
 
-The site is a personal reading room with a compact top navigation. Its single
-monospaced family recalls an editor, while a centered column gives the text
-its own space. The archive is a chronological list with a date at the right
-of each title.
+The site is a personal reading room with a compact top navigation. JetBrains
+Mono shapes the navigation and hierarchy; Literata carries the prose in the
+centered reading column. The archive is a chronological list with a date at
+the right of each title.
 
 Monster Green marks the current page, focus and hovered links. A hairline
 separates the header from the page. The header keeps navigation visible and
@@ -195,16 +195,17 @@ the text takes it from its parent with `color: inherit`.
 
 ## Typography
 
-One family does the whole site: JetBrains Mono Variable, with the fallbacks
-`'JetBrains Mono', 'Cascadia Code', Consolas, monospace`. It is shipped with
-the site through `@fontsource-variable/jetbrains-mono`, with the latin,
-latin-ext, cyrillic, cyrillic-ext, greek and vietnamese subsets, the weight
-axis from 100 to 800 and `font-display: swap`. The Cyrillic subsets are not
-optional, since the articles are in Russian.
+JetBrains Mono Variable, with the fallbacks `'JetBrains Mono', 'Cascadia
+Code', Consolas, monospace`, carries headings, navigation, metadata, controls,
+code and interactive blocks. It is shipped through
+`@fontsource-variable/jetbrains-mono` with Latin and Cyrillic subsets.
 
-No proportional family appears anywhere: not in a heading, not in a button,
-not in the footer. The hierarchy is built from weight, 400 and 700, and from
-size.
+Literata Variable carries continuous article prose, including paragraphs,
+lists, quotations and tables. It is shipped through
+`@fontsource-variable/literata`; the Russian Cyrillic subset is preloaded and
+the matching Latin subset loads when needed. The body uses Literata's normal
+and italic styles, while headings and structural labels stay monospaced.
+There are two families, each with a fixed role.
 
 Page type is set in the tokens of the "Tokens and icons" section. Inside a component a
 size may be written in `em` so that it follows the text around it: a disclosure
@@ -219,7 +220,7 @@ sits in a component that sets its own text size.
   page, on `/blog/` and on a folder page. Inside an article the scale is the
   article's own: h2 1.35em, h3 1.15em, h4 1em.
 - **Title, 1.15rem, 700, 1.3**: the title of an article in a list.
-- **Body, 1rem, 400, 1.6**: the text of an article.
+- **Body, 1rem, 400, 1.6**: article prose in Literata.
 - **Control, 0.8rem, 400**: the narrow-screen navigation, copy button,
   dates in the archive, series line and reading time. The search field uses
   the body size.
@@ -237,8 +238,9 @@ wide. The zoom factor multiplies it.
 
 ### Named rules
 
-**The One Typeface Rule.** The hierarchy is built from weight and size, never
-from a change of family.
+**The Two Typeface Rule.** Literata is for continuous prose. JetBrains Mono
+is for headings, interface, code and structured data. Do not add a third
+family.
 
 **The Reader Scale Rule.** One root value scales the article and the interface.
 
@@ -250,7 +252,8 @@ rule that sits higher in the cascade.
 ## Layout
 
 A single centered reading column has a normal maximum width of `45em`
-including side padding, roughly 72 characters of JetBrains Mono for the text.
+including side padding. The visible line length follows Literata's glyph
+width and the reader's selected text size.
 Using `em` avoids shifts while the font loads. The other width settings are
 `40em` and `74em`, and the browser remembers the selected width.
 
@@ -385,8 +388,8 @@ picker (`+`, `!`, `~`, `×`), which are the legend itself.
 
 ## Do's and Don'ts
 
-- **Do** set everything in JetBrains Mono, the headings, the buttons, the
-  dates and the footer included.
+- **Do** set article prose in Literata, with JetBrains Mono for headings,
+  buttons, dates, navigation, code and diagrams.
 - **Do** use Monster Green on states and on links: the active page, the
   focus, the hover, the copy.
 - **Do** use Monster Green Ink for green text in the light theme, and check
@@ -418,5 +421,5 @@ picker (`+`, `!`, `~`, `×`), which are the legend itself.
   no frame and no fill.
 - **Don't** replace the text marks `▸`, `→` and `~` with graphics, and
   don't put emoji in the interface.
-- **Don't** add a proportional family for the sake of the headings.
+- **Don't** add a third type family.
 - **Don't** make the reader scroll a block of code sideways.

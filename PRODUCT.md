@@ -44,9 +44,10 @@ and the reader comes back for another.
 
 ## Positioning
 
-A personal blog with a compact chronological archive, monospaced typography
-and a quiet reading column. Search transliterates Russian queries to find
-Latin file names. The "part N of M" line puts a series in chapter order.
+A personal blog with a compact chronological archive, Literata article text,
+monospaced navigation and a quiet reading column. Search transliterates
+Russian queries to find Latin file names. The "part N of M" line puts a
+series in chapter order.
 
 The content is a difference in itself. The author writes agents himself, takes
 the industry around language models apart from the inside, and backs every
@@ -69,9 +70,10 @@ opinion and the guideline are kept apart.
   `mgmt`, `projects` and `science`, the last with subfolders. Most of them
   carry an `about-<section>.md`.
 - Stack: Astro 7 with the content layer and the glob loader, Pico CSS, JetBrains
-  Mono, Shiki for the code, Mermaid for the diagrams, rendered in the
-  browser by `src/scripts/theme.js`. A static build, deployed to GitHub Pages
-  by GitHub Actions on Node 22, with an `astro check` step before the build.
+  Mono for interface and code, Literata for article prose, Shiki for the code,
+  Mermaid for the diagrams, rendered in the browser by `src/scripts/theme.js`.
+  A static build, deployed to GitHub Pages by GitHub Actions on Node 22, with
+  an `astro check` step before the build.
 - Publication: the author writes in an editor, commits and pushes, and the
   article appears after the build.
 - The author writes cycles of related articles, nine of them about how his
@@ -135,8 +137,8 @@ Deliberately not true, and worth knowing before a change:
 
 Pinned by the author
 
-- The monospaced JetBrains Mono and the austerity: only text and structure, no
-  visual noise.
+- JetBrains Mono for navigation and structure, Literata for prose, and the
+  austerity: only text and structure, no visual noise.
 - The light and dark themes and reader-controlled text size.
 
 Name: "Личный сайт Александра Блинова", Alexander Blinov's personal site. The

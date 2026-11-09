@@ -7,6 +7,7 @@ import '../styles/global.css';
 // Тот же файл, что берёт CSS fontsource: Vite отдаёт один хешированный адрес, предзагрузка не качает шрифт дважды
 import monoLatin from '@fontsource-variable/jetbrains-mono/files/jetbrains-mono-latin-wght-normal.woff2?url';
 import monoCyrillic from '@fontsource-variable/jetbrains-mono/files/jetbrains-mono-cyrillic-wght-normal.woff2?url';
+import literataCyrillic from '@fontsource-variable/literata/files/literata-cyrillic-wght-normal.woff2?url';
 
 interface Props {
   title: string;
@@ -29,6 +30,7 @@ const desc = description ?? SITE.description;
     <meta name="color-scheme" content="light dark" />
     <link rel="preload" href={monoCyrillic} as="font" type="font/woff2" crossorigin />
     <link rel="preload" href={monoLatin} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={literataCyrillic} as="font" type="font/woff2" crossorigin />
     <link rel="icon" type="image/svg+xml" href={`${BASE}favicon.svg`} />
     <title>{fullTitle}</title>
     <meta name="description" content={desc} />
