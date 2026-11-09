@@ -1,15 +1,14 @@
 ---
-import { formatDate, excerpt, readingMinutes, plural } from '../utils/date';
+import { formatDate, readingMinutes, plural } from '../utils/date';
 import { BASE } from '../config';
 
 interface Props {
   posts: { id: string; body?: string; data: { title: string; date: Date; section?: string; summary?: string; part?: number } }[];
   numbered?: boolean; // серия: номер части перед датой
-  excerpts?: boolean; // главная: первая строка текста под заголовком
   level?: 2 | 3; // уровень заголовка статьи: 2, когда над списком нет своего h2, иначе после h1 сразу h3
 }
 
-const { posts, numbered = false, excerpts = false, level = 3 } = Astro.props;
+const { posts, numbered = false, level = 3 } = Astro.props;
 const Heading = level === 2 ? 'h2' : 'h3';
 ---
 
@@ -30,7 +29,7 @@ const Heading = level === 2 ? 'h2' : 'h3';
             {entry.data.title}
           </a>
         </Heading>
-        {entry.data.summary ? <p class="summary">{entry.data.summary}</p> : excerpts && entry.body && <p class="summary">{excerpt(entry.body)}</p>}
+        {entry.data.summary && <p class="summary">{entry.data.summary}</p>}
       </div>
     ))
   )}

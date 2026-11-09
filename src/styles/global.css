@@ -28,14 +28,11 @@
   --app-primary-selection-opacity-dark: 0.2;
 
   /* Layout */
-  --app-navbar-desktop-width: 64px;
-  --app-navbar-desktop-button: 40px;
-  --app-navbar-mobile-height: 48px;
   --app-scroll-offset: var(--app-spacing-xl);
-  --app-navbar-mobile-button: 44px;
-  --app-sidebar-width: clamp(300px, 19rem, 400px);
-  --app-main-max-width: 55.2em; /* 92 знака JetBrains Mono (0.6em на знак), ~85 в строке. В em, а не ch: ch меряется по запасному шрифту, пока основной грузится, и колонка дёргалась */
-  --app-content-padding-top-mobile: 52px;
+  --app-reading-measure: 45em;
+  --app-main-max-width: var(--app-reading-measure);
+  --app-page-gutter-start: max(var(--app-spacing), env(safe-area-inset-left));
+  --app-page-gutter-end: max(var(--app-spacing), env(safe-area-inset-right));
 
   /* Spacing */
   --app-spacing-xs: 0.15rem;
@@ -44,7 +41,6 @@
   --app-spacing: 1rem;
   --app-spacing-lg: 1.5rem;
   --app-spacing-xl: 2rem;
-  --app-spacing-page: 2rem;
   --app-spacing-2xl: 3rem;
   --app-spacing-3xl: 4rem;
 
@@ -74,8 +70,6 @@
   --app-radius-xs: 3px;
   --app-radius-sm: 4px;
   --app-z-navbar: 1000;
-  --app-z-sidebar-overlay: 999;
-  --app-z-navbar-desktop: 100;
   --app-z-code-copy: 10;
   --app-transition: 0.2s ease;
 
@@ -222,39 +216,24 @@ html::-webkit-scrollbar-thumb:hover {
 }
 
 /* ==========================================================================
-   Layout: app-layout, main-container, main-grid, main
+   Layout: header and centered reading column
    ========================================================================== */
 
 .app-layout {
   display: flex;
+  flex-direction: column;
   min-height: 100vh;
-  min-width: 0;
-  overflow-x: clip;
-  width: 100%;
   background-color: var(--pico-background-color);
 }
 
-.main-container {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  min-height: 0;
-  min-width: 0;
-  overflow-x: clip;
-}
-
-.main-grid {
-  flex: 1;
-  min-width: 0;
-  overflow-x: clip;
-}
-
 main {
+  flex: 1;
   max-width: var(--app-main-max-width);
-  margin-inline: auto;
   width: 100%;
   min-width: 0;
-  overflow-x: clip;
+  margin-inline: auto;
+  padding-inline: var(--app-page-gutter-start) var(--app-page-gutter-end);
+  padding-top: var(--app-spacing-xl);
 }
 
 /* ==========================================================================
@@ -284,9 +263,9 @@ html[data-font="md"] { --app-zoom: 1.2; }
 html[data-font="lg"] { --app-zoom: 1.3; }
 html[data-font="xl"] { --app-zoom: 1.45; }
 :root { --app-zoom: 1.2; --app-article-font: 1rem; }
-/* Лупа в полях поиска: тот же контур, что в наборе иконок (icons.ts, magnifying-glass). Цвет приглушённый, видно в обеих темах */
+/* Контур лупы совпадает с иконкой magnifying-glass, цвет читается в обеих темах. */
 :root { --app-search-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%237d8590' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z'/%3E%3C/svg%3E"); }
-#sidebar-search, #nf-search, .mm .mm-search-input {
+#site-search-input, .mm .mm-search-input {
   background-image: var(--app-search-icon);
   background-repeat: no-repeat;
   background-position: 0.6em center;
@@ -380,9 +359,6 @@ main article .content h4 {
   margin-bottom: var(--app-spacing-md);
 }
 @media (max-width: 991px) {
-  :root {
-    --app-scroll-offset: calc(var(--app-navbar-mobile-height) + var(--app-spacing));
-  }
   .toc-title {
     min-height: var(--app-touch-target);
   }
@@ -423,113 +399,8 @@ pre, code {
 }
 
 /* ==========================================================================
-   Desktop media (min-width: 992px)
+   Meta, highlight and code blocks
    ========================================================================== */
-
-@media (min-width: 992px) {
-  .app-layout {
-    padding-left: var(--app-navbar-desktop-width);
-  }
-  .main-container {
-    background-image: linear-gradient(to right,
-      transparent calc(var(--app-spacing-page) + var(--app-sidebar-width)),
-      var(--pico-muted-border-color) calc(var(--app-spacing-page) + var(--app-sidebar-width)),
-      var(--pico-muted-border-color) calc(var(--app-spacing-page) + var(--app-sidebar-width) + 1px),
-      transparent calc(var(--app-spacing-page) + var(--app-sidebar-width) + 1px));
-  }
-  .main-grid {
-    display: grid;
-    grid-template-columns: var(--app-sidebar-width) minmax(0, 1fr);
-    gap: 0;
-    padding: var(--app-spacing-page);
-  }
-  #layout-sidebar {
-    padding-right: var(--app-spacing-page);
-    /* Дерево остаётся на экране при чтении лонгрида и прокручивается само */
-    position: sticky;
-    top: 0;
-    align-self: start;
-    max-height: 100vh;
-    overflow-y: auto;
-    overscroll-behavior: contain;
-    scrollbar-width: thin;
-    padding-top: var(--app-spacing-md);
-    margin-top: calc(-1 * var(--app-spacing-md));
-    --sidebar-pad-top: var(--app-spacing-md); /* закреплённый поиск закрывает и эту полосу */
-  }
-  main {
-    padding-left: var(--app-spacing-page);
-  }
-}
-
-/* ==========================================================================
-   Mobile (max-width: 991px)
-   ========================================================================== */
-
-@media (max-width: 991px) {
-  .app-layout {
-    display: block;
-    min-height: 0;
-  }
-  .main-container {
-    display: block;
-    flex: none;
-    min-height: auto;
-    padding-top: var(--app-content-padding-top-mobile);
-  }
-  .main-grid {
-    flex: none;
-    min-height: auto;
-    padding: var(--app-spacing);
-    padding-left: max(var(--app-spacing), env(safe-area-inset-left));
-    padding-right: max(var(--app-spacing), env(safe-area-inset-right));
-    display: block;
-  }
-  #layout-sidebar.sidebar-hidden,
-  #layout-sidebar:not(.sidebar-shown) {
-    display: none;
-  }
-  #layout-sidebar.sidebar-shown {
-    display: block;
-    position: fixed;
-    top: var(--app-navbar-mobile-height);
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: var(--pico-background-color);
-    z-index: var(--app-z-sidebar-overlay);
-    padding: var(--app-spacing);
-    --sidebar-pad-top: var(--app-spacing);
-    overflow-y: auto;
-    overscroll-behavior-y: contain;
-    -webkit-overflow-scrolling: touch;
-    touch-action: pan-y;
-    padding-left: max(var(--app-spacing), env(safe-area-inset-left));
-    padding-right: max(var(--app-spacing), env(safe-area-inset-right));
-    padding-bottom: max(var(--app-spacing), env(safe-area-inset-bottom));
-    border-bottom: 1px solid var(--pico-muted-border-color);
-    margin: 0;
-  }
-}
-
-/* ==========================================================================
-   Sidebar nav, meta, highlight/code-block
-   ========================================================================== */
-
-.sidebar-nav ul {
-  list-style: none;
-  padding: 0;
-}
-.sidebar-nav li {
-  margin-bottom: 0;
-}
-.sidebar-nav a {
-  text-decoration: none;
-}
-.sidebar-nav .active {
-  color: var(--pico-primary);
-  font-weight: bold;
-}
 
 .meta {
   display: flex;
@@ -754,12 +625,6 @@ a.all-articles-link.post-title-link:hover {
   }
   .meta-file {
     display: inline;
-  }
-}
-/* 992 до 1199: дерево уже, колонке текста остаётся больше места (на 1024 было около 45 знаков) */
-@media (min-width: 992px) and (max-width: 1199px) {
-  :root {
-    --app-sidebar-width: clamp(240px, 16rem, 300px);
   }
 }
 @media (max-width: 991px) {
@@ -996,7 +861,7 @@ main article .content .post-list-item .post-title,
 }
 
 .section-heading {
-  scroll-margin-top: var(--app-scroll-offset); /* якоря разделов на /blog/ не прячутся под мобильной панелью */
+  scroll-margin-top: var(--app-scroll-offset); /* отступ при переходе к разделу */
   display: flex;
   flex-wrap: wrap; /* длинная крошка переносится, а не уходит за край телефона */
   align-items: center;
@@ -2611,12 +2476,12 @@ main article .content .pk-sub {
   white-space: nowrap;
 }
 
-/* Печать: статья без дерева, панели и футера, ссылки внешние с адресом, без зелёного и кнопок */
+/* Печать: статья без навигации и футера, ссылки внешние с адресом, без зелёного и кнопок */
 @media print {
-  .vertical-navbar, #layout-sidebar, .skip-link, footer, .bottom-nav, .search-clear, .code-copy-btn, .pk-jump, .pk-steps, .mm, .sort-btn, .toc-chevron, .ascii-icon {
+  .site-header, .skip-link, footer, .code-copy-btn, .pk-jump, .pk-steps, .mm, .toc-chevron, .ascii-icon {
     display: none !important;
   }
-  .app-layout, .main-container, .main-grid { display: block !important; }
+  .app-layout { display: block !important; }
   main { max-width: none !important; margin: 0 !important; padding: 0 !important; }
   body { color: #000 !important; background: #fff !important; font-size: 11pt; }
   a { color: inherit !important; text-decoration: underline; }

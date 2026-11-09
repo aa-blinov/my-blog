@@ -1,0 +1,108 @@
+---
+import { BASE } from '../config';
+import { formatDate, readingMinutes, plural } from '../utils/date';
+import { articleSummary } from '../utils/article-summary';
+import type { BlogEntry } from '../utils/series';
+
+interface Props {
+  posts: BlogEntry[];
+  showDetails?: boolean;
+}
+
+const { posts, showDetails = false } = Astro.props;
+const shortDate = new Intl.DateTimeFormat('ru-RU', { day: '2-digit', month: '2-digit', timeZone: 'UTC' });
+
+function readingLabel(entry: BlogEntry): string {
+  const minutes = readingMinutes(entry.body ?? '');
+  return `≈ ${minutes} ${plural(minutes, 'минута', 'минуты', 'минут')}`;
+}
+---
+
+{posts.length > 0 ? (
+  <ul class="chronology-list" role="list">
+    {posts.map((entry) => (
+      <li>
+        <a class="post-title-link chronology-link" href={`${BASE}blog/${entry.id}/`}>
+          <span class="chronology-title">{entry.data.title}</span>
+          <time datetime={formatDate(entry.data.date)}>{shortDate.format(entry.data.date)}</time>
+          {showDetails && (
+            <>
+              <span class="chronology-summary">{articleSummary(entry)}</span>
+              <span class="chronology-reading-time">{readingLabel(entry)}</span>
+            </>
+          )}
+        </a>
+      </li>
+    ))}
+  </ul>
+) : <p>Пока ничего нет.</p>}
+
+<style>
+  .chronology-list {
+    margin: 0;
+    padding: 0;
+    color: var(--pico-color);
+  }
+
+  .chronology-list li {
+    margin: 0;
+    list-style: none;
+  }
+
+  .chronology-list a {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-content: center;
+    align-items: baseline;
+    column-gap: var(--app-spacing);
+    row-gap: var(--app-spacing-xs);
+    padding-block: var(--app-spacing-sm);
+    color: inherit;
+  }
+
+  .chronology-title {
+    line-height: 1.45;
+    overflow-wrap: anywhere;
+    text-decoration: underline;
+    text-decoration-color: var(--pico-muted-border-color);
+    text-underline-offset: 0.2em;
+  }
+
+  .chronology-list a:is(:hover, :focus-visible) .chronology-title {
+    color: var(--pico-primary);
+    text-decoration-color: currentColor;
+  }
+
+  .chronology-list time {
+    color: var(--pico-muted-color);
+    font-size: var(--app-font-control);
+    white-space: nowrap;
+  }
+
+  .chronology-summary {
+    grid-column: 1;
+    color: var(--pico-muted-color);
+    font-size: var(--app-font-sm);
+    line-height: 1.45;
+  }
+
+  .chronology-reading-time {
+    grid-column: 2;
+    color: var(--pico-muted-color);
+    font-size: var(--app-font-control);
+    white-space: nowrap;
+  }
+
+  @media (max-width: 991px), (pointer: coarse) {
+    .chronology-list a {
+      min-height: var(--app-touch-target);
+    }
+  }
+
+  @media (max-width: 480px) {
+    .chronology-summary,
+    .chronology-reading-time {
+      grid-column: 1 / -1;
+    }
+  }
+</style>

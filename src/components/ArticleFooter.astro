@@ -4,6 +4,7 @@ import { sortByDateDesc } from '../utils/date';
 import { BASE, SITE, sectionTitle } from '../config';
 import PostList from './PostList.astro';
 import Arrow from './Arrow.astro';
+import { articleSummary } from '../utils/article-summary';
 
 interface Props {
   entry: CollectionEntry<'blog'>;
@@ -20,6 +21,8 @@ const top = entry.id.split('/')[0];
 const pool = inFolder.length >= 2 ? inFolder : all.filter((e) => e.id.startsWith(top + '/'));
 const poolFolder = inFolder.length >= 2 ? folder : top;
 const more = inSeries || isAbout(entry.id) ? [] : sortByDateDesc(pool).slice(0, 3);
+const featured = more[0];
+const featuredSummary = featured ? articleSummary(featured) : '';
 const folderName = poolFolder.split('/').pop()!;
 const about = (await getCollection('blog')).find((e) => e.id === `${poolFolder}/about-${folderName}`);
 const folderTitle = about?.data.title.replace(/:\s*Об этой секции$/, '') ?? sectionTitle(folderName);
@@ -27,6 +30,13 @@ const hasNotes = (await getCollection('notes')).some((n) => !n.data.draft);
 ---
 
 <aside class="article-footer" aria-label="После статьи">
+  {featured && (
+    <div class="article-recommendation" id="article-recommendation" hidden>
+      <p class="article-recommendation-label">Ещё по теме</p>
+      <a href={`${BASE}blog/${featured.id}/`} class="post-title-link">{featured.data.title}</a>
+      {featuredSummary && <p class="article-recommendation-summary">{featuredSummary}</p>}
+    </div>
+  )}
   {more.length > 0 && (
     <section class="more-in-section">
       <h2 class="section-heading">Ещё в разделе «{folderTitle}» <span class="section-slug">{poolFolder}/</span></h2>
@@ -47,3 +57,33 @@ const hasNotes = (await getCollection('notes')).some((n) => !n.data.draft);
     <a href={`${BASE}rss.xml`}>RSS</a>
   </p>
 </aside>
+
+<style>
+  .article-recommendation:not([hidden]) {
+    margin: var(--app-spacing-xl) 0;
+    padding-block: var(--app-spacing-md);
+    border-block: 1px solid var(--pico-muted-border-color);
+  }
+
+  .article-recommendation-label {
+    margin: 0 0 var(--app-spacing-xs);
+    color: var(--pico-muted-color);
+    font-size: var(--app-font-control);
+  }
+
+  .article-recommendation > a {
+    display: inline-block;
+    font-weight: 700;
+    text-decoration: underline;
+    text-decoration-color: var(--pico-muted-border-color);
+    text-underline-offset: 0.2em;
+  }
+
+  .article-recommendation-summary {
+    max-width: 42em;
+    margin: var(--app-spacing-xs) 0 0;
+    color: var(--pico-muted-color);
+    font-size: var(--app-font-sm);
+    line-height: 1.45;
+  }
+</style>

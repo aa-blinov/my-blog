@@ -7,10 +7,9 @@
 web
 
 The site is a static build. Astro 7 renders every route to HTML at build time,
-and GitHub Pages serves the result of `dist/`. The interface is three columns
-on a desktop (toolbar, file tree, article) and a top bar with an overlay tree
-under 992 pixels. The content, the interface and the feeds are in Russian; the
-documents in the repository are in English.
+and GitHub Pages serves the result of `dist/`. A top navigation leads to a
+centered reading column. The content, interface and feeds are in Russian.
+The repository documents are in English.
 
 ## Users
 
@@ -38,17 +37,16 @@ The personal blog of Alexander Blinov, head of development at EORA and senior
 Python developer at NSU, in the shape of a digital garden: articles on
 development, language models, popular science and personal thoughts. The job
 of the site is to let a text be read without visual noise, and to let a reader
-find the article they came for inside a tree of sections. Success for the
+find articles through the archive, section pages and search. Success for the
 reader: they reach the end of an article and understand that a person wrote
 it, not a model. Success for the site: the article is found, read to the end,
 and the reader comes back for another.
 
 ## Positioning
 
-A blog that looks and navigates like a project in an editor. The tree of files
-replaces the menu, every article is a file in a folder, the search
-transliterates so that a Russian query finds a Latin file name, and the
-"part N of M" line puts a series in order the way a list of chapters does.
+A personal blog with a compact chronological archive, monospaced typography
+and a quiet reading column. Search transliterates Russian queries to find
+Latin file names. The "part N of M" line puts a series in chapter order.
 
 The content is a difference in itself. The author writes agents himself, takes
 the industry around language models apart from the inside, and backs every
@@ -84,17 +82,25 @@ opinion and the guideline are kept apart.
 
 Present now, confirmed by the code:
 
-- The file tree in the sidebar: sections, nested folders, `main.md`,
-  `about-me.md` and `notes.md` pinned, the articles of a section ordered by
-  date, search with transliteration, the order of the tree in local storage,
-  the search in session storage.
-- A light and a dark theme, five font sizes, the controls in the toolbar.
-- The home page with the seven latest articles, `/blog/` grouped by section, a
-  page per section and per subfolder, an article page with the meta line
-  "date ~ path.md".
+- The header links to the home page, archive, notes, about page and search.
+  The dedicated search page matches titles, sections, file names and article
+  text, including common Russian inflections. It shows excerpts with matched
+  words highlighted, transliterates Russian queries and remembers the query
+  in the tab. An empty result offers a link to the archive.
+- The header disclosure offers a light and dark theme, five font sizes and
+  three reading widths.
+- The home page with the seven latest articles, short summaries and reading
+  times, plus a link to the full archive beside the list heading. The archive
+  at `/blog/` groups articles by year
+  and month, newest first, with links to the months and topic pages. Each
+  section and subfolder has a page. Articles link to their parent sections
+  above the title and show the date and reading time below it.
+- The table of contents in long articles starts closed. One related article
+  appears after the introduction when scripts are available; the full list of
+  three neighbours stays after the text.
 - Code blocks with a copy button, Mermaid diagrams with a toggle back to the
   source, a sitemap.
-- The notes feed at `/notes/`: a `notes.md` pin in the tree, one file per note
+- The notes feed at `/notes/`: one file per note
   at `src/content/notes/YYYY-MM-DD-HHMM.md`, frontmatter of `date` and `draft`
   only, an anchor for every note, and up to the latest three on the home page.
 - Two feeds: `/rss.xml` for the articles, `/notes.xml` for the notes, with
@@ -102,8 +108,8 @@ Present now, confirmed by the code:
 - Series: a folder whose files carry `part`, with `about-<folder>.md` giving
   the name and the intro. Under the heading of a part, the line "Series «…»
   ~ part N of M"; after the text, links to the previous and the next part
-  with their titles; the folder page lists the parts with their numbers; in
-  the tree the parts keep their order whatever the sort is. Three series:
+  with their titles. The folder page lists the parts in chapter order. The
+  three series are
   `dev/agent/` with nine parts, `science/body-and-environment/` with six,
   `science/mind/antidepressants/` with eight.
 - The interactive blocks of the antidepressants series: a radial map of the
@@ -126,13 +132,11 @@ Deliberately not true, and worth knowing before a change:
 
 ## Brand Commitments
 
-Pinned by the author and unchanged by any later design work:
+Pinned by the author
 
-- The file tree as the main navigation, the metaphor of an editor, the names
-  of the articles as `.md` files.
 - The monospaced JetBrains Mono and the austerity: only text and structure, no
   visual noise.
-- The light and the dark theme, and the font size control in the toolbar.
+- The light and dark themes and reader-controlled text size.
 
 Name: "Личный сайт Александра Блинова", Alexander Blinov's personal site. The
 contacts in the footer are GitHub `aa-blinov`, Telegram and LinkedIn. The
@@ -161,8 +165,8 @@ out of the texts on his own.
 
 1. The text comes first. Any decoration serves the reading and gets out of
    the way.
-2. Navigation like a project. The reader orients by file structure, not by a
-   marketing menu.
+2. Navigation starts in the header. The archive supports browsing by date,
+   and section links let the reader follow a topic.
 3. Nothing extra by default. A capability appears against a confirmed need
    (the feeds, the series, the notes), and not "for the future".
 4. Verifiability. The claims in the articles have primary sources, and the
@@ -173,10 +177,10 @@ out of the texts on his own.
 ## Accessibility & Inclusion
 
 - The code confirms a skip link, a live announcement of the font size for
-  screen readers, a pressed state on the theme toggle, an inert page behind
-  the mobile tree, and tap targets of 44 pixels on a phone.
+  screen readers, a pressed state on the theme toggle, visible keyboard
+  focus and 44-pixel targets in the top navigation.
 - The reader controls are the accessibility mechanism: a light and a dark
-  theme, five font sizes, a table of contents on the long reads, and a search
+  theme, five font sizes, a collapsed table of contents on long reads, and a search
   that opens from the keyboard with the `/` key.
 - The design system records the contrast it measured, for instance Monster
   Green Ink at 5.1:1 on white and 4.7:1 on the code tint.

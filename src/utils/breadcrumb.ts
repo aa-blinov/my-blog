@@ -1,11 +1,9 @@
-export function getBreadcrumb(pathname: string): string {
-  const p = pathname.replace(/\/$/, '') || '/';
-  if (p === '/') return 'main.md';
-  if (p === '/about-me') return 'about-me.md';
-  if (p === '/blog') return 'blog/';
-  const blogSectionMatch = p.match(/^\/blog\/(dev|life)\/?$/);
-  if (blogSectionMatch) return `blog/${blogSectionMatch[1]}/`;
-  const slugMatch = p.match(/^\/blog\/(dev|life)\/([^/]+)$/);
-  if (slugMatch) return `blog/${slugMatch[1]}/${slugMatch[2]}.md`;
-  return p.slice(1) || 'content';
+import { BASE, sectionTitle } from '../config';
+
+export function getArticleSections(id: string) {
+  const folders = id.split('/').slice(0, -1);
+  return folders.map((folder, index) => ({
+    title: sectionTitle(folder),
+    href: `${BASE}blog/${folders.slice(0, index + 1).join('/')}/`,
+  }));
 }

@@ -1,0 +1,296 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+import { BASE } from '../config';
+import { getArticleSections } from '../utils/breadcrumb';
+import { sortByDateDesc } from '../utils/date';
+import { isAbout } from '../utils/series';
+
+const articles = sortByDateDesc(await getCollection('blog', (entry) => !entry.data.draft && !isAbout(entry.id)));
+---
+
+<Layout title="Поиск" description="Поиск по статьям блога">
+  <article>
+    <div class="entry-header">
+      <h1>Поиск</h1>
+    </div>
+    <div class="search-field needs-js" role="search" aria-label="Поиск по блогу">
+      <label for="site-search-input">Название, тема или фраза из статьи</label>
+      <input type="search" id="site-search-input" placeholder="Найти статью" autocomplete="off" />
+    </div>
+    <p id="search-status" class="search-status needs-js" role="status">
+      <span id="search-status-text"></span>
+      <a id="search-archive-link" href={`${BASE}blog/`} hidden>Открыть архив</a>
+    </p>
+    <ul id="search-results" class="search-results needs-js" data-index-url={`${BASE}search-index.json`} aria-label="Результаты поиска" role="list">
+      {articles.map((entry) => {
+        const section = getArticleSections(entry.id).map(({ title }) => title).join(' / ');
+        return (
+          <li hidden data-id={entry.id} data-file={`${entry.id}.md`} data-alias={entry.data.section} data-summary={entry.data.summary}>
+            <a class="post-title-link" href={`${BASE}blog/${entry.id}/`}>{entry.data.title}</a>
+            <span class="search-section" hidden={!section}>{section}</span>
+            <p class="search-excerpt" hidden></p>
+          </li>
+        );
+      })}
+    </ul>
+    <noscript><p>Для поиска нужен JavaScript. Все публикации есть <a href={`${BASE}blog/`}>в архиве</a>.</p></noscript>
+  </article>
+</Layout>
+
+<script>
+  import { plural } from '../utils/date';
+  import { findWordMatches, queryWords, wordsIn, type MatchRange, type SearchWord } from '../utils/search-matching';
+
+  const ruToEn: Record<string, string> = {
+    'а':'a','б':'b','в':'v','г':'g','д':'d','е':'e','ё':'yo',
+    'ж':'zh','з':'z','и':'i','й':'y','к':'k','л':'l','м':'m',
+    'н':'n','о':'o','п':'p','р':'r','с':'s','т':'t','у':'u',
+    'ф':'f','х':'kh','ц':'ts','ч':'ch','ш':'sh','щ':'shch',
+    'ъ':'','ы':'y','ь':'','э':'e','ю':'yu','я':'ya',' ':'-',
+  };
+  const normalize = (text: string) => text.replaceAll('İ', 'I').toLowerCase().replaceAll('ё', 'е');
+  const input = document.querySelector<HTMLInputElement>('#site-search-input');
+  const status = document.getElementById('search-status');
+  const statusText = document.getElementById('search-status-text');
+  const archiveLink = document.getElementById('search-archive-link') as HTMLAnchorElement | null;
+  const list = document.getElementById('search-results');
+
+  function showMatches(node: HTMLElement, text: string, ranges: MatchRange[]) {
+    const matches = ranges
+      .filter(({ start, end }) => start >= 0 && end > start && start < text.length)
+      .sort((a, b) => a.start - b.start);
+    if (!matches.length) {
+      node.textContent = text;
+      return;
+    }
+    const children: (Node | string)[] = [];
+    let cursor = 0;
+    for (const { start, end } of matches) {
+      if (start < cursor) continue;
+      if (start > cursor) children.push(text.slice(cursor, start));
+      const mark = document.createElement('mark');
+      mark.textContent = text.slice(start, end);
+      children.push(mark);
+      cursor = end;
+    }
+    if (cursor < text.length) children.push(text.slice(cursor));
+    node.replaceChildren(...children);
+  }
+
+  function showMatch(node: HTMLElement, text: string, start: number, length: number) {
+    showMatches(node, text, start < 0 ? [] : [{ start, end: start + length }]);
+  }
+
+  function showExcerpt(node: HTMLElement, text: string, matches: MatchRange[]) {
+    const firstMatch = matches[0];
+    let start = Math.max(0, (firstMatch?.start ?? 0) - 60);
+    const nextSpace = text.indexOf(' ', start);
+    if (start && nextSpace >= 0 && nextSpace < (firstMatch?.start ?? 0)) start = nextSpace + 1;
+
+    const matchEnd = firstMatch?.end ?? 0;
+    const limit = Math.min(text.length, Math.max(start + 175, matchEnd + 25));
+    const lastSpace = text.lastIndexOf(' ', limit);
+    const end = limit < text.length && lastSpace > start && lastSpace >= matchEnd ? lastSpace : limit;
+    const excerpt = (start ? '…' : '') + text.slice(start, end) + (end < text.length ? '…' : '');
+    node.hidden = !excerpt;
+    const offset = start ? 1 : 0;
+    const visibleMatches = matches
+      .filter(({ start: matchStart, end: matchEnd }) => matchStart >= start && matchEnd <= end)
+      .map(({ start: matchStart, end: matchEnd }) => ({ start: matchStart - start + offset, end: matchEnd - start + offset }));
+    showMatches(node, excerpt, visibleMatches);
+  }
+
+  if (input && status && statusText && archiveLink && list) {
+    const results = [...list.querySelectorAll('li')].map((item) => {
+      const titleNode = item.querySelector('a')!;
+      const sectionNode = item.querySelector<HTMLElement>('.search-section')!;
+      const title = titleNode.textContent ?? '';
+      const section = sectionNode.textContent ?? '';
+      const summary = item.dataset.summary ?? '';
+      return {
+        item, titleNode, sectionNode, title, section, summary,
+        titleWords: wordsIn(normalize(title)),
+        sectionWords: wordsIn(normalize(section)),
+        summaryWords: wordsIn(normalize(summary)),
+        excerptNode: item.querySelector<HTMLElement>('.search-excerpt')!,
+        id: item.dataset.id ?? '',
+        name: normalize(item.dataset.file ?? ''),
+        alias: normalize(item.dataset.alias ?? ''),
+      };
+    });
+    type ArticleIndex = Map<string, { text: string; normalized: string; words: SearchWord[] }>;
+    let indexRequest: Promise<ArticleIndex | null> | undefined;
+    let revision = 0;
+
+    const update = async () => {
+      const current = ++revision;
+      const raw = input.value.trim().replace(/\s+/g, ' ');
+      const query = normalize(raw);
+      const terms = queryWords(query);
+      sessionStorage.setItem('sidebar-search', input.value);
+      if (!query) {
+        results.forEach(({ item }) => { item.hidden = true; });
+        statusText.textContent = '';
+        archiveLink.hidden = true;
+        return;
+      }
+
+      if (!indexRequest) {
+        statusText.textContent = 'Загружаю тексты статей…';
+        archiveLink.hidden = true;
+        indexRequest = fetch(list.dataset.indexUrl!)
+          .then((response) => {
+            if (!response.ok) throw new Error('Search index unavailable');
+            return response.json() as Promise<Record<string, string>>;
+          })
+          .then((texts) => new Map(Object.entries(texts).map(([id, text]) => {
+            const normalized = normalize(text);
+            return [id, { text, normalized, words: wordsIn(normalized) }];
+          })))
+          .catch(() => {
+            indexRequest = undefined;
+            return null;
+          });
+      }
+      const index = await indexRequest;
+      if (current !== revision) return;
+
+      const translit = /[а-яё]/i.test(raw) ? [...raw.toLowerCase()].map((letter) => ruToEn[letter] ?? letter).join('') : '';
+      const matches: { item: HTMLLIElement; rank: number }[] = [];
+      for (const result of results) {
+        const { item, name, alias, title, section, summary, titleWords, sectionWords, summaryWords } = result;
+        const text = index?.get(result.id);
+        const titleMatch = normalize(title).indexOf(query);
+        const sectionMatch = normalize(section).indexOf(query);
+        const summaryMatch = normalize(summary).indexOf(query);
+        const textMatch = text?.normalized.indexOf(query) ?? -1;
+        const titleTokenMatches = findWordMatches(titleWords, terms);
+        const sectionTokenMatches = findWordMatches(sectionWords, terms);
+        const summaryTokenMatches = findWordMatches(summaryWords, terms);
+        const textTokenMatches = text ? findWordMatches(text.words, terms) : null;
+        const nameMatch = name.includes(query) || alias.includes(query)
+          || (translit && name.split(/[-_./]/).some((word) => word.startsWith(translit)));
+        const contentMatch = textMatch >= 0 || summaryMatch >= 0 || !!summaryTokenMatches || !!textTokenMatches;
+        item.hidden = titleMatch < 0 && sectionMatch < 0 && !titleTokenMatches && !sectionTokenMatches && !contentMatch && !nameMatch;
+        if (item.hidden) continue;
+
+        showMatch(result.titleNode, title, titleMatch, query.length);
+        if (titleMatch < 0 && titleTokenMatches) showMatches(result.titleNode, title, titleTokenMatches);
+        showMatch(result.sectionNode, section, sectionMatch, query.length);
+        if (sectionMatch < 0 && sectionTokenMatches) showMatches(result.sectionNode, section, sectionTokenMatches);
+
+        if (text && textMatch >= 0) showExcerpt(result.excerptNode, text.text, [{ start: textMatch, end: textMatch + query.length }]);
+        else if (text && textTokenMatches) showExcerpt(result.excerptNode, text.text, textTokenMatches);
+        else if (summaryMatch >= 0) showExcerpt(result.excerptNode, summary, [{ start: summaryMatch, end: summaryMatch + query.length }]);
+        else if (summaryTokenMatches) showExcerpt(result.excerptNode, summary, summaryTokenMatches);
+        else showExcerpt(result.excerptNode, summary || text?.text || '', []);
+
+        const rank = titleMatch >= 0 ? 0 : titleTokenMatches ? 1 : textMatch >= 0 || summaryMatch >= 0 ? 2 : contentMatch ? 3 : sectionMatch >= 0 || sectionTokenMatches ? 4 : 5;
+        matches.push({ item, rank });
+      }
+      matches.sort((a, b) => a.rank - b.rank);
+      list.append(...matches.map(({ item }) => item));
+      const count = matches.length;
+      statusText.textContent = count
+        ? `Найдено ${count} ${plural(count, 'совпадение', 'совпадения', 'совпадений')}`
+        : 'Ничего не найдено. Попробуй изменить формулировку или открыть архив.';
+      archiveLink.hidden = count !== 0;
+      if (!index) statusText.textContent += ' Тексты статей не загрузились. Измени запрос, чтобы повторить.';
+    };
+
+    input.value = sessionStorage.getItem('sidebar-search') ?? '';
+    input.addEventListener('input', update);
+    update();
+    if (document.activeElement === document.body) input.focus();
+  }
+</script>
+
+<style>
+  .search-field {
+    display: block;
+  }
+
+  .search-field label {
+    margin-bottom: var(--app-spacing-sm);
+  }
+
+  #site-search-input {
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 0;
+    margin: 0 0 var(--app-spacing-md);
+    min-height: var(--app-touch-target);
+    border-radius: var(--app-radius-sm);
+  }
+
+  #site-search-input:focus-visible {
+    /* Колонка обрезает выступающие края, поэтому рамка остаётся внутри поля. */
+    outline-offset: -2px;
+  }
+
+  .search-status {
+    color: var(--pico-muted-color);
+    font-size: var(--app-font-sm);
+  }
+
+  .search-status a {
+    margin-left: var(--app-spacing-xs);
+    color: inherit;
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  .search-results {
+    margin: 0;
+    padding: 0;
+  }
+
+  .search-results li {
+    margin: 0;
+    padding: var(--app-spacing-md) 0;
+    list-style: none;
+  }
+
+  .search-section {
+    color: var(--pico-muted-color);
+    font-size: var(--app-font-control);
+  }
+
+  .search-section:not([hidden]) {
+    display: block;
+  }
+
+  .search-excerpt {
+    margin: var(--app-spacing-sm) 0 0;
+    font-size: var(--app-font-sm);
+    overflow-wrap: anywhere;
+  }
+
+  .search-results :global(mark) {
+    padding: 0;
+    color: inherit;
+    background-color: var(--pico-text-selection-color);
+    font-weight: 700;
+  }
+
+  .search-results a {
+    display: inline-block;
+    padding-block: var(--app-spacing-sm);
+    text-decoration: underline;
+    text-decoration-color: var(--pico-muted-border-color);
+    text-underline-offset: 0.2em;
+  }
+
+  .search-results a:hover {
+    text-decoration-color: currentColor;
+  }
+
+  @media (pointer: coarse) {
+    .search-results a {
+      display: inline-flex;
+      align-items: center;
+      min-height: var(--app-touch-target);
+    }
+  }
+</style>

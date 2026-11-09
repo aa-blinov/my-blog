@@ -1,82 +1,123 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-import PostList from '../../components/PostList.astro';
 import { getCollection } from 'astro:content';
-import { sortByDateDesc } from '../../utils/date';
-import { sectionTitle } from '../../config';
-import { liveFolders, inLiveFolder, isAbout } from '../../utils/series';
+import ChronologyList from '../../components/ChronologyList.astro';
+import Layout from '../../layouts/Layout.astro';
+import { BASE, sectionTitle } from '../../config';
+import { formatDate, sortByDateDesc } from '../../utils/date';
+import { isAbout } from '../../utils/series';
 
-const allEntries = await getCollection('blog');
-const published = allEntries.filter((p) => !p.data.draft);
-const live = liveFolders(published);
-const entries = published.filter((p) => inLiveFolder(p.id, live) && !isAbout(p.id));
+const entries = sortByDateDesc(await getCollection('blog', (entry) => !entry.data.draft && !isAbout(entry.id)));
+const bySection = Map.groupBy(entries.filter((entry) => entry.id.includes('/')), (entry) => entry.id.split('/')[0]);
+const sections = [...bySection].sort(([a], [b]) => a.localeCompare(b));
 
-// 1. Grouping by top-level sections
-interface Group {
-  name: string;
-  entries: any[];
-  maxDate: number;
-}
-
-const groups: Record<string, any[]> = {};
-const directEntries: any[] = [];
-
-entries.forEach(entry => {
-  const parts = entry.id.split('/');
-  if (parts.length === 1) {
-    directEntries.push(entry);
-  } else {
-    const sub = parts[0];
-    if (!groups[sub]) groups[sub] = [];
-    groups[sub].push(entry);
-  }
+const monthName = new Intl.DateTimeFormat('ru-RU', { month: 'long', timeZone: 'UTC' });
+const byYear = Map.groupBy(entries, (entry) => entry.data.date.getUTCFullYear());
+const years = [...byYear].map(([year, posts]) => {
+  const byMonth = Map.groupBy(posts, (entry) => formatDate(entry.data.date).slice(0, 7));
+  const months = [...byMonth].map(([key, posts]) => {
+    const name = monthName.format(posts[0].data.date);
+    return { id: `month-${key}`, name: name[0].toUpperCase() + name.slice(1), posts };
+  });
+  return { year, months };
 });
-
-const subGroups: Group[] = Object.entries(groups)
-  .map(([name, entries]) => ({
-    name,
-    entries: sortByDateDesc(entries),
-    maxDate: Math.max(...entries.map(e => e.data.date.getTime()))
-  }))
-  .sort((a, b) => a.name.localeCompare(b.name)); // Alphabetical at top level
-
 ---
 
-<Layout title="Блог">
+<Layout title="Архив статей">
   <article>
     <div class="entry-header">
-      <h1>Блог</h1>
-      <p>По разделам, внутри по дате.</p>
+      <h1>Архив статей</h1>
     </div>
 
-    {/* Больше 150 записей одной стеной: сверху разделы с числом статей, как карта блога на главной */}
-    <ul class="section-tags blog-index-tags" aria-label="Разделы блога">
-      {subGroups.map((group) => (
-        <li><a href={`#section-${group.name}`}>{sectionTitle(group.name)}<span class="tag-count">{group.entries.length}</span></a></li>
-      ))}
-    </ul>
-
-    {directEntries.length > 0 && (
-      <section class="section-block">
-        <header>
-          <h2 class="section-heading">
-            /
-          </h2>
-        </header>
-        <PostList posts={directEntries} />
-      </section>
+    {sections.length > 0 && (
+      <ul class="section-tags blog-index-tags" aria-label="Разделы блога" role="list">
+        {sections.map(([name, posts]) => (
+          <li id={`section-${name}`}><a href={`${BASE}blog/${name}/`}>{sectionTitle(name)}<span class="tag-count">{posts.length}</span></a></li>
+        ))}
+      </ul>
     )}
 
-    {subGroups.map((group, index) => (
-      <section class="section-block">
-        {(index > 0 || directEntries.length > 0) && <hr class="section-divider" />}
-        <header>
-          <h2 class="section-heading" id={`section-${group.name}`}>
-            {sectionTitle(group.name)} <span class="section-slug">{group.name}/</span>
-          </h2>
-        </header>
-        <PostList posts={group.entries} />
+    {years.length > 1 && (
+      <ul class="archive-jumps" aria-label="Годы" role="list">
+        {years.map(({ year }) => <li><a href={`#year-${year}`}>{year}</a></li>)}
+      </ul>
+    )}
+
+    {years.length === 0 && <p>Пока ничего нет.</p>}
+
+    {years.map(({ year, months }) => (
+      <section class="archive-year">
+        <h2 class="section-heading" id={`year-${year}`}>{year}</h2>
+        {months.length > 1 && (
+          <ul class="archive-jumps" aria-label={`Месяцы за ${year} год`} role="list">
+            {months.map(({ id, name }) => <li><a href={`#${id}`}>{name}</a></li>)}
+          </ul>
+        )}
+        {months.map(({ id, name, posts }) => (
+          <section class="archive-month">
+            <h3 id={id}>{name}</h3>
+            <ChronologyList posts={posts} />
+          </section>
+        ))}
       </section>
     ))}
   </article>
 </Layout>
+
+<style>
+  .blog-index-tags li,
+  .archive-month h3 {
+    scroll-margin-top: var(--app-scroll-offset);
+  }
+
+  .blog-index-tags a:not(:hover) {
+    color: inherit;
+  }
+
+  .archive-year > h2 {
+    margin-bottom: var(--app-spacing-md);
+  }
+
+  .archive-jumps {
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: var(--app-spacing);
+    margin: 0 0 var(--app-spacing);
+    padding: 0;
+  }
+
+  .archive-jumps li {
+    list-style: none;
+    margin: 0;
+  }
+
+  .archive-jumps a {
+    display: inline-flex;
+    align-items: center;
+    color: var(--pico-muted-color);
+    font-size: var(--app-font-control);
+    text-underline-offset: 0.2em;
+  }
+
+  .archive-jumps a:hover {
+    color: var(--pico-primary);
+  }
+
+  .archive-year + .archive-year {
+    margin-top: var(--app-spacing-2xl);
+  }
+
+  .archive-month + .archive-month {
+    margin-top: var(--app-spacing-xl);
+  }
+
+  .archive-month h3 {
+    margin: 0 0 var(--app-spacing-sm);
+    font-size: var(--app-font-md);
+  }
+
+  @media (max-width: 991px), (pointer: coarse) {
+    .archive-jumps a {
+      min-height: var(--app-touch-target);
+    }
+  }
+</style>

@@ -1,23 +1,20 @@
 ---
 import PageFromEntry from '../components/PageFromEntry.astro';
-import PostList from '../components/PostList.astro';
+import ChronologyList from '../components/ChronologyList.astro';
 import NoteList from '../components/NoteList.astro';
 import Arrow from '../components/Arrow.astro';
 import { getCollection, render } from 'astro:content';
-import { sortByDateDesc, plural } from '../utils/date';
+import { sortByDateDesc } from '../utils/date';
 import { BASE, RECENT_POSTS_LIMIT, sectionTitle } from '../config';
 import { isAbout, liveFolders, getSeries } from '../utils/series';
 
 const pages = (await getCollection('pages')).filter((e) => !e.data.draft);
 const homeEntry = pages.find((e) => e.id === 'main');
 
-const posts = sortByDateDesc(
-  (await getCollection('blog')).filter((p) => !p.data.draft && !isAbout(p.id))
-).slice(0, RECENT_POSTS_LIMIT);
-
-// Карта блога: серии первыми, затем верхние разделы с числом статей (about-* не считаем)
+// Вводные страницы разделов не входят в список статей и счётчики.
 const published = (await getCollection('blog')).filter((p) => !p.data.draft);
 const articles = published.filter((p) => !isAbout(p.id));
+const posts = sortByDateDesc(articles).slice(0, RECENT_POSTS_LIMIT);
 const live = liveFolders(published);
 const seriesFolders = [...new Set(articles.filter((p) => p.data.part !== undefined).map((p) => p.id.slice(0, p.id.lastIndexOf('/'))))];
 const seriesRows = (await Promise.all(seriesFolders.map((f) => getSeries(f)))).filter((s) => s !== null);
@@ -46,28 +43,13 @@ if (homeEntry) {
 <PageFromEntry entry={entryData} fallbackTitle="Главная" fallbackH1="Главная" prompt="main &gt;" hideMeta>
   {Content ? <Content /> : <p>Добавь в <code>content/pages/</code> файл <code>main.md</code> с frontmatter: <code>title</code>, <code>date</code>.</p>}
 
-  <div class="recent-posts recent-first">
-    <h2 class="section-heading">
-      Свежие статьи
-    </h2>
-    <PostList posts={posts} excerpts />
-
-    <div class="all-articles">
-      <p class="all-articles-line"><a href={`${BASE}blog/`} class="post-title-link all-articles-link">Смотреть все статьи <Arrow /></a></p>
+  <section class="recent-posts recent-first">
+    <div class="recent-header">
+      <h2 class="section-heading">Свежие статьи</h2>
+      <a href={`${BASE}blog/`} class="post-title-link all-articles-link">Все статьи <Arrow /></a>
     </div>
-  </div>
-
-  {recentNotes.length > 0 && (
-    <div class="recent-posts">
-      <h2 class="section-heading">
-        Заметки
-      </h2>
-      <NoteList notes={recentNotes} />
-      <div class="all-articles">
-        <p class="all-articles-line"><a href={`${BASE}notes/`} class="post-title-link all-articles-link">Все заметки <Arrow /></a></p>
-      </div>
-    </div>
-  )}
+      <ChronologyList posts={posts} showDetails />
+  </section>
 
   <div class="site-map">
     <h2 class="section-heading">Разделы</h2>
@@ -81,4 +63,37 @@ if (homeEntry) {
     </ul>
   </div>
 
+  {recentNotes.length > 0 && (
+    <div class="recent-posts">
+      <h2 class="section-heading">Заметки</h2>
+      <NoteList notes={recentNotes} />
+      <div class="all-articles">
+        <p class="all-articles-line"><a href={`${BASE}notes/`} class="post-title-link all-articles-link">Все заметки <Arrow /></a></p>
+      </div>
+    </div>
+  )}
 </PageFromEntry>
+
+<style>
+  .recent-header {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    column-gap: var(--app-spacing);
+    margin-bottom: var(--app-spacing-md);
+  }
+
+  .recent-header .section-heading {
+    margin: 0;
+  }
+
+  .recent-header .all-articles-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--app-touch-target);
+    font-size: var(--app-font-sm);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+</style>

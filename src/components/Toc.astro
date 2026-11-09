@@ -22,11 +22,3 @@ const word = n % 10 === 1 && n % 100 !== 11 ? 'раздел' : n % 10 >= 2 && n 
     </ol>
   </details>
 )}
-
-<script is:inline>
-  // На десктопе оглавление раскрыто, на телефоне свёрнуто: текст статьи на первом экране
-  (function () {
-    var t = document.getElementById('toc');
-    if (t && window.matchMedia('(min-width: 992px)').matches) t.open = true;
-  })();
-</script>

@@ -17,6 +17,7 @@ import { formatDate, readingMinutes, plural } from '../../utils/date';
 import { sortByDateDesc } from '../../utils/date';
 import { getSeries, seriesOf, isAbout } from '../../utils/series';
 import { sectionTitle } from '../../config';
+import { getArticleSections } from '../../utils/breadcrumb';
 
 type BlogEntry = CollectionEntry<'blog'>;
 type Props = { kind: 'file'; entry: BlogEntry; path?: never } | { kind: 'folder'; path: string; entry?: never };
@@ -115,19 +116,30 @@ if (kind === 'folder') {
 // Папка с about-<имя>.md получает русское имя из него
 const folderName = path.split('/').pop() || path;
 const title = entry ? entry.data.title : (folderAbout?.data.title.replace(/:\s*Об этой секции$/, '') ?? sectionTitle(folderName));
+const articleSections = entry ? getArticleSections(entry.id) : [];
 ---
 
 {entry && Content ? (
   <Layout title={entry.data.title} description={entry.data.summary}>
     <article>
       <div class="entry-header">
-        <p class="meta"><span>{formatDate(entry.data.date)}</span><span class="meta-sep" aria-hidden="true">~</span><span class="meta-path">{entry.id}.md</span><span class="meta-file">{entry.id.split('/').pop()}.md</span></p>
+        {articleSections.length > 0 && (
+          <nav class="article-sections" aria-label="Разделы статьи">
+            <ol role="list">
+              {articleSections.map(({ title, href }, index) => (
+                <li>{index > 0 && <span aria-hidden="true">/</span>}<a href={href}>{title}</a></li>
+              ))}
+            </ol>
+          </nav>
+        )}
         <hgroup>
           <h1>{entry.data.title}</h1>
           {entry.data.summary && <p class="summary">{entry.data.summary}</p>}
         </hgroup>
         {series && <SeriesNav series={series} entry={entry} where="head" />}
         <p class="read-line">
+          <time datetime={formatDate(entry.data.date)}>{formatDate(entry.data.date)}</time>
+          <span class="meta-sep" aria-hidden="true">~</span>
           <span>≈ {minutes} {plural(minutes, 'минута', 'минуты', 'минут')}</span>
           {headings.filter((h) => h.depth === 2).length >= 3 && (
             <>
@@ -184,3 +196,55 @@ const title = entry ? entry.data.title : (folderAbout?.data.title.replace(/:\s*�
     </article>
   </Layout>
 )}
+
+<script>
+  // Список после статьи остаётся доступен без JavaScript; скрипт поднимает одну ссылку к месту, где заканчивается введение.
+  const content = document.querySelector('article > .content');
+  const recommendation = document.getElementById('article-recommendation');
+  if (content && recommendation) {
+    const blocks = [...content.children];
+    const firstHeading = blocks.find((block) => block.tagName === 'H2');
+    const firstParagraph = blocks.find((block) => block.tagName === 'P');
+    if (firstHeading) firstHeading.before(recommendation);
+    else if (firstParagraph) firstParagraph.after(recommendation);
+    if (firstHeading || firstParagraph) recommendation.hidden = false;
+  }
+</script>
+
+<style>
+  .article-sections {
+    margin-bottom: var(--app-spacing-md);
+    color: var(--pico-muted-color);
+    font-size: var(--app-font-sm);
+  }
+
+  .article-sections ol,
+  .article-sections li {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--app-spacing-md);
+    align-items: center;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .article-sections a {
+    color: inherit;
+    margin: 0;
+    padding: 0;
+    text-underline-offset: 0.2em;
+  }
+
+  .article-sections a:hover {
+    color: var(--pico-primary);
+  }
+
+  @media (max-width: 640px), (pointer: coarse) {
+    .article-sections a {
+      display: inline-flex;
+      align-items: center;
+      min-height: var(--app-touch-target);
+    }
+  }
+</style>

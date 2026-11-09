@@ -17,7 +17,8 @@ export async function getSeries(folder: string): Promise<Series | null> {
   if (parts.length === 0) return null;
   const name = folder.split('/').pop()!;
   const about = inFolder.find((e) => e.id === `${folder}/about-${name}`);
-  return { folder, title: about?.data.title ?? name, about, parts };
+  const title = about?.data.title.replace(/:\s*Об этой секции$/, '') ?? name;
+  return { folder, title, about, parts };
 }
 
 export function seriesOf(entry: BlogEntry): string | null {
@@ -40,9 +41,4 @@ export function liveFolders(entries: { id: string }[]): Set<string> {
     for (let i = 1; i < parts.length; i++) live.add(parts.slice(0, i).join('/'));
   }
   return live;
-}
-
-export function inLiveFolder(id: string, live: Set<string>): boolean {
-  const i = id.lastIndexOf('/');
-  return i < 0 || live.has(id.slice(0, i));
 }

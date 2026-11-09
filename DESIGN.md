@@ -1,6 +1,6 @@
 ---
 name: blinov.monster
-description: The blog as an open project in an editor: a file tree, one monospaced family and a single green accent.
+description: A quiet personal blog with a chronological archive, one monospaced family and a single green accent.
 colors:
   monster-green: "#95d600"
   monster-green-deep: "#7ab800"
@@ -115,39 +115,15 @@ components:
 
 ## Overview
 
-**Creative North Star: "an open project in an IDE"**
+The site is a personal reading room with a compact top navigation. Its single
+monospaced family recalls an editor, while a centered column gives the text
+its own space. The archive is a chronological list with a date at the right
+of each title.
 
-The site behaves like an editor window with the blog open in it. A narrow
-vertical toolbar holds the home link, the theme toggle and the font size
-buttons. Next to it stands a tree of folders and `.md` files with their dates.
-The text is on the right, in a column of about 92 characters.
-
-Everything is set in one monospaced family, headings included. The single
-colour of the system, Monster Green, works the way a syntax highlight works:
-it marks the active file, the caret in the search field, a link under the
-pointer, and nothing else. The interface serves the reading and then gets out
-of the way.
-
-The density is high and the air is there anyway. The tree is small and tight,
-like an editor, and the text column is limited to 92ch with a line height of
-1.6 and a blank line between the paragraphs. The surfaces are flat: the page,
-the tree and the toolbar lie in one plane and are separated by hairlines. The
-dark theme is the same system on dark paper, with the same lines, the same
-green and the same proportions.
-
-The reader is given the controls. The theme, the font size in five steps, the
-order of the tree and the search box are all kept in the browser, and an
-article never ends on its last line: a series leads to the neighbouring part,
-a folder to the neighbouring articles, and the author to himself.
-
-**Key characteristics:**
-
-- One family for everything, JetBrains Mono
-- One chromatic colour, Monster Green, on states and links only
-- Flat surfaces, with depth carried by hairlines and tonal fills
-- Navigation shaped like a file system: folders, files and a disclosure mark
-- Two themes out of one palette, paper and night, with the same green in both
-- The reader controls the reading: theme, five font sizes, search and order
+Monster Green marks the current page, focus and hovered links. A hairline
+separates the header from the page. The header keeps navigation visible and
+groups theme, font size and column width in one disclosure. Both themes use
+the same type scale and layout.
 
 ## Colors
 
@@ -244,13 +220,9 @@ sits in a component that sets its own text size.
   article's own: h2 1.35em, h3 1.15em, h4 1em.
 - **Title, 1.15rem, 700, 1.3**: the title of an article in a list.
 - **Body, 1rem, 400, 1.6**: the text of an article.
-- **Label, 0.8rem, 400**: the tree of files, 0.8 of the article's size on a
-  desktop and 1rem on a phone.
-- **Caption, 0.7rem, 400**: the dates in the tree and the label of the sort
-  control.
-- **Control, 0.8rem, 400**: the search field, the sort button, the copy
-  button, the meta line of a list, the series line and the read line. On a
-  phone the control is 1.15rem, so that iOS does not zoom the field.
+- **Control, 0.8rem, 400**: the narrow-screen navigation, copy button,
+  dates in the archive, series line and reading time. The search field uses
+  the body size.
 
 ### The reader scale
 
@@ -258,20 +230,17 @@ The size of the article text belongs to the reader. The root carries a
 `data-font` attribute with one of five steps, and the article scales from it:
 0.8rem, 0.9rem, 1rem, 1.15rem and 1.3rem. The choice is stored in the browser
 under `font-size-v2`, and the inline script in the head of the layout applies
-it before the first paint. The interface stays at its own size while the
-article grows and shrinks.
+it before the first paint. The root scale applies to the interface and article.
 
 The root font size is 90% of the browser default, and 100% from 1440px
-wide, because a tree and a meta line get small on a dense laptop screen. The
-zoom factor multiplies it.
+wide. The zoom factor multiplies it.
 
 ### Named rules
 
 **The One Typeface Rule.** The hierarchy is built from weight and size, never
 from a change of family.
 
-**The Reader Scale Rule.** One root value sets the size of the article, and
-the interface does not follow it.
+**The Reader Scale Rule.** One root value scales the article and the interface.
 
 **The Layer Rule.** Pico is imported into the cascade layer `pico`, so any
 rule of ours beats it without `!important`. The stylesheet uses no
@@ -280,31 +249,13 @@ rule that sits higher in the cascade.
 
 ## Layout
 
-Three columns on a desktop: a toolbar of 64px, the tree at
-`clamp(300px, 19rem, 400px)`, and the article in a column of 55.2em, which is
-about 92 characters of JetBrains Mono. The measure is in `em` rather than in
-`ch`, because `ch` is measured with the fallback font while the real one is
-still loading, and the column jumped.
+A single centered reading column has a normal maximum width of `45em`
+including side padding, roughly 72 characters of JetBrains Mono for the text.
+Using `em` avoids shifts while the font loads. The other width settings are
+`40em` and `74em`, and the browser remembers the selected width.
 
-The breakpoint is 992px. Below it the toolbar becomes a top bar of 48px and
-the tree becomes an overlay, with the page behind it marked `inert` so that
-Tab cannot wander into it. The table of contents is open on a desktop and
-closed on a phone, and the summary is at least 44px tall so a finger can
-reach it.
-
-The spacing steps are 0.15rem, 0.25rem, 0.5rem, 1rem, 1.5rem, 2rem, 3rem and
-4rem, and the page padding is 2rem. Every margin, padding and gap in the
-stylesheet uses one of these tokens; see Tokens and icons below. The reading width has three modes (narrow 40em, normal 55.2em, wide 74em) set by the
-button beside the theme switch and remembered in the browser. The width of the tree is remembered, and the
-structure column of an article can be dragged between 192px and 480px.
-
-### Named rules
-
-**Three Columns.** The toolbar, the tree and the text, in that order. Under
-992px the toolbar moves to the top and the tree becomes an overlay.
-
-**The Tree Is The Navigation.** There is no menu of sections. The tree is
-the content, and it is built from the same collection as the pages.
+The navigation aligns to the normal column and wraps on narrow screens. It
+scrolls with the page. The table of contents starts closed at every width.
 
 ## Elevation & Depth
 
@@ -336,41 +287,19 @@ thumb is 4px round, which is a rectangle with soft ends.
 
 ## Components
 
-### The toolbar
+### Top navigation
 
-- **Shape:** a vertical bar of 64px on a desktop, 48px at the top on a phone.
-- **Buttons:** 40px, no background, an outline icon in the muted ink, and
-  Monster Green under the pointer.
-- **At the end of a scale:** the font size button that cannot go further is
-  switched off with an opacity of 0.3, and it says so to a screen reader.
+The author name links home. The other links lead to the archive, notes,
+about page and search. The current page has a green underline. The reading
+settings open from the icon at the end of the row.
 
-### The search field
+### Search
 
-- **Style:** transparent, a 1px rule, a 3px corner, 0.75rem of text.
-- **Focus:** the rule moves to Monster Green Ink.
-- **The clear button:** a cross on the right, which appears with the text.
-- **Below it:** a line that says how many of how many entries the query
-  matched, or a hint when the query matched nothing.
-
-### The sort control
-
-Three states in a circle: newest first, oldest first, by name. The default
-is not marked, because it is the default, and the outline and the icon turn
-green only for a state that differs from it.
-
-### The tree
-
-- **Folders** open and close by their name at any width. The name is text
-  inside the summary and not a link, because a link inside a disclosure
-  button breaks the screen readers. The `▸` turns 90 degrees when the
-  folder is open. On a phone the row is at least 44px tall and the name is
-  set at 1rem. The page of a section is reached from the breadcrumbs, from
-  the list of the sections and from the first item of a series in the tree.
-- **Files** carry the Russian name of the article, the full name in the
-  tooltip, and the date as `YYYY-MM-DD`.
-- **The active file** is green and bold on a 10% green fill.
-- **The order** is new first, and it is applied by the stylesheet through
-  `--order-desc` and `--order-asc`, so the markup stays alphabetical.
+The page uses a full-width field with a visible label. Results show the
+title, section and a short excerpt, with matched words marked in the selection
+colour. Search matches query words across common Russian inflections. The `/`
+key takes the reader to the field. Search announces the number of matches or
+offers a link to the archive when there are none.
 
 ### The code block
 
@@ -389,13 +318,17 @@ text turns white.
 
 ### The meta line
 
-The line above a title in a list: the date, a tilde and the path of the
-file. On a phone the path is replaced by the name of the file. The tilde is
-the separator; a middle dot is not used.
+Section lists put the date, a tilde and the file path above the title. On a
+phone they show the file name. Numbered series lists show the part number,
+reading time and file name. The archive and the recent articles on the home
+page put the title first, with a muted day and month aligned to its right.
+The seven latest articles on the home page also show a short summary and
+reading time. Year and month headings separate groups in the archive.
 
 ### The article header
 
-The meta line, the title, and a 1px rule under them.
+Linked section names sit above the title. The date and reading time sit
+below it, followed by a 1px rule.
 
 ### The series line
 
@@ -407,10 +340,13 @@ at least 44px tall.
 ### The table of contents
 
 A `details` with the summary "Содержание, N разделов" and a green `▸`
-that turns 90 degrees when it opens. It appears in an article with six or
-more second-level headings, from the left edge of the text with no rule and
-no margins of its own, and the numbers are in the muted ink. The summary is
-at least 44px tall on a phone.
+that turns 90 degrees when it opens. It appears closed by default in an
+article with six or more second-level headings, from the left edge of the
+text with no rule and no margins of its own, and the numbers are in the muted
+ink. The summary is at least 44px tall on a phone.
+
+One related article appears after the introduction when scripts are available.
+The full list of three neighbouring articles stays after the text.
 
 ### The note entry
 
@@ -440,10 +376,8 @@ The interface draws its icons from one set: outline, a 24-unit grid, a
 The set is the Heroicons outline set, which is MIT licensed.
 
 Text characters are not used as interface icons. The disclosure chevron of
-a tree folder, a summary, the table of contents or a filter is the chevron
-of the set, drawn as a mask in the colour of the text, and it turns when
-the block opens. The sort control shows an arrow up, an arrow down or the
-two-way arrows. The close control of a card is the cross of the set.
+a summary, the table of contents or a filter uses the shared chevron.
+The close control of a card uses the cross from the same set.
 
 Three text characters remain on purpose: the arrows and the crosses in the
 text of an article, which are words, and the markers of the legend of the
@@ -453,7 +387,7 @@ picker (`+`, `!`, `~`, `×`), which are the legend itself.
 
 - **Do** set everything in JetBrains Mono, the headings, the buttons, the
   dates and the footer included.
-- **Do** use Monster Green on states and on links: the active file, the
+- **Do** use Monster Green on states and on links: the active page, the
   focus, the hover, the copy.
 - **Do** use Monster Green Ink for green text in the light theme, and check
   the pair against 4.5:1.
@@ -461,8 +395,9 @@ picker (`+`, `!`, `~`, `×`), which are the legend itself.
   mark an element with a fill in Paper Code or Night Code.
 - **Do** keep the code blocks and the diagrams in the dark window, in both
   themes.
-- **Do** show the articles as files: the name of the `.md` file, the date as
-  `YYYY-MM-DD` and the path of the section in the meta line.
+- **Do** show the article title first in chronological lists, with dates in
+  muted text and clear year and month headings; the home page adds summaries
+  and reading time to its seven latest articles.
 - **Do** give the reader the size of the text and the theme, and remember
   the choice.
 - **Do** give a tap target at least 44px on a phone.
@@ -473,8 +408,7 @@ picker (`+`, `!`, `~`, `×`), which are the legend itself.
 - **Do** carry the reader past the end of the text: the neighbouring part of
   the series, three neighbouring articles from the same folder, the line of
   the author.
-- **Do** put the `▸` only where something opens, a folder in the tree and the
-  table of contents.
+- **Do** use a chevron where a section expands, such as the table of contents.
 - **Don't** use shadows, glows, blurs or gradients on any surface, in any
   state.
 - **Don't** introduce a second accent colour, and don't fill a large area

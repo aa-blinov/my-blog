@@ -5,6 +5,7 @@ The documents in this folder, and where the content of the site lives.
 | Document | What it covers |
 | --- | --- |
 | [architecture.md](architecture.md) | The collections, the route that serves every article and every folder, and the boundaries. |
+| [content-plan.md](content-plan.md) | Темы статей и коротких заметок на шесть недель. |
 | [screenshots/README.md](screenshots/README.md) | There are no screenshots in this repository. |
 | [../README.md](../README.md) | The front door: what the site is and how to build it. |
 | [../AGENTS.md](../AGENTS.md) | The commands, the layout of the tree, and the traps. |

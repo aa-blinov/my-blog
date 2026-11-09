@@ -2,11 +2,7 @@
 import { getCollection } from 'astro:content';
 import NavBar from '../components/NavBar.astro';
 import Footer from '../components/Footer.astro';
-import Sidebar from '../components/Sidebar.astro';
 import { BASE, SITE } from '../config';
-import { getBreadcrumb } from '../utils/breadcrumb';
-import { sortByDateDesc } from '../utils/date';
-import { liveFolders, inLiveFolder, isAbout } from '../utils/series';
 import '../styles/global.css';
 // Тот же файл, что берёт CSS fontsource: Vite отдаёт один хешированный адрес, предзагрузка не качает шрифт дважды
 import monoLatin from '@fontsource-variable/jetbrains-mono/files/jetbrains-mono-latin-wght-normal.woff2?url';
@@ -19,37 +15,10 @@ interface Props {
 
 const { title, description } = Astro.props;
 
-const published = (await getCollection('blog')).filter((e) => !e.data.draft);
-const live = liveFolders(published);
-// about-*.md это вводный текст раздела, не статья: в дереве его нет, в раздел ведёт имя папки.
-// Исключение серии: их about пунктом «О серии» сверху, иначе на оглавление из дерева не попасть
-const seriesFolders = new Set(published.filter((e) => e.data.part !== undefined).map((e) => e.id.slice(0, e.id.lastIndexOf('/'))));
-const folderOf = (id: string) => id.slice(0, id.lastIndexOf('/'));
-const isSeriesAbout = (id: string) => isAbout(id) && seriesFolders.has(folderOf(id));
-const blogEntries = sortByDateDesc(published.filter((e) => inLiveFolder(e.id, live) && (!isAbout(e.id) || isSeriesAbout(e.id)))).map((entry) => {
-  const seriesAbout = isSeriesAbout(entry.id);
-  return {
-    id: `${entry.id}.md`, // File-like path for the sidebar tree, e.g. 'science/human-body/article.md'
-    slug: seriesAbout ? folderOf(entry.id) : entry.id, // URL path like 'science/human-body/article'; about серии живёт на странице папки
-    title: entry.data.title,
-    date: entry.data.date,
-    section: entry.data.section, // Still support frontmatter override
-    part: entry.data.part, // номер части в серии: дерево сортирует по нему
-  };
-});
-
-const pages = (await getCollection('pages')).filter((e) => !e.data.draft);
-const notes = sortByDateDesc((await getCollection('notes')).filter((n) => !n.data.draft));
-const notesForSidebar = notes.length > 0 ? { slug: 'notes', title: 'Заметки', date: notes[0].data.date } : null;
-const mainEntry = pages.find((e) => e.id === 'main');
-const aboutEntry = pages.find((e) => e.id === 'about-me');
-
-// В дереве главная остаётся «Главная»: заголовок страницы теперь имя сайта, в строку дерева он не нужен
-const mainForSidebar = mainEntry ? { slug: mainEntry.id, title: 'Главная', date: mainEntry.data.date } : null;
-const aboutForSidebar = aboutEntry ? { slug: aboutEntry.id, title: aboutEntry.data.title, date: aboutEntry.data.date } : null;
+const pages = await getCollection('pages', (entry) => !entry.data.draft);
+const hasAbout = pages.some((entry) => entry.id === 'about-me');
 const fullTitle = title === SITE.title ? title : `${title} | ${SITE.title}`;
 const desc = description ?? SITE.description;
-const breadcrumbPath = getBreadcrumb(Astro.url.pathname);
 ---
 
 <!doctype html>
@@ -68,7 +37,7 @@ const breadcrumbPath = getBreadcrumb(Astro.url.pathname);
 
     <script is:inline>
       (function() {
-        document.documentElement.classList.add('js'); // без JS кнопки панели и поиск не работают: их прячет html:not(.js) .needs-js
+        document.documentElement.classList.add('js'); // без JS скрываем настройки чтения
         const theme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.dataset.theme = theme;
 
@@ -85,18 +54,11 @@ const breadcrumbPath = getBreadcrumb(Astro.url.pathname);
   <body>
     <a href="#main" class="skip-link">к содержанию</a>
     <div class="app-layout">
-      <NavBar breadcrumbPath={breadcrumbPath} />
-      <div class="main-container">
-        <div class="main-grid">
-          <aside id="layout-sidebar">
-            <Sidebar blogEntries={blogEntries} mainEntry={mainForSidebar} aboutEntry={aboutForSidebar} notesEntry={notesForSidebar} />
-          </aside>
-          <main id="main" tabindex="-1">
-            <slot />
-          </main>
-        </div>
-        <Footer />
-      </div>
+      <NavBar hasAbout={hasAbout} />
+      <main id="main" tabindex="-1">
+        <slot />
+      </main>
+      <Footer />
     </div>
 
     <script>

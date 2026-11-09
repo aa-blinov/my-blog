@@ -1,328 +1,223 @@
 ---
 import Icon from './Icon.astro';
-import { BASE } from '../config';
+import { BASE, SITE } from '../config';
 
 interface Props {
-  breadcrumbPath: string;
+  hasAbout: boolean;
 }
 
+const { hasAbout } = Astro.props;
+const currentPath = Astro.url.pathname.replace(/\/$/, '');
+const isCurrent = (href: string) => currentPath === href.replace(/\/$/, '');
+const links = [
+  { label: 'Архив', href: BASE + 'blog/' },
+  { label: 'Заметки', href: BASE + 'notes/' },
+  ...(hasAbout ? [{ label: 'Обо мне', href: BASE + 'about-me/' }] : []),
+];
 ---
-<nav class="vertical-navbar" aria-label="Панель инструментов">
-  <ul>
-    <!-- Sidebar toggle: only visible on mobile -->
-    <li class="mobile-only needs-js">
-      <button id="sidebar-toggle" aria-label="Дерево статей" aria-expanded="false" aria-controls="layout-sidebar">
-        <!-- Heroicons: Bars 3 (hamburger) -->
-        <svg id="sidebar-open-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="24" height="24">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-        </svg>
-        <!-- Heroicons: X Mark (close) -->
-        <svg id="sidebar-close-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="24" height="24" style="display:none">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
-        </svg>
-      </button>
-    </li>
-    <li>
-      <a href={BASE} aria-label="На главную">
-        <!-- Heroicons: Home (Outline) -->
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="24" height="24">
-          <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
-        </svg>
-      </a>
-    </li>
 
-  </ul>
-
-  <!-- Theme toggle: top-right on mobile (via CSS), bottom on desktop -->
-  <ul class="bottom-nav needs-js">
-    <!-- Font Size Controls -->
-    <li>
-      <button id="font-decrease" class="contrast" aria-label="Уменьшить шрифт">
-        <!-- Minus Icon -->
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" width="20" height="20">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14" />
-        </svg>
-      </button>
-    </li>
-
-    <li>
-      <button id="font-increase" class="contrast" aria-label="Увеличить шрифт">
-        <!-- Plus Icon -->
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" width="20" height="20">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-        </svg>
-      </button>
-    </li>
-    <!-- Theme Toggle -->
-    <li>
-      <button id="width-toggle" class="contrast" aria-label="Ширина текста: обычная. Нажмите, чтобы сменить" title="Ширина текста: обычная">
-        <Icon name="width-normal" />
-      </button>
-    </li>
-    <li>
-      <button id="theme-toggle" class="contrast" aria-label="Тёмная тема" aria-pressed="false">
-        <!-- Heroicons: Sun (Outline) -->
-        <svg id="sun-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="24" height="24">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773-4.227-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z" />
-        </svg>
-        <!-- Heroicons: Moon (Outline) -->
-        <svg id="moon-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="24" height="24">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.718 9.718 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998Z" />
-        </svg>
-      </button>
-    </li>
-  </ul>
-  <span id="font-status" class="sr-only" aria-live="polite"></span>
-</nav>
+<header class="site-header">
+  <nav class="site-nav" aria-label="Навигация по сайту">
+    <a class="site-brand" href={BASE} aria-current={isCurrent(BASE) ? 'page' : undefined}>{SITE.author}</a>
+    <ul role="list">
+      {links.map(({ label, href }) => (
+        <li><a href={href} aria-current={isCurrent(href) ? 'page' : undefined}>{label}</a></li>
+      ))}
+      <li><a id="site-search-link" href={BASE + 'search/'} aria-current={isCurrent(BASE + 'search/') ? 'page' : undefined} aria-keyshortcuts="/">Поиск</a></li>
+      <li class="needs-js">
+        <details class="reader-settings">
+          <summary title="Настройки чтения" aria-label="Настройки чтения"><Icon name="adjustments-horizontal" /></summary>
+          <div class="reader-controls" role="group" aria-label="Настройки чтения">
+            <button type="button" id="font-decrease" title="Уменьшить шрифт" aria-label="Уменьшить шрифт"><Icon name="minus" /></button>
+            <button type="button" id="font-increase" title="Увеличить шрифт" aria-label="Увеличить шрифт"><Icon name="plus" /></button>
+            <button type="button" id="width-toggle" title="Ширина текста: обычная" aria-label="Ширина текста: обычная. Нажмите, чтобы сменить"><Icon name="width-normal" /></button>
+            <button type="button" id="theme-toggle" title="Тёмная тема" aria-label="Тёмная тема" aria-pressed="false">
+              <Icon name="sun" class="sun-icon" />
+              <Icon name="moon" class="moon-icon" />
+            </button>
+          </div>
+        </details>
+      </li>
+    </ul>
+    <span id="font-status" class="sr-only" aria-live="polite"></span>
+  </nav>
+</header>
 
 <script>
-  const sidebarToggle = document.getElementById('sidebar-toggle');
-  const sidebar = document.getElementById('layout-sidebar');
-  const openIcon = document.getElementById('sidebar-open-icon');
-  const closeIcon = document.getElementById('sidebar-close-icon');
-  const root = document.documentElement;
-  const body = document.body;
-  const mobileBreakpoint = 992;
+  const settings = document.querySelector<HTMLDetailsElement>('.reader-settings');
 
-  function isMobileViewport() {
-    return window.innerWidth < mobileBreakpoint;
-  }
-
-  function lockPageScroll() {
-    if (!body || body.dataset.sidebarScrollLocked === 'true') return;
-
-    body.dataset.sidebarScrollLocked = 'true';
-    root.classList.add('sidebar-open');
-    body.classList.add('sidebar-open');
-  }
-
-  function unlockPageScroll() {
-    if (!body) return;
-
-    delete body.dataset.sidebarScrollLocked;
-    root.classList.remove('sidebar-open');
-    body.classList.remove('sidebar-open');
-  }
-
-  function syncIcons() {
-    const isShown = sidebar?.classList.contains('sidebar-shown');
-    const isMobile = isMobileViewport();
-    const expanded = isMobile ? !!isShown : !sidebar?.classList.contains('sidebar-hidden');
-    sidebarToggle?.setAttribute('aria-expanded', String(expanded));
-
-    if (openIcon && closeIcon) {
-      if (isMobile) {
-        openIcon.style.display = isShown ? 'none' : 'block';
-        closeIcon.style.display = isShown ? 'block' : 'none';
-      } else {
-        const isHidden = sidebar?.classList.contains('sidebar-hidden');
-        openIcon.style.display = isHidden ? 'block' : 'none';
-        closeIcon.style.display = isHidden ? 'none' : 'block';
-      }
-    }
-  }
-
-  // Оверлей дерева на телефоне модальный: текст под ним вне фокуса и вне скринридера, иначе Tab уходил под оверлей
-  function setBehindInert(on: boolean) {
-    document.querySelectorAll<HTMLElement>('main, .site-footer, .skip-link').forEach((el) => { el.inert = on; });
-    if (on) sidebar?.setAttribute('aria-modal', 'true'); else sidebar?.removeAttribute('aria-modal');
-  }
-
-  function syncMobileSidebarState() {
-    if (!sidebar) return;
-
-    if (!isMobileViewport()) {
-      sidebar.classList.remove('sidebar-shown');
-      unlockPageScroll();
-      setBehindInert(false);
-      syncIcons();
-      return;
-    }
-
-    sidebar.classList.remove('sidebar-hidden');
-
-    if (sidebar.classList.contains('sidebar-shown')) lockPageScroll();
-    else unlockPageScroll();
-    setBehindInert(sidebar.classList.contains('sidebar-shown'));
-
-    syncIcons();
-  }
-
-  function notifySidebarStateChanged() {
-    window.dispatchEvent(new CustomEvent('sidebar-state-changed'));
-  }
-
-  syncMobileSidebarState();
-  window.addEventListener('resize', syncMobileSidebarState);
-  window.addEventListener('sidebar-state-changed', syncMobileSidebarState);
-
-  // Escape closes the mobile overlay and returns focus to the toggle
-  document.addEventListener('keydown', (e) => {
-    if (e.key !== 'Escape' || !isMobileViewport() || !sidebar?.classList.contains('sidebar-shown')) return;
-    sidebar.classList.remove('sidebar-shown');
-    notifySidebarStateChanged();
-    sidebarToggle?.focus();
+  document.addEventListener('click', (event) => {
+    if (settings?.open && event.target instanceof Node && !settings.contains(event.target)) settings.open = false;
   });
 
-  sidebarToggle?.addEventListener('click', () => {
-    const isMobile = isMobileViewport();
-    if (isMobile) {
-      sidebar?.classList.remove('sidebar-hidden');
-      sidebar?.classList.toggle('sidebar-shown');
-    } else {
-      sidebar?.classList.remove('sidebar-shown');
-      sidebar?.classList.toggle('sidebar-hidden');
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && settings?.open) {
+      if (settings.contains(document.activeElement)) settings.querySelector('summary')?.focus();
+      settings.open = false;
     }
-    notifySidebarStateChanged();
+
+    if (event.key !== '/' || event.ctrlKey || event.metaKey || event.altKey || event.isComposing) return;
+    const target = event.target;
+    if (target instanceof HTMLElement && (target.isContentEditable || target.closest('input, textarea, select'))) return;
+
+    event.preventDefault();
+    const input = document.getElementById('site-search-input');
+    if (input) input.focus();
+    else document.getElementById('site-search-link')?.click();
   });
 </script>
 
 <style>
-  :global(html.sidebar-open),
-  :global(body.sidebar-open) {
-    overflow: hidden;
-    overscroll-behavior: none;
+  .site-header {
+    position: relative;
+    z-index: var(--app-z-navbar);
+    border-bottom: 1px solid var(--pico-muted-border-color);
+    color: var(--pico-color);
   }
 
-  .vertical-navbar {
-    width: var(--app-navbar-desktop-width);
-    background: transparent;
-    border-right: 1px solid var(--pico-muted-border-color);
+  .site-nav {
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: space-between;
     align-items: center;
-    padding: var(--app-spacing) 0;
-    position: fixed;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    height: 100vh;
-    z-index: var(--app-z-navbar-desktop);
+    column-gap: var(--app-spacing);
+    max-width: var(--app-reading-measure);
+    margin-inline: auto;
+    padding-inline: var(--app-page-gutter-start) var(--app-page-gutter-end);
+    padding-block: var(--app-spacing-sm);
   }
 
-  .vertical-navbar ul {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: var(--app-spacing-lg);
+  .site-nav ul {
+    flex-wrap: wrap;
+    column-gap: var(--app-spacing);
+    margin: 0;
+    padding: 0;
+  }
+
+  .site-nav li {
+    display: block;
+    padding: 0;
+    margin: 0;
     list-style: none;
-    margin: 0;
-    padding: 0;
   }
 
-  .vertical-navbar li {
-    margin: 0;
-    padding: 0;
-    display: flex;
-  }
-
-  .vertical-navbar .bottom-nav {
-    margin-top: auto;
-    gap: var(--app-spacing-md);
-  }
-
-  .vertical-navbar a,
-  .vertical-navbar button {
-    display: flex;
-    justify-content: center;
+  .site-nav a,
+  .reader-settings summary {
+    display: inline-flex;
     align-items: center;
-    width: var(--app-navbar-desktop-button);
-    height: var(--app-navbar-desktop-button);
-    padding: 0;
+    min-height: var(--app-touch-target);
     margin: 0;
-    border: none;
-    background: transparent;
-    box-shadow: none;
-    color: var(--pico-muted-color);
-    opacity: 0.85;
-    cursor: pointer;
-    transition: opacity var(--app-transition), color var(--app-transition);
+    padding: 0;
+    color: inherit;
     text-decoration: none;
   }
 
-  .vertical-navbar a svg,
-  .vertical-navbar button svg {
-    color: inherit;
-    stroke: currentColor;
-  }
-
-  .vertical-navbar a:hover,
-  .vertical-navbar button:hover {
-    opacity: 1;
+  .site-nav a:hover,
+  .site-nav [aria-current="page"]:not(.site-brand),
+  .reader-settings summary:hover,
+  .reader-settings[open] summary {
     color: var(--pico-primary);
   }
 
-  .vertical-navbar button:disabled {
-    opacity: 0.3;
-    cursor: default;
-    color: var(--pico-muted-color);
+  .site-nav ul [aria-current="page"] {
+    text-decoration: underline;
+    text-underline-offset: 0.3em;
   }
 
-  .vertical-navbar li.mobile-only {
+  .site-nav ul a {
+    justify-content: center;
+    min-width: var(--app-touch-target);
+  }
+
+  .site-brand {
+    font-weight: 700;
+  }
+
+  .site-nav ul {
+    font-size: var(--app-font-sm);
+  }
+
+  .reader-settings {
+    position: relative;
+    margin: 0;
+  }
+
+  .reader-settings summary {
+    position: relative;
+    justify-content: center;
+    width: var(--app-touch-target);
+    list-style: none;
+  }
+
+  .reader-settings summary::-webkit-details-marker,
+  .reader-settings summary::after {
     display: none;
   }
 
-  #sun-icon,
-  #moon-icon {
+  .reader-settings summary:focus-visible {
+    outline: none;
+  }
+
+  .reader-settings summary:focus-visible::before {
+    content: '';
+    position: absolute;
+    inset-block-end: var(--app-spacing-md);
+    inset-inline: 0;
+    width: var(--app-icon-size);
+    margin-inline: auto;
+    border-bottom: 2px solid var(--pico-primary);
+  }
+
+  .reader-controls {
+    position: absolute;
+    inset-block-start: 100%;
+    inset-inline-end: 0;
+    display: flex;
+    width: max-content;
+    background: var(--pico-background-color);
+    border: 1px solid var(--pico-muted-border-color);
+    border-radius: var(--app-radius-sm);
+  }
+
+  .reader-controls button {
+    display: grid;
+    place-items: center;
+    width: var(--app-touch-target);
+    flex: 0 0 var(--app-touch-target);
+    min-height: var(--app-touch-target);
+    padding: 0;
+    margin: 0;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    font-size: var(--app-font-md);
+  }
+
+  .reader-controls button:hover {
+    color: var(--pico-primary);
+  }
+
+  .reader-controls :global(.sun-icon),
+  :global(html[data-theme="dark"]) .reader-controls :global(.moon-icon) {
     display: none;
   }
 
-  :global(html[data-theme="dark"]) #sun-icon {
+  :global(html[data-theme="dark"]) .reader-controls :global(.sun-icon) {
     display: block;
   }
 
-  :global(html[data-theme="light"]) #moon-icon {
-    display: block;
-  }
-
-  @media (max-width: 991px) {
-    .vertical-navbar li.mobile-only {
-      display: flex;
+  @media (max-width: 640px) {
+    .site-nav ul {
+      font-size: var(--app-font-control);
+      column-gap: var(--app-spacing-md);
     }
 
-    .vertical-navbar {
-      width: 100%;
-      flex-direction: row;
-      align-items: center;
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      padding: 0 max(0.5rem, env(safe-area-inset-right)) 0 max(0.5rem, env(safe-area-inset-left));
-      height: var(--app-navbar-mobile-height);
-      min-height: var(--app-navbar-mobile-height);
-      max-height: var(--app-navbar-mobile-height);
-      background: var(--pico-background-color);
-      border-right: none;
-      border-bottom: 1px solid var(--pico-muted-border-color);
-      z-index: var(--app-z-navbar);
-      overflow: hidden;
-      touch-action: manipulation;
+    .reader-settings {
+      position: static;
     }
 
-    .vertical-navbar a,
-    .vertical-navbar button {
-      width: var(--app-navbar-mobile-button);
-      height: var(--app-navbar-mobile-button);
-      min-height: var(--app-navbar-mobile-button);
-      padding: 0;
-    }
-
-    .vertical-navbar ul {
-      flex-direction: row;
-      width: auto;
-      min-width: 0;
-      justify-content: flex-start;
-      gap: 0;
-      margin-top: 0;
-      overflow: hidden;
-      flex-shrink: 0;
-    }
-
-
-    .vertical-navbar .bottom-nav {
-      margin-top: 0;
-      margin-left: auto;
+    .reader-controls {
+      inset-inline-end: var(--app-page-gutter-end);
     }
   }
 </style>
