@@ -97,7 +97,8 @@ Present now, confirmed by the code:
   above the title and show the date and reading time below it.
 - The table of contents in long articles starts closed. One related article
   appears after the introduction when scripts are available; the full list of
-  three neighbours stays after the text.
+  three neighbours stays after the text. Author details and site links stay
+  in the shared footer rather than repeating after every article.
 - Code blocks with a copy button, Mermaid diagrams with a toggle back to the
   source, a sitemap.
 - The notes feed at `/notes/`: one file per note

@@ -1,7 +1,7 @@
 ---
 import { getCollection, type CollectionEntry } from 'astro:content';
 import { sortByDateDesc } from '../utils/date';
-import { BASE, SITE, sectionTitle } from '../config';
+import { BASE, sectionTitle } from '../config';
 import PostList from './PostList.astro';
 import Arrow from './Arrow.astro';
 import { articleSummary } from '../utils/article-summary';
@@ -26,37 +26,24 @@ const featuredSummary = featured ? articleSummary(featured) : '';
 const folderName = poolFolder.split('/').pop()!;
 const about = (await getCollection('blog')).find((e) => e.id === `${poolFolder}/about-${folderName}`);
 const folderTitle = about?.data.title.replace(/:\s*Об этой секции$/, '') ?? sectionTitle(folderName);
-const hasNotes = (await getCollection('notes')).some((n) => !n.data.draft);
 ---
 
-<aside class="article-footer" aria-label="После статьи">
-  {featured && (
-    <div class="article-recommendation" id="article-recommendation" hidden>
-      <p class="article-recommendation-label">Ещё по теме</p>
-      <a href={`${BASE}blog/${featured.id}/`} class="post-title-link">{featured.data.title}</a>
-      {featuredSummary && <p class="article-recommendation-summary">{featuredSummary}</p>}
-    </div>
-  )}
-  {more.length > 0 && (
+{more.length > 0 && (
+  <aside class="article-footer" aria-label="После статьи">
+    {featured && (
+      <div class="article-recommendation" id="article-recommendation" hidden>
+        <p class="article-recommendation-label">Ещё по теме</p>
+        <a href={`${BASE}blog/${featured.id}/`} class="post-title-link">{featured.data.title}</a>
+        {featuredSummary && <p class="article-recommendation-summary">{featuredSummary}</p>}
+      </div>
+    )}
     <section class="more-in-section">
       <h2 class="section-heading">Ещё в разделе «{folderTitle}» <span class="section-slug">{poolFolder}/</span></h2>
       <PostList posts={more} />
       <p class="all-articles"><a href={`${BASE}blog/${poolFolder}/`} class="post-title-link all-articles-link">Весь раздел <Arrow /></a></p>
     </section>
-  )}
-  <p class="author-line">
-    <span>{SITE.author}, руководитель разработки в EORA.</span>
-    <a href={`${BASE}about-me/`}>Обо мне</a>
-    {hasNotes && (
-      <>
-        <span class="meta-sep" aria-hidden="true">~</span>
-        <a href={`${BASE}notes/`}>Заметки</a>
-      </>
-    )}
-    <span class="meta-sep" aria-hidden="true">~</span>
-    <a href={`${BASE}rss.xml`}>RSS</a>
-  </p>
-</aside>
+  </aside>
+)}
 
 <style>
   .article-recommendation:not([hidden]) {

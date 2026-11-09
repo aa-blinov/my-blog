@@ -746,25 +746,6 @@ a.all-articles-link.post-title-link:hover {
   margin: 0;
   font-weight: 700;
 }
-.author-line {
-  display: flex;
-  flex-wrap: wrap;
-  column-gap: 0.6em;
-  margin: var(--app-spacing-xl) 0 0;
-  font-size: var(--app-font-sm); /* кто пишет: кегль футера и цвет текста, а не мелкая серая подпись */
-  color: var(--pico-color);
-}
-.author-line a {
-  color: inherit;
-  text-decoration: underline;
-  text-decoration-color: var(--pico-muted-border-color);
-  text-underline-offset: 0.2em;
-}
-.author-line a:hover {
-  color: var(--pico-primary);
-  text-decoration-color: var(--pico-primary);
-}
-
 /* ==========================================================================
    Notes feed: git-log rhythm, a time stamp and text, hairline between entries
    ========================================================================== */
