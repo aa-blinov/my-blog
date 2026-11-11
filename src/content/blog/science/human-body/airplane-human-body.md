@@ -120,7 +120,7 @@ draft: false
 
 ## Список источников
 
-1. Airbus Safety First. Hypoxia – An Invisible Enemy. Cabin Depressurization Effects on Human Physiology. CS/FAR 25.841 regulations cited. <https://safetyfirst.airbus.com/app/themes/mh_newsdesk/documents/archives/hypoxia-an-invisible-enemy.pdf>
+1. Airbus Safety First. Hypoxia – An Invisible Enemy. Cabin Depressurization Effects on Human Physiology. CS/FAR 25.841 regulations cited. <https://skybrary.aero/sites/default/files/bookshelf/3678.pdf>
 
 2. Harvard School of Public Health / FAA. Health Effects of Aircraft Cabin Pressure in Older and Vulnerable Passengers. <https://www.faa.gov/sites/faa.gov/files/data_research/research/med_humanfacs/cer/HealthEffectsVulnerablePassengers.pdf>
 
