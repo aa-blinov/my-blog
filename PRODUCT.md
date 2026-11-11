@@ -91,15 +91,17 @@ Present now, confirmed by the code:
   in the tab. An empty result offers a link to the archive.
 - The header disclosure offers a light and dark theme, five font sizes and
   three reading widths.
-- The home page with the seven latest articles, short summaries and reading
-  times, plus a link to the full archive beside the list heading. The archive
-  at `/blog/` groups articles by year
-  and month, newest first, with links to the months and topic pages. Each
+- The home page starts with four curated articles across AI, popular science,
+  personal essays and development, each with a short description. It then shows
+  the seven latest articles with summaries and reading times, plus a link to
+  the full archive beside the list heading. The archive at `/blog/` groups
+  articles by year and month, newest first, with links to the months and topic pages. Each
   section and subfolder has a page. Articles link to their parent sections
-  above the title and show the date and reading time below it.
-- The table of contents in long articles starts closed. One related article
-  appears after the introduction when scripts are available; the full list of
-  three neighbours stays after the text. Author details and site links stay
+  above the title and show the date and reading time below it. The science
+  section groups body articles and the "Body and environment" series under
+  `/blog/science/body/`; existing article and series addresses stay available.
+- The table of contents in long articles starts closed. Up to three related
+  articles appear after the text. Author details and site links stay
   in the shared footer rather than repeating after every article.
 - Code blocks with a copy button, Mermaid diagrams with a toggle back to the
   source, a sitemap.

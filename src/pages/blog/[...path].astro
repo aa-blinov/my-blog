@@ -16,7 +16,7 @@ import type { MarkdownHeading } from 'astro';
 import { formatDate, readingMinutes, plural } from '../../utils/date';
 import { sortByDateDesc } from '../../utils/date';
 import { getSeries, seriesOf, isAbout } from '../../utils/series';
-import { sectionTitle } from '../../config';
+import { BASE, sectionTitle } from '../../config';
 import { getArticleSections } from '../../utils/breadcrumb';
 
 type BlogEntry = CollectionEntry<'blog'>;
@@ -40,6 +40,8 @@ export async function getStaticPaths() {
       directoryPaths.add(parts.slice(0, i).join('/'));
     }
   });
+  // Эта страница собирает статьи о теле, сохраняя их исходные адреса и адрес серии.
+  directoryPaths.add('science/body');
 
   const folderPaths = Array.from(directoryPaths).map((path) => ({
     params: { path },
@@ -73,12 +75,18 @@ interface Group {
   name: string;
   entries: BlogEntry[];
   maxDate: number;
+  isBodyHubLink?: boolean;
 }
 let directEntries: BlogEntry[] = [];
 let subGroups: Group[] = [];
 let folderSeries = null as Awaited<ReturnType<typeof getSeries>>;
 let folderAbout: BlogEntry | null = null;
 let AboutContent: Awaited<ReturnType<typeof render>>['Content'] | null = null;
+let BodySeriesContent: Awaited<ReturnType<typeof render>>['Content'] | null = null;
+let bodyArticles: BlogEntry[] = [];
+let bodySeriesParts: BlogEntry[] = [];
+let bodyMaterialsCount = 0;
+const isBodyHub = kind === 'folder' && path === 'science/body';
 
 if (kind === 'folder') {
   const allEntries = await getCollection('blog');
@@ -104,11 +112,41 @@ if (kind === 'folder') {
   // about-файл это вводный текст раздела, не строка в списке; в серии части идут по номеру
   if (folderAbout) AboutContent = (await render(folderAbout)).Content;
   if (folderSeries) directEntries = folderSeries.parts;
+
+  if (isBodyHub) {
+    bodyArticles = sortByDateDesc(allEntries.filter((e) =>
+      !e.data.draft &&
+      e.id.startsWith('science/human-body/') &&
+      !e.id.slice('science/human-body/'.length).includes('/') &&
+      !isAbout(e.id)
+    ));
+    const bodyEnvironment = await getSeries('science/body-and-environment');
+    bodySeriesParts = bodyEnvironment?.parts ?? [];
+    const bodyEnvironmentAbout = allEntries.find((e) =>
+      e.id === 'science/body-and-environment/about-body-and-environment' && !e.data.draft
+    );
+    if (bodyEnvironmentAbout) BodySeriesContent = (await render(bodyEnvironmentAbout)).Content;
+    bodyMaterialsCount = bodyArticles.length + bodySeriesParts.length;
+  }
+
+  if (path === 'science') {
+    const bodyArticlesAndParts = allEntries.filter((e) =>
+      !e.data.draft &&
+      !isAbout(e.id) &&
+      (e.id.startsWith('science/human-body/') || e.id.startsWith('science/body-and-environment/'))
+    );
+    bodyMaterialsCount = bodyArticlesAndParts.length;
+    if (bodyArticlesAndParts.length > 0) groups.body = bodyArticlesAndParts;
+    delete groups['human-body'];
+    delete groups['body-and-environment'];
+  }
+
   subGroups = Object.entries(groups)
     .map(([name, entries]) => ({
       name,
       entries: sortByDateDesc(entries),
-      maxDate: Math.max(...entries.map(e => e.data.date.getTime()))
+      maxDate: Math.max(...entries.map(e => e.data.date.getTime())),
+      isBodyHubLink: path === 'science' && name === 'body',
     }))
     .sort((a, b) => a.name.localeCompare(b.name)); // Sort sections alphabetically
 }
@@ -116,6 +154,7 @@ if (kind === 'folder') {
 // Папка с about-<имя>.md получает русское имя из него
 const folderName = path.split('/').pop() || path;
 const title = entry ? entry.data.title : (folderAbout?.data.title.replace(/:\s*Об этой секции$/, '') ?? sectionTitle(folderName));
+const bodyHubDescription = 'Научпоп о том, как устроено тело человека и как на него влияют условия вокруг: вес, холод, свет, высота и шум. Здесь собраны отдельные статьи и серия «Тело и среда».';
 const articleSections = entry ? getArticleSections(entry.id) : [];
 ---
 
@@ -162,7 +201,7 @@ const articleSections = entry ? getArticleSections(entry.id) : [];
     </article>
   </Layout>
 ) : (
-  <Layout title={title}>
+  <Layout title={title} description={isBodyHub ? bodyHubDescription : undefined}>
     <article>
       <div class="entry-header">
         <p class="meta"><span>{folderSeries ? 'серия' : 'раздел'}</span><span class="meta-sep" aria-hidden="true">~</span><span>{path}/</span></p>
@@ -176,40 +215,51 @@ const articleSections = entry ? getArticleSections(entry.id) : [];
           <AboutContent />
         </div>
       )}
+      {isBodyHub && <div class="content"><p>{bodyHubDescription}</p></div>}
 
-      {directEntries.length > 0 && (
-        <section class="section-block">
-          <PostList posts={directEntries} numbered={!!folderSeries} level={2} />
-        </section>
+      {isBodyHub ? (
+        <>
+          <section class="section-block">
+            <h2 class="section-heading">Тело человека</h2>
+            <PostList posts={bodyArticles} level={3} />
+          </section>
+          <section class="section-block">
+            <hr class="section-divider" />
+            <h2 class="section-heading">Тело и среда</h2>
+            {BodySeriesContent && <div class="content"><BodySeriesContent /></div>}
+            <PostList posts={bodySeriesParts} numbered level={3} />
+          </section>
+        </>
+      ) : (
+        <>
+          {directEntries.length > 0 && (
+            <section class="section-block">
+              <PostList posts={directEntries} numbered={!!folderSeries} level={2} />
+            </section>
+          )}
+          {subGroups.map((group, index) => (
+            <section class="section-block">
+              {(index > 0 || directEntries.length > 0) && <hr class="section-divider" />}
+              <header>
+                <h2 class="section-heading">
+                  {sectionTitle(group.name)} <span class="section-slug">{group.name}/</span>
+                </h2>
+              </header>
+              {group.isBodyHubLink ? (
+                <div class="post-list">
+                  <div class="post-list-item">
+                    <h3 class="post-title"><a class="post-title-link" href={`${BASE}blog/science/body/`}>Все материалы о теле</a></h3>
+                    <p class="summary">{bodyMaterialsCount} {plural(bodyMaterialsCount, 'материал', 'материала', 'материалов')}, включая серию «Тело и среда».</p>
+                  </div>
+                </div>
+              ) : <PostList posts={group.entries} />}
+            </section>
+          ))}
+        </>
       )}
-      {subGroups.map((group, index) => (
-        <section class="section-block">
-          {(index > 0 || directEntries.length > 0) && <hr class="section-divider" />}
-          <header>
-            <h2 class="section-heading">
-              {sectionTitle(group.name)} <span class="section-slug">{group.name}/</span>
-            </h2>
-          </header>
-          <PostList posts={group.entries} />
-        </section>
-      ))}
     </article>
   </Layout>
 )}
-
-<script>
-  // Список после статьи остаётся доступен без JavaScript; скрипт поднимает одну ссылку к месту, где заканчивается введение.
-  const content = document.querySelector('article > .content');
-  const recommendation = document.getElementById('article-recommendation');
-  if (content && recommendation) {
-    const blocks = [...content.children];
-    const firstHeading = blocks.find((block) => block.tagName === 'H2');
-    const firstParagraph = blocks.find((block) => block.tagName === 'P');
-    if (firstHeading) firstHeading.before(recommendation);
-    else if (firstParagraph) firstParagraph.after(recommendation);
-    if (firstHeading || firstParagraph) recommendation.hidden = false;
-  }
-</script>
 
 <style>
   .article-sections {

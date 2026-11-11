@@ -328,6 +328,22 @@ page put the title first, with a muted day and month aligned to its right.
 The seven latest articles on the home page also show a short summary and
 reading time. Year and month headings separate groups in the archive.
 
+### The home reading guide
+
+The home page places four editorial starting points between its introduction
+and the chronological list. Each row has a topic label, a title and one short
+description. Hairline rules separate the rows; there are no cards or fills.
+The four links cover AI, popular science, personal essays and development.
+
+### Section labels and topic grouping
+
+The five active top-level labels are `ИИ`, `Разработка`, `Научпоп`, `Личное`
+and `Проекты`. The AI section describes model capabilities, use and impact;
+the development section describes implementation, architecture and tools.
+Within popular science, the `Тело` hub groups the human-body articles and the
+series `Тело и среда` under `/blog/science/body/`. Its two lists stay distinct,
+and the existing article and series routes stay available.
+
 ### The article header
 
 Linked section names sit above the title. The date and reading time sit
@@ -348,8 +364,7 @@ article with six or more second-level headings, from the left edge of the
 text with no rule and no margins of its own, and the numbers are in the muted
 ink. The summary is at least 44px tall on a phone.
 
-One related article appears after the introduction when scripts are available.
-The full list of three neighbouring articles stays after the text.
+Up to three neighbouring articles appear after the text.
 
 ### The note entry
 

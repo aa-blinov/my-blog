@@ -19,10 +19,11 @@ export const SECTION_TITLES: Record<string, string> = {
   dev: 'Разработка',
   ideas: 'Идеи',
   knowledge: 'База знаний',
-  life: 'Жизнь',
+  life: 'Личное',
   mgmt: 'Менеджмент',
-  projects: 'Маленькие проекты',
+  projects: 'Проекты',
   science: 'Научпоп',
+  body: 'Тело',
   'human-body': 'Тело человека',
   'body-and-environment': 'Тело и среда',
   travel: 'Путешествия',
@@ -33,6 +34,15 @@ export const SECTION_TITLES: Record<string, string> = {
 
 export function sectionTitle(name: string): string {
   return SECTION_TITLES[name] ?? name;
+}
+
+const SECTION_PAGE_PATHS: Record<string, string> = {
+  'science/human-body': 'science/body',
+  'science/body-and-environment': 'science/body',
+};
+
+export function sectionPagePath(path: string): string {
+  return SECTION_PAGE_PATHS[path] ?? path;
 }
 
 export function isBlogSection(s: string): boolean {

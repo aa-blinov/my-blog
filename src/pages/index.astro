@@ -27,6 +27,33 @@ const recentNotes = sortByDateDesc(
   (await getCollection('notes')).filter((n) => !n.data.draft)
 ).slice(0, 3);
 
+const startingPoints = [
+  {
+    topic: 'ИИ',
+    title: 'Как не потерять себя',
+    description: 'Личный опыт о том, что происходит с собственным мышлением, когда часть работы отдаёшь языковой модели.',
+    slug: 'ai/how-not-to-lose-yourself',
+  },
+  {
+    topic: 'Научпоп',
+    title: 'Прокрастинация как ремонт настроения',
+    description: 'Почему неприятные чувства заставляют откладывать дела и что помогает выйти из этого круга.',
+    slug: 'science/mind/procrastination-is-not-about-time',
+  },
+  {
+    topic: 'Личное',
+    title: 'Право передумать',
+    description: 'Как понять, что давняя цель больше не твоя, и перестать нести её как обещание.',
+    slug: 'life/the-right-to-change-your-mind',
+  },
+  {
+    topic: 'Разработка',
+    title: 'Цикл, из которого сделан агент',
+    description: 'Первая часть серии о кодовом агенте и простом цикле, вокруг которого он устроен.',
+    slug: 'dev/agent/loop',
+  },
+];
+
 let Content: Awaited<ReturnType<typeof render>>['Content'] | null = null;
 let entryData: { data: { title: string; date: Date; summary?: string }; fileLabel: string } | null = null;
 
@@ -42,6 +69,21 @@ if (homeEntry) {
 
 <PageFromEntry entry={entryData} fallbackTitle="Главная" fallbackH1="Главная" prompt="main &gt;" hideMeta>
   {Content ? <Content /> : <p>Добавь в <code>content/pages/</code> файл <code>main.md</code> с frontmatter: <code>title</code>, <code>date</code>.</p>}
+
+  <section class="start-here" aria-labelledby="start-here-heading">
+    <h2 id="start-here-heading" class="section-heading">Начать отсюда</h2>
+    <ul class="start-here-list" role="list">
+      {startingPoints.map((item) => (
+        <li>
+          <a class="start-here-link post-title-link" href={`${BASE}blog/${item.slug}/`}>
+            <span class="start-here-topic">{item.topic}</span>
+            <span class="start-here-title">{item.title}</span>
+            <span class="start-here-description">{item.description}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </section>
 
   <section class="recent-posts recent-first">
     <div class="recent-header">
@@ -95,5 +137,80 @@ if (homeEntry) {
     font-size: var(--app-font-sm);
     text-decoration: underline;
     text-underline-offset: 0.2em;
+  }
+
+  .start-here {
+    margin-top: var(--app-spacing-2xl);
+  }
+
+  .start-here .section-heading {
+    margin-bottom: var(--app-spacing-md);
+  }
+
+  .start-here-list {
+    margin: 0;
+    padding: 0;
+  }
+
+  .start-here-list li {
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid var(--pico-muted-border-color);
+    list-style: none;
+  }
+
+  .start-here-list li:last-child {
+    border-bottom: 1px solid var(--pico-muted-border-color);
+  }
+
+  .start-here-link {
+    display: grid;
+    grid-template-columns: minmax(7.5rem, max-content) minmax(0, 1fr);
+    align-items: baseline;
+    column-gap: var(--app-spacing);
+    row-gap: var(--app-spacing-xs);
+    min-height: var(--app-touch-target);
+    padding-block: var(--app-spacing-md);
+  }
+
+  .start-here-topic {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+    color: var(--pico-muted-color);
+    font-family: var(--font-family);
+    font-size: var(--app-font-control);
+  }
+
+  .start-here-title {
+    grid-column: 2;
+    text-decoration: underline;
+    text-decoration-color: var(--pico-muted-border-color);
+    text-underline-offset: 0.2em;
+  }
+
+  .start-here-description {
+    grid-column: 2;
+    color: var(--pico-muted-color);
+    font-size: var(--app-font-sm);
+    line-height: 1.45;
+  }
+
+  .start-here-link:is(:hover, :focus-visible) .start-here-title {
+    color: var(--pico-primary);
+    text-decoration-color: currentColor;
+  }
+
+  @media (max-width: 480px) {
+    .start-here-link {
+      grid-template-columns: minmax(0, 1fr);
+      row-gap: var(--app-spacing-xs);
+    }
+
+    .start-here-topic,
+    .start-here-title,
+    .start-here-description {
+      grid-column: 1;
+      grid-row: auto;
+    }
   }
 </style>
