@@ -325,13 +325,14 @@ Section lists put the date, a tilde and the file path above the title. On a
 phone they show the file name. Numbered series lists show the part number,
 reading time and file name. The archive and the recent articles on the home
 page put the title first, with a muted day and month aligned to its right.
-The seven latest articles on the home page also show a short summary and
-reading time. Year and month headings separate groups in the archive.
+The seven latest publications on the home page also show a short summary and
+reading time; projects are labelled. Year and month headings separate groups
+in the archive.
 
 ### The home reading guide
 
-The home page places four editorial starting points between its introduction
-and the chronological list. Each row has a topic label, a title and one short
+The home page places links to its topics after the introduction, followed by
+four editorial starting points before the chronological list. Each row has a topic label, a title and one short
 description. Hairline rules separate the rows; there are no cards or fills.
 The four links cover AI, popular science, personal essays and development.
 

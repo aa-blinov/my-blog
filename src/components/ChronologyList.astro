@@ -23,7 +23,7 @@ function readingLabel(entry: BlogEntry): string {
     {posts.map((entry) => (
       <li>
         <a class="post-title-link chronology-link" href={`${BASE}blog/${entry.id}/`}>
-          <span class="chronology-title">{entry.data.title}</span>
+          <span><span class="chronology-title">{entry.data.title}</span>{showDetails && entry.id.startsWith('projects/') && <> <span class="chronology-kind">Проект</span></>}</span>
           <time datetime={formatDate(entry.data.date)}>{shortDate.format(entry.data.date)}</time>
           {showDetails && (
             <>
@@ -75,6 +75,14 @@ function readingLabel(entry: BlogEntry): string {
   .chronology-list a:is(:hover, :focus-visible) .chronology-title {
     color: var(--pico-primary);
     text-decoration-color: currentColor;
+  }
+
+  .chronology-kind {
+    margin-inline-start: var(--app-spacing-sm);
+    color: var(--pico-muted-color);
+    font-family: var(--font-family);
+    font-size: var(--app-font-control);
+    white-space: nowrap;
   }
 
   .chronology-list time {

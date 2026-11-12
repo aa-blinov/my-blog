@@ -31,25 +31,25 @@ const startingPoints = [
   {
     topic: 'ИИ',
     title: 'Как не потерять себя',
-    description: 'Личный опыт о том, что происходит с собственным мышлением, когда часть работы отдаёшь языковой модели.',
+    description: 'Как работа с ИИ влияет на собственное мышление.',
     slug: 'ai/how-not-to-lose-yourself',
   },
   {
     topic: 'Научпоп',
     title: 'Прокрастинация как ремонт настроения',
-    description: 'Почему неприятные чувства заставляют откладывать дела и что помогает выйти из этого круга.',
+    description: 'Как неприятные чувства заставляют нас откладывать дела.',
     slug: 'science/mind/procrastination-is-not-about-time',
   },
   {
     topic: 'Личное',
     title: 'Право передумать',
-    description: 'Как понять, что давняя цель больше не твоя, и перестать нести её как обещание.',
+    description: 'Что делать, когда давняя цель больше не твоя.',
     slug: 'life/the-right-to-change-your-mind',
   },
   {
     topic: 'Разработка',
     title: 'Цикл, из которого сделан агент',
-    description: 'Первая часть серии о кодовом агенте и простом цикле, вокруг которого он устроен.',
+    description: 'Как работает цикл кодового агента.',
     slug: 'dev/agent/loop',
   },
 ];
@@ -69,6 +69,15 @@ if (homeEntry) {
 
 <PageFromEntry entry={entryData} fallbackTitle="Главная" fallbackH1="Главная" prompt="main &gt;" hideMeta>
   {Content ? <Content /> : <p>Добавь в <code>content/pages/</code> файл <code>main.md</code> с frontmatter: <code>title</code>, <code>date</code>.</p>}
+
+  <section class="home-topics" aria-labelledby="home-topics-heading">
+    <h2 id="home-topics-heading" class="section-heading">Темы</h2>
+    <ul class="section-tags" role="list">
+      {topSections.map((s) => (
+        <li><a href={`${BASE}blog/${s.slug}/`}>{s.title} <span class="tag-count">{s.count}</span></a></li>
+      ))}
+    </ul>
+  </section>
 
   <section class="start-here" aria-labelledby="start-here-heading">
     <h2 id="start-here-heading" class="section-heading">Начать отсюда</h2>
@@ -93,17 +102,14 @@ if (homeEntry) {
       <ChronologyList posts={posts} showDetails />
   </section>
 
-  <div class="site-map">
-    <h2 class="section-heading">Разделы</h2>
+  {seriesRows.length > 0 && <div class="site-map">
+    <h2 class="section-heading">Серии статей</h2>
     <ul class="section-tags">
-      {topSections.map((s) => (
-        <li><a href={`${BASE}blog/${s.slug}/`}>{s.title}<span class="tag-count">{s.count}</span></a></li>
-      ))}
       {seriesRows.map((s) => (
-        <li><a href={`${BASE}blog/${s.folder}/`}>Серия «{s.title}»<span class="tag-count">{s.parts.length}</span></a></li>
+        <li><a href={`${BASE}blog/${s.folder}/`}>{s.title} <span class="tag-count">{s.parts.length}</span></a></li>
       ))}
     </ul>
-  </div>
+  </div>}
 
   {recentNotes.length > 0 && (
     <div class="recent-posts">
@@ -117,6 +123,18 @@ if (homeEntry) {
 </PageFromEntry>
 
 <style>
+  .home-topics {
+    margin-top: var(--app-spacing-xl);
+  }
+
+  .home-topics .section-heading {
+    margin-bottom: var(--app-spacing-md);
+  }
+
+  .home-topics .section-tags a {
+    min-height: var(--app-touch-target);
+  }
+
   .recent-header {
     display: flex;
     align-items: baseline;

@@ -91,9 +91,10 @@ Present now, confirmed by the code:
   in the tab. An empty result offers a link to the archive.
 - The header disclosure offers a light and dark theme, five font sizes and
   three reading widths.
-- The home page starts with four curated articles across AI, popular science,
-  personal essays and development, each with a short description. It then shows
-  the seven latest articles with summaries and reading times, plus a link to
+- The home page offers topic links near the introduction, followed by four
+  curated articles across AI, popular science, personal essays and development,
+  each with a short description. It then shows the seven latest publications
+  with summaries and reading times, marks projects and links to
   the full archive beside the list heading. The archive at `/blog/` groups
   articles by year and month, newest first, with links to the months and topic pages. Each
   section and subfolder has a page. Articles link to their parent sections
