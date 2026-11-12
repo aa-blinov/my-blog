@@ -345,8 +345,9 @@ the development section describes implementation, architecture and tools.
 Within popular science, the `Тело` hub groups the human-body articles and the
 series `Тело и среда` under `/blog/science/body/`. Its two lists stay distinct,
 and the existing article and series routes stay available. In the archive,
-subtopics and series appear as text links indented beneath their parent topics;
-a link beside the heading takes the reader to the chronological list.
+subtopics and series appear as text links connected by subtle lines beneath
+their parent topics; a link beside the heading takes the reader to the
+chronological list.
 
 ### The article header
 

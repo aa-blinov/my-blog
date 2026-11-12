@@ -24,8 +24,6 @@ const seriesUnder = (parent: string) => series.filter((item) => {
   return seriesParent === parent;
 });
 const hasChildren = (name: string) => seriesUnder(name).length > 0 || (name === 'science' && scienceTopics.length > 0);
-const simpleSections = sections.filter(([name]) => !hasChildren(name));
-const groupedSections = sections.filter(([name]) => hasChildren(name));
 
 const monthName = new Intl.DateTimeFormat('ru-RU', { month: 'long', timeZone: 'UTC' });
 const byYear = Map.groupBy(entries, (entry) => entry.data.date.getUTCFullYear());
@@ -50,30 +48,25 @@ const years = [...byYear].map(([year, posts]) => {
         <h2 class="section-heading" id="archive-topics-heading">Темы</h2>
         {years.length > 0 && <a class="archive-skip" href={`#year-${years[0].year}`}>К статьям</a>}
       </div>
-      <ul class="section-tags blog-index-tags archive-simple-topics" aria-label="Разделы блога" role="list">
-        {simpleSections.map(([name, posts]) => (
-          <li id={`section-${name}`}><a href={`${BASE}blog/${name}/`}>{sectionTitle(name)} <span class="tag-count">{posts.length}</span></a></li>
-        ))}
-      </ul>
-      <ul class="section-tags archive-topic-tree" aria-label="Разделы с подразделами и циклами" role="list">
-        {groupedSections.map(([name, posts]) => (
+      <ul class="section-tags archive-topic-tree archive-topic-branches" aria-label="Темы, подразделы и циклы" role="list">
+        {sections.map(([name, posts]) => (
           <li id={`section-${name}`}>
             <a href={`${BASE}blog/${name}/`}>{sectionTitle(name)} <span class="tag-count">{posts.length}</span></a>
-            <ul class="section-tags archive-topic-children" role="list">
+            {hasChildren(name) && <ul class="section-tags archive-topic-children archive-topic-branches" role="list">
               {seriesUnder(name).map((item) => (
                 <li class="archive-series"><a href={`${BASE}blog/${item.folder}/`}>Цикл «{item.title}»</a></li>
               ))}
               {name === 'science' && scienceTopics.map(({ path, title }) => (
                 <li>
                   <a href={`${BASE}blog/${path}/`}>{title}</a>
-                  {seriesUnder(path).length > 0 && <ul class="section-tags archive-topic-children" role="list">
+                  {seriesUnder(path).length > 0 && <ul class="section-tags archive-topic-children archive-topic-branches" role="list">
                     {seriesUnder(path).map((item) => (
                       <li class="archive-series"><a href={`${BASE}blog/${item.folder}/`}>Цикл «{item.title}»</a></li>
                     ))}
                   </ul>}
                 </li>
               ))}
-            </ul>
+            </ul>}
           </li>
         ))}
       </ul>
@@ -107,7 +100,7 @@ const years = [...byYear].map(([year, posts]) => {
 </Layout>
 
 <style>
-  .blog-index-tags li,
+  .archive-topic-tree li,
   .archive-month h3 {
     scroll-margin-top: var(--app-scroll-offset);
   }
@@ -144,30 +137,48 @@ const years = [...byYear].map(([year, posts]) => {
     text-underline-offset: 0.2em;
   }
 
-  .archive-simple-topics {
-    column-gap: var(--app-spacing-lg);
-    margin-bottom: var(--app-spacing-sm);
-  }
-
-  .archive-topic-children {
+  .archive-topic-branches {
     display: block;
     margin: 0;
+    padding-left: var(--app-spacing-lg);
   }
 
   .archive-topic-tree {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    column-gap: var(--app-spacing-xl);
+    --archive-tree-line: color-mix(in srgb, var(--pico-muted-color) 55%, var(--pico-background-color));
     margin-bottom: var(--app-spacing-xl);
   }
 
-  .archive-topic-tree > li > a,
-  .archive-simple-topics > li > a {
+  .archive-topic-tree > li > a {
     font-weight: 600;
   }
 
   .archive-topic-children {
-    margin-left: var(--app-spacing-lg);
+    margin-left: var(--app-spacing-sm);
+  }
+
+  .archive-topic-branches > li {
+    position: relative;
+  }
+
+  .archive-topic-branches > li::before,
+  .archive-topic-branches > li:not(:last-child)::after {
+    position: absolute;
+    left: calc(-1 * var(--app-spacing-lg));
+    content: '';
+    border-left: 1px solid var(--archive-tree-line);
+    pointer-events: none;
+  }
+
+  .archive-topic-branches > li::before {
+    top: 0;
+    width: var(--app-spacing-lg);
+    height: calc(var(--app-touch-target) / 2);
+    border-bottom: 1px solid var(--archive-tree-line);
+  }
+
+  .archive-topic-branches > li:not(:last-child)::after {
+    top: calc(var(--app-touch-target) / 2);
+    bottom: 0;
   }
 
   .archive-topic-tree .archive-series > a {
@@ -222,10 +233,4 @@ const years = [...byYear].map(([year, posts]) => {
     }
   }
 
-  @media (max-width: 600px) {
-    .archive-topic-tree {
-      grid-template-columns: minmax(0, 1fr);
-      row-gap: var(--app-spacing-sm);
-    }
-  }
 </style>
