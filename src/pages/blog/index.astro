@@ -2,13 +2,18 @@
 import { getCollection } from 'astro:content';
 import ChronologyList from '../../components/ChronologyList.astro';
 import Layout from '../../layouts/Layout.astro';
-import { BASE, sectionTitle } from '../../config';
+import { BASE, sectionPagePath, sectionTitle } from '../../config';
 import { formatDate, sortByDateDesc } from '../../utils/date';
 import { isAbout } from '../../utils/series';
 
 const entries = sortByDateDesc(await getCollection('blog', (entry) => !entry.data.draft && !isAbout(entry.id)));
 const bySection = Map.groupBy(entries.filter((entry) => entry.id.includes('/')), (entry) => entry.id.split('/')[0]);
 const sections = [...bySection].sort(([a], [b]) => a.localeCompare(b));
+const scienceTopics = [...new Set(entries
+  .filter((entry) => entry.id.startsWith('science/') && entry.id.split('/').length > 2)
+  .map((entry) => sectionPagePath(entry.id.split('/').slice(0, 2).join('/'))))]
+  .map((path) => ({ path, title: sectionTitle(path.split('/').at(-1) ?? path) }))
+  .sort((a, b) => a.title.localeCompare(b.title, 'ru'));
 
 const monthName = new Intl.DateTimeFormat('ru-RU', { month: 'long', timeZone: 'UTC' });
 const byYear = Map.groupBy(entries, (entry) => entry.data.date.getUTCFullYear());
@@ -35,6 +40,14 @@ const years = [...byYear].map(([year, posts]) => {
           <li id={`section-${name}`}><a href={`${BASE}blog/${name}/`}>{sectionTitle(name)} <span class="tag-count">{posts.length}</span></a></li>
         ))}
       </ul>
+      {scienceTopics.length > 0 && <>
+        <h3 class="science-topics-heading" id="science-topics-heading">Темы научпопа</h3>
+        <ul class="section-tags blog-index-tags" aria-labelledby="science-topics-heading" role="list">
+          {scienceTopics.map(({ path, title }) => (
+            <li><a href={`${BASE}blog/${path}/`}>{title}</a></li>
+          ))}
+        </ul>
+      </>}
     </section>}
 
     {years.length > 1 && (
@@ -72,6 +85,16 @@ const years = [...byYear].map(([year, posts]) => {
 
   .blog-index-tags a:not(:hover) {
     color: inherit;
+  }
+
+  .blog-index-tags a {
+    min-height: var(--app-touch-target);
+  }
+
+  .science-topics-heading {
+    margin: 0 0 var(--app-spacing-sm);
+    font-size: var(--app-font-sm);
+    color: var(--pico-muted-color);
   }
 
   .archive-year > h2 {

@@ -17,5 +17,7 @@ export default defineConfig({
     ),
     // Старый адрес карты антидепрессантов: теперь это интерактивная карта внутри серии
     '/blog/science/mind/antidepressants-map/': '/blog/science/mind/antidepressants/map/',
+    // Старую ссылку на статью сохраняем после переноса в личные тексты
+    '/blog/ideas/why-a-personal-project-stays-an-idea/': '/blog/life/why-a-personal-project-stays-an-idea/',
   },
 });
