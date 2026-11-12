@@ -96,7 +96,7 @@ Present now, confirmed by the code:
   each with a short description. It then shows the seven latest publications
   with summaries and reading times, marks projects and links to
   the full archive beside the list heading. The archive at `/blog/` groups
-  articles by year and month, newest first, shows a topic below each title and
+  articles by year and month, newest first, shows the topic path below each title and
   links to the months, topic pages, subtopics and article series in a hierarchy,
   with a shortcut from the topics to the chronological list. Each
   section and subfolder has a page. Articles link to their parent sections

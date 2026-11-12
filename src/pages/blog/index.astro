@@ -18,6 +18,7 @@ const seriesFolders = [...new Set(entries.filter((entry) => entry.data.part !== 
   .map((entry) => entry.id.slice(0, entry.id.lastIndexOf('/'))))];
 const series = (await Promise.all(seriesFolders.map((folder) => getSeries(folder))))
   .filter((item) => item !== null);
+const seriesTitles = Object.fromEntries(series.map((item) => [item.folder, item.title]));
 const seriesUnder = (parent: string) => series.filter((item) => {
   const mapped = sectionPagePath(item.folder);
   const seriesParent = mapped !== item.folder ? mapped : item.folder.slice(0, item.folder.lastIndexOf('/'));
@@ -91,7 +92,7 @@ const years = [...byYear].map(([year, posts]) => {
         {months.map(({ id, name, posts }) => (
           <section class="archive-month">
             <h3 id={id}>{name}</h3>
-            <ChronologyList posts={posts} showCategory />
+            <ChronologyList posts={posts} showCategory seriesTitles={seriesTitles} />
           </section>
         ))}
       </section>

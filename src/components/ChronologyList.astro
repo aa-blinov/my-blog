@@ -8,9 +8,10 @@ interface Props {
   posts: BlogEntry[];
   showDetails?: boolean;
   showCategory?: boolean;
+  seriesTitles?: Record<string, string>;
 }
 
-const { posts, showDetails = false, showCategory = false } = Astro.props;
+const { posts, showDetails = false, showCategory = false, seriesTitles = {} } = Astro.props;
 const shortDate = new Intl.DateTimeFormat('ru-RU', { day: '2-digit', month: '2-digit', timeZone: 'UTC' });
 
 function readingLabel(entry: BlogEntry): string {
@@ -19,11 +20,14 @@ function readingLabel(entry: BlogEntry): string {
 }
 
 function categoryLabel(entry: BlogEntry): string {
-  const parts = entry.id.split('/');
-  const section = parts[0] === 'science' && parts.length > 2
-    ? sectionPagePath(parts.slice(0, 2).join('/')).split('/').at(-1) ?? parts[0]
-    : parts[0];
-  return sectionTitle(section);
+  const folders = entry.id.split('/').slice(0, -1);
+  return folders.flatMap((_, index) => {
+    const path = folders.slice(0, index + 1).join('/');
+    const mapped = sectionPagePath(path);
+    const section = sectionTitle(mapped.split('/').at(-1) ?? mapped);
+    const series = seriesTitles[path];
+    return mapped !== path && series ? [section, series] : [series ?? section];
+  }).join(' / ');
 }
 ---
 
@@ -96,11 +100,12 @@ function categoryLabel(entry: BlogEntry): string {
   }
 
   .chronology-category {
-    grid-column: 1;
+    grid-column: 1 / -1;
     color: var(--pico-muted-color);
     font-family: var(--font-family);
     font-size: var(--app-font-control);
     line-height: 1.4;
+    overflow-wrap: anywhere;
   }
 
   .chronology-list time {

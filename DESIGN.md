@@ -325,7 +325,7 @@ Section lists put the date, a tilde and the file path above the title. On a
 phone they show the file name. Numbered series lists show the part number,
 reading time and file name. The archive and the recent articles on the home
 page put the title first, with a muted day and month aligned to its right.
-In the archive, a muted topic label sits below each title without a separator.
+In the archive, a muted topic path sits below each title, with slashes between levels.
 The seven latest publications on the home page also show a short summary and
 reading time; projects are labelled. Year and month headings separate groups
 in the archive.
