@@ -97,7 +97,8 @@ Present now, confirmed by the code:
   with summaries and reading times, marks projects and links to
   the full archive beside the list heading. The archive at `/blog/` groups
   articles by year and month, newest first, shows a topic below each title and
-  links to the months, topic pages, subtopics and article series in a hierarchy. Each
+  links to the months, topic pages, subtopics and article series in a hierarchy,
+  with a shortcut from the topics to the chronological list. Each
   section and subfolder has a page. Articles link to their parent sections
   above the title and show the date and reading time below it. The science
   section groups body articles and the "Body and environment" series under

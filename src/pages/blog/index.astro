@@ -46,7 +46,10 @@ const years = [...byYear].map(([year, posts]) => {
     </div>
 
     {sections.length > 0 && <section aria-labelledby="archive-topics-heading">
-      <h2 class="section-heading" id="archive-topics-heading">Темы</h2>
+      <div class="archive-topics-header">
+        <h2 class="section-heading" id="archive-topics-heading">Темы</h2>
+        {years.length > 0 && <a class="archive-skip" href={`#year-${years[0].year}`}>К статьям</a>}
+      </div>
       <ul class="section-tags blog-index-tags archive-simple-topics" aria-label="Разделы блога" role="list">
         {simpleSections.map(([name, posts]) => (
           <li id={`section-${name}`}><a href={`${BASE}blog/${name}/`}>{sectionTitle(name)} <span class="tag-count">{posts.length}</span></a></li>
@@ -56,7 +59,7 @@ const years = [...byYear].map(([year, posts]) => {
         {groupedSections.map(([name, posts]) => (
           <li id={`section-${name}`}>
             <a href={`${BASE}blog/${name}/`}>{sectionTitle(name)} <span class="tag-count">{posts.length}</span></a>
-            <ul class:list={['section-tags', 'archive-topic-children', { 'archive-topic-children--topics': name === 'science' }]} role="list">
+            <ul class="section-tags archive-topic-children" role="list">
               {seriesUnder(name).map((item) => (
                 <li class="archive-series"><a href={`${BASE}blog/${item.folder}/`}>Цикл «{item.title}»</a></li>
               ))}
@@ -115,47 +118,60 @@ const years = [...byYear].map(([year, posts]) => {
 
   .section-tags a {
     min-height: var(--app-touch-target);
+    padding: 0;
+    border: 0;
+    text-decoration: underline;
+    text-decoration-color: var(--pico-muted-border-color);
+    text-underline-offset: 0.2em;
+  }
+
+  .section-tags a:hover {
+    text-decoration-color: currentColor;
+  }
+
+  .archive-topics-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--app-spacing);
+  }
+
+  .archive-skip {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--app-touch-target);
+    font-size: var(--app-font-control);
+    text-underline-offset: 0.2em;
   }
 
   .archive-simple-topics {
-    margin-bottom: var(--app-spacing);
+    column-gap: var(--app-spacing-lg);
+    margin-bottom: var(--app-spacing-sm);
   }
 
-  .archive-topic-tree,
   .archive-topic-children {
     display: block;
     margin: 0;
   }
 
   .archive-topic-tree {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: var(--app-spacing-xl);
     margin-bottom: var(--app-spacing-xl);
   }
 
-  .archive-topic-tree > li + li {
-    margin-top: var(--app-spacing-sm);
+  .archive-topic-tree > li > a,
+  .archive-simple-topics > li > a {
+    font-weight: 600;
   }
 
   .archive-topic-children {
     margin-left: var(--app-spacing-lg);
   }
 
-  .archive-topic-children--topics {
-    display: flex;
-    align-items: flex-start;
-    column-gap: var(--app-spacing-md);
-  }
-
-  .archive-topic-children--topics > li {
-    min-width: 0;
-    max-width: 100%;
-  }
-
   .archive-topic-tree .archive-series > a {
-    padding: 0;
-    border: 0;
-    text-decoration: underline;
-    text-decoration-color: var(--pico-muted-border-color);
-    text-underline-offset: 0.2em;
+    font-size: var(--app-font-control);
   }
 
   .archive-year > h2 {
@@ -203,6 +219,13 @@ const years = [...byYear].map(([year, posts]) => {
   @media (max-width: 991px), (pointer: coarse) {
     .archive-jumps a {
       min-height: var(--app-touch-target);
+    }
+  }
+
+  @media (max-width: 600px) {
+    .archive-topic-tree {
+      grid-template-columns: minmax(0, 1fr);
+      row-gap: var(--app-spacing-sm);
     }
   }
 </style>
