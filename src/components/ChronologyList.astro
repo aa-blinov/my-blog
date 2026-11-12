@@ -1,5 +1,5 @@
 ---
-import { BASE } from '../config';
+import { BASE, sectionPagePath, sectionTitle } from '../config';
 import { formatDate, readingMinutes, plural } from '../utils/date';
 import { articleSummary } from '../utils/article-summary';
 import type { BlogEntry } from '../utils/series';
@@ -7,14 +7,23 @@ import type { BlogEntry } from '../utils/series';
 interface Props {
   posts: BlogEntry[];
   showDetails?: boolean;
+  showCategory?: boolean;
 }
 
-const { posts, showDetails = false } = Astro.props;
+const { posts, showDetails = false, showCategory = false } = Astro.props;
 const shortDate = new Intl.DateTimeFormat('ru-RU', { day: '2-digit', month: '2-digit', timeZone: 'UTC' });
 
 function readingLabel(entry: BlogEntry): string {
   const minutes = readingMinutes(entry.body ?? '');
   return `≈ ${minutes} ${plural(minutes, 'минута', 'минуты', 'минут')}`;
+}
+
+function categoryLabel(entry: BlogEntry): string {
+  const parts = entry.id.split('/');
+  const section = parts[0] === 'science' && parts.length > 2
+    ? sectionPagePath(parts.slice(0, 2).join('/')).split('/').at(-1) ?? parts[0]
+    : parts[0];
+  return sectionTitle(section);
 }
 ---
 
@@ -25,6 +34,7 @@ function readingLabel(entry: BlogEntry): string {
         <a class="post-title-link chronology-link" href={`${BASE}blog/${entry.id}/`}>
           <span><span class="chronology-title">{entry.data.title}</span>{showDetails && entry.id.startsWith('projects/') && <> <span class="chronology-kind">Проект</span></>}</span>
           <time datetime={formatDate(entry.data.date)}>{shortDate.format(entry.data.date)}</time>
+          {showCategory && <span class="chronology-category">{categoryLabel(entry)}</span>}
           {showDetails && (
             <>
               <span class="chronology-summary">{articleSummary(entry)}</span>
@@ -83,6 +93,14 @@ function readingLabel(entry: BlogEntry): string {
     font-family: var(--font-family);
     font-size: var(--app-font-control);
     white-space: nowrap;
+  }
+
+  .chronology-category {
+    grid-column: 1;
+    color: var(--pico-muted-color);
+    font-family: var(--font-family);
+    font-size: var(--app-font-control);
+    line-height: 1.4;
   }
 
   .chronology-list time {
