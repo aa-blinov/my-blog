@@ -19,7 +19,7 @@ function readingLabel(entry: BlogEntry): string {
 ---
 
 {posts.length > 0 ? (
-  <ul class="chronology-list" role="list">
+  <ul class:list={['chronology-list', { 'chronology-list--details': showDetails }]} role="list">
     {posts.map((entry) => (
       <li>
         <a class="post-title-link chronology-link" href={`${BASE}blog/${entry.id}/`}>
@@ -60,6 +60,10 @@ function readingLabel(entry: BlogEntry): string {
     color: inherit;
   }
 
+  .chronology-list--details a {
+    grid-template-columns: minmax(0, 1fr) 8em;
+  }
+
   .chronology-title {
     line-height: 1.45;
     overflow-wrap: anywhere;
@@ -74,9 +78,15 @@ function readingLabel(entry: BlogEntry): string {
   }
 
   .chronology-list time {
+    justify-self: end;
     color: var(--pico-muted-color);
     font-size: var(--app-font-control);
+    font-variant-numeric: tabular-nums;
     white-space: nowrap;
+  }
+
+  .chronology-list--details time {
+    justify-self: start;
   }
 
   .chronology-summary {
@@ -88,6 +98,7 @@ function readingLabel(entry: BlogEntry): string {
 
   .chronology-reading-time {
     grid-column: 2;
+    justify-self: start;
     color: var(--pico-muted-color);
     font-size: var(--app-font-control);
     white-space: nowrap;
@@ -100,6 +111,14 @@ function readingLabel(entry: BlogEntry): string {
   }
 
   @media (max-width: 480px) {
+    .chronology-list--details a {
+      grid-template-columns: minmax(0, 1fr) auto;
+    }
+
+    .chronology-list--details time {
+      justify-self: end;
+    }
+
     .chronology-summary,
     .chronology-reading-time {
       grid-column: 1 / -1;
