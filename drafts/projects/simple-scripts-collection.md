@@ -1,7 +1,7 @@
 ---
 title: "52 скрипта без pip install"
 date: 2026-04-08T03:05:00Z
-draft: false
+draft: true
 ---
 
 Есть задачи, которые появляются раз в несколько месяцев. Найти дубликаты в папке. Посчитать размер директории. Посмотреть, открыт ли порт. Сгенерировать пароль. Перебрать CSV-файл.
@@ -15,8 +15,8 @@ draft: false
 Файловые операции, обработка данных, сетевые инструменты, безопасность, системные утилиты, инструменты для разработки, конвертация форматов. Каждый скрипт запускается через `--help`, работает самостоятельно, не требует ничего устанавливать.
 
 ```bash
-python simple-duplicate-finder.py ~/Downloads --delete
-python simple-port-scanner.py -t 192.168.1.1 -p 1-1024
+python simple-duplicate-finder.py ~/Downloads
+python simple-port-scanner.py 192.168.1.1 -p 1-1024
 python simple-password-generator.py -l 20
 python simple-csv-stats.py data.csv -c price
 ```

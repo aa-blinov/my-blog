@@ -1,7 +1,7 @@
 ---
 title: "Project Setup Tool: ритуал создания проекта, один раз и навсегда"
 date: 2026-04-11T00:59:00Z
-draft: false
+draft: true
 ---
 
 Каждый новый Python-проект начинается одинаково. Создаёшь папку, инициализируешь git, делаешь virtualenv, скачиваешь `.gitignore`, создаёшь `requirements.txt`, настраиваешь VS Code, пишешь `ruff.toml`. Если это FastAPI: ещё структуру папок, `Dockerfile`, `docker-compose.yml`. Если Telegram-бот: другая структура, другие зависимости. Если ML: Jupyter, pandas, mlflow.
@@ -20,7 +20,7 @@ uv run pst-cli my-bot telegram
 
 Или интерактивно: запускаешь без аргументов, выбираешь из списка.
 
-Профилей двадцать: `basic`, `fastapi`, `fastapi-db`, `flask`, `streamlit`, `django`, `cli`, `telegram`, `discord`, `grpc`, `celery`, `scraper`, `data`, `ml`, `pypi`, `langchain`, `llama`, `mcp`, `lambda`, `pytest-plugin`. Каждый разворачивает правильную структуру с нужными зависимостями, Dockerfile и README.
+Профилей двадцать: `basic`, `fastapi`, `fastapi-db`, `flask`, `streamlit`, `django`, `cli`, `telegram`, `discord`, `grpc`, `celery`, `scraper`, `data`, `ml`, `pypi`, `langchain`, `llama`, `mcp`, `lambda`, `pytest-plugin`. Каждый создаёт структуру с зависимостями и README; Dockerfile и compose добавляются для 15 профилей.
 
 Есть и GUI-версия на PyQt5, для тех, кто предпочитает кликать.
 
