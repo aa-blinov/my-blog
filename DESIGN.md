@@ -344,8 +344,8 @@ and `Проекты`. The AI section describes model capabilities, use and impac
 the development section describes implementation, architecture and tools.
 Within popular science, the `Тело` hub groups the human-body articles and the
 series `Тело и среда` under `/blog/science/body/`. Its two lists stay distinct,
-and the existing article and series routes stay available. The archive links
-to the popular-science subtopics beneath the main topic links.
+and the existing article and series routes stay available. In the archive,
+subtopics and series appear indented beneath their parent topics.
 
 ### The article header
 

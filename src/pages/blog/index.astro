@@ -4,7 +4,7 @@ import ChronologyList from '../../components/ChronologyList.astro';
 import Layout from '../../layouts/Layout.astro';
 import { BASE, sectionPagePath, sectionTitle } from '../../config';
 import { formatDate, sortByDateDesc } from '../../utils/date';
-import { isAbout } from '../../utils/series';
+import { getSeries, isAbout } from '../../utils/series';
 
 const entries = sortByDateDesc(await getCollection('blog', (entry) => !entry.data.draft && !isAbout(entry.id)));
 const bySection = Map.groupBy(entries.filter((entry) => entry.id.includes('/')), (entry) => entry.id.split('/')[0]);
@@ -14,6 +14,18 @@ const scienceTopics = [...new Set(entries
   .map((entry) => sectionPagePath(entry.id.split('/').slice(0, 2).join('/'))))]
   .map((path) => ({ path, title: sectionTitle(path.split('/').at(-1) ?? path) }))
   .sort((a, b) => a.title.localeCompare(b.title, 'ru'));
+const seriesFolders = [...new Set(entries.filter((entry) => entry.data.part !== undefined)
+  .map((entry) => entry.id.slice(0, entry.id.lastIndexOf('/'))))];
+const series = (await Promise.all(seriesFolders.map((folder) => getSeries(folder))))
+  .filter((item) => item !== null);
+const seriesUnder = (parent: string) => series.filter((item) => {
+  const mapped = sectionPagePath(item.folder);
+  const seriesParent = mapped !== item.folder ? mapped : item.folder.slice(0, item.folder.lastIndexOf('/'));
+  return seriesParent === parent;
+});
+const hasChildren = (name: string) => seriesUnder(name).length > 0 || (name === 'science' && scienceTopics.length > 0);
+const simpleSections = sections.filter(([name]) => !hasChildren(name));
+const groupedSections = sections.filter(([name]) => hasChildren(name));
 
 const monthName = new Intl.DateTimeFormat('ru-RU', { month: 'long', timeZone: 'UTC' });
 const byYear = Map.groupBy(entries, (entry) => entry.data.date.getUTCFullYear());
@@ -35,19 +47,33 @@ const years = [...byYear].map(([year, posts]) => {
 
     {sections.length > 0 && <section aria-labelledby="archive-topics-heading">
       <h2 class="section-heading" id="archive-topics-heading">Темы</h2>
-      <ul class="section-tags blog-index-tags" aria-label="Разделы блога" role="list">
-        {sections.map(([name, posts]) => (
+      <ul class="section-tags blog-index-tags archive-simple-topics" aria-label="Разделы блога" role="list">
+        {simpleSections.map(([name, posts]) => (
           <li id={`section-${name}`}><a href={`${BASE}blog/${name}/`}>{sectionTitle(name)} <span class="tag-count">{posts.length}</span></a></li>
         ))}
       </ul>
-      {scienceTopics.length > 0 && <>
-        <h3 class="science-topics-heading" id="science-topics-heading">Темы научпопа</h3>
-        <ul class="section-tags blog-index-tags" aria-labelledby="science-topics-heading" role="list">
-          {scienceTopics.map(({ path, title }) => (
-            <li><a href={`${BASE}blog/${path}/`}>{title}</a></li>
-          ))}
-        </ul>
-      </>}
+      <ul class="section-tags archive-topic-tree" aria-label="Разделы с подразделами и циклами" role="list">
+        {groupedSections.map(([name, posts]) => (
+          <li id={`section-${name}`}>
+            <a href={`${BASE}blog/${name}/`}>{sectionTitle(name)} <span class="tag-count">{posts.length}</span></a>
+            <ul class:list={['section-tags', 'archive-topic-children', { 'archive-topic-children--topics': name === 'science' }]} role="list">
+              {seriesUnder(name).map((item) => (
+                <li class="archive-series"><a href={`${BASE}blog/${item.folder}/`}>Цикл «{item.title}»</a></li>
+              ))}
+              {name === 'science' && scienceTopics.map(({ path, title }) => (
+                <li>
+                  <a href={`${BASE}blog/${path}/`}>{title}</a>
+                  {seriesUnder(path).length > 0 && <ul class="section-tags archive-topic-children" role="list">
+                    {seriesUnder(path).map((item) => (
+                      <li class="archive-series"><a href={`${BASE}blog/${item.folder}/`}>Цикл «{item.title}»</a></li>
+                    ))}
+                  </ul>}
+                </li>
+              ))}
+            </ul>
+          </li>
+        ))}
+      </ul>
     </section>}
 
     {years.length > 1 && (
@@ -83,18 +109,53 @@ const years = [...byYear].map(([year, posts]) => {
     scroll-margin-top: var(--app-scroll-offset);
   }
 
-  .blog-index-tags a:not(:hover) {
+  .section-tags a:not(:hover) {
     color: inherit;
   }
 
-  .blog-index-tags a {
+  .section-tags a {
     min-height: var(--app-touch-target);
   }
 
-  .science-topics-heading {
-    margin: 0 0 var(--app-spacing-sm);
-    font-size: var(--app-font-sm);
-    color: var(--pico-muted-color);
+  .archive-simple-topics {
+    margin-bottom: var(--app-spacing);
+  }
+
+  .archive-topic-tree,
+  .archive-topic-children {
+    display: block;
+    margin: 0;
+  }
+
+  .archive-topic-tree {
+    margin-bottom: var(--app-spacing-xl);
+  }
+
+  .archive-topic-tree > li + li {
+    margin-top: var(--app-spacing-sm);
+  }
+
+  .archive-topic-children {
+    margin-left: var(--app-spacing-lg);
+  }
+
+  .archive-topic-children--topics {
+    display: flex;
+    align-items: flex-start;
+    column-gap: var(--app-spacing-md);
+  }
+
+  .archive-topic-children--topics > li {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .archive-topic-tree .archive-series > a {
+    padding: 0;
+    border: 0;
+    text-decoration: underline;
+    text-decoration-color: var(--pico-muted-border-color);
+    text-underline-offset: 0.2em;
   }
 
   .archive-year > h2 {
