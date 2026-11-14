@@ -120,6 +120,15 @@ else. The deploy workflow runs the same two commands, on Node 22.
 - **Every claim in an article carries a source.** The blocks under
   `src/data/` hold a URL for every statement they make, and the numbered chip
   in the text is the link to it. A claim without a source does not go in.
+- **A source in an article is a `[N]` chip.** Method 3 in `blog-sources`: a
+  `span.ref-run` around `a.ref` with `data-tip` and `aria-label`, numbered
+  through the article in the order of first appearance, set against the claim
+  with no space before it. An article does not mix chips with inline source
+  links, and links to other texts of the blog stay ordinary links. Every
+  source is opened and compared with the claim before publishing: the numbers,
+  the sample, the wording, and whether the source shows a link or a cause. A
+  second pass is made by someone other than the author of the text, and the
+  humanizer runs after it, because a reworded sentence can touch a number.
 - **The tools and the picker prescribe nothing.** They carry a disclaimer and
   an urgent line, and the checklist is a list of questions for a doctor. Keep
   that text, and keep the questions as questions.
