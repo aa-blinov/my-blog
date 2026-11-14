@@ -253,16 +253,16 @@ const client = {
       };
 
       const legend = first.length || caution.length || avoid.length
-        ? '<p class="pk-legend">В причинах: <b>+</b> довод за препарат, <b>!</b> довод против, <b>~</b> обратить внимание, <b>×</b> не подходит.</p>'
+        ? '<p class="pk-legend">В причинах: <b>+</b> довод за препарат, <b>!</b> довод против, <b>~</b> обратить внимание, <b>×</b> довод против.</p>'
         : '';
       lists.innerHTML = legend +
         block('Обычно обсуждают первыми', 'pk-sub-first', first, picked.length || helped || failed ? '' : 'Пока ничего не отмечено: это препараты первой линии по рекомендациям. Отметьте особенности в анкете, и список подстроится.') +
-        (first.length ? '' : `<p class="pk-note">При отмеченном нет варианта без оговорок.${caution.length ? ` Ближе всего к рекомендации, с оговорками: ${caution.slice(0, 2).map((x) => esc(x.d.label)).join(' и ')}.` : ''} Это повод обсудить выбор с врачом подробнее, а не выбирать из списка ниже самому.</p>`) +
-        fold('caution', 'Можно, но с осторожностью', 'pk-sub-caution', caution) +
-        (moreList ? `<details class="pk-more"><summary>Другие варианты (${more.length})</summary><p class="pk-note">По отмеченному правил нет. Это не значит, что препарат подходит.</p>${moreList.common}${moreList.rows}</details>` : '') +
-        fold('avoid', 'Не подходит при отмеченном', 'pk-sub-avoid', avoid);
+        (first.length ? '' : `<p class="pk-note">При отмеченном нет варианта без оговорок.${caution.length ? ` Ближе всего к рекомендации, с оговорками: ${caution.slice(0, 2).map((x) => esc(x.d.label)).join(' и ')}.` : ''} Список ниже нужен для разговора с врачом.</p>`) +
+        fold('caution', 'О чём спросить врача: есть оговорки', 'pk-sub-caution', caution) +
+        (moreList ? `<details class="pk-more"><summary>Другие варианты (${more.length})</summary><p class="pk-note">По отмеченному правил нет, о пригодности препарата это ничего не говорит.</p>${moreList.common}${moreList.rows}</details>` : '') +
+        fold('avoid', 'О чём спросить врача: есть доводы против', 'pk-sub-avoid', avoid);
       summary.textContent = picked.length || helped || failed
-        ? `Учтено отметок: ${picked.length + histCount}. Первыми ${first.length}, с осторожностью ${caution.length}, не подходит ${avoid.length}.`
+        ? `Учтено отметок: ${picked.length + histCount}. Первыми ${first.length}, с оговорками ${caution.length}, с доводами против ${avoid.length}.`
         : '';
 
       // Кнопка «к результату» показывает, сколько отмечено: видно и без прокрутки к анкете

@@ -10,7 +10,7 @@ draft: false
 
 Когда стало лучше, хочется сразу бросить таблетки. Почему же лечение обычно продолжают и после улучшения, и как его правильно заканчивать?
 
-Это не инструкция. Препарат и дозу подбирает врач: он смотрит на историю болезни, другие лекарства, беременность, сопутствующие болезни. Номер в квадратных скобках ведёт на источник. Что это за источник, видно при наведении, а на телефоне по первому нажатию.
+Это не инструкция, подробнее об этом в [первой части](/blog/science/mind/antidepressants/you-were-prescribed/). Номер в скобках ведёт на источник.
 
 ## Сколько принимать
 
@@ -20,7 +20,7 @@ draft: false
 
 Более свежий метаанализ 2021 года Като и соавторов<span class="ref-run"><a class="ref" href="https://pubmed.ncbi.nlm.nih.gov/32704061/" data-tip="Kato M. et al. Discontinuation of antidepressants after remission with antidepressant medication in major depressive disorder: a systematic review and meta-analysis. 2021." aria-label="Источник 2: Kato M. et al. Discontinuation of antidepressants after remission with antidepressant medication in major depressive disorder: a systematic review and meta-analysis. 2021.">[2]</a></span> по 40 исследованиям и 8890 пациентам дал похожую картину: рецидив у 20,9% продолжавших лечение против 39,7% на плацебо. Авторы советуют поддерживающее лечение и внимательное наблюдение минимум полгода после ремиссии.
 
-Рекомендации CANMAT советуют всем поддерживающее лечение от 6 до 12 месяцев после ремиссии, а тем, у кого есть факторы риска возврата, 2 года и дольше.<span class="ref-run"><a class="ref" href="https://pmc.ncbi.nlm.nih.gov/articles/PMC11351064/" data-tip="Lam R.W. et al. Canadian Network for Mood and Anxiety Treatments (CANMAT) 2023 update on clinical guidelines for management of major depressive disorder in adults. Canadian Journal of Psychiatry, 2024." aria-label="Источник 3: Lam R.W. et al. Canadian Network for Mood and Anxiety Treatments (CANMAT) 2023 update on clinical guidelines for management of major depressive disorder in adults. Canadian Journal of Psychiatry, 2024.">[3]</a></span>
+Рекомендации CANMAT советуют всем поддерживающее лечение от 6 до 12 месяцев после ремиссии, а тем, у кого есть факторы риска возврата, 2 года и дольше<span class="ref-run"><a class="ref" href="https://pmc.ncbi.nlm.nih.gov/articles/PMC11351064/" data-tip="Lam R.W. et al. Canadian Network for Mood and Anxiety Treatments (CANMAT) 2023 update on clinical guidelines for management of major depressive disorder in adults. Canadian Journal of Psychiatry, 2024." aria-label="Источник 3: Lam R.W. et al. Canadian Network for Mood and Anxiety Treatments (CANMAT) 2023 update on clinical guidelines for management of major depressive disorder in adults. Canadian Journal of Psychiatry, 2024.">[3]</a></span>.
 
 Уменьшать дозу потихоньку самому, когда стало лучше, не стоит. Сколько продолжать и когда заканчивать, решают вместе с врачом. Об отмене ниже, в разделе «Отмена».
 

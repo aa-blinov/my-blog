@@ -9,7 +9,7 @@ export const antidepressants: MindMapData = { root: {
   "facts": [
     {
       "label": "Как читать карту",
-      "text": "Вокруг центра пять классов антидепрессантов по механизму действия, дальше препараты других классов, которые встречаются рядом с депрессией: антипсихотики, нормотимики, успокоительные, безрецептурные средства и другие способы усилить лечение. Группы с пунктирной рамкой не антидепрессанты: это препараты, которые встречаются рядом с лечением, а не его замена. Каждый препарат стоит в своём классе; если он встречается в основном у нас, это отмечено в карточке. В карточке препарата: что это, когда его выбирают, как принимают, чем хорош и чем за него платят."
+      "text": "Вокруг центра пять классов антидепрессантов по механизму действия, дальше препараты других классов, которые встречаются рядом с депрессией: антипсихотики, нормотимики, успокоительные, безрецептурные средства и другие способы усилить лечение. Группы с пунктирной рамкой антидепрессантами не являются: это препараты, которые встречаются рядом с лечением. Каждый препарат стоит в своём классе; если он встречается в основном у нас, это отмечено в карточке. В карточке препарата: что это, когда его выбирают, как принимают, чем хорош и чем за него платят."
     },
     {
       "label": "Важно",
@@ -45,7 +45,7 @@ export const antidepressants: MindMapData = { root: {
         },
         {
           "label": "Когда выбирают",
-          "text": "Обычный первый выбор. При риске отравления безопаснее трициклических.",
+          "text": "Обычный первый выбор. Токсичность при отравлении различается между классами и внутри них: обсудите с врачом.",
           "sources": [
             {
               "title": "Hawton K. et al. Toxicity of antidepressants: rates of suicide relative to prescribing and non-fatal overdose. British Journal of Psychiatry, 2010.",
@@ -552,12 +552,8 @@ export const antidepressants: MindMapData = { root: {
             },
             {
               "label": "Чем платят",
-              "text": "Токсичнее остальных СИОЗС при передозировке; удлиняет интервал QT на ЭКГ, а это повышает риск опасной аритмии, поэтому доза не выше 40 мг в сутки, после 60 лет не выше 20 мг; сексуальные нарушения",
+              "text": "Удлиняет интервал QT на ЭКГ, а это повышает риск опасной аритмии, поэтому доза не выше 40 мг в сутки, после 60 лет не выше 20 мг; сексуальные нарушения",
               "sources": [
-                {
-                  "title": "Hawton K. et al. Toxicity of antidepressants: rates of suicide relative to prescribing and non-fatal overdose. British Journal of Psychiatry, 2010.",
-                  "url": "https://pubmed.ncbi.nlm.nih.gov/20435959/"
-                },
                 {
                   "title": "FDA Drug Safety Communication: revised recommendations for Celexa (citalopram hydrobromide) related to a potential risk of abnormal heart rhythms with high doses. FDA, 2012.",
                   "url": "https://www.fda.gov/drugs/drug-safety-and-availability/fda-drug-safety-communication-revised-recommendations-celexa-citalopram-hydrobromide-related"
@@ -807,7 +803,7 @@ export const antidepressants: MindMapData = { root: {
             },
             {
               "label": "Чем платят",
-              "text": "Сексуальные нарушения; хуже переносится; может повышать давление; токсичнее СИОЗС; частые и тяжёлые симптомы отмены",
+              "text": "Сексуальные нарушения; хуже переносится; может повышать давление; частые и тяжёлые симптомы отмены",
               "sources": [
                 {
                   "title": "Serretti A., Chiesa A. Treatment-emergent sexual dysfunction related to antidepressants: a meta-analysis. Journal of Clinical Psychopharmacology, 2009.",
@@ -820,10 +816,6 @@ export const antidepressants: MindMapData = { root: {
                 {
                   "title": "Effexor XR (venlafaxine extended-release), инструкция по применению: раздел 2 о дозах и приёме. DailyMed, Viatris.",
                   "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=c848a5d8-ba94-4c84-80e3-0bf35fb8e32e"
-                },
-                {
-                  "title": "Hawton K. et al. Toxicity of antidepressants: rates of suicide relative to prescribing and non-fatal overdose. British Journal of Psychiatry, 2010.",
-                  "url": "https://pubmed.ncbi.nlm.nih.gov/20435959/"
                 },
                 {
                   "title": "Henssler J. et al. Incidence of antidepressant discontinuation symptoms: a systematic review and meta-analysis. Lancet Psychiatry, 2024.",
@@ -1271,15 +1263,11 @@ export const antidepressants: MindMapData = { root: {
             },
             {
               "label": "Чем платят",
-              "text": "Сонливость; аппетит и прибавка веса, сильнее других антидепрессантов у Гафура; токсичнее СИОЗС при передозировке",
+              "text": "Сонливость; аппетит и прибавка веса, сильнее других антидепрессантов у Гафура",
               "sources": [
                 {
                   "title": "Gafoor R., Booth H.P., Gulliford M.C. Antidepressant utilisation and incidence of weight gain during 10 years’ follow-up: population based cohort study. BMJ, 2018.",
                   "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5964332/"
-                },
-                {
-                  "title": "Hawton K. et al. Toxicity of antidepressants: rates of suicide relative to prescribing and non-fatal overdose. British Journal of Psychiatry, 2010.",
-                  "url": "https://pubmed.ncbi.nlm.nih.gov/20435959/"
                 }
               ],
               "more": true
@@ -1987,7 +1975,7 @@ export const antidepressants: MindMapData = { root: {
       "id": "tca",
       "label": "Трициклические (ТЦА)",
       "title": "Трициклические и родственные антидепрессанты (ТЦА)",
-      "hint": "Старые трициклические: сильные, но много побочных эффектов и опасны при передозировке.",
+      "hint": "Старые трициклические: сильные, с большим числом побочных эффектов.",
       "facts": [
         {
           "label": "Что это",
@@ -2001,15 +1989,11 @@ export const antidepressants: MindMapData = { root: {
         },
         {
           "label": "Когда выбирают",
-          "text": "Обычно не первым выбором: хуже переносятся и самые токсичные при передозировке.",
+          "text": "Обычно не первым выбором: хуже переносятся.",
           "sources": [
             {
               "title": "Cipriani A. et al. Comparative efficacy and acceptability of 21 antidepressant drugs for the acute treatment of adults with major depressive disorder: a systematic review and network meta-analysis. Lancet, 2018.",
               "url": "https://pubmed.ncbi.nlm.nih.gov/29477251/"
-            },
-            {
-              "title": "Hawton K. et al. Toxicity of antidepressants: rates of suicide relative to prescribing and non-fatal overdose. British Journal of Psychiatry, 2010.",
-              "url": "https://pubmed.ncbi.nlm.nih.gov/20435959/"
             }
           ]
         }
@@ -2087,15 +2071,11 @@ export const antidepressants: MindMapData = { root: {
             },
             {
               "label": "Чем платят",
-              "text": "Хуже переносится; трициклические самые токсичные при передозировке",
+              "text": "Хуже переносится",
               "sources": [
                 {
                   "title": "Cipriani A. et al. Comparative efficacy and acceptability of 21 antidepressant drugs for the acute treatment of adults with major depressive disorder: a systematic review and network meta-analysis. Lancet, 2018.",
                   "url": "https://pubmed.ncbi.nlm.nih.gov/29477251/"
-                },
-                {
-                  "title": "Hawton K. et al. Toxicity of antidepressants: rates of suicide relative to prescribing and non-fatal overdose. British Journal of Psychiatry, 2010.",
-                  "url": "https://pubmed.ncbi.nlm.nih.gov/20435959/"
                 }
               ],
               "more": true
@@ -2299,7 +2279,7 @@ export const antidepressants: MindMapData = { root: {
             },
             {
               "label": "Чем платят",
-              "text": "Сексуальные нарушения чаще, чем на плацебо; среди самых тяжёлых по симптомам отмены; трициклические самые токсичные при передозировке.",
+              "text": "Сексуальные нарушения чаще, чем на плацебо; среди самых тяжёлых по симптомам отмены.",
               "sources": [
                 {
                   "title": "Serretti A., Chiesa A. Treatment-emergent sexual dysfunction related to antidepressants: a meta-analysis. Journal of Clinical Psychopharmacology, 2009.",
@@ -2308,10 +2288,6 @@ export const antidepressants: MindMapData = { root: {
                 {
                   "title": "Henssler J. et al. Incidence of antidepressant discontinuation symptoms: a systematic review and meta-analysis. Lancet Psychiatry, 2024.",
                   "url": "https://pubmed.ncbi.nlm.nih.gov/38851198/"
-                },
-                {
-                  "title": "Hawton K. et al. Toxicity of antidepressants: rates of suicide relative to prescribing and non-fatal overdose. British Journal of Psychiatry, 2010.",
-                  "url": "https://pubmed.ncbi.nlm.nih.gov/20435959/"
                 }
               ],
               "more": true
@@ -2398,17 +2374,6 @@ export const antidepressants: MindMapData = { root: {
                 {
                   "title": "Doxepin hydrochloride capsules, инструкция по применению: раздел 2.2 о дозах, противопоказания, раздел 5.4 о сонливости. DailyMed, Amneal, 2026.",
                   "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=20bfb8af-7933-4e5c-a2b5-010659d9125b"
-                }
-              ],
-              "more": true
-            },
-            {
-              "label": "Чем платят",
-              "text": "При передозировке токсичнее амитриптилина.",
-              "sources": [
-                {
-                  "title": "Hawton K. et al. Toxicity of antidepressants: rates of suicide relative to prescribing and non-fatal overdose. British Journal of Psychiatry, 2010.",
-                  "url": "https://pubmed.ncbi.nlm.nih.gov/20435959/"
                 }
               ],
               "more": true
@@ -2851,7 +2816,7 @@ export const antidepressants: MindMapData = { root: {
             },
             {
               "label": "Показания по инструкции",
-              "text": "В России не зарегистрирован. В США (Nardil): «атипичная», «неэндогенная» или «невротическая» депрессия, часто со смешанной тревогой и фобиями; обычно не первым выбором, а когда не помогли более распространённые препараты.",
+              "text": "В России не зарегистрирован. В США (Nardil): «атипичная», «неэндогенная» или «невротическая» депрессия, часто со смешанной тревогой и фобиями; обычно его выбирают после того, как не помогли более распространённые препараты.",
               "sources": [
                 {
                   "title": "Nardil (phenelzine), инструкция по применению: противопоказания (продукты с тирамином, опасные сочетания) и раздел о дозах. DailyMed, Parke-Davis (Pfizer), 2025.",
@@ -4983,7 +4948,7 @@ export const antidepressants: MindMapData = { root: {
           "facts": [
             {
               "label": "Что это",
-              "text": "Противотревожное средство (анксиолитик), не бензодиазепин: частично стимулирует серотониновые рецепторы 5-HT1A. Действует не сразу, а через 1 или 2 недели.",
+              "text": "Противотревожное средство (анксиолитик), не бензодиазепин: частично стимулирует серотониновые рецепторы 5-HT1A. Действие начинается через 1 или 2 недели.",
               "sources": [
                 {
                   "title": "Российское общество психиатров. Клинические рекомендации «Депрессивный эпизод, рекуррентное депрессивное расстройство», редакция 2021 года (ID 301_2 в рубрикаторе Минздрава, в архиве с 26.08.2024), PDF разработчика.",
@@ -5224,7 +5189,7 @@ export const antidepressants: MindMapData = { root: {
       "id": "otc",
       "label": "Без рецепта и травы",
       "title": "Без рецепта и травы",
-      "hint": "Не лечат депрессию. Их часто покупают вместо лечения; доказательств почти нет.",
+      "hint": "Депрессию не лечат. Их часто покупают, когда лечение откладывают; доказательств почти нет.",
       "facts": [
         {
           "label": "Что это",
