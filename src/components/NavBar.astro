@@ -10,20 +10,20 @@ const { hasAbout } = Astro.props;
 const currentPath = Astro.url.pathname.replace(/\/$/, '');
 const isCurrent = (href: string) => currentPath === href.replace(/\/$/, '');
 const links = [
-  { label: 'Архив', href: BASE + 'blog/' },
-  { label: 'Заметки', href: BASE + 'notes/' },
-  ...(hasAbout ? [{ label: 'Обо мне', href: BASE + 'about-me/' }] : []),
+  { label: 'архив', href: BASE + 'blog/' },
+  { label: 'заметки', href: BASE + 'notes/' },
+  ...(hasAbout ? [{ label: 'обо мне', href: BASE + 'about-me/' }] : []),
 ];
 ---
 
 <header class="site-header">
   <nav class="site-nav" aria-label="Навигация по сайту">
-    <a class="site-brand" href={BASE} aria-current={isCurrent(BASE) ? 'page' : undefined}>{SITE.author}</a>
+    <a class="site-brand" href={BASE} aria-current={isCurrent(BASE) ? 'page' : undefined}>[главная]</a>
     <ul role="list">
       {links.map(({ label, href }) => (
-        <li><a href={href} aria-current={isCurrent(href) ? 'page' : undefined}>{label}</a></li>
+        <li><a href={href} aria-current={isCurrent(href) ? 'page' : undefined}>[{label}]</a></li>
       ))}
-      <li><a id="site-search-link" href={BASE + 'search/'} aria-current={isCurrent(BASE + 'search/') ? 'page' : undefined} aria-keyshortcuts="/">Поиск</a></li>
+      <li><a id="site-search-link" href={BASE + 'search/'} aria-current={isCurrent(BASE + 'search/') ? 'page' : undefined} aria-keyshortcuts="/">[поиск]</a></li>
       <li class="needs-js">
         <details class="reader-settings">
           <summary title="Настройки чтения" aria-label="Настройки чтения"><Icon name="adjustments-horizontal" /></summary>
