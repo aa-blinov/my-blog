@@ -20,6 +20,8 @@ const pages = await getCollection('pages', (entry) => !entry.data.draft);
 const hasAbout = pages.some((entry) => entry.id === 'about-me');
 const fullTitle = title === SITE.title ? title : `${title} | ${SITE.title}`;
 const desc = description ?? SITE.description;
+const canonical = new URL(Astro.url.pathname, SITE.url).href;
+const ogType = Astro.url.pathname.startsWith(`${BASE}blog/`) ? 'article' : 'website';
 ---
 
 <!doctype html>
@@ -34,6 +36,16 @@ const desc = description ?? SITE.description;
     <link rel="icon" type="image/svg+xml" href={`${BASE}favicon.svg`} />
     <title>{fullTitle}</title>
     <meta name="description" content={desc} />
+    <link rel="canonical" href={canonical} />
+    <!-- Блог расходится ссылками из чатов: без og-меты мессенджер показывает голый адрес -->
+    <meta property="og:type" content={ogType} />
+    <meta property="og:site_name" content={SITE.title} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={desc} />
+    <meta property="og:url" content={canonical} />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={desc} />
     <link rel="alternate" type="application/rss+xml" title="Статьи" href={`${BASE}rss.xml`} />
     <link rel="alternate" type="application/rss+xml" title="Заметки" href={`${BASE}notes.xml`} />
 

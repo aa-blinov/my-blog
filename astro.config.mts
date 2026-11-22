@@ -7,6 +7,13 @@ export default defineConfig({
   base: '/',
   output: 'static',
   integrations: [sitemap()],
+  vite: {
+    build: {
+      // Mermaid (и его elk с cytoscape) — ленивые чанки: браузер тянет их только на страницах
+      // с диаграммами. Порог по умолчанию ругается на них, хотя в первом экране их нет.
+      chunkSizeWarningLimit: 1500,
+    },
+  },
   // Серия про агента переехала в dev/agent/; старые адреса живут в чужих закладках
   redirects: {
     ...Object.fromEntries(

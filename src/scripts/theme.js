@@ -14,10 +14,6 @@ import { iconSvg } from '../utils/icons';
   };
   applyThemeUi(root.dataset.theme || initialTheme);
 
-  const copyToClipboard = async (text) => {
-    await navigator.clipboard.writeText(text);
-  };
-
   const enhanceCodeBlocks = () => {
     const preBlocks = document.querySelectorAll("pre");
 

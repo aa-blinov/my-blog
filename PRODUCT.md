@@ -88,12 +88,19 @@ Present now, confirmed by the code:
   The dedicated search page matches titles, sections, file names and article
   text, including common Russian inflections. It shows excerpts with matched
   words highlighted, transliterates Russian queries and remembers the query
-  in the tab. An empty result offers a link to the archive.
+  in the tab. It starts downloading the article texts when the field takes
+  focus, so the first typed query does not wait for them. An empty result
+  offers a link to the archive.
+- The head of every page carries Open Graph and Twitter Card tags with a
+  canonical link, so a link pasted into a chat unfolds with the title and the
+  description of the page.
 - The header disclosure offers a light and dark theme, five font sizes and
   three reading widths.
 - The home page offers topic links near the introduction, followed by four
   curated articles across AI, popular science, personal essays and development,
-  each with a short description. It then shows the seven latest publications
+  each with a short description. The four are checked against the collection
+  at build time: a moved or deleted article fails the build instead of shipping
+  a dead link. It then shows the seven latest publications
   with summaries and reading times, marks projects and links to
   the full archive beside the list heading. The archive at `/blog/` groups
   articles by year and month, newest first, shows the topic path below each title and
@@ -113,6 +120,9 @@ Present now, confirmed by the code:
   only, an anchor for every note, and up to the latest three on the home page.
 - Two feeds: `/rss.xml` for the articles, `/notes.xml` for the notes, with
   `rel=alternate` links in the head of the page and a line in the footer.
+  The article feed carries the full rendered text of each item, with relative
+  links rewritten to absolute ones, and drops the intro file of a folder that
+  holds no article.
 - Series: a folder whose files carry `part`, with `about-<folder>.md` giving
   the name and the intro. Under the heading of a part, the line "Series «…»
   ~ part N of M"; after the text, links to the previous and the next part
@@ -154,7 +164,7 @@ out of the texts on his own.
 
 ## Evidence on Hand
 
-- 115 Markdown files in `src/content/blog/`, including the nine-part series
+- 138 Markdown files in `src/content/blog/`, including the nine-part series
   about how the agent is put together (`dev/agent/`), the popular science long
   reads (`science/`), the project posts (`projects/`) and the essays about
   language models (`ai/`).

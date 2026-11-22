@@ -3,9 +3,15 @@ import type { APIContext } from 'astro';
 import { getCollection } from 'astro:content';
 import { SITE } from '../config';
 import { sortByDateDesc } from '../utils/date';
+import { isAbout, liveFolders } from '../utils/series';
 
 export async function GET(context: APIContext) {
-  const posts = sortByDateDesc((await getCollection('blog')).filter((p) => !p.data.draft));
+  const published = (await getCollection('blog')).filter((p) => !p.data.draft);
+  // Интро раздела без статей — анонс того, чего нет; читатель фида не должен такое получать.
+  // Живые разделы и интро серий остаются: они объясняют, что внутри.
+  const live = liveFolders(published);
+  const folderOf = (id: string) => id.slice(0, id.lastIndexOf('/'));
+  const posts = sortByDateDesc(published.filter((p) => !isAbout(p.id) || live.has(folderOf(p.id))));
   return rss({
     title: SITE.title,
     description: 'Статьи',
@@ -15,6 +21,8 @@ export async function GET(context: APIContext) {
       pubDate: p.data.date,
       description: p.data.summary,
       link: `/blog/${p.id}/`,
+      // Полный текст читают в RSS-читалке: относительные ссылки там не открываются
+      content: p.rendered?.html?.replace(/(src|href)="\//g, `$1="${SITE.url}/`),
     })),
     customData: '<language>ru</language>',
   });

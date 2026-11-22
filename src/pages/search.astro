@@ -123,22 +123,8 @@ const articles = sortByDateDesc(await getCollection('blog', (entry) => !entry.da
     let indexRequest: Promise<ArticleIndex | null> | undefined;
     let revision = 0;
 
-    const update = async () => {
-      const current = ++revision;
-      const raw = input.value.trim().replace(/\s+/g, ' ');
-      const query = normalize(raw);
-      const terms = queryWords(query);
-      sessionStorage.setItem('sidebar-search', input.value);
-      if (!query) {
-        results.forEach(({ item }) => { item.hidden = true; });
-        statusText.textContent = '';
-        archiveLink.hidden = true;
-        return;
-      }
-
+    const ensureIndex = () => {
       if (!indexRequest) {
-        statusText.textContent = 'Загружаю тексты статей…';
-        archiveLink.hidden = true;
         indexRequest = fetch(list.dataset.indexUrl!)
           .then((response) => {
             if (!response.ok) throw new Error('Search index unavailable');
@@ -153,7 +139,31 @@ const articles = sortByDateDesc(await getCollection('blog', (entry) => !entry.da
             return null;
           });
       }
-      const index = await indexRequest;
+      return indexRequest;
+    };
+    // Индекс с полными текстами весит около мегабайта: качаем его, когда поле получило фокус,
+    // а не когда напечатан первый символ, — к началу набора он уже на месте
+    input.addEventListener('focus', ensureIndex);
+
+    const update = async () => {
+      const current = ++revision;
+      const raw = input.value.trim().replace(/\s+/g, ' ');
+      const query = normalize(raw);
+      const terms = queryWords(query);
+      sessionStorage.setItem('sidebar-search', input.value);
+      if (!query) {
+        results.forEach(({ item }) => { item.hidden = true; });
+        statusText.textContent = '';
+        archiveLink.hidden = true;
+        return;
+      }
+
+      const pending = !indexRequest;
+      if (pending) {
+        statusText.textContent = 'Загружаю тексты статей…';
+        archiveLink.hidden = true;
+      }
+      const index = await ensureIndex();
       if (current !== revision) return;
 
       const translit = /[а-яё]/i.test(raw) ? [...raw.toLowerCase()].map((letter) => ruToEn[letter] ?? letter).join('') : '';

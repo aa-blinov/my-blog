@@ -123,8 +123,6 @@ const hoverTip = (n: MapNode) => n.hint ?? (n.children?.length ? undefined : n.n
     const panel = mm.querySelector<HTMLElement>('.mm-panel')!;
     const nodes = [...mm.querySelectorAll<HTMLButtonElement>('.mm-node')];
     const byId = new Map(nodes.map((n) => [n.dataset.id!, n]));
-    const W = canvas.offsetWidth;
-    const H = canvas.offsetHeight;
     const MIN = 0.2;
     const MAX = 2.5;
     let s = 1, tx = 0, ty = 0;
