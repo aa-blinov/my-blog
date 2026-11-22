@@ -37,9 +37,9 @@ on Node 22.
 | `src/pages/search.astro`, `search-index.json.ts` | The search page and the full-text index it downloads on the first query. |
 | `src/components/MindMap.astro`, `Picker.astro`, `Tools.astro`, `Questionnaire.astro` | The interactive blocks and their browser-side controllers. |
 | `src/data/` | The data behind those blocks, one file per block, with a registry per kind. |
-| `src/scripts/theme.js` | The theme, the font size, the reading width, the copy buttons, the Mermaid rendering, which imports Mermaid only when a page has a diagram. |
-| `src/layouts/Layout.astro` | The shared head: preloaded fonts, the inline paint script, the Open Graph and Twitter Card tags, the canonical link. |
-| `src/scripts/ref-tip.js` | The tooltip behind a reference chip. |
+| `src/scripts/theme.js` | The font size, the reading width, the can picker for the accent, the copy buttons, the Mermaid rendering, which imports Mermaid only when a page has a diagram. |
+| `src/layouts/Layout.astro` | The shared head: preloaded fonts, the static dark theme (`data-theme="dark"` written into the markup), the inline paint script, the Open Graph and Twitter Card tags, the canonical link. |
+| `src/scripts/ref-tip.js` | The shared styled tooltip: the source behind a reference chip, the can names above the settings swatches. |
 | `src/utils/search-matching.ts` | The word matching of the search: Russian suffix stripping and stop words. |
 | `src/utils/series.ts` | What counts as a series, what counts as an intro file, which folders have an article to show. |
 | `src/utils/date.ts` | Dates, sorting, the reading time, the note anchor. |
@@ -84,10 +84,12 @@ on Node 22.
 - **The search page ships the whole list and filters it in the browser.**
   `src/pages/search.astro` renders every article as a hidden `<li>` and
   unhides the matches as the visitor types; the article texts are not in the
-  page. They are fetched from `search-index.json` on the first query, once per
-  visit. The page is useless without JavaScript, so the field, the status line
-  and the results carry `needs-js`, and the `noscript` block links to the
-  archive.
+  page. They are fetched from `search-index.json` when the field takes
+  focus, once per visit. While they travel, a first pass matches titles,
+  sections and summaries from the page itself, and a second pass re-renders
+  the list when the texts arrive. The page is useless without JavaScript,
+  so the field, the status line and the results carry `needs-js`, and the
+  `noscript` block links to the archive.
 - **Search matches words, not only raw substrings.** A query matches a title,
   a section or a summary as a substring, and the full text by words:
   `src/utils/search-matching.ts` strips common Russian suffixes and drops
@@ -96,13 +98,17 @@ on Node 22.
 - **The search query lives in session storage.** The key is `sidebar-search`,
   a name left over from the old sidebar. The query survives a reload in the
   same tab and is gone in the next one.
-- **The theme, the font size and the reading width are applied before the
-  first paint.** An inline script in the head of `Layout.astro` reads local
-  storage (`theme`, `font-size-v2`, `reading-width`), and
+- **The font size, the reading width and the accent flavour are applied
+  before the first paint.** An inline script in the head of `Layout.astro`
+  reads local storage (`font-size-v2`, `reading-width`, `flavor`), and
   `src/scripts/theme.js` reads the same keys a moment later. When the two
-  disagree the page is drawn one way and jumps to another. The inline script
-  also sets the `js` class: the reader controls in the header and the search
-  page itself are hidden without it.
+  disagree the page is drawn one way and jumps to another. The theme is not
+  a setting: `data-theme="dark"` sits in the markup, and a stale `theme`
+  key in an old visitor's storage is read by nothing. The flavour is a
+  setting: `html[data-flavor]` blocks in `global.css` re-point the accent,
+  and Black is not among the choices, because at 1.09:1 on Night it is the
+  background. The inline script also sets the `js` class: the reader
+  controls in the header and the search page itself are hidden without it.
 - **The section names come from two places.** `SECTION_TITLES` in
   `src/config.ts` is the fallback list; a folder with an `about-<name>.md`
   takes its title from that file. A folder missing from both shows the raw

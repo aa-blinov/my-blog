@@ -1,4 +1,5 @@
 // Всплывашка источника над чипом [n]: описание из data-tip и сайт.
+// Та же всплывашка показывает английские названия банок над кружками настроек.
 // Мышь: по наведению. Клавиатура: по фокусу. Тач: первый тап показывает, второй по тому же чипу открывает источник
 (() => {
   // Без раннего выхода: в подборщике чипы появляются после отметок, а слушатели на document почти ничего не стоят
@@ -16,7 +17,7 @@
   let pointerFocus = false; // фокус от касания не в счёт, иначе первый тап сразу открывал бы ссылку
 
   const place = () => {
-    // Под чипом, а если внизу не влезает, над ним; по горизонтали не вылезает за экран
+    // Под элементом, а если внизу не влезает, над ним; по горизонтали не вылезает за экран
     const r = current.getBoundingClientRect();
     const w = tip.offsetWidth;
     const h = tip.offsetHeight;
@@ -34,11 +35,14 @@
     const holder = document.fullscreenElement ?? document.body;
     if (tip.parentElement !== holder) holder.append(tip);
     tip.textContent = a.dataset.tip;
-    const host = document.createElement("span");
-    host.className = "ref-tip-host";
-    host.textContent = new URL(a.href).hostname.replace(/^www\./, "");
-    tip.append(host);
-    if (!canHover) {
+    // Хост показываем только у ссылки: у банки в подсказке нет ничего, кроме имени
+    if (a instanceof HTMLAnchorElement) {
+      const host = document.createElement("span");
+      host.className = "ref-tip-host";
+      host.textContent = new URL(a.href).hostname.replace(/^www\./, "");
+      tip.append(host);
+    }
+    if (!canHover && a instanceof HTMLAnchorElement) {
       const hint = document.createElement("span");
       hint.className = "ref-tip-hint";
       hint.textContent = "ещё одно нажатие откроет источник";
@@ -54,11 +58,11 @@
     tip.hidden = true;
   };
 
-  const refOf = (e) => e.target.closest?.(".content a.ref[data-tip]");
+  const refOf = (e) => e.target.closest?.(".content a.ref[data-tip], .flavor-btn[data-tip]");
   if (canHover) {
     document.addEventListener("mouseover", (e) => { const a = refOf(e); if (a && a !== current) show(a); });
     document.addEventListener("mouseout", (e) => {
-      if (refOf(e) && !e.relatedTarget?.closest?.(".content a.ref") && document.activeElement !== current) hide();
+      if (refOf(e) && !e.relatedTarget?.closest?.(".content a.ref, .flavor-btn") && document.activeElement !== current) hide();
     });
   } else {
     // На таче фокус ставится уже после отпускания пальца, поэтому флаг снимаем на клике, а не по таймеру
@@ -68,6 +72,8 @@
       pointerFocus = false;
       const a = refOf(e);
       if (!a) { hide(); return; }
+      // Тап по банке сразу выбирает её: подсказку с именем на таче не показываем
+      if (a.classList.contains("flavor-btn")) { hide(); return; }
       if (a === current) return; // второй тап: обычный переход по ссылке
       e.preventDefault();
       show(a);

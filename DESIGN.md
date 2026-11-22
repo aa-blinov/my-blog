@@ -7,6 +7,13 @@ colors:
   monster-green-bright: "#a8e00a"
   monster-green-ink: "#4d7a00"
   monster-green-ink-deep: "#3f6600"
+  flavor-original: "#95d600"
+  flavor-black: "#0b0c0c"
+  flavor-ultra-white: "#f0f1f3"
+  flavor-khaos: "#ff8a00"
+  flavor-mango: "#19bcd9"
+  flavor-vr46: "#ffe012"
+  flavor-ultra-black: "#ce69d6"
   on-accent: "#ffffff"
   on-accent-night: "#13171f"
   paper: "#ffffff"
@@ -122,8 +129,8 @@ the right of each title.
 
 Monster Green marks the current page, focus and hovered links. A hairline
 separates the header from the page. The header keeps navigation visible and
-groups theme, font size and column width in one disclosure. Both themes use
-the same type scale and layout.
+groups font size and column width in one disclosure. The site is dark
+only: the night palette is the palette.
 
 ## Colors
 
@@ -132,28 +139,49 @@ cannot collide with the Pico CSS the site is built on.
 
 ### Primary
 
-- **Monster Green** (`#95d600`): the accent of the system. It marks the
+- **Monster Green** (`#95d600`): the accent of the system, and the green of
+  the text too. On Night (`#13171f`) it measures 10.17:1. It marks the
   active file, the focus of the search field, a link under the pointer and
   the button that says the text was copied.
-- **Monster Green Deep** (`#7ab800`) and **Monster Green Bright** (`#a8e00a`):
-  the hover of the accent, in the light and the dark theme.
-- **Monster Green Ink** (`#4d7a00`) and **Monster Green Ink Deep**
-  (`#3f6600`): the green that may be used as text in the light theme.
+- **Monster Green Bright** (`#a8e00a`): the hover of the accent.
+- **Monster Green Deep** (`#7ab800`) and the inks (`#4d7a00`, `#3f6600`):
+  retired with the light theme, kept in the palette for the record. On white
+  the lime measured 2.1:1, which is why the light theme needed the inks.
 
-The lime cannot be text. `#95d600` on white measures 2.1:1, so everything
-that is read as text in the light theme is set in Monster Green Ink, and the
-lime is left for fills, for tinted backgrounds and for the dark theme.
+### The flavour palette
 
-### Neutral, the paper theme
+The can lineup of the series, held as tokens for data categories: any place
+where one green cannot tell N things apart. A flavour never paints the
+navigation, a link or a state — the chrome stays single-green.
 
-- **Paper** (`#ffffff`): the page.
-- **Paper Code** (`#f3f4f7`): the fill of a code chip and of a hovered row.
-- **Paper Rule** (`#e7eaf0`): the 1px line that separates two things.
-- **Ink** (`#373c44`): the body text.
-- **Ink Heading** (`#2d3138`): the headings.
-- **Ink Contrast** (`#181c25`): the strongest ink, for a link that has to
-  stand out from its neighbours.
-- **Ink Muted** (`#646b79`): the dates, the meta lines and the placeholders.
+- **Original** (`#95d600`): the green claw, the accent of the system.
+  10.17:1 on Night.
+- **Black** (`#0b0c0c`): the can the series ships in. On Night it is the
+  background family itself, decorative only. 1.09:1.
+- **Ultra White** (`#f0f1f3`): the silver-white zero-sugar can; the same value
+  as Night Heading. 15.88:1.
+- **Khaos** (`#ff8a00`): the all-orange juice can. The hue is measured off
+  the can, the value is normalized for Night. 7.60:1.
+- **Mango Loco** (`#19bcd9`): the turquoise of the Day of the Dead can,
+  measured off the artwork and kept as measured. 7.89:1.
+- **VR46** (`#ffe012`): The Doctor's yellow. Monster publishes no hex for the
+  can, so the value follows the published descriptions. 13.61:1.
+- **Ultra Black** (`#ce69d6`): the cherry of the black cherry can, a step
+  brighter than the print so it clears AA on Night. 5.65:1.
+
+The measured hues come from the annotated Commons photograph
+`Monster Energy drinks 08.jpg` at 1920px: the green control and the orange
+of Khaos read off the cans, the turquoise straight off the artwork. Photo
+lighting dims and warms a can, so a measured hue is a hue, not a value: the
+print-green of the control read `#62aa2f` before being anchored back to the
+published `#95d600`, and every provenance is written next to its colour.
+
+The reader pours a can in the header disclosure: the chosen flavour moves
+the accent — links, marks, states — while the layout, the neutrals and the
+type stay. The default is the Original green. Black is not offered: at
+1.09:1 on Night the black can is the page itself. The swatches are plain
+colour dots with no borders — the dark popup carries even the light cans —
+and only the poured can wears a thin ring.
 
 ### Neutral, the night theme
 
@@ -167,23 +195,25 @@ lime is left for fills, for tinted backgrounds and for the dark theme.
 
 ### The editor block
 
-Code and diagrams live in a dark window in both themes: the block is
-`#24292e` and its text is `#e1e4e8`. It does not follow the theme, because it
-is a window of an editor inside the document rather than a part of the
-document.
+Code and diagrams live in a dark window: the block is `#24292e` and its
+text is `#e1e4e8`. It keeps its own editor shade, a step off the page, so it
+reads as a window of an editor inside the document rather than a part of
+the document.
 
 ### Named rules
 
-**The Single Highlight Rule.** Monster Green is the only chromatic colour in
-the system. It appears as a reaction to a state, active, hovered, focused,
-copied, or as the mark on a link. A second accent is not introduced for any
-task.
+**The Single Highlight Rule.** One accent at a time, and the accent is
+Monster Green unless the reader pours another can. It appears as a
+reaction to a state, active, hovered, focused, copied, or as the mark on
+a link. The flavour palette is not a licence for a second simultaneous
+colour: the reader's can moves the one accent, and nothing else paints.
 
-**The Ink Rule.** The lime is a highlight rather than a text colour. In the
-light theme, everything that is read as text or as a thin mark is set in
-Monster Green Ink and checked against 4.5:1. One hue in two densities.
+**The Ink Rule.** Retired with the light theme. The lime is now the text
+green as well: 10.17:1 on Night. The inks of the light theme existed to
+check green text against 4.5:1 on white, and there is no white left to
+check against.
 
-**The Dark Editor Rule.** A block of code is dark in either theme.
+**The Dark Editor Rule.** A block of code is dark.
 
 **The Pico Boundary Rule.** Pico lives in its own cascade layer and paints by
 tag, so there are two borders it may not cross. A `<nav>` receives the styles
@@ -293,8 +323,12 @@ thumb is 4px round, which is a rectangle with soft ends.
 ### Top navigation
 
 The author name links home. The other links lead to the archive, notes,
-about page and search. The current page has a green underline. The reading
-settings open from the icon at the end of the row.
+about page and search. The current page marks itself through its square
+brackets in the accent, Monster Green by default; nothing else in the row
+changes. The reading settings open from the icon at the end of the row:
+font size, column width and a lineup of cans for the accent. Each can
+carries its English name — `Monster Khaos`, `Monster Mango Loco` — in the
+shared tooltip on hover and on keyboard focus.
 
 ### Search
 
@@ -307,7 +341,7 @@ offers a link to the archive when there are none.
 ### The code block
 
 - **Shape:** a 4px corner, the dark editor fill, the text in the editor
-  colour, in both themes.
+  colour.
 - **Copy button:** in the top right corner, a 4px corner, and it turns green
   with the word "copied" once the text is on the clipboard.
 - **Long lines** wrap rather than scroll, so the reader never has to move
@@ -412,17 +446,14 @@ picker (`+`, `!`, `~`, `×`), which are the legend itself.
   buttons, dates, navigation, code and diagrams.
 - **Do** use Monster Green on states and on links: the active page, the
   focus, the hover, the copy.
-- **Do** use Monster Green Ink for green text in the light theme, and check
-  the pair against 4.5:1.
-- **Do** separate two zones with a 1px rule in Paper Rule or Night Rule, and
-  mark an element with a fill in Paper Code or Night Code.
-- **Do** keep the code blocks and the diagrams in the dark window, in both
-  themes.
+- **Do** separate two zones with a 1px rule in Night Rule, and mark an
+  element with a fill in Night Code.
+- **Do** keep the code blocks and the diagrams in the dark window.
 - **Do** show the article title first in chronological lists, with dates in
   muted text and clear year and month headings; the home page adds summaries
   and reading time to its seven latest articles.
-- **Do** give the reader the size of the text and the theme, and remember
-  the choice.
+- **Do** give the reader the size of the text and the width of the column,
+  and remember the choice.
 - **Do** give a tap target at least 44px on a phone.
 - **Do** keep the structural blocks out of a `<nav>`: the table of contents
   in a `details`, the footer of an article in an `aside`.
@@ -434,8 +465,9 @@ picker (`+`, `!`, `~`, `×`), which are the legend itself.
 - **Do** use a chevron where a section expands, such as the table of contents.
 - **Don't** use shadows, glows, blurs or gradients on any surface, in any
   state.
-- **Don't** introduce a second accent colour, and don't fill a large area
-  with green.
+- **Don't** run two accents at once: the interface carries one accent, the
+  default green or the reader's chosen can, and flavours never decorate
+  alongside it. Don't fill a large area with the accent.
 - **Don't** set lime `#95d600` on white, or white on lime.
 - **Don't** draw cards: an article in a list is a title and a meta line, with
   no frame and no fill.

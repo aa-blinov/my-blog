@@ -12,22 +12,26 @@
 :root {
   /* --- Design tokens (app- prefix to avoid Pico collisions) --- */
 
-  /* Brand primary colors */
+  /* Brand primary colors. Тема одна и тёмная: кислотный зелёный — это и текст тоже (10.17:1 на фоне #13171f).
+     Светлая тема ушла вместе с «чернильными» оттенками: на белом этот зелёный даёт 2.1:1. */
   --app-primary: #95d600;
   --app-primary-rgb: 149, 214, 0;
-  --app-primary-hover-light: #7ab800;
-  --app-primary-hover-dark: #a8e00a;
-  --app-primary-inverse: #fff;
-  /* Text-safe greens for the light theme: lime (#95d600) is a highlight, not a text color (2.1:1 on white) */
-  --app-primary-ink-light: #4d7a00;
-  --app-primary-ink-rgb-light: 77, 122, 0;
-  --app-primary-ink-hover-light: #3f6600;
-  --app-primary-inverse-dark: #13171f;
+  --app-primary-hover: #a8e00a;
+  --app-primary-inverse: #13171f;
   --app-primary-underline-opacity: 0.5;
-  --app-primary-focus-opacity-light: 0.25;
-  --app-primary-focus-opacity-dark: 0.375;
-  --app-primary-selection-opacity-light: 0.25;
-  --app-primary-selection-opacity-dark: 0.2;
+  --app-primary-focus-opacity: 0.375;
+  --app-primary-selection-opacity: 0.2;
+
+  /* Палитра вкусов: цвета банок линейки, для категорий данных, где одного зелёного мало.
+     Хром сайта остаётся зелёным (Single Highlight Rule): вкус не красит навигацию, ссылку или состояние.
+     Происхождение значений и контраст на Night — в DESIGN.md, раздел The flavour palette. */
+  --app-flavor-original: #95d600;
+  --app-flavor-black: #0b0c0c;
+  --app-flavor-ultra-white: #f0f1f3;
+  --app-flavor-khaos: #ff8a00;
+  --app-flavor-mango: #19bcd9;
+  --app-flavor-vr46: #ffe012;
+  --app-flavor-ultra-black: #ce69d6;
 
   /* Layout */
   --app-scroll-offset: var(--app-spacing-xl);
@@ -78,63 +82,24 @@
   /* Font family & Pico primary (synced from app-primary for compatibility) */
   --font-family: 'JetBrains Mono Variable', 'JetBrains Mono', 'Cascadia Code', Consolas, monospace;
   --app-article-reading-font: 'Literata Variable', Literata, Georgia, serif;
-  --pico-primary: var(--app-primary);
-  --pico-primary-rgb: var(--app-primary-rgb);
-  --pico-border-radius: var(--app-radius-sm); /* у Pico 0.25rem = 4.8px: вне шкалы на inline code */
-}
 
-/* --- Theme overrides: green primary in light theme --- */
-html[data-theme="light"],
-:root:not([data-theme="dark"]) {
-  --pico-primary: var(--app-primary-ink-light);
-  --pico-primary-rgb: var(--app-primary-rgb);
-  --pico-primary-background: var(--app-primary-ink-light);
-  --pico-primary-border: var(--app-primary-ink-light);
-  --pico-primary-underline: rgba(var(--app-primary-ink-rgb-light), var(--app-primary-underline-opacity));
-  --pico-primary-hover: var(--app-primary-ink-hover-light);
-  --pico-primary-hover-background: var(--app-primary-ink-hover-light);
-  --pico-primary-hover-border: var(--app-primary-ink-hover-light);
-  --pico-primary-hover-underline: var(--app-primary-ink-hover-light);
-  --pico-primary-focus: rgba(var(--app-primary-rgb), var(--app-primary-focus-opacity-light));
-  --pico-primary-inverse: var(--app-primary-inverse);
-  --pico-text-selection-color: rgba(var(--app-primary-rgb), var(--app-primary-selection-opacity-light));
-  --pico-code-background-color: #f3f4f7; /* Paper Code из DESIGN.md, у Pico #f3f5f7 */
-}
-
-/* --- Theme overrides: green primary in dark theme --- */
-html[data-theme="dark"] {
+  /* Тема прибита к тёмной в разметке (data-theme="dark" на <html>): Pico рисует ночные фоны,
+     здесь остаётся согласовать зелёный и служебные тона с ним */
+  color-scheme: dark;
   --pico-primary: var(--app-primary);
   --pico-primary-rgb: var(--app-primary-rgb);
   --pico-primary-background: var(--app-primary);
   --pico-primary-border: var(--app-primary);
   --pico-primary-underline: rgba(var(--app-primary-rgb), var(--app-primary-underline-opacity));
-  --pico-primary-hover: var(--app-primary-hover-dark);
-  --pico-primary-hover-background: var(--app-primary-hover-dark);
-  --pico-primary-hover-border: var(--app-primary-hover-dark);
-  --pico-primary-hover-underline: var(--app-primary-hover-dark);
-  --pico-primary-focus: rgba(var(--app-primary-rgb), var(--app-primary-focus-opacity-dark));
-  --pico-primary-inverse: var(--app-primary-inverse-dark);
-  --pico-text-selection-color: rgba(var(--app-primary-rgb), var(--app-primary-selection-opacity-dark));
+  --pico-primary-hover: var(--app-primary-hover);
+  --pico-primary-hover-background: var(--app-primary-hover);
+  --pico-primary-hover-border: var(--app-primary-hover);
+  --pico-primary-hover-underline: var(--app-primary-hover);
+  --pico-primary-focus: rgba(var(--app-primary-rgb), var(--app-primary-focus-opacity));
+  --pico-primary-inverse: var(--app-primary-inverse);
+  --pico-text-selection-color: rgba(var(--app-primary-rgb), var(--app-primary-selection-opacity));
   --pico-code-background-color: #1a1e28; /* Night Code из DESIGN.md */
-}
-
-/* Без JS атрибута темы нет: при тёмной ОС Pico рисует ночной фон, а светлый блок выше дал бы тёмно-зелёные ссылки (3.5:1) */
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme]) {
-    --pico-primary: var(--app-primary);
-    --pico-primary-rgb: var(--app-primary-rgb);
-    --pico-primary-background: var(--app-primary);
-    --pico-primary-border: var(--app-primary);
-    --pico-primary-underline: rgba(var(--app-primary-rgb), var(--app-primary-underline-opacity));
-    --pico-primary-hover: var(--app-primary-hover-dark);
-    --pico-primary-hover-background: var(--app-primary-hover-dark);
-    --pico-primary-hover-border: var(--app-primary-hover-dark);
-    --pico-primary-hover-underline: var(--app-primary-hover-dark);
-    --pico-primary-focus: rgba(var(--app-primary-rgb), var(--app-primary-focus-opacity-dark));
-    --pico-primary-inverse: var(--app-primary-inverse-dark);
-    --pico-text-selection-color: rgba(var(--app-primary-rgb), var(--app-primary-selection-opacity-dark));
-    --pico-code-background-color: #1a1e28;
-  }
+  --pico-border-radius: var(--app-radius-sm); /* у Pico 0.25rem = 4.8px: вне шкалы на inline code */
 }
 
 /* ==========================================================================
@@ -151,6 +116,46 @@ html {
   background-color: var(--pico-background-color);
   scrollbar-width: thin;
   scrollbar-color: var(--pico-muted-border-color) var(--pico-background-color);
+}
+
+/* Выбранная банка перекрашивает только акцент: ссылки, метки, состояния.
+   Фон, нейтрали и типографика не меняются. Чёрная банка не выбирается:
+   1.09:1 на Night — это фон, а не акцент. */
+html[data-flavor="original"],
+html:not([data-flavor]) {
+  --app-primary: var(--app-flavor-original);
+  --app-primary-rgb: 149, 214, 0;
+  --app-primary-hover: #a8e00a;
+}
+
+html[data-flavor="ultra-white"] {
+  --app-primary: var(--app-flavor-ultra-white);
+  --app-primary-rgb: 240, 241, 243;
+  --app-primary-hover: #ffffff;
+}
+
+html[data-flavor="khaos"] {
+  --app-primary: var(--app-flavor-khaos);
+  --app-primary-rgb: 255, 138, 0;
+  --app-primary-hover: #ffb25e;
+}
+
+html[data-flavor="mango"] {
+  --app-primary: var(--app-flavor-mango);
+  --app-primary-rgb: 25, 188, 217;
+  --app-primary-hover: #6fe0f2;
+}
+
+html[data-flavor="vr46"] {
+  --app-primary: var(--app-flavor-vr46);
+  --app-primary-rgb: 255, 224, 18;
+  --app-primary-hover: #fff27a;
+}
+
+html[data-flavor="ultra-black"] {
+  --app-primary: var(--app-flavor-ultra-black);
+  --app-primary-rgb: 206, 105, 214;
+  --app-primary-hover: #f0a0f5;
 }
 
 /* Широкие экраны: база 16px, иначе на ретина-ноутбуках дерево и мета мельчат */

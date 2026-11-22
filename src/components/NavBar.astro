@@ -18,12 +18,12 @@ const links = [
 
 <header class="site-header">
   <nav class="site-nav" aria-label="Навигация по сайту">
-    <a class="site-brand" href={BASE} aria-current={isCurrent(BASE) ? 'page' : undefined}>[главная]</a>
+    <a class="site-brand" href={BASE} aria-current={isCurrent(BASE) ? 'page' : undefined}><span class="nav-bracket">[</span>главная<span class="nav-bracket">]</span></a>
     <ul role="list">
       {links.map(({ label, href }) => (
-        <li><a href={href} aria-current={isCurrent(href) ? 'page' : undefined}>[{label}]</a></li>
+        <li><a href={href} aria-current={isCurrent(href) ? 'page' : undefined}><span class="nav-bracket">[</span>{label}<span class="nav-bracket">]</span></a></li>
       ))}
-      <li><a id="site-search-link" href={BASE + 'search/'} aria-current={isCurrent(BASE + 'search/') ? 'page' : undefined} aria-keyshortcuts="/">[поиск]</a></li>
+      <li><a id="site-search-link" href={BASE + 'search/'} aria-current={isCurrent(BASE + 'search/') ? 'page' : undefined} aria-keyshortcuts="/"><span class="nav-bracket">[</span>поиск<span class="nav-bracket">]</span></a></li>
       <li class="needs-js">
         <details class="reader-settings">
           <summary title="Настройки чтения" aria-label="Настройки чтения"><Icon name="adjustments-horizontal" /></summary>
@@ -31,10 +31,14 @@ const links = [
             <button type="button" id="font-decrease" title="Уменьшить шрифт" aria-label="Уменьшить шрифт"><Icon name="minus" /></button>
             <button type="button" id="font-increase" title="Увеличить шрифт" aria-label="Увеличить шрифт"><Icon name="plus" /></button>
             <button type="button" id="width-toggle" title="Ширина текста: обычная" aria-label="Ширина текста: обычная. Нажмите, чтобы сменить"><Icon name="width-normal" /></button>
-            <button type="button" id="theme-toggle" title="Тёмная тема" aria-label="Тёмная тема" aria-pressed="false">
-              <Icon name="sun" class="sun-icon" />
-              <Icon name="moon" class="moon-icon" />
-            </button>
+            <span class="flavor-row" role="group" aria-label="Банка для акцента">
+              <button type="button" class="flavor-btn" data-flavor="original" data-tip="Monster Energy Original" aria-label="Акцент: Оригинал" aria-pressed="true"><span class="flavor-dot" aria-hidden="true"></span></button>
+              <button type="button" class="flavor-btn" data-flavor="ultra-white" data-tip="Monster Ultra White" aria-label="Акцент: Ультра уайт" aria-pressed="false"><span class="flavor-dot" aria-hidden="true"></span></button>
+              <button type="button" class="flavor-btn" data-flavor="khaos" data-tip="Monster Khaos" aria-label="Акцент: Хаос" aria-pressed="false"><span class="flavor-dot" aria-hidden="true"></span></button>
+              <button type="button" class="flavor-btn" data-flavor="mango" data-tip="Monster Mango Loco" aria-label="Акцент: Манго Локо" aria-pressed="false"><span class="flavor-dot" aria-hidden="true"></span></button>
+              <button type="button" class="flavor-btn" data-flavor="vr46" data-tip="Monster VR46 The Doctor" aria-label="Акцент: VR46" aria-pressed="false"><span class="flavor-dot" aria-hidden="true"></span></button>
+              <button type="button" class="flavor-btn" data-flavor="ultra-black" data-tip="Monster Ultra Black" aria-label="Акцент: Ультра блэк" aria-pressed="false"><span class="flavor-dot" aria-hidden="true"></span></button>
+            </span>
           </div>
         </details>
       </li>
@@ -113,15 +117,15 @@ const links = [
   }
 
   .site-nav a:hover,
-  .site-nav [aria-current="page"]:not(.site-brand),
   .reader-settings summary:hover,
   .reader-settings[open] summary {
     color: var(--pico-primary);
   }
 
-  .site-nav ul [aria-current="page"] {
-    text-decoration: underline;
-    text-underline-offset: 0.3em;
+  /* Текущая страница помечается только скобками: цвет — единственный сигнал,
+     лишняя линия в шапке не нужна */
+  .site-nav [aria-current="page"] .nav-bracket {
+    color: var(--pico-primary);
   }
 
   .site-nav ul a {
@@ -172,6 +176,7 @@ const links = [
     position: absolute;
     inset-block-start: 100%;
     inset-inline-end: 0;
+    flex-wrap: wrap;
     display: flex;
     width: max-content;
     background: var(--pico-background-color);
@@ -197,14 +202,46 @@ const links = [
     color: var(--pico-primary);
   }
 
-  .reader-controls :global(.sun-icon),
-  :global(html[data-theme="dark"]) .reader-controls :global(.moon-icon) {
-    display: none;
+  /* Банки из настроек чтения: кружок — вид банки сверху, не иконка */
+  .flavor-row {
+    display: flex;
+    flex: 1 0 100%;
+    justify-content: flex-end;
+    border-top: 1px solid var(--pico-muted-border-color);
   }
 
-  :global(html[data-theme="dark"]) .reader-controls :global(.sun-icon) {
-    display: block;
+  .flavor-btn {
+    display: grid;
+    place-items: center;
+    width: var(--app-touch-target);
+    height: var(--app-touch-target);
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
   }
+
+  .flavor-dot {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+  }
+
+  /* Рамок на банках нет: тёмный фон держит и светлую Ультру. Единственный маркер —
+     тонкое кольцо у налитой банки; ховер без рамок, его отклик — всплывашка с именем.
+     Зазор кольца пишем ночным значением напрямую: внутри <button> Pico подменяет
+     --pico-background-color на цвет ховера, и кольцо вспыхивает цветным (см. комментарий в MindMap) */
+  .flavor-btn[aria-pressed="true"] .flavor-dot {
+    box-shadow: 0 0 0 2px #13171f, 0 0 0 3px var(--pico-muted-color);
+  }
+
+  .flavor-btn[data-flavor="original"] .flavor-dot { background: var(--app-flavor-original); }
+  .flavor-btn[data-flavor="ultra-white"] .flavor-dot { background: var(--app-flavor-ultra-white); }
+  .flavor-btn[data-flavor="khaos"] .flavor-dot { background: var(--app-flavor-khaos); }
+  .flavor-btn[data-flavor="mango"] .flavor-dot { background: var(--app-flavor-mango); }
+  .flavor-btn[data-flavor="vr46"] .flavor-dot { background: var(--app-flavor-vr46); }
+  .flavor-btn[data-flavor="ultra-black"] .flavor-dot { background: var(--app-flavor-ultra-black); }
 
   @media (max-width: 640px) {
     .site-nav ul {

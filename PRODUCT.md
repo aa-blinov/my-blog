@@ -89,13 +89,18 @@ Present now, confirmed by the code:
   text, including common Russian inflections. It shows excerpts with matched
   words highlighted, transliterates Russian queries and remembers the query
   in the tab. It starts downloading the article texts when the field takes
-  focus, so the first typed query does not wait for them. An empty result
-  offers a link to the archive.
+  focus: the first matches on titles, sections and summaries render from the
+  page itself, and full-text matches join in a second pass when the texts
+  arrive. An empty result offers a link to the archive.
 - The head of every page carries Open Graph and Twitter Card tags with a
   canonical link, so a link pasted into a chat unfolds with the title and the
   description of the page.
-- The header disclosure offers a light and dark theme, five font sizes and
-  three reading widths.
+- The header disclosure offers five font sizes and three reading widths, and
+  a lineup of can swatches that moves the accent to the chosen flavour. The
+  default is the Original green; the choice is remembered and applied
+  before the first paint. The site is dark only: the night palette is the
+  single palette, and Monster Green at 10.17:1 on Night is the green of the
+  text as well as of the marks.
 - The home page offers topic links near the introduction, followed by four
   curated articles across AI, popular science, personal essays and development,
   each with a short description. The four are checked against the collection
@@ -154,7 +159,10 @@ Pinned by the author
 
 - JetBrains Mono for navigation and structure, Literata for prose, and the
   austerity: only text and structure, no visual noise.
-- The light and dark themes and reader-controlled text size.
+- A dark-only interface and reader-controlled text size.
+- The flavour palette: the can colours of the series, measured where a can
+  could be photographed. The default interface is single-green; a reader
+  may pour another can, which moves the accent and nothing else.
 
 Name: "Личный сайт Александра Блинова", Alexander Blinov's personal site. The
 contacts in the footer are GitHub `aa-blinov`, Telegram and LinkedIn. The
@@ -195,13 +203,13 @@ out of the texts on his own.
 ## Accessibility & Inclusion
 
 - The code confirms a skip link, a live announcement of the font size for
-  screen readers, a pressed state on the theme toggle, visible keyboard
+  screen readers, visible keyboard
   focus and 44-pixel targets in the top navigation.
-- The reader controls are the accessibility mechanism: a light and a dark
-  theme, five font sizes, a collapsed table of contents on long reads, and a search
+- The reader controls are the accessibility mechanism: five font sizes,
+  three reading widths, a collapsed table of contents on long reads, and a search
   that opens from the keyboard with the `/` key.
 - The design system records the contrast it measured, for instance Monster
-  Green Ink at 5.1:1 on white and 4.7:1 on the code tint.
+  Green at 10.17:1 on Night.
 - Not decided: the author has set no separate standard for accessibility.
   There is no statement about the alt text of the images in the articles, and
   no external audit of the site.

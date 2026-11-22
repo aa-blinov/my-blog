@@ -2,17 +2,6 @@ import { iconSvg } from '../utils/icons';
 
 (() => {
   const root = document.documentElement;
-  const btn = document.getElementById("theme-toggle");
-
-  const storedTheme = localStorage.getItem("theme");
-  const systemDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-  const initialTheme = storedTheme || (systemDark ? "dark" : "light");
-
-  const applyThemeUi = (theme) => {
-    root.dataset.theme = theme;
-    if (btn) btn.setAttribute("aria-pressed", String(theme === "dark")); // скринридер слышит, какая тема сейчас
-  };
-  applyThemeUi(root.dataset.theme || initialTheme);
 
   const enhanceCodeBlocks = () => {
     const preBlocks = document.querySelectorAll("pre");
@@ -59,17 +48,7 @@ import { iconSvg } from '../utils/icons';
     });
   };
 
-  // removed duplicate theme block
-
-  if (btn) {
-    btn.addEventListener("click", () => {
-      const next = root.dataset.theme === "dark" ? "light" : "dark";
-      localStorage.setItem("theme", next);
-      applyThemeUi(next);
-    });
-  }
-
-  // === Reading width: узкая, обычная, широкая. Кнопка рядом с темой ===
+  // === Reading width: узкая, обычная, широкая. Кнопка рядом с размером шрифта ===
   const widthBtn = document.getElementById("width-toggle");
   const widthModes = ["narrow", "normal", "wide"];
   const widthLabels = { narrow: "узкая", normal: "обычная", wide: "широкая" };
@@ -93,6 +72,25 @@ import { iconSvg } from '../utils/icons';
       localStorage.setItem("reading-width", next);
       applyWidthUi(next);
     });
+  }
+
+  // === Вкус: банка, выбранная читателем, перекрашивает только акцент ===
+  const flavorButtons = [...document.querySelectorAll(".flavor-btn")];
+  const flavors = ["original", "ultra-white", "khaos", "mango", "vr46", "ultra-black"];
+
+  const applyFlavorUi = (flavor) => {
+    root.dataset.flavor = flavor;
+    flavorButtons.forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.flavor === flavor)));
+  };
+
+  if (flavorButtons.length) {
+    // Тот же ключ, что в inline-скрипте Layout: страница красится до первой отрисовки
+    const storedFlavor = localStorage.getItem("flavor");
+    applyFlavorUi(flavors.includes(storedFlavor) ? storedFlavor : "original");
+    flavorButtons.forEach((b) => b.addEventListener("click", () => {
+      localStorage.setItem("flavor", b.dataset.flavor);
+      applyFlavorUi(b.dataset.flavor);
+    }));
   }
 
   // === Font Size Logic ===
@@ -168,7 +166,10 @@ import { iconSvg } from '../utils/icons';
         fontFamily: "var(--font-family)",
         flowchart: {
           useMaxWidth: true,
-          htmlLabels: true
+          htmlLabels: true,
+          // Mermaid 12 раскладывает флоучарты через elk — 1,4 МБ отдельным чанком.
+          // Dagre легче на порядок и именно им диаграммы рисовались, когда их писали
+          layout: "dagre",
         }
       });
 

@@ -121,6 +121,7 @@ const articles = sortByDateDesc(await getCollection('blog', (entry) => !entry.da
     });
     type ArticleIndex = Map<string, { text: string; normalized: string; words: SearchWord[] }>;
     let indexRequest: Promise<ArticleIndex | null> | undefined;
+    let indexData: ArticleIndex | null = null;
     let revision = 0;
 
     const ensureIndex = () => {
@@ -134,6 +135,10 @@ const articles = sortByDateDesc(await getCollection('blog', (entry) => !entry.da
             const normalized = normalize(text);
             return [id, { text, normalized, words: wordsIn(normalized) }];
           })))
+          .then((loaded) => {
+            indexData = loaded;
+            return loaded;
+          })
           .catch(() => {
             indexRequest = undefined;
             return null;
@@ -145,7 +150,7 @@ const articles = sortByDateDesc(await getCollection('blog', (entry) => !entry.da
     // а не когда напечатан первый символ, — к началу набора он уже на месте
     input.addEventListener('focus', ensureIndex);
 
-    const update = async () => {
+    const update = () => {
       const current = ++revision;
       const raw = input.value.trim().replace(/\s+/g, ' ');
       const query = normalize(raw);
@@ -158,13 +163,9 @@ const articles = sortByDateDesc(await getCollection('blog', (entry) => !entry.da
         return;
       }
 
-      const pending = !indexRequest;
-      if (pending) {
-        statusText.textContent = 'Загружаю тексты статей…';
-        archiveLink.hidden = true;
-      }
-      const index = await ensureIndex();
-      if (current !== revision) return;
+      // Первый проход не ждёт сети: названия, разделы и описания лежат прямо в странице.
+      // Полные тексты догоняют вторым проходом, когда индекс доедет
+      const index = indexData;
 
       const translit = /[а-яё]/i.test(raw) ? [...raw.toLowerCase()].map((letter) => ruToEn[letter] ?? letter).join('') : '';
       const matches: { item: HTMLLIElement; rank: number }[] = [];
@@ -206,7 +207,14 @@ const articles = sortByDateDesc(await getCollection('blog', (entry) => !entry.da
         ? `Найдено ${count} ${plural(count, 'совпадение', 'совпадения', 'совпадений')}`
         : 'Ничего не найдено. Попробуй изменить формулировку или открыть архив.';
       archiveLink.hidden = count !== 0;
-      if (!index) statusText.textContent += ' Тексты статей не загрузились. Измени запрос, чтобы повторить.';
+      if (!index) {
+        statusText.textContent += ' Ищу ещё по полным текстам…';
+        ensureIndex().then((loaded) => {
+          if (current !== revision) return;
+          if (loaded) update();
+          else statusText.textContent += ' Тексты статей не загрузились. Измени запрос, чтобы повторить.';
+        });
+      }
     };
 
     input.value = sessionStorage.getItem('sidebar-search') ?? '';
