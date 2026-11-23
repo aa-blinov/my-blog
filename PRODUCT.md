@@ -131,10 +131,15 @@ Present now, confirmed by the code:
 - Series: a folder whose files carry `part`, with `about-<folder>.md` giving
   the name and the intro. Under the heading of a part, the line "Series «…»
   ~ part N of M"; after the text, links to the previous and the next part
-  with their titles. The folder page lists the parts in chapter order. The
-  three series are
-  `dev/agent/` with nine parts, `science/body-and-environment/` with six,
-  `science/mind/antidepressants/` with eight.
+  with their titles. The folder page lists the parts in chapter order, and
+  so does the parent page when the series is its direct subfolder. A page
+  further up shows the series as one card with its name and the number of
+  parts instead of mixing the parts into the list of articles. The name from
+  `about-<folder>.md` is the one used everywhere: the archive, the section
+  line above an article title, the search results. The four series are
+  `ai/ai-for-the-unprepared/` with five parts, `dev/agent/` with nine,
+  `science/body-and-environment/` with six, `science/mind/antidepressants/`
+  with eight.
 - The interactive blocks of the antidepressants series: a radial map of the
   drugs with a card per substance, a picker that sorts them by the constraints
   ticked by the reader, a set of questions for the doctor with a checklist, a

@@ -21,6 +21,17 @@ export async function getSeries(folder: string): Promise<Series | null> {
   return { folder, title, about, parts };
 }
 
+/** Все серии блога. Имя серии берётся из её about-файла, и любое место, где она названа, читает его отсюда. */
+export async function getAllSeries(): Promise<Series[]> {
+  const all = (await getCollection('blog')).filter((e) => !e.data.draft);
+  const folders = [...new Set(all.filter((e) => e.data.part !== undefined).map((e) => seriesOf(e)!).filter(Boolean))];
+  return (await Promise.all(folders.map((f) => getSeries(f)))).filter((s): s is Series => s !== null);
+}
+
+export async function getSeriesTitles(): Promise<Record<string, string>> {
+  return Object.fromEntries((await getAllSeries()).map((s) => [s.folder, s.title]));
+}
+
 export function seriesOf(entry: BlogEntry): string | null {
   if (entry.data.part === undefined) return null;
   const i = entry.id.lastIndexOf('/');

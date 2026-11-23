@@ -4,9 +4,10 @@ import Layout from '../layouts/Layout.astro';
 import { BASE } from '../config';
 import { getArticleSections } from '../utils/breadcrumb';
 import { sortByDateDesc } from '../utils/date';
-import { isAbout } from '../utils/series';
+import { getSeriesTitles, isAbout } from '../utils/series';
 
 const articles = sortByDateDesc(await getCollection('blog', (entry) => !entry.data.draft && !isAbout(entry.id)));
+const seriesTitles = await getSeriesTitles();
 ---
 
 <Layout title="Поиск" description="Поиск по статьям блога">
@@ -24,7 +25,7 @@ const articles = sortByDateDesc(await getCollection('blog', (entry) => !entry.da
     </p>
     <ul id="search-results" class="search-results needs-js" data-index-url={`${BASE}search-index.json`} aria-label="Результаты поиска" role="list">
       {articles.map((entry) => {
-        const section = getArticleSections(entry.id).map(({ title }) => title).join(' / ');
+        const section = getArticleSections(entry.id, seriesTitles).map(({ title }) => title).join(' / ');
         return (
           <li hidden data-id={entry.id} data-file={`${entry.id}.md`} data-alias={entry.data.section} data-summary={entry.data.summary}>
             <a class="post-title-link" href={`${BASE}blog/${entry.id}/`}>{entry.data.title}</a>

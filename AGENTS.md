@@ -112,7 +112,10 @@ on Node 22.
 - **The section names come from two places.** `SECTION_TITLES` in
   `src/config.ts` is the fallback list; a folder with an `about-<name>.md`
   takes its title from that file. A folder missing from both shows the raw
-  slug, which is how a forgotten translation surfaces.
+  slug, which is how a forgotten translation surfaces. A series name reaches
+  the section line and the search results only through `getSeriesTitles()`
+  in `src/utils/series.ts`: a caller of `getArticleSections()` that skips it
+  falls back to the list.
 - **The redirects live in `astro.config.mts`.** Eleven of them: the nine old
   `dev/agent-*` addresses, the old map of the antidepressants series and the
   old place of the article that moved from `ideas` to `life`. A changed path

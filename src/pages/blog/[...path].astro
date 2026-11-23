@@ -15,7 +15,7 @@ import { questionnaires } from '../../data/questionnaires';
 import type { MarkdownHeading } from 'astro';
 import { formatDate, readingMinutes, plural } from '../../utils/date';
 import { sortByDateDesc } from '../../utils/date';
-import { getSeries, seriesOf, isAbout } from '../../utils/series';
+import { getSeries, getAllSeries, seriesOf, isAbout, type Series } from '../../utils/series';
 import { BASE, sectionTitle } from '../../config';
 import { getArticleSections } from '../../utils/breadcrumb';
 
@@ -73,10 +73,15 @@ if (entry) {
 // If it's a folder, find all entries and group them
 interface Group {
   name: string;
+  title: string;
   entries: BlogEntry[];
   maxDate: number;
   isBodyHubLink?: boolean;
+  series?: Series | null; // сама группа серия: части по номеру
+  nestedSeries: Series[]; // серии глубже группы: одна карточка вместо россыпи частей среди статей
 }
+const allSeries = await getAllSeries();
+const seriesTitles = Object.fromEntries(allSeries.map((s) => [s.folder, s.title]));
 let directEntries: BlogEntry[] = [];
 let subGroups: Group[] = [];
 let folderSeries = null as Awaited<ReturnType<typeof getSeries>>;
@@ -142,12 +147,21 @@ if (kind === 'folder') {
   }
 
   subGroups = Object.entries(groups)
-    .map(([name, entries]) => ({
-      name,
-      entries: sortByDateDesc(entries),
-      maxDate: Math.max(...entries.map(e => e.data.date.getTime())),
-      isBodyHubLink: path === 'science' && name === 'body',
-    }))
+    .map(([name, entries]) => {
+      const folder = `${path}/${name}`;
+      const series = allSeries.find((s) => s.folder === folder) ?? null;
+      const nestedSeries = allSeries.filter((s) => s.folder.startsWith(folder + '/'));
+      const visible = entries.filter((e) => !isAbout(e.id) && !nestedSeries.some((s) => e.id.startsWith(s.folder + '/')));
+      return {
+        name,
+        title: series?.title ?? sectionTitle(name),
+        entries: series ? series.parts : sortByDateDesc(visible),
+        maxDate: Math.max(...entries.map(e => e.data.date.getTime())),
+        isBodyHubLink: path === 'science' && name === 'body',
+        series,
+        nestedSeries,
+      };
+    })
     .sort((a, b) => a.name.localeCompare(b.name)); // Sort sections alphabetically
 }
 
@@ -155,7 +169,7 @@ if (kind === 'folder') {
 const folderName = path.split('/').pop() || path;
 const title = entry ? entry.data.title : (folderAbout?.data.title.replace(/:\s*Об этой секции$/, '') ?? sectionTitle(folderName));
 const bodyHubDescription = 'Научпоп о том, как устроено тело человека и как на него влияют условия вокруг: вес, холод, свет, высота и шум. Здесь собраны отдельные статьи и серия «Тело и среда».';
-const articleSections = entry ? getArticleSections(entry.id) : [];
+const articleSections = entry ? getArticleSections(entry.id, seriesTitles) : [];
 ---
 
 {entry && Content ? (
@@ -242,9 +256,20 @@ const articleSections = entry ? getArticleSections(entry.id) : [];
               {(index > 0 || directEntries.length > 0) && <hr class="section-divider" />}
               <header>
                 <h2 class="section-heading">
-                  {sectionTitle(group.name)} <span class="section-slug">{group.name}/</span>
+                  {group.title} <span class="section-slug">{group.name}/</span>
                 </h2>
               </header>
+              {group.nestedSeries.length > 0 && (
+                <div class="post-list">
+                  {group.nestedSeries.map((s) => (
+                    <div class="post-list-item">
+                      <p class="meta"><span>серия</span><span class="meta-sep" aria-hidden="true">~</span><span>{s.parts.length} {plural(s.parts.length, 'часть', 'части', 'частей')}</span></p>
+                      <h3 class="post-title"><a class="post-title-link" href={`${BASE}blog/${s.folder}/`}>{s.title}</a></h3>
+                      {s.about?.data.summary && <p class="summary">{s.about.data.summary}</p>}
+                    </div>
+                  ))}
+                </div>
+              )}
               {group.isBodyHubLink ? (
                 <div class="post-list">
                   <div class="post-list-item">
@@ -252,7 +277,7 @@ const articleSections = entry ? getArticleSections(entry.id) : [];
                     <p class="summary">{bodyMaterialsCount} {plural(bodyMaterialsCount, 'материал', 'материала', 'материалов')}, включая серию «Тело и среда».</p>
                   </div>
                 </div>
-              ) : <PostList posts={group.entries} />}
+              ) : (group.entries.length > 0 || group.nestedSeries.length === 0) && <PostList posts={group.entries} numbered={!!group.series} />}
             </section>
           ))}
         </>
