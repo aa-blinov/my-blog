@@ -120,14 +120,20 @@ Present now, confirmed by the code:
   before the first paint. The site is dark only: the night palette is the
   single palette, and Monster Green at 10.17:1 on Night is the green of the
   text as well as of the marks.
-- The home page offers topic links near the introduction, followed by four
-  curated articles across AI, popular science, personal essays and development,
-  each with a short description. The four are checked against the collection
-  at build time: a moved or deleted article fails the build instead of shipping
-  a dead link. It then shows the seven latest publications
-  with summaries and reading times, names the series and the part above the
-  summary of a part, marks projects and links to
-  the full archive beside the list heading. The archive at `/blog/` groups
+- The home page is a feed. Under the introduction, a «first time here?» link
+  jumps to four curated starting points below the feed. The feed lists every
+  article newest first, ten rows at a time with a «Показать ещё» button, each
+  row with its topic path, summary, date and reading time. Parts of one series
+  published within a week of each other collapse into one row that unfolds
+  into the parts in order. Above it, a row of topics in the bracket idiom of
+  the header, «[все 126] [научпоп 57] …», filters the feed in place and
+  writes the topic into the address (`?topic=science`), so a filtered feed can
+  be shared; on a phone the row scrolls sideways in one line. Without
+  JavaScript the topics are links to the section pages and the first ten rows
+  show, with a link to the full list by date. The four starting points are
+  checked against the collection at build time: a moved or deleted article
+  fails the build instead of shipping a dead link. Series and the latest notes
+  follow. The archive at `/blog/` groups
   articles by year and month, newest first, shows the topic path below each title and
   links to the months, topic pages, subtopics and article series in a hierarchy,
   with a shortcut from the topics to the chronological list. Each

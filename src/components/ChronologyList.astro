@@ -3,15 +3,48 @@ import { BASE, sectionPagePath, sectionTitle } from '../config';
 import { formatDate, humanDayMonth, readingMinutes, plural } from '../utils/date';
 import { articleSummary } from '../utils/article-summary';
 import type { BlogEntry } from '../utils/series';
+import Icon from './Icon.astro';
 
 interface Props {
   posts: BlogEntry[];
   showDetails?: boolean;
   showCategory?: boolean;
   seriesTitles?: Record<string, string>;
+  /** Подряд идущие части одной серии сворачиваются в одну строку: пачка из пяти частей не съедает ленту */
+  groupSeries?: boolean;
+  /** Сколько строк видно сразу; остальные получают hidden, и лента их раскрывает по кнопке */
+  limit?: number;
 }
 
-const { posts, showDetails = false, showCategory = false, seriesTitles = {} } = Astro.props;
+const { posts, showDetails = false, showCategory = false, seriesTitles = {}, groupSeries = false, limit } = Astro.props;
+
+type Row = { kind: 'post'; entry: BlogEntry } | { kind: 'series'; folder: string; parts: BlogEntry[] };
+const folderOf = (entry: BlogEntry) => entry.id.slice(0, entry.id.lastIndexOf('/'));
+const seriesFolderOf = (entry: BlogEntry) => (entry.data.part !== undefined && seriesTitles[folderOf(entry)] ? folderOf(entry) : null);
+
+// Части одной серии, вышедшие в пределах недели от самой свежей, собираются в одну строку на месте
+// самой свежей, даже если между ними стоят другие статьи: иначе фильтр по теме убирал соседей,
+// и две пачки одной серии вставали в ленте подряд
+const SERIES_WINDOW = 7 * 24 * 3600 * 1000;
+const rows: Row[] = [];
+const openBatch = new Map<string, number>(); // папка серии -> индекс её строки
+for (const entry of posts) {
+  const folder = groupSeries ? seriesFolderOf(entry) : null;
+  const at = folder ? openBatch.get(folder) : undefined;
+  if (folder && at !== undefined) {
+    const row = rows[at];
+    const newest = row.kind === 'series' ? row.parts[0] : row.entry;
+    if (newest.data.date.getTime() - entry.data.date.getTime() <= SERIES_WINDOW) {
+      if (row.kind === 'series') row.parts.push(entry);
+      else rows[at] = { kind: 'series', folder, parts: [row.entry, entry] };
+      continue;
+    }
+  }
+  if (folder) openBatch.set(folder, rows.length);
+  rows.push({ kind: 'post', entry });
+}
+// Тема строки для фильтра на главной: верхняя папка статьи
+const topicOf = (row: Row) => (row.kind === 'post' ? row.entry.id : row.parts[0].id).split('/')[0];
 
 function readingLabel(entry: BlogEntry): string {
   const minutes = readingMinutes(entry.body ?? '');
@@ -26,6 +59,7 @@ function seriesLabel(entry: BlogEntry): string {
 }
 
 function categoryLabel(entry: BlogEntry): string {
+  if (seriesLabel(entry) && showDetails) return '';
   const folders = entry.id.split('/').slice(0, -1);
   return folders.flatMap((_, index) => {
     const path = folders.slice(0, index + 1).join('/');
@@ -39,20 +73,44 @@ function categoryLabel(entry: BlogEntry): string {
 
 {posts.length > 0 ? (
   <ul class:list={['chronology-list', { 'chronology-list--details': showDetails }]} role="list">
-    {posts.map((entry) => (
-      <li>
-        <a class="post-title-link chronology-link" href={`${BASE}blog/${entry.id}/`}>
-          <span><span class="chronology-title">{entry.data.title}</span>{showDetails && entry.id.startsWith('projects/') && <> <span class="chronology-kind">Проект</span></>}</span>
-          <time datetime={formatDate(entry.data.date)}>{humanDayMonth(entry.data.date)}</time>
-          {showCategory && <span class="chronology-category">{categoryLabel(entry)}</span>}
+    {rows.map((row, index) => row.kind === 'post' ? (
+      <li data-topic={topicOf(row)} data-count="1" hidden={limit !== undefined && index >= limit}>
+        <a class="post-title-link chronology-link" href={`${BASE}blog/${row.entry.id}/`}>
+          <span><span class="chronology-title">{row.entry.data.title}</span>{showDetails && !showCategory && row.entry.id.startsWith('projects/') && <> <span class="chronology-kind">Проект</span></>}</span>
+          <time datetime={formatDate(row.entry.data.date)}>{humanDayMonth(row.entry.data.date)}</time>
+          {showCategory && categoryLabel(row.entry) && <span class="chronology-category">{categoryLabel(row.entry)}</span>}
           {showDetails && (
             <>
-              {seriesLabel(entry) && <span class="chronology-category">{seriesLabel(entry)}</span>}
-              <span class="chronology-summary">{articleSummary(entry)}</span>
-              <span class="chronology-reading-time">{readingLabel(entry)}</span>
+              {seriesLabel(row.entry) && <span class="chronology-category">{seriesLabel(row.entry)}</span>}
+              <span class="chronology-summary">{articleSummary(row.entry)}</span>
+              <span class="chronology-reading-time">{readingLabel(row.entry)}</span>
             </>
           )}
         </a>
+      </li>
+    ) : (
+      <li class="chronology-group" data-topic={topicOf(row)} data-count={row.parts.length} hidden={limit !== undefined && index >= limit}>
+        <details>
+          <summary class="chronology-link">
+            <span class="chronology-group-head">
+              <span class="chronology-chevron" aria-hidden="true"><Icon name="chevron-right" /></span>
+              <span class="chronology-title">Серия «{seriesTitles[row.folder]}»</span>
+            </span>
+            <time datetime={formatDate(row.parts[0].data.date)}>{humanDayMonth(row.parts[0].data.date)}</time>
+            <span class="chronology-category">{row.parts.length} {plural(row.parts.length, 'часть', 'части', 'частей')} подряд: {row.parts.map((p) => p.data.title).slice(0, 2).join(', ')}{row.parts.length > 2 ? ' и другие' : ''}</span>
+          </summary>
+          <ul class="chronology-parts" role="list">
+            {[...row.parts].sort((a, b) => (a.data.part ?? 0) - (b.data.part ?? 0)).map((part) => (
+              <li>
+                <a class="post-title-link chronology-part" href={`${BASE}blog/${part.id}/`}>
+                  <span class="chronology-part-number">часть {part.data.part}</span>{' '}
+                  <span class="chronology-title">{part.data.title}</span>
+                </a>
+              </li>
+            ))}
+            <li><a class="post-title-link chronology-part chronology-part-all" href={`${BASE}blog/${row.folder}/`}>Вся серия <Icon name="chevron-right" /></a></li>
+          </ul>
+        </details>
       </li>
     ))}
   </ul>
@@ -70,7 +128,8 @@ function categoryLabel(entry: BlogEntry): string {
     list-style: none;
   }
 
-  .chronology-list a {
+  .chronology-list a,
+  .chronology-list summary {
     display: grid;
     grid-template-columns: minmax(0, 1fr) auto;
     align-content: center;
@@ -81,7 +140,8 @@ function categoryLabel(entry: BlogEntry): string {
     color: inherit;
   }
 
-  .chronology-list--details a {
+  .chronology-list--details a,
+  .chronology-list--details summary {
     grid-template-columns: minmax(0, 1fr) 8em;
   }
 
@@ -148,8 +208,83 @@ function categoryLabel(entry: BlogEntry): string {
     }
   }
 
+  /* Свёрнутая серия: строка как у статьи, раскрытие показывает части по номерам. Шеврон из общего
+     набора, как у оглавления; маркер браузера спрятан, чтобы не было двух стрелок */
+  .chronology-group summary {
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .chronology-group summary::-webkit-details-marker,
+  .chronology-group summary::after {
+    display: none;
+  }
+
+  .chronology-group-head {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.4em;
+  }
+
+  .chronology-chevron {
+    display: inline-block;
+    flex-shrink: 0;
+    color: var(--pico-primary);
+    transition: transform var(--app-transition);
+  }
+
+  .chronology-group details[open] .chronology-chevron {
+    transform: rotate(90deg);
+  }
+
+  .chronology-group summary:is(:hover, :focus-visible) .chronology-title {
+    color: var(--pico-primary);
+    text-decoration-color: currentColor;
+  }
+
+  .chronology-parts {
+    margin: 0 0 var(--app-spacing-sm);
+    padding: 0 0 0 calc(1em + 0.4em);
+    border-left: 1px solid var(--pico-muted-border-color);
+  }
+
+  .chronology-parts li {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .chronology-list .chronology-parts a {
+    display: flex;
+    align-items: baseline;
+    gap: var(--app-spacing-md);
+    min-height: var(--app-touch-target);
+    padding-block: var(--app-spacing-xs);
+    padding-inline-start: var(--app-spacing);
+  }
+
+  .chronology-part-number {
+    flex-shrink: 0;
+    min-width: 4.5em;
+    color: var(--pico-muted-color);
+    font-family: var(--font-family);
+    font-size: var(--app-font-control);
+  }
+
+  .chronology-part-all {
+    color: var(--pico-muted-color);
+    font-size: var(--app-font-control);
+  }
+
+  .chronology-list a.chronology-part:is(:hover, :focus-visible) .chronology-title,
+  .chronology-list a.chronology-part-all:is(:hover, :focus-visible) {
+    color: var(--pico-primary);
+    text-decoration-color: currentColor;
+  }
+
   @media (max-width: 480px) {
-    .chronology-list--details a {
+    .chronology-list--details a,
+    .chronology-list--details summary {
       grid-template-columns: minmax(0, 1fr) auto;
     }
 

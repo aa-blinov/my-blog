@@ -5,7 +5,7 @@ import NoteList from '../components/NoteList.astro';
 import Arrow from '../components/Arrow.astro';
 import { getCollection, render } from 'astro:content';
 import { sortByDateDesc } from '../utils/date';
-import { BASE, RECENT_POSTS_LIMIT, sectionTitle } from '../config';
+import { BASE, sectionTitle } from '../config';
 import { isAbout, liveFolders, getSeries } from '../utils/series';
 
 const pages = (await getCollection('pages')).filter((e) => !e.data.draft);
@@ -14,7 +14,7 @@ const homeEntry = pages.find((e) => e.id === 'main');
 // Вводные страницы разделов не входят в список статей и счётчики.
 const published = (await getCollection('blog')).filter((p) => !p.data.draft);
 const articles = published.filter((p) => !isAbout(p.id));
-const posts = sortByDateDesc(articles).slice(0, RECENT_POSTS_LIMIT);
+const posts = sortByDateDesc(articles);
 const live = liveFolders(published);
 const seriesFolders = [...new Set(articles.filter((p) => p.data.part !== undefined).map((p) => p.id.slice(0, p.id.lastIndexOf('/'))))];
 const seriesRows = (await Promise.all(seriesFolders.map((f) => getSeries(f)))).filter((s) => s !== null);
@@ -62,6 +62,10 @@ for (const item of startingPoints) {
   }
 }
 
+// По десять строк: столько помещается на два экрана телефона, дальше читатель решает сам
+const FEED_PAGE = 10;
+const seriesTitles = Object.fromEntries(seriesRows.map((s) => [s.folder, s.title]));
+
 let Content: Awaited<ReturnType<typeof render>>['Content'] | null = null;
 let entryData: { data: { title: string; date: Date; summary?: string }; fileLabel: string } | null = null;
 
@@ -77,18 +81,27 @@ if (homeEntry) {
 
 <PageFromEntry entry={entryData} fallbackTitle="Главная" fallbackH1="Главная" prompt="main &gt;" hideMeta>
   {Content ? <Content /> : <p>Добавь в <code>content/pages/</code> файл <code>main.md</code> с frontmatter: <code>title</code>, <code>date</code>.</p>}
+  <p class="home-first-visit">Впервые здесь? <a href="#start">С чего начать</a></p>
 
-  <section class="home-topics" aria-labelledby="home-topics-heading">
-    <h2 id="home-topics-heading" class="section-heading">Темы</h2>
-    <ul class="section-tags" role="list">
+  <section class="home-feed" aria-labelledby="feed-heading" data-page={FEED_PAGE}>
+    <h2 id="feed-heading" class="section-heading">Статьи</h2>
+    {/* Без JS фильтр это ссылки на страницы разделов; с JS тема фильтрует ленту на месте и пишется в адрес */}
+    <ul class="feed-topics" role="list" aria-label="Темы ленты">
+      <li><a href={`${BASE}blog/`} data-filter="all" aria-current="true"><span class="nav-bracket" aria-hidden="true">[</span>все <span class="feed-count">{articles.length}</span><span class="nav-bracket" aria-hidden="true">]</span></a></li>
       {topSections.map((s) => (
-        <li><a href={`${BASE}blog/${s.slug}/`}>{s.title} <span class="tag-count">{s.count}</span></a></li>
+        <li><a href={`${BASE}blog/${s.slug}/`} data-filter={s.slug}><span class="nav-bracket" aria-hidden="true">[</span>{s.title.toLowerCase()} <span class="feed-count">{s.count}</span><span class="nav-bracket" aria-hidden="true">]</span></a></li>
       ))}
     </ul>
+    <p class="feed-status needs-js" role="status" aria-live="polite"></p>
+    <ChronologyList posts={posts} showDetails showCategory groupSeries limit={FEED_PAGE} seriesTitles={seriesTitles} />
+    <p class="feed-more">
+      <button type="button" class="feed-more-button needs-js">Показать ещё</button>
+      <a href={`${BASE}blog/`} class="post-title-link all-articles-link">Все статьи по датам <Arrow /></a>
+    </p>
   </section>
 
-  <section class="start-here" aria-labelledby="start-here-heading">
-    <h2 id="start-here-heading" class="section-heading">Начать отсюда</h2>
+  <section class="start-here" id="start" aria-labelledby="start-here-heading">
+    <h2 id="start-here-heading" class="section-heading">С чего начать</h2>
     <ul class="start-here-list" role="list">
       {startingPoints.map((item) => (
         <li>
@@ -102,22 +115,14 @@ if (homeEntry) {
     </ul>
   </section>
 
-  <section class="recent-posts recent-first">
-    <div class="recent-header">
-      <h2 class="section-heading">Свежие статьи</h2>
-      <a href={`${BASE}blog/`} class="post-title-link all-articles-link">Все статьи <Arrow /></a>
-    </div>
-      <ChronologyList posts={posts} showDetails seriesTitles={Object.fromEntries(seriesRows.map((s) => [s.folder, s.title]))} />
-  </section>
-
-  {seriesRows.length > 0 && <div class="site-map">
-    <h2 class="section-heading">Серии статей</h2>
-    <ul class="section-tags">
+  {seriesRows.length > 0 && <section class="home-series" aria-labelledby="series-heading">
+    <h2 id="series-heading" class="section-heading">Серии статей</h2>
+    <ul class="section-tags" role="list">
       {seriesRows.map((s) => (
         <li><a href={`${BASE}blog/${s.folder}/`}>{s.title} <span class="tag-count">{s.parts.length}</span></a></li>
       ))}
     </ul>
-  </div>}
+  </section>}
 
   {recentNotes.length > 0 && (
     <div class="recent-posts">
@@ -130,17 +135,209 @@ if (homeEntry) {
   )}
 </PageFromEntry>
 
+<script>
+  const feed = document.querySelector<HTMLElement>('.home-feed');
+  if (feed) {
+    const page = Number(feed.dataset.page) || 10;
+    const filters = [...feed.querySelectorAll<HTMLAnchorElement>('[data-filter]')];
+    const rows = [...feed.querySelectorAll<HTMLLIElement>('.chronology-list > li')];
+    const more = feed.querySelector<HTMLButtonElement>('.feed-more-button')!;
+    const status = feed.querySelector<HTMLElement>('.feed-status')!;
+    const known = new Set(filters.map((a) => a.dataset.filter));
+    const fromUrl = new URLSearchParams(location.search).get('topic');
+    let topic = fromUrl && known.has(fromUrl) ? fromUrl : 'all';
+    let shown = page;
+
+    const matching = () => rows.filter((row) => topic === 'all' || row.dataset.topic === topic);
+    const nameOf = (a: HTMLAnchorElement) => [...a.childNodes].filter((n) => n.nodeType === Node.TEXT_NODE).map((n) => n.textContent).join('').trim();
+
+    const render = () => {
+      const visible = matching();
+      rows.forEach((row) => { row.hidden = true; });
+      visible.slice(0, shown).forEach((row) => { row.hidden = false; });
+      filters.forEach((a) => (a.dataset.filter === topic ? a.setAttribute('aria-current', 'true') : a.removeAttribute('aria-current')));
+      more.hidden = visible.length <= shown;
+      // Считаем статьи, а не строки: свёрнутая серия это одна строка и несколько статей,
+      // и счёт должен сходиться с числом у темы
+      const count = (list: HTMLLIElement[]) => list.reduce((sum, row) => sum + (Number(row.dataset.count) || 1), 0);
+      const current = filters.find((a) => a.dataset.filter === topic);
+      // На телефоне ряд тем листается вбок: выбранная тема не должна уехать за край. Двигаем только
+      // сам ряд, без scrollIntoView: тот прокручивал и страницу, если лента ниже первого экрана
+      const strip = current?.closest('ul');
+      if (current && strip && strip.scrollWidth > strip.clientWidth) {
+        const left = current.offsetLeft - strip.offsetLeft;
+        if (left < strip.scrollLeft || left + current.offsetWidth > strip.scrollLeft + strip.clientWidth) strip.scrollLeft = left - 16;
+      }
+      const label = topic === 'all' ? 'Все темы' : (current ? nameOf(current) : '');
+      status.textContent = `${label[0]?.toUpperCase() ?? ''}${label.slice(1)}: показано ${count(visible.slice(0, shown))} из ${count(visible)}`;
+    };
+
+    filters.forEach((a) => a.addEventListener('click', (event) => {
+      if (event.metaKey || event.ctrlKey || event.shiftKey || event.button !== 0) return;
+      event.preventDefault();
+      topic = a.dataset.filter ?? 'all';
+      shown = page;
+      // Адрес с темой можно отправить: ?topic=science открывает ленту уже отфильтрованной
+      const url = new URL(location.href);
+      if (topic === 'all') url.searchParams.delete('topic'); else url.searchParams.set('topic', topic);
+      history.replaceState(null, '', url);
+      render();
+    }));
+
+    more.addEventListener('click', () => {
+      const before = Math.min(shown, matching().length);
+      shown += page;
+      render();
+      // Фокус на первую новую строку: с клавиатуры не приходится искать, где кончилось прочитанное
+      matching()[before]?.querySelector<HTMLElement>('a, summary')?.focus();
+    });
+
+    render();
+  }
+</script>
+
 <style>
-  .home-topics {
+  .home-first-visit {
+    margin-top: var(--app-spacing-md);
+    color: var(--pico-muted-color);
+    font-family: var(--font-family);
+    font-size: var(--app-font-sm);
+  }
+
+  .home-first-visit a {
+    color: inherit;
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  .home-first-visit a:hover {
+    color: var(--pico-primary);
+  }
+
+  .home-feed {
     margin-top: var(--app-spacing-xl);
   }
 
-  .home-topics .section-heading {
-    margin-bottom: var(--app-spacing-md);
+  .home-feed .section-heading {
+    margin-bottom: var(--app-spacing-sm);
   }
 
-  .home-topics .section-tags a {
+  /* Фильтр тем той же идиомой, что шапка: скобки, текущая тема отмечена скобками в акценте.
+     Без плашек и рамок, чтобы ряд читался как навигация, а не как набор кнопок */
+  .feed-topics {
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: var(--app-spacing);
+    margin: 0 0 var(--app-spacing-sm);
+    padding: 0;
+    font-family: var(--font-family);
+    font-size: var(--app-font-sm);
+  }
+
+  .feed-topics li {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .feed-topics a {
+    display: inline-flex;
+    align-items: baseline;
     min-height: var(--app-touch-target);
+    padding-block: 0.6rem;
+    color: var(--pico-muted-color);
+    text-decoration: none;
+  }
+
+  .feed-topics a:hover {
+    color: var(--pico-primary);
+  }
+
+  .feed-topics a[aria-current="true"] {
+    color: var(--pico-color);
+  }
+
+  .feed-topics a[aria-current="true"] .nav-bracket {
+    color: var(--pico-primary);
+  }
+
+  /* Пробел в разметке нужен диктору («научпоп 57»), но во flex он схлопывается: зазор рисует отступ */
+  .feed-count {
+    margin-inline-start: 0.35em;
+    color: var(--pico-muted-color);
+    font-size: var(--app-font-control);
+  }
+
+  .feed-status {
+    margin: 0 0 var(--app-spacing-sm);
+    color: var(--pico-muted-color);
+    font-family: var(--font-family);
+    font-size: var(--app-font-control);
+  }
+
+  .feed-more {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--app-spacing);
+    margin-top: var(--app-spacing-lg);
+  }
+
+  .feed-more-button {
+    width: auto;
+    min-height: var(--app-touch-target);
+    margin: 0;
+    padding-inline: var(--app-spacing);
+    border: 1px solid var(--pico-form-element-border-color);
+    border-radius: var(--app-radius-sm);
+    background: transparent;
+    color: var(--pico-color);
+    font-family: var(--font-family);
+    font-size: var(--app-font-sm);
+  }
+
+  .feed-more-button:hover {
+    border-color: var(--pico-primary);
+    color: var(--pico-primary);
+  }
+
+  .feed-more .all-articles-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--app-touch-target);
+    font-size: var(--app-font-sm);
+  }
+
+  .home-series {
+    margin-top: var(--app-spacing-2xl);
+  }
+
+  /* На телефоне шесть тем в три строки отодвигали ленту на полэкрана. Одна строка, которая листается
+     вбок внутри себя: следующая тема видна наполовину и сама подсказывает жест */
+  @media (max-width: 640px) {
+    .feed-topics {
+      flex-wrap: nowrap;
+      column-gap: var(--app-spacing-md);
+      margin-inline: calc(-1 * var(--app-page-gutter-start)) calc(-1 * var(--app-page-gutter-end));
+      padding-inline: var(--app-page-gutter-start) var(--app-page-gutter-end);
+      overflow-x: auto;
+      overscroll-behavior-x: contain;
+      scrollbar-width: none;
+      white-space: nowrap;
+    }
+
+    .feed-topics::-webkit-scrollbar {
+      display: none;
+    }
+
+    .feed-topics li {
+      flex-shrink: 0;
+    }
+  }
+
+  .home-series .section-heading {
+    margin-bottom: var(--app-spacing-md);
   }
 
   .recent-header {

@@ -57,4 +57,3 @@ export function isBlogSection(s: string): boolean {
   return typeof s === 'string' && s.length > 0;
 }
 
-export const RECENT_POSTS_LIMIT = 7;

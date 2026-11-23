@@ -557,7 +557,7 @@ pre, code {
   max-width: 100%;
 }
 
-.content a[href^="/"]:not(.post-title-link):not(.note-anchor):not(.series-nav a):not(.section-tags a) {
+.content a[href^="/"]:not(.post-title-link):not(.note-anchor):not(.series-nav a):not(.section-tags a):not(.feed-topics a):not(.home-first-visit a) {
   display: inline;
   padding: 0.1rem var(--app-spacing-md);
   border-radius: var(--app-radius-sm);
@@ -575,7 +575,7 @@ pre, code {
   -webkit-box-decoration-break: clone;
   box-decoration-break: clone;
 }
-.content a[href^="/"]:not(.post-title-link):not(.note-anchor):not(.series-nav a):not(.section-tags a):hover {
+.content a[href^="/"]:not(.post-title-link):not(.note-anchor):not(.series-nav a):not(.section-tags a):not(.feed-topics a):not(.home-first-visit a):hover {
   background-color: var(--pico-primary);
   border-color: var(--pico-primary);
   color: var(--pico-primary-inverse);

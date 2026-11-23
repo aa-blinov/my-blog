@@ -355,21 +355,38 @@ text turns white.
 
 ### The meta line
 
-Section lists put the date, a tilde and the file path above the title. On a
-phone they show the file name. Numbered series lists show the part number,
-reading time and file name. The archive and the recent articles on the home
+Section lists put the date, a tilde and the reading time above the title.
+Numbered series lists show the part number and the reading time. File names
+and folder paths stay out of the interface. The archive and the recent articles on the home
 page put the title first, with a muted day and month aligned to its right.
 In the archive, a muted topic path sits below each title, with slashes between levels.
-The seven latest publications on the home page also show a short summary and
-reading time; projects are labelled. Year and month headings separate groups
+The home feed also shows a short summary and the reading time. Year and month headings separate groups
 in the archive.
 
-### The home reading guide
+### The home feed
 
-The home page places links to its topics after the introduction, followed by
-four editorial starting points before the chronological list. Each row has a topic label, a title and one short
-description. Hairline rules separate the rows; there are no cards or fills.
-The four links cover AI, popular science, personal essays and development.
+The home page is one chronological feed under a one-line introduction. A row
+is the archive row with details: the title, the day and month at the right,
+the topic path, the summary and the reading time. The rows carry no rules;
+their spacing gives the rhythm, as in the archive.
+
+The topic filter above the feed borrows the header idiom: each topic in
+square brackets with its count, the current one with its brackets in the
+accent and its name in the ink, the others muted. No pills, no fills. On a
+phone the row stays one line and scrolls sideways inside itself; the next
+topic shows half-cut and invites the gesture.
+
+Parts of one series published within a week collapse into one row: the
+shared chevron, «Серия «…»», the date of the newest part and the line «N
+частей подряд: …». Opened, it lists the parts by number on a 1px rule with a
+link to the whole series. «Показать ещё» is an outlined button at the control
+border; the next row takes the focus so a keyboard reader continues where the
+list grew.
+
+Below the feed, four editorial starting points («С чего начать»): a topic
+label, a title and one short description per row, separated by hairlines,
+covering AI, popular science, personal essays and development. Then the
+series as tags and the latest notes.
 
 ### Section labels and topic grouping
 
@@ -452,8 +469,9 @@ picker (`+`, `!`, `~`, `×`), which are the legend itself.
   element with a fill in Night Code.
 - **Do** keep the code blocks and the diagrams in the dark window.
 - **Do** show the article title first in chronological lists, with dates in
-  muted text and clear year and month headings; the home page adds summaries
-  and reading time to its seven latest articles.
+  muted text and clear year and month headings; the home feed adds the topic
+  path, summaries and reading time, and folds a burst of one series into one
+  row.
 - **Do** give the reader the size of the text and the width of the column,
   and remember the choice.
 - **Do** give a tap target at least 44px on a phone.
