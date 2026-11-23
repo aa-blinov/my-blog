@@ -22,10 +22,11 @@ const Heading = level === 2 ? 'h2' : 'h3';
     posts.map((entry) => (
       <div class="post-list-item">
         <p class="meta">{numbered && entry.data.part !== undefined ? (
-          // Серия: номер, время чтения и имя файла; одинаковые даты и полный путь здесь только шумели
-          <><span>часть {entry.data.part}</span><span class="meta-sep" aria-hidden="true">~</span>{entry.body && <><span>≈ {readingMinutes(entry.body)} {plural(readingMinutes(entry.body), 'минута', 'минуты', 'минут')}</span><span class="meta-sep" aria-hidden="true">~</span></>}<span>{entry.id.split('/').pop()}.md</span></>
+          // Серия: номер и время чтения; одинаковые даты здесь только шумели. Имя файла читателю научпопа
+          // ничего не говорило и выглядело как служебная страница, открытая по ошибке
+          <><span>часть {entry.data.part}</span>{entry.body && <><span class="meta-sep" aria-hidden="true">~</span><span>≈ {readingMinutes(entry.body)} {plural(readingMinutes(entry.body), 'минута', 'минуты', 'минут')}</span></>}</>
         ) : (
-          <><span>{formatDate(entry.data.date)}</span><span class="meta-sep" aria-hidden="true">~</span><span class="meta-path">{entry.id}.md</span><span class="meta-file">{entry.id.split('/').pop()}.md</span></>
+          <><span>{formatDate(entry.data.date)}</span>{entry.body && <><span class="meta-sep" aria-hidden="true">~</span><span>≈ {readingMinutes(entry.body)} {plural(readingMinutes(entry.body), 'минута', 'минуты', 'минут')}</span></>}</>
         )}</p>
         <Heading class="post-title">
           <a href={`${BASE}blog/${entry.id}/`} class="post-title-link">

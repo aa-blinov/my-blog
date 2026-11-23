@@ -25,7 +25,9 @@ Russian.
   sources.
 
 The author writes in the first person and addresses the reader as "ты", the
-informal "you".
+informal "you". One article keeps one form. The exception is the
+antidepressants series, a guide for patients, which says "вы" throughout.
+Quotes keep the form of the person quoted.
 
 Nothing else is known. The site carries no analytics and no comments, so the
 repository holds no traffic figure, no subscriber count and no reader
@@ -123,7 +125,13 @@ Present now, confirmed by the code:
   links to the months, topic pages, subtopics and article series in a hierarchy,
   with a shortcut from the topics to the chronological list. Each
   section and subfolder has a page. Articles link to their parent sections
-  above the title and show the date and reading time below it. The science
+  above the title and show the date and reading time below it. An article
+  about health (`science/mind/`, `science/human-body/`,
+  `science/body-and-environment/`) adds a quiet line under the date: the
+  author is a developer, not a doctor or a psychologist, the text rests on
+  research and clinical guidelines linked in the text, and a health question
+  is decided with a doctor. Lists show the date and reading time; file names
+  and folder paths stay out of the interface. The science
   section groups body articles and the "Body and environment" series under
   `/blog/science/body/`; existing article and series addresses stay available.
 - The table of contents in long articles starts closed. Up to three related

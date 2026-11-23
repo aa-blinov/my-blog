@@ -29,7 +29,7 @@ const folderTitle = about?.data.title.replace(/:\s*Об этой секции$/,
 {more.length > 0 && (
   <aside class="article-footer" aria-label="После статьи">
     <section class="more-in-section">
-      <h2 class="section-heading">Ещё в разделе «{folderTitle}» <span class="section-slug">{sectionPath}/</span></h2>
+      <h2 class="section-heading">Ещё в разделе «{folderTitle}»</h2>
       <PostList posts={more} />
       <p class="all-articles"><a href={`${BASE}blog/${sectionPath}/`} class="post-title-link all-articles-link">Весь раздел <Arrow /></a></p>
     </section>

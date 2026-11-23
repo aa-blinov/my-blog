@@ -628,23 +628,10 @@ a.all-articles-link.post-title-link:hover {
   color: var(--pico-primary);
 }
 
-/* Meta line: date ~ path, the tilde as a quiet separator (one glyph for the whole site) */
+/* Meta line: date ~ reading time, the tilde as a quiet separator (one glyph for the whole site) */
 .meta-sep {
   opacity: 0.55;
   user-select: none;
-}
-/* На телефоне в мета-строке только имя файла: папки видны в дереве, а слаг в две строки над H1 мешал читать */
-.meta-file {
-  display: none;
-}
-/* До 1200px колонка узкая: полный путь над H1 рвался на две строки, оставляем имя файла */
-@media (max-width: 1199px) {
-  .meta-path {
-    display: none;
-  }
-  .meta-file {
-    display: inline;
-  }
 }
 @media (max-width: 991px) {
   main article .entry-header h1 {
@@ -870,15 +857,6 @@ main article .content .post-list-item .post-title,
   font-size: 1.5rem;
   border: none;
   padding: 0;
-}
-.section-heading .section-slug {
-  overflow-wrap: anywhere;
-  min-width: 0;
-  font-size: var(--app-font-sm);
-  font-weight: 400;
-  color: var(--pico-muted-color);
-  align-self: baseline;
-  margin-top: 0.45em;
 }
 .section-block {
   margin-top: var(--app-spacing-2xl);

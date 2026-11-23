@@ -17,6 +17,6 @@ if (aboutEntry) {
 }
 ---
 
-<PageFromEntry entry={entryData} fallbackTitle="Обо мне" fallbackH1="Обо мне" prompt="about-me &gt;">
+<PageFromEntry entry={entryData} fallbackTitle="Обо мне" fallbackH1="Обо мне" prompt="about-me &gt;" hideMeta>
   {Content ? <Content /> : <p>Добавь в <code>content/pages/</code> файл <code>about-me.md</code> с frontmatter: <code>title</code>, <code>date</code>.</p>}
 </PageFromEntry>

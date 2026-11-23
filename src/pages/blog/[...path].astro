@@ -16,7 +16,7 @@ import type { MarkdownHeading } from 'astro';
 import { formatDate, readingMinutes, plural } from '../../utils/date';
 import { sortByDateDesc } from '../../utils/date';
 import { getSeries, getAllSeries, seriesOf, isAbout, type Series } from '../../utils/series';
-import { BASE, sectionTitle } from '../../config';
+import { BASE, sectionTitle, isHealthArticle } from '../../config';
 import { getArticleSections } from '../../utils/breadcrumb';
 
 type BlogEntry = CollectionEntry<'blog'>;
@@ -201,6 +201,11 @@ const articleSections = entry ? getArticleSections(entry.id, seriesTitles) : [];
             </>
           )}
         </p>
+        {isHealthArticle(entry.id) && (
+          <p class="health-note">
+            <a href={`${BASE}about-me/`}>Автор блога</a> по профессии разработчик, не врач и не психолог. Текст опирается на исследования и клинические рекомендации, ссылки на них стоят прямо в тексте. Если вопрос касается здоровья, решать его стоит вместе с врачом.
+          </p>
+        )}
       </div>
       {headings.filter((h) => h.depth === 2).length >= 6 && <Toc headings={headings} />}
       <div class="content">
@@ -218,7 +223,7 @@ const articleSections = entry ? getArticleSections(entry.id, seriesTitles) : [];
   <Layout title={title} description={isBodyHub ? bodyHubDescription : undefined}>
     <article>
       <div class="entry-header">
-        <p class="meta"><span>{folderSeries ? 'серия' : 'раздел'}</span><span class="meta-sep" aria-hidden="true">~</span><span>{path}/</span></p>
+        <p class="meta"><span>{folderSeries ? 'серия' : 'раздел'}</span></p>
         <hgroup>
           <h1>{title}</h1>
         </hgroup>
@@ -256,7 +261,7 @@ const articleSections = entry ? getArticleSections(entry.id, seriesTitles) : [];
               {(index > 0 || directEntries.length > 0) && <hr class="section-divider" />}
               <header>
                 <h2 class="section-heading">
-                  {group.title} <span class="section-slug">{group.name}/</span>
+                  {group.title}
                 </h2>
               </header>
               {group.nestedSeries.length > 0 && (
@@ -287,6 +292,21 @@ const articleSections = entry ? getArticleSections(entry.id, seriesTitles) : [];
 )}
 
 <style>
+  /* Тихая строка под датой: читатель из поиска должен понять, кто пишет о здоровье,
+     но статья начинается с текста, поэтому без рамки-плашки и без акцентного цвета */
+  .health-note {
+    margin: var(--app-spacing-md) 0 0;
+    color: var(--pico-muted-color);
+    font-size: var(--app-font-sm);
+    line-height: 1.5;
+  }
+
+  .health-note a {
+    color: inherit;
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
   .article-sections {
     margin-bottom: var(--app-spacing-md);
     color: var(--pico-muted-color);
