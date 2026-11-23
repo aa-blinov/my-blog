@@ -302,8 +302,6 @@ html[data-font="xl"] { --app-zoom: 1.45; }
   padding-left: 2em;
 }
 /* Ширина колонки текста: три режима, кнопка рядом с темой. Обычная = значение токена выше */
-:root[data-width="narrow"] { --app-main-max-width: 40em; }
-:root[data-width="wide"] { --app-main-max-width: 74em; }
 
 main article .entry-header,
 main article .content {

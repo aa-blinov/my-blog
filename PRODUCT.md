@@ -114,7 +114,7 @@ Present now, confirmed by the code:
   Every article also carries its own preview image, 1200×630: the section line
   and the title in JetBrains Mono on Night with the Original accent, drawn at
   build time; the other pages share one image of the site.
-- The header disclosure offers five font sizes and three reading widths, and
+- The header disclosure offers five font sizes and
   a lineup of can swatches that moves the accent to the chosen flavour. The
   default is the Original green; the choice is remembered and applied
   before the first paint. The site is dark only: the night palette is the
@@ -243,7 +243,7 @@ out of the texts on his own.
   screen readers, visible keyboard
   focus and 44-pixel targets in the top navigation.
 - The reader controls are the accessibility mechanism: five font sizes,
-  three reading widths, a collapsed table of contents on long reads, and a search
+  a collapsed table of contents on long reads, and a search
   that opens from the keyboard with the `/` key.
 - The design system records the contrast it measured, for instance Monster
   Green at 10.17:1 on Night.

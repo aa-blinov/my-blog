@@ -129,7 +129,7 @@ the right of each title.
 
 Monster Green marks the current page, focus and hovered links. A hairline
 separates the header from the page. The header keeps navigation visible and
-groups font size and column width in one disclosure. The site is dark
+groups font size and the accent can in one disclosure. The site is dark
 only: the night palette is the palette.
 
 ## Colors
@@ -284,8 +284,11 @@ rule that sits higher in the cascade.
 A single centered reading column has a normal maximum width of `45em`
 including side padding. The visible line length follows Literata's glyph
 width and the reader's selected text size.
-Using `em` avoids shifts while the font loads. The other width settings are
-`40em` and `74em`, and the browser remembers the selected width.
+Using `em` avoids shifts while the font loads. The width is not a setting:
+one measure keeps the header and the text on one edge at every screen size,
+and 45em of Literata is the reading line that works from a phone to a wide
+monitor. Three widths used to be offered; the wide one pulled the text away
+from the header and stretched the line past easy reading.
 
 The navigation aligns to the normal column and wraps on narrow screens. It
 scrolls with the page. The table of contents starts closed at every width.
@@ -326,7 +329,7 @@ The author name links home. The other links lead to the archive, notes,
 about page and search. The current page marks itself through its square
 brackets in the accent, Monster Green by default; nothing else in the row
 changes. The reading settings open from the icon at the end of the row:
-font size, column width and a lineup of cans for the accent. Each can
+font size and a lineup of cans for the accent. Each can
 carries its English name — `Monster Khaos`, `Monster Mango Loco` — in the
 shared tooltip on hover and on keyboard focus.
 
@@ -472,8 +475,8 @@ picker (`+`, `!`, `~`, `×`), which are the legend itself.
   muted text and clear year and month headings; the home feed adds the topic
   path, summaries and reading time, and folds a burst of one series into one
   row.
-- **Do** give the reader the size of the text and the width of the column,
-  and remember the choice.
+- **Do** give the reader the size of the text and remember the choice; the
+  column keeps one measure.
 - **Do** give a tap target at least 44px on a phone.
 - **Do** set the text of a field to at least 16px: below that, iOS zooms the
   page when the field takes focus.

@@ -69,10 +69,6 @@ const ogType = Astro.url.pathname.startsWith(`${BASE}blog/`) ? 'article' : 'webs
         const font = localStorage.getItem('font-size-v2');
         document.documentElement.dataset.font = ['xs', 'sm', 'md', 'lg', 'xl'].includes(font) ? font : 'md';
 
-        // Ширина колонки текста: узкая, обычная или широкая; тот же ключ, что в theme.js
-        const width = localStorage.getItem('reading-width');
-        document.documentElement.dataset.width = ['narrow', 'normal', 'wide'].includes(width) ? width : 'normal';
-
         // Банка для акцента из настроек чтения: красит ссылки до первой отрисовки; тот же ключ, что в theme.js
         const flavor = localStorage.getItem('flavor');
         document.documentElement.dataset.flavor = ['original', 'ultra-white', 'khaos', 'mango', 'vr46', 'ultra-black'].includes(flavor) ? flavor : 'original';

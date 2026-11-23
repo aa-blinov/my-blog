@@ -43,7 +43,7 @@ because journals and news sites answer scripts that way.
 | `src/pages/search.astro`, `search-index.json.ts` | The search page and the full-text index it downloads on the first query. |
 | `src/components/MindMap.astro`, `Picker.astro`, `Tools.astro`, `Questionnaire.astro` | The interactive blocks and their browser-side controllers. |
 | `src/data/` | The data behind those blocks, one file per block, with a registry per kind. |
-| `src/scripts/theme.js` | The font size, the reading width, the can picker for the accent, the copy buttons, the Mermaid rendering, which imports Mermaid only when a page has a diagram. |
+| `src/scripts/theme.js` | The font size, the can picker for the accent, the copy buttons, the Mermaid rendering, which imports Mermaid only when a page has a diagram. |
 | `src/layouts/Layout.astro` | The shared head: preloaded fonts, the static dark theme (`data-theme="dark"` written into the markup), the inline paint script, the Open Graph and Twitter Card tags, the canonical link. |
 | `src/scripts/ref-tip.js` | The shared styled tooltip: the source behind a reference chip, the can names above the settings swatches. |
 | `src/utils/search-matching.ts`, `src/pages/search-lemmas.json.ts` | The word matching of the search: Russian suffix stripping, stop words and the table of word forms built with `az`. |
@@ -117,13 +117,15 @@ because journals and news sites answer scripts that way.
 - **The search query lives in session storage.** The key is `sidebar-search`,
   a name left over from the old sidebar. The query survives a reload in the
   same tab and is gone in the next one.
-- **The font size, the reading width and the accent flavour are applied
+- **The font size and the accent flavour are applied
   before the first paint.** An inline script in the head of `Layout.astro`
-  reads local storage (`font-size-v2`, `reading-width`, `flavor`), and
+  reads local storage (`font-size-v2`, `flavor`), and
   `src/scripts/theme.js` reads the same keys a moment later. When the two
   disagree the page is drawn one way and jumps to another. The theme is not
   a setting: `data-theme="dark"` sits in the markup, and a stale `theme`
-  key in an old visitor's storage is read by nothing. The flavour is a
+  key in an old visitor's storage is read by nothing. Nor is the column
+  width: one measure of 45em for every page, so the header and the text
+  share one edge, and a stale `reading-width` key is read by nothing too. The flavour is a
   setting: `html[data-flavor]` blocks in `global.css` re-point the accent,
   and Black is not among the choices, because at 1.09:1 on Night it is the
   background. The inline script also sets the `js` class: the reader
