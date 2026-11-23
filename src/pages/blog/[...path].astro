@@ -180,7 +180,7 @@ const articleSections = entry ? getArticleSections(entry.id, seriesTitles) : [];
           <nav class="article-sections" aria-label="Разделы статьи">
             <ol role="list">
               {articleSections.map(({ title, href }, index) => (
-                <li>{index > 0 && <span aria-hidden="true">/</span>}<a href={href}>{title}</a></li>
+                <li><a href={href}>{title}</a>{index < articleSections.length - 1 && <span aria-hidden="true">/</span>}</li>
               ))}
             </ol>
           </nav>
@@ -293,10 +293,19 @@ const articleSections = entry ? getArticleSections(entry.id, seriesTitles) : [];
     font-size: var(--app-font-sm);
   }
 
-  .article-sections ol,
-  .article-sections li {
+  /* Черта держится за раздел слева: при переносе строка кончается на «/», а новая
+     начинается с названия, ровно под заголовком */
+  .article-sections ol {
     display: flex;
     flex-wrap: wrap;
+    column-gap: var(--app-spacing-md);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .article-sections li {
+    display: inline-flex;
     gap: var(--app-spacing-md);
     align-items: center;
     list-style: none;

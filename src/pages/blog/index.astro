@@ -49,20 +49,20 @@ const years = [...byYear].map(([year, posts]) => {
         <h2 class="section-heading" id="archive-topics-heading">Темы</h2>
         {years.length > 0 && <a class="archive-skip" href={`#year-${years[0].year}`}>К статьям</a>}
       </div>
-      <ul class="section-tags archive-topic-tree archive-topic-branches" aria-label="Темы, подразделы и циклы" role="list">
+      <ul class="section-tags archive-topic-tree archive-topic-branches" aria-label="Темы, подразделы и серии" role="list">
         {sections.map(([name, posts]) => (
           <li id={`section-${name}`}>
             <a href={`${BASE}blog/${name}/`}>{sectionTitle(name)} <span class="tag-count">{posts.length}</span></a>
             {hasChildren(name) && <ul class="section-tags archive-topic-children archive-topic-branches" role="list">
               {seriesUnder(name).map((item) => (
-                <li class="archive-series"><a href={`${BASE}blog/${item.folder}/`}>Цикл «{item.title}»</a></li>
+                <li class="archive-series"><a href={`${BASE}blog/${item.folder}/`}>Серия «{item.title}»</a></li>
               ))}
               {name === 'science' && scienceTopics.map(({ path, title }) => (
                 <li>
                   <a href={`${BASE}blog/${path}/`}>{title}</a>
                   {seriesUnder(path).length > 0 && <ul class="section-tags archive-topic-children archive-topic-branches" role="list">
                     {seriesUnder(path).map((item) => (
-                      <li class="archive-series"><a href={`${BASE}blog/${item.folder}/`}>Цикл «{item.title}»</a></li>
+                      <li class="archive-series"><a href={`${BASE}blog/${item.folder}/`}>Серия «{item.title}»</a></li>
                     ))}
                   </ul>}
                 </li>

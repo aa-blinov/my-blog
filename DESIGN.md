@@ -422,6 +422,7 @@ Every value that a component reuses is a token in `:root` of
 | Type | `--app-font-control`, `--app-font-caption`, `--app-font-xs` to `--app-font-xl` | 0.8rem, 0.7rem, then 0.8rem, 0.9rem, 1rem, 1.15rem, 1.3rem |
 | Radius | `--app-radius-xs`, `--app-radius-sm` | 3px, 4px |
 | Touch | `--app-touch-target` | 44px, the smallest height of any control on a touch screen |
+| Form | `--pico-form-element-spacing-vertical`, `--pico-form-element-spacing-horizontal` | 0.5rem, 0.75rem: a Pico field or button lands at 44–50px from phone to desktop |
 | Icon | `--app-icon-size` | 1em, so an icon follows the text it sits beside |
 
 Where a component needs one value that the scales do not cover, it is named
@@ -455,6 +456,8 @@ picker (`+`, `!`, `~`, `×`), which are the legend itself.
 - **Do** give the reader the size of the text and the width of the column,
   and remember the choice.
 - **Do** give a tap target at least 44px on a phone.
+- **Do** set the text of a field to at least 16px: below that, iOS zooms the
+  page when the field takes focus.
 - **Do** keep the structural blocks out of a `<nav>`: the table of contents
   in a `details`, the footer of an article in an `aside`.
 - **Do** set the colour of a text link on the parent and give the link

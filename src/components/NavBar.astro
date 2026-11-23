@@ -256,12 +256,30 @@ const links = [
       column-gap: var(--app-spacing-md);
     }
 
+    /* Иконка настроек не помещалась к ссылкам и уходила одна на третью строку.
+       Список растворяется в шапке: настройки встают рядом с «главной», ссылки ниже одной строкой */
+    .site-nav ul {
+      display: contents;
+    }
+
+    .site-brand { order: 0; }
+    .site-nav li.needs-js { order: 1; }
+    .site-nav::after {
+      content: '';
+      order: 2;
+      flex-basis: 100%;
+    }
+    .site-nav li { order: 3; font-size: var(--app-font-control); }
+
     .reader-settings {
       position: static;
     }
 
+    /* В одну строку панель шире телефона и уезжала за левый край: кнопки шрифта
+       остаются сверху, шесть банок ложатся строкой под ними */
     .reader-controls {
       inset-inline-end: var(--app-page-gutter-end);
+      width: calc(var(--app-touch-target) * 6 + 2px);
     }
   }
 

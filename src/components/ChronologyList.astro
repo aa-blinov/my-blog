@@ -19,6 +19,13 @@ function readingLabel(entry: BlogEntry): string {
   return `≈ ${minutes} ${plural(minutes, 'минута', 'минуты', 'минут')}`;
 }
 
+// На главной статья из серии без подписи читалась как самостоятельная, и первая же фраза
+// «пока собирал эту серию» отсылала к тому, чего читатель не видел
+function seriesLabel(entry: BlogEntry): string {
+  const series = seriesTitles[entry.id.slice(0, entry.id.lastIndexOf('/'))];
+  return series && entry.data.part !== undefined ? `Серия «${series}» ~ часть ${entry.data.part}` : '';
+}
+
 function categoryLabel(entry: BlogEntry): string {
   const folders = entry.id.split('/').slice(0, -1);
   return folders.flatMap((_, index) => {
@@ -41,6 +48,7 @@ function categoryLabel(entry: BlogEntry): string {
           {showCategory && <span class="chronology-category">{categoryLabel(entry)}</span>}
           {showDetails && (
             <>
+              {seriesLabel(entry) && <span class="chronology-category">{seriesLabel(entry)}</span>}
               <span class="chronology-summary">{articleSummary(entry)}</span>
               <span class="chronology-reading-time">{readingLabel(entry)}</span>
             </>

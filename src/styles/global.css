@@ -100,6 +100,11 @@
   --pico-text-selection-color: rgba(var(--app-primary-rgb), var(--app-primary-selection-opacity));
   --pico-code-background-color: #1a1e28; /* Night Code из DESIGN.md */
   --pico-border-radius: var(--app-radius-sm); /* у Pico 0.25rem = 4.8px: вне шкалы на inline code */
+  /* Отступы Pico (0.75rem по вертикали) при нашей крупной базе давали полю поиска и кнопкам
+     54 px на телефоне и 60 px на ПК, рядом с 36–44 px у карты и подбора. С 0.5rem высота
+     ложится в 44–48 px: палец попадает, на ПК поле не выглядит плашкой */
+  --pico-form-element-spacing-vertical: 0.5rem;
+  --pico-form-element-spacing-horizontal: 0.75rem;
 }
 
 /* ==========================================================================
@@ -2361,7 +2366,13 @@ main article .content .pk-sub {
 .tools-field select,
 .tools-field textarea {
   margin: 0;
-  font-size: var(--app-font-sm);
+  /* Мельче 16 px iOS при касании увеличивает всю страницу, и дневник приходится отдалять пальцами */
+  font-size: max(16px, var(--app-font-sm));
+}
+.tools-field input:not([type="checkbox"], [type="range"]),
+.tools-field select {
+  height: auto;
+  min-height: var(--app-touch-target);
 }
 .tools-btn {
   width: auto;

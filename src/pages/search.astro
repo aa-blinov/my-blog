@@ -231,17 +231,23 @@ const seriesTitles = await getSeriesTitles();
     display: block;
   }
 
+  /* Подпись это подсказка к полю, а не текст статьи: размером с мету, и на телефоне в одну строку */
   .search-field label {
     margin-bottom: var(--app-spacing-sm);
+    color: var(--pico-muted-color);
+    font-size: var(--app-font-sm);
   }
 
+  /* Текст поля как у интерфейса, но не мельче 16 px: iOS увеличивает страницу при фокусе на более мелком поле */
   #site-search-input {
     box-sizing: border-box;
     width: 100%;
     min-width: 0;
+    height: auto;
     margin: 0 0 var(--app-spacing-md);
     min-height: var(--app-touch-target);
     border-radius: var(--app-radius-sm);
+    font-size: max(16px, var(--app-font-sm));
   }
 
   #site-search-input:focus-visible {

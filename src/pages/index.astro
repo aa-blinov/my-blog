@@ -107,7 +107,7 @@ if (homeEntry) {
       <h2 class="section-heading">Свежие статьи</h2>
       <a href={`${BASE}blog/`} class="post-title-link all-articles-link">Все статьи <Arrow /></a>
     </div>
-      <ChronologyList posts={posts} showDetails />
+      <ChronologyList posts={posts} showDetails seriesTitles={Object.fromEntries(seriesRows.map((s) => [s.folder, s.title]))} />
   </section>
 
   {seriesRows.length > 0 && <div class="site-map">

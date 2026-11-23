@@ -109,7 +109,8 @@ Present now, confirmed by the code:
   each with a short description. The four are checked against the collection
   at build time: a moved or deleted article fails the build instead of shipping
   a dead link. It then shows the seven latest publications
-  with summaries and reading times, marks projects and links to
+  with summaries and reading times, names the series and the part above the
+  summary of a part, marks projects and links to
   the full archive beside the list heading. The archive at `/blog/` groups
   articles by year and month, newest first, shows the topic path below each title and
   links to the months, topic pages, subtopics and article series in a hierarchy,
