@@ -107,7 +107,10 @@ Present now, confirmed by the code:
   arrive. An empty result offers a link to the archive.
 - The head of every page carries Open Graph and Twitter Card tags with a
   canonical link, so a link pasted into a chat unfolds with the title and the
-  description of the page.
+  description of the page. The description of an article is its `summary`, or
+  the opening of its text cut at 160 characters; a section takes its intro, or
+  names its three newest articles when it has none. The general line of the
+  site is left for the home page and the archive.
 - The header disclosure offers five font sizes and three reading widths, and
   a lineup of can swatches that moves the accent to the chosen flavour. The
   default is the Original green; the choice is remembered and applied

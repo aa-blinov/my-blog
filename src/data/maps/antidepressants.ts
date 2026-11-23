@@ -556,7 +556,7 @@ export const antidepressants: MindMapData = { root: {
               "sources": [
                 {
                   "title": "FDA Drug Safety Communication: revised recommendations for Celexa (citalopram hydrobromide) related to a potential risk of abnormal heart rhythms with high doses. FDA, 2012.",
-                  "url": "https://www.fda.gov/drugs/drug-safety-and-availability/fda-drug-safety-communication-revised-recommendations-celexa-citalopram-hydrobromide-related"
+                  "url": "https://web.archive.org/web/20260219011804/https://www.fda.gov/drugs/drug-safety-and-availability/fda-drug-safety-communication-revised-recommendations-celexa-citalopram-hydrobromide-related"
                 },
                 {
                   "title": "Serretti A., Chiesa A. Treatment-emergent sexual dysfunction related to antidepressants: a meta-analysis. Journal of Clinical Psychopharmacology, 2009.",

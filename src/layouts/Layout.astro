@@ -22,6 +22,9 @@ const hasNotes = (await getCollection('notes')).some((note) => !note.data.draft)
 const fullTitle = title === SITE.title ? title : `${title} | ${SITE.title}`;
 const desc = description ?? SITE.description;
 const canonical = new URL(Astro.url.pathname, SITE.url).href;
+// Страница 404 отдаётся по любому неверному адресу, своего адреса у неё нет: канонический /404/
+// вёл в никуда и выдавал её поисковику за обычную страницу
+const isNotFound = /\/404\/?$/.test(Astro.url.pathname);
 const ogType = Astro.url.pathname.startsWith(`${BASE}blog/`) ? 'article' : 'website';
 ---
 
@@ -37,13 +40,13 @@ const ogType = Astro.url.pathname.startsWith(`${BASE}blog/`) ? 'article' : 'webs
     <link rel="icon" type="image/svg+xml" href={`${BASE}favicon.svg`} />
     <title>{fullTitle}</title>
     <meta name="description" content={desc} />
-    <link rel="canonical" href={canonical} />
+    {!isNotFound && <link rel="canonical" href={canonical} />}
     <!-- Блог расходится ссылками из чатов: без og-меты мессенджер показывает голый адрес -->
     <meta property="og:type" content={ogType} />
     <meta property="og:site_name" content={SITE.title} />
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={desc} />
-    <meta property="og:url" content={canonical} />
+    {!isNotFound && <meta property="og:url" content={canonical} />}
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content={fullTitle} />
     <meta name="twitter:description" content={desc} />

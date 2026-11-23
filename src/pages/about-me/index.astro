@@ -1,6 +1,7 @@
 ---
 import PageFromEntry from '../../components/PageFromEntry.astro';
 import { getCollection, render } from 'astro:content';
+import { articleSummary } from '../../utils/article-summary';
 const pages = (await getCollection('pages')).filter((e) => !e.data.draft);
 const aboutEntry = pages.find((e) => e.id === 'about-me');
 
@@ -17,6 +18,6 @@ if (aboutEntry) {
 }
 ---
 
-<PageFromEntry entry={entryData} fallbackTitle="Обо мне" fallbackH1="Обо мне" prompt="about-me &gt;" hideMeta>
+<PageFromEntry entry={entryData} fallbackTitle="Обо мне" fallbackH1="Обо мне" prompt="about-me &gt;" hideMeta description={aboutEntry ? articleSummary(aboutEntry, 160) : undefined}>
   {Content ? <Content /> : <p>Добавь в <code>content/pages/</code> файл <code>about-me.md</code> с frontmatter: <code>title</code>, <code>date</code>.</p>}
 </PageFromEntry>

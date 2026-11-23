@@ -18,6 +18,11 @@ import { sortByDateDesc } from '../../utils/date';
 import { getSeries, getAllSeries, seriesOf, isAbout, type Series } from '../../utils/series';
 import { BASE, sectionTitle, isHealthArticle } from '../../config';
 import { getArticleSections } from '../../utils/breadcrumb';
+import { articleSummary } from '../../utils/article-summary';
+
+// Без своего summary статья уходила в поиск и в превью мессенджеров с общей фразой сайта.
+// Первые строки текста говорят о статье больше; 160 знаков помещаются в сниппет поисковика целиком
+const DESCRIPTION_LIMIT = 160;
 
 type BlogEntry = CollectionEntry<'blog'>;
 type Props = { kind: 'file'; entry: BlogEntry; path?: never } | { kind: 'folder'; path: string; entry?: never };
@@ -170,10 +175,21 @@ const folderName = path.split('/').pop() || path;
 const title = entry ? entry.data.title : (folderAbout?.data.title.replace(/:\s*Об этой секции$/, '') ?? sectionTitle(folderName));
 const bodyHubDescription = 'Научпоп о том, как устроено тело человека и как на него влияют условия вокруг: вес, холод, свет, высота и шум. Здесь собраны отдельные статьи и серия «Тело и среда».';
 const articleSections = entry ? getArticleSections(entry.id, seriesTitles) : [];
+// У раздела без вводного файла описывать нечем, кроме его же статей: три свежих заголовка
+// честнее общей фразы сайта, которая одинакова для любой страницы
+const newestTitles = sortByDateDesc([...directEntries, ...subGroups.flatMap((group) => group.entries)])
+  .slice(0, 3)
+  .map((e) => `«${e.data.title}»`)
+  .join(', ');
+const folderDescription = isBodyHub
+  ? bodyHubDescription
+  : folderAbout
+    ? articleSummary(folderAbout, DESCRIPTION_LIMIT)
+    : newestTitles ? `Раздел «${title}» в блоге Александра Блинова. Свежие статьи: ${newestTitles}.` : undefined;
 ---
 
 {entry && Content ? (
-  <Layout title={entry.data.title} description={entry.data.summary}>
+  <Layout title={entry.data.title} description={articleSummary(entry, DESCRIPTION_LIMIT)}>
     <article>
       <div class="entry-header">
         {articleSections.length > 0 && (
@@ -220,7 +236,7 @@ const articleSections = entry ? getArticleSections(entry.id, seriesTitles) : [];
     </article>
   </Layout>
 ) : (
-  <Layout title={title} description={isBodyHub ? bodyHubDescription : undefined}>
+  <Layout title={title} description={folderDescription}>
     <article>
       <div class="entry-header">
         <p class="meta"><span>{folderSeries ? 'серия' : 'раздел'}</span></p>
