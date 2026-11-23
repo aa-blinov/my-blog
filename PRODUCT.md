@@ -199,7 +199,7 @@ Pinned by the author
   could be photographed. The default interface is single-green; a reader
   may pour another can, which moves the accent and nothing else.
 
-Name: "Личный сайт Александра Блинова", Alexander Blinov's personal site. The
+Name: "Блог Александра Блинова", Alexander Blinov's blog. The
 contacts in the footer are GitHub `aa-blinov`, Telegram and LinkedIn. The
 voice of the texts: the first person, short paragraphs, no dashes, no office
 speak and no stock phrasing. The author cleans the traces of language models
