@@ -68,7 +68,32 @@ async function check(url) {
     }
   }
 }
-const isDead = (r) => r.status === 404 || r.status === 410 || ['ENOTFOUND', 'EAI_AGAIN_PERMANENT'].includes(r.error);
+const isDead = (r) => !r.blocked && (r.status === 404 || r.status === 410 || ['ENOTFOUND', 'EAI_AGAIN_PERMANENT'].includes(r.error));
+
+// Сайты правительства США отдают 404 адресам дата-центров, в том числе GitHub Actions, хотя страница
+// жива. 404 засчитывается, только если главная того же сайта нам открывается: значит, нас пускают,
+// и пропала именно страница
+// Вторая страховка от того же: свежий снимок Web Archive с ответом 200 значит, что страница жива,
+// а 404 достался только нам. У действительно удалённой страницы последний живой снимок старый
+async function recentlyArchived(url) {
+  try {
+    const res = await fetch(`https://archive.org/wayback/available?url=${encodeURIComponent(url)}&timestamp=${new Date().toISOString().slice(0, 10).replace(/-/g, '')}`);
+    const snap = (await res.json()).archived_snapshots?.closest;
+    if (!snap || snap.status !== '200') return false;
+    const t = snap.timestamp;
+    const taken = Date.UTC(+t.slice(0, 4), +t.slice(4, 6) - 1, +t.slice(6, 8));
+    return Date.now() - taken < 90 * 24 * 3600 * 1000;
+  } catch {
+    return false;
+  }
+}
+
+const hostOpen = new Map();
+async function hostAnswers(url) {
+  const { origin } = new URL(url);
+  if (!hostOpen.has(origin)) hostOpen.set(origin, check(origin + '/').then((r) => r.status >= 200 && r.status < 400));
+  return hostOpen.get(origin);
+}
 
 // Не больше двух запросов к одному сайту и пауза между ними: иначе сайт включает ограничение
 // по частоте, и честные ссылки выглядят мёртвыми
@@ -88,7 +113,12 @@ let next = 0;
 await Promise.all(Array.from({ length: 12 }, async () => {
   while (next < lanes.length) {
     for (const url of lanes[next++]) {
-      results.set(url, await check(url));
+      let result = await check(url);
+      if ((result.status === 404 || result.status === 410) && result.via !== 'doi') {
+        if (!(await hostAnswers(url))) result = { status: result.status, error: 'сайт не пускает проверку', blocked: true };
+        else if (await recentlyArchived(url)) result = { status: result.status, error: 'архив видел её живой за 90 дней', blocked: true };
+      }
+      results.set(url, result);
       await new Promise((r) => setTimeout(r, 500));
     }
   }
@@ -96,7 +126,12 @@ await Promise.all(Array.from({ length: 12 }, async () => {
 
 const dead = [...results].filter(([, r]) => isDead(r));
 const unknown = [...results].filter(([, r]) => !isDead(r) && (r.status === 0 || r.status >= 400));
-const line = ([url, r]) => `- ${url} (${r.status || r.error}): ${[...refs.get(url)].join(', ')}`;
+// Ссылка из подвала стоит на каждой странице: трёх адресов хватает, чтобы её найти
+const line = ([url, r]) => {
+  const pages = [...refs.get(url)];
+  const where = pages.slice(0, 3).join(', ') + (pages.length > 3 ? ` и ещё ${pages.length - 3}` : '');
+  return `- ${url} (${r.error ? `${r.status || ''} ${r.error}`.trim() : r.status}): ${where}`;
+};
 const report = [
   `# Проверка внешних ссылок`,
   ``,
