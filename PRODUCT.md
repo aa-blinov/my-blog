@@ -85,6 +85,13 @@ opinion and the guideline are kept apart.
 Present now, confirmed by the code:
 
 - The header links to the home page, archive, notes, about page and search.
+  The notes link, like the notes line in the footer and the notes feed in the
+  head, appears only once a note is published: an empty feed in the menu reads
+  as an abandoned site.
+  Every list of articles (a section page, the home page, "more in this
+  section" after an article) shows a summary: the `summary` field, or the
+  opening of the first paragraph when there is none, with source chips and
+  link addresses removed.
   The dedicated search page matches titles, sections, file names and article
   text, including common Russian inflections. A match counts from the start
   of a word, never from its middle. Title matches come first; among the

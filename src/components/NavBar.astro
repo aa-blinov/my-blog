@@ -4,14 +4,15 @@ import { BASE } from '../config';
 
 interface Props {
   hasAbout: boolean;
+  hasNotes: boolean; // пустая лента в меню выглядит заброшенной: ссылка появится с первой опубликованной заметкой
 }
 
-const { hasAbout } = Astro.props;
+const { hasAbout, hasNotes } = Astro.props;
 const currentPath = Astro.url.pathname.replace(/\/$/, '');
 const isCurrent = (href: string) => currentPath === href.replace(/\/$/, '');
 const links = [
   { label: 'архив', href: BASE + 'blog/' },
-  { label: 'заметки', href: BASE + 'notes/' },
+  ...(hasNotes ? [{ label: 'заметки', href: BASE + 'notes/' }] : []),
   ...(hasAbout ? [{ label: 'обо мне', href: BASE + 'about-me/' }] : []),
 ];
 ---
