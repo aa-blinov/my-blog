@@ -35,7 +35,7 @@ feedback. A product record must not invent them.
 
 ## Product Purpose
 
-The personal blog of Alexander Blinov, head of development at EORA and senior
+The personal blog of Alexander Blinov, CTO of EORA and senior
 Python developer at NSU, in the shape of a digital garden: articles on
 development, language models, popular science and personal thoughts. The job
 of the site is to let a text be read without visual noise, and to let a reader

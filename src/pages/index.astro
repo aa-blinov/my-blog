@@ -80,7 +80,7 @@ if (homeEntry) {
 ---
 
 <PageFromEntry entry={entryData} fallbackTitle="Главная" fallbackH1="Главная" prompt="main &gt;" hideMeta>
-  {Content ? <Content /> : <p>Добавь в <code>content/pages/</code> файл <code>main.md</code> с frontmatter: <code>title</code>, <code>date</code>.</p>}
+  {Content ? <div class="home-intro"><Content /></div> : <p>Добавь в <code>content/pages/</code> файл <code>main.md</code> с frontmatter: <code>title</code>, <code>date</code>.</p>}
   <p class="home-first-visit">Впервые здесь? <a href="#start">С чего начать</a></p>
 
   <section class="home-feed" aria-labelledby="feed-heading" data-page={FEED_PAGE}>
