@@ -227,7 +227,7 @@ if (homeEntry) {
   .feed-topics {
     display: flex;
     flex-wrap: wrap;
-    column-gap: var(--app-spacing);
+    column-gap: var(--app-spacing-md);
     margin: 0 0 var(--app-spacing-sm);
     padding: 0;
     font-family: var(--font-family);
@@ -238,6 +238,18 @@ if (homeEntry) {
     margin: 0;
     padding: 0;
     list-style: none;
+  }
+
+  /* Колонка обрезает всё, что выступает за её край, и внешняя рамка фокуса у крайних ссылок
+     срезалась. Рамка рисуется внутрь, а отступ в четверть rem не даёт ей лечь на буквы */
+  .feed-topics a,
+  .feed-more .all-articles-link {
+    padding-inline: var(--app-spacing-sm);
+  }
+
+  .feed-topics a:focus-visible,
+  .feed-more .all-articles-link:focus-visible {
+    outline-offset: -2px;
   }
 
   .feed-topics a {
@@ -276,6 +288,9 @@ if (homeEntry) {
   }
 
   .feed-more {
+    /* Внутри <button> Pico подменяет --pico-color на тёмный цвет кнопки, и текст сливался с фоном.
+       Цвет берётся из своей переменной, объявленной снаружи кнопки */
+    --feed-ink: var(--pico-color);
     display: flex;
     flex-wrap: wrap;
     align-items: center;
@@ -292,7 +307,7 @@ if (homeEntry) {
     border: 1px solid var(--pico-form-element-border-color);
     border-radius: var(--app-radius-sm);
     background: transparent;
-    color: var(--pico-color);
+    color: var(--feed-ink);
     font-family: var(--font-family);
     font-size: var(--app-font-sm);
   }
