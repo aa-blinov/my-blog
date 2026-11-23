@@ -15,7 +15,7 @@ import { questionnaires } from '../../data/questionnaires';
 import type { MarkdownHeading } from 'astro';
 import { formatDate, humanDate, readingMinutes, plural } from '../../utils/date';
 import { sortByDateDesc } from '../../utils/date';
-import { getSeries, getAllSeries, seriesOf, isAbout, type Series } from '../../utils/series';
+import { getSeries, getAllSeries, seriesOf, isAbout, liveFolders, type Series } from '../../utils/series';
 import { BASE, sectionTitle, isHealthArticle } from '../../config';
 import { getArticleSections } from '../../utils/breadcrumb';
 import { articleSummary } from '../../utils/article-summary';
@@ -30,21 +30,21 @@ type Props = { kind: 'file'; entry: BlogEntry; path?: never } | { kind: 'folder'
 export async function getStaticPaths() {
   const entries = await getCollection('blog');
 
+  // Раздел без единой статьи не собирается вовсе: ни страница раздела, ни его вводный текст.
+  // Иначе пустые страницы попадают в sitemap и в поисковую выдачу.
+  const live = liveFolders(entries);
+  const folderOf = (id: string) => id.split('/').slice(0, -1).join('/');
+
   // 1. Routes for individual files
-  const filePaths = entries.map((entry) => ({
-    params: { path: entry.id },
-    props: { kind: 'file', entry },
-  }));
+  const filePaths = entries
+    .filter((entry) => !isAbout(entry.id) || live.has(folderOf(entry.id)))
+    .map((entry) => ({
+      params: { path: entry.id },
+      props: { kind: 'file', entry },
+    }));
 
   // 2. Routes for folders (directories)
-  const directoryPaths = new Set<string>();
-  entries.forEach((entry) => {
-    const parts = entry.id.split('/');
-    // Add all parent paths
-    for (let i = 1; i < parts.length; i++) {
-      directoryPaths.add(parts.slice(0, i).join('/'));
-    }
-  });
+  const directoryPaths = new Set<string>(live);
   // Эта страница собирает статьи о теле, сохраняя их исходные адреса и адрес серии.
   directoryPaths.add('science/body');
 

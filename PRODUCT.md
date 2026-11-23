@@ -157,7 +157,8 @@ Present now, confirmed by the code:
   `rel=alternate` links in the head of the page and a line in the footer.
   The article feed carries the full rendered text of each item, with relative
   links rewritten to absolute ones, and drops the intro file of a folder that
-  holds no article.
+  holds no article. Such a folder has no page on the site either, so an empty
+  section never reaches the sitemap.
 - Series: a folder whose files carry `part`, with `about-<folder>.md` giving
   the name and the intro. Under the heading of a part, the line "Series «…»
   ~ part N of M"; after the text, links to the previous and the next part

@@ -61,8 +61,10 @@ because journals and news sites answer scripts that way.
 - **The catch-all route serves folders as well as files.** `getStaticPaths`
   returns a route per article and a route per folder, and the component
   branches on the `kind` prop. A new article needs no page file. A new folder
-  gets a page for free, and that page is where the intro text and the list of
-  articles go.
+  gets a page for free once it holds an article, and that page is where the
+  intro text and the list of articles go. A folder with only its
+  `about-<name>.md` gets no page at all, and neither does the intro file: an
+  empty section would land in the sitemap and in search results.
 - **A file called `about-<name>.md` carries the intro of its folder rather
   than being an article.** `isAbout()` in `src/utils/series.ts` matches on the
   name prefix. Such a file stays out of the archive, out of the article lists
