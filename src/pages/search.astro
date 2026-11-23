@@ -23,7 +23,7 @@ const seriesTitles = await getSeriesTitles();
       <span id="search-status-text"></span>
       <a id="search-archive-link" href={`${BASE}blog/`} hidden>Открыть архив</a>
     </p>
-    <ul id="search-results" class="search-results needs-js" data-index-url={`${BASE}search-index.json`} aria-label="Результаты поиска" role="list">
+    <ul id="search-results" class="search-results needs-js" data-index-url={`${BASE}search-index.json`} data-lemmas-url={`${BASE}search-lemmas.json`} aria-label="Результаты поиска" role="list">
       {articles.map((entry) => {
         const section = getArticleSections(entry.id, seriesTitles).map(({ title }) => title).join(' / ');
         return (
@@ -41,7 +41,7 @@ const seriesTitles = await getSeriesTitles();
 
 <script>
   import { plural } from '../utils/date';
-  import { countWordMatches, findWordMatches, indexAtWordStart, queryWords, wordsIn, type MatchRange, type SearchWord } from '../utils/search-matching';
+  import { countWordMatches, findWordMatches, indexAtWordStart, normalizeWord, queryWords, useLemmas, wordsIn, type LemmaTable, type MatchRange, type SearchWord } from '../utils/search-matching';
 
   const ruToEn: Record<string, string> = {
     'а':'a','б':'b','в':'v','г':'g','д':'d','е':'e','ё':'yo',
@@ -50,7 +50,7 @@ const seriesTitles = await getSeriesTitles();
     'ф':'f','х':'kh','ц':'ts','ч':'ch','ш':'sh','щ':'shch',
     'ъ':'','ы':'y','ь':'','э':'e','ю':'yu','я':'ya',' ':'-',
   };
-  const normalize = (text: string) => text.replaceAll('İ', 'I').toLowerCase().replaceAll('ё', 'е');
+  const normalize = normalizeWord;
   const input = document.querySelector<HTMLInputElement>('#site-search-input');
   const status = document.getElementById('search-status');
   const statusText = document.getElementById('search-status-text');
@@ -127,6 +127,10 @@ const seriesTitles = await getSeriesTitles();
 
     const ensureIndex = () => {
       if (!indexRequest) {
+        // Словоформы едут рядом с текстами. Без них поиск остаётся рабочим и просто не узнаёт «сна» в «сон»
+        const lemmasRequest = fetch(list.dataset.lemmasUrl!)
+          .then((response) => (response.ok ? response.json() as Promise<LemmaTable> : null))
+          .catch(() => null);
         indexRequest = fetch(list.dataset.indexUrl!)
           .then((response) => {
             if (!response.ok) throw new Error('Search index unavailable');
@@ -136,7 +140,8 @@ const seriesTitles = await getSeriesTitles();
             const normalized = normalize(text);
             return [id, { text, normalized, words: wordsIn(normalized) }];
           })))
-          .then((loaded) => {
+          .then(async (loaded) => {
+            useLemmas(await lemmasRequest);
             indexData = loaded;
             return loaded;
           })

@@ -95,7 +95,8 @@ Present now, confirmed by the code:
   opening of the first paragraph when there is none, with source chips and
   link addresses removed.
   The dedicated search page matches titles, sections, file names and article
-  text, including common Russian inflections. A match counts from the start
+  text, including Russian word forms: the build maps every word form of the
+  articles to its dictionary form, so «сна» finds «сон». A match counts from the start
   of a word, never from its middle. Title matches come first; among the
   rest, the article where the query word occurs more often ranks higher.
   It shows excerpts with matched

@@ -40,7 +40,7 @@ on Node 22.
 | `src/scripts/theme.js` | The font size, the reading width, the can picker for the accent, the copy buttons, the Mermaid rendering, which imports Mermaid only when a page has a diagram. |
 | `src/layouts/Layout.astro` | The shared head: preloaded fonts, the static dark theme (`data-theme="dark"` written into the markup), the inline paint script, the Open Graph and Twitter Card tags, the canonical link. |
 | `src/scripts/ref-tip.js` | The shared styled tooltip: the source behind a reference chip, the can names above the settings swatches. |
-| `src/utils/search-matching.ts` | The word matching of the search: Russian suffix stripping and stop words. |
+| `src/utils/search-matching.ts`, `src/pages/search-lemmas.json.ts` | The word matching of the search: Russian suffix stripping, stop words and the table of word forms built with `az`. |
 | `src/utils/series.ts` | What counts as a series, what counts as an intro file, which folders have an article to show. |
 | `src/utils/date.ts` | Dates, sorting, the reading time, the note anchor. |
 | `src/config.ts` | The site metadata, the Russian names of the folders, the mapping of the two body folders onto the body hub. |
@@ -93,8 +93,16 @@ on Node 22.
 - **Search matches words, not only raw substrings.** A query matches a title,
   a section, a summary or the full text as a substring that starts a word,
   and by words: `src/utils/search-matching.ts` strips common Russian
-  suffixes and drops stop words, so «сахаром» finds «сахар». A substring in
-  the middle of a word does not count, or «сон» would find «Олсон». Within a
+  suffixes and drops stop words, so «сахаром» finds «сахар». Suffix stripping
+  cannot see fleeting vowels, so the build also writes `search-lemmas.json`
+  (`src/pages/search-lemmas.json.ts`): every word form of the articles mapped
+  to its dictionary form by `az` (OpenCorpora), which is how «сна» and «сне»
+  find «сон». Only forms that occur in the articles are in it, about 100 KB
+  gzipped. Guesses that cut an unknown prefix (`PrefixUnknown`) are dropped,
+  or the surname Уилсон would read as «сон». The page works without the
+  table and falls back to suffix stripping. A substring in the middle of a
+  word does not count, or «сон» would find «Олсон», and a query of three
+  letters matches only a whole word, or «сна» would find «сначала». Within a
   rank, the article with more matching words comes first. A Cyrillic query
   also becomes Latin for the file names, matched against the start of each
   part of the name.

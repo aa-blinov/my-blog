@@ -1,5 +1,5 @@
 ---
-import { formatDate, readingMinutes, plural } from '../utils/date';
+import { formatDate, humanDate, readingMinutes, plural } from '../utils/date';
 import { BASE } from '../config';
 // Описание есть у малой части статей, а заголовки образные: без первых строк текста
 // по списку раздела не понять, о чём статья
@@ -26,7 +26,7 @@ const Heading = level === 2 ? 'h2' : 'h3';
           // ничего не говорило и выглядело как служебная страница, открытая по ошибке
           <><span>часть {entry.data.part}</span>{entry.body && <><span class="meta-sep" aria-hidden="true">~</span><span>≈ {readingMinutes(entry.body)} {plural(readingMinutes(entry.body), 'минута', 'минуты', 'минут')}</span></>}</>
         ) : (
-          <><span>{formatDate(entry.data.date)}</span>{entry.body && <><span class="meta-sep" aria-hidden="true">~</span><span>≈ {readingMinutes(entry.body)} {plural(readingMinutes(entry.body), 'минута', 'минуты', 'минут')}</span></>}</>
+          <><time datetime={formatDate(entry.data.date)}>{humanDate(entry.data.date)}</time>{entry.body && <><span class="meta-sep" aria-hidden="true">~</span><span>≈ {readingMinutes(entry.body)} {plural(readingMinutes(entry.body), 'минута', 'минуты', 'минут')}</span></>}</>
         )}</p>
         <Heading class="post-title">
           <a href={`${BASE}blog/${entry.id}/`} class="post-title-link">

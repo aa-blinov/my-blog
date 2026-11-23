@@ -13,7 +13,7 @@ import { pickers } from '../../data/pickers';
 import Questionnaire from '../../components/Questionnaire.astro';
 import { questionnaires } from '../../data/questionnaires';
 import type { MarkdownHeading } from 'astro';
-import { formatDate, readingMinutes, plural } from '../../utils/date';
+import { formatDate, humanDate, readingMinutes, plural } from '../../utils/date';
 import { sortByDateDesc } from '../../utils/date';
 import { getSeries, getAllSeries, seriesOf, isAbout, type Series } from '../../utils/series';
 import { BASE, sectionTitle, isHealthArticle } from '../../config';
@@ -191,7 +191,7 @@ const articleSections = entry ? getArticleSections(entry.id, seriesTitles) : [];
         </hgroup>
         {series && <SeriesNav series={series} entry={entry} where="head" />}
         <p class="read-line">
-          <time datetime={formatDate(entry.data.date)}>{formatDate(entry.data.date)}</time>
+          <time datetime={formatDate(entry.data.date)}>{humanDate(entry.data.date)}</time>
           <span class="meta-sep" aria-hidden="true">~</span>
           <span>≈ {minutes} {plural(minutes, 'минута', 'минуты', 'минут')}</span>
           {headings.filter((h) => h.depth === 2).length >= 3 && (

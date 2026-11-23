@@ -1,6 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { formatDate } from '../utils/date';
+import { formatDate, humanDate } from '../utils/date';
 
 interface Props {
   entry: { data: { title: string; date: Date; summary?: string }; fileLabel: string } | null;
@@ -19,7 +19,7 @@ const hasEntry = !!entry;
     <div class="entry-header">
       {hasEntry ? (
         <>
-          {!hideMeta && <p class="meta"><span>{formatDate(entry.data.date)}</span></p>}
+          {!hideMeta && <p class="meta"><time datetime={formatDate(entry.data.date)}>{humanDate(entry.data.date)}</time></p>}
           <hgroup>
             <h1>{entry.data.title}</h1>
             {entry.data.summary && <p class="summary">{entry.data.summary}</p>}

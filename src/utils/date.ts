@@ -3,6 +3,19 @@ export function formatDate(d: Date): string {
   return d.toISOString().slice(0, 10);
 }
 
+/** «16 октября 2026» для читателя. ISO читается как машинный вывод: в разметке он остаётся
+    только в атрибуте datetime, а глазам показываем дату словами. UTC, как frontmatter. */
+export function humanDate(d: Date): string {
+  return new Intl.DateTimeFormat('ru-RU', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' })
+    .format(d)
+    .replace(/\s*г\.$/, '');
+}
+
+/** «14 ноября» там, где год уже назван заголовком или очевиден из соседних строк. */
+export function humanDayMonth(d: Date): string {
+  return new Intl.DateTimeFormat('ru-RU', { day: 'numeric', month: 'long', timeZone: 'UTC' }).format(d);
+}
+
 export function sortByDateDesc<T extends { id?: string; data: { date: Date } }>(entries: T[]): T[] {
   // Newest first; ties broken by id so the order is stable across loaders and builds.
   return [...entries].sort(

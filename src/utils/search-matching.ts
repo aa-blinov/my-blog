@@ -28,6 +28,29 @@ const stopWords = new Set([
   'чем', 'так', 'уже', 'тоже', 'есть',
 ]);
 
+/** Нижний регистр и «е» вместо «ё»: так пишут запросы, и так же сделаны ключи таблицы словоформ. */
+export function normalizeWord(text: string): string {
+  return text.replaceAll('İ', 'I').toLowerCase().replaceAll('ё', 'е');
+}
+
+export interface LemmaTable {
+  lemmas: string[];
+  forms: Record<string, number | number[]>;
+}
+
+// Таблицу собирает сборка (search-lemmas.json); пока она не приехала, работает только обрезка окончаний
+let lemmaTable: LemmaTable | null = null;
+
+export function useLemmas(table: LemmaTable | null): void {
+  lemmaTable = table;
+}
+
+function lemmasOf(word: string): string[] {
+  const ids = lemmaTable?.forms[word];
+  if (ids === undefined) return [word];
+  return (Array.isArray(ids) ? ids : [ids]).map((id) => lemmaTable!.lemmas[id]);
+}
+
 export function wordsIn(text: string): SearchWord[] {
   return [...text.matchAll(/[a-z0-9а-я]+/gi)].map((match) => ({
     value: match[0].toLowerCase(),
@@ -53,7 +76,12 @@ function sameWord(queryWord: string, textWord: string): boolean {
   const queryStem = stem(queryWord);
   const textStem = stem(textWord);
   if (queryStem === textStem) return true;
-  return queryStem.length >= 4 && textStem.includes(queryStem);
+  // Основа ищется только с начала слова: в середине она находила «стал» в «ностальгии»
+  if (queryStem.length >= 4 && textStem.startsWith(queryStem)) return true;
+  // Обрезка окончаний не видит беглых гласных и чередований: «сон» и «сна» сходятся только по словарю
+  if (!lemmaTable) return false;
+  const textLemmas = lemmasOf(textWord);
+  return lemmasOf(queryWord).some((lemma) => textLemmas.includes(lemma));
 }
 
 const wordChar = /[a-z0-9а-я]/i;
@@ -62,8 +90,12 @@ const wordChar = /[a-z0-9а-я]/i;
     и вытеснял наверх статьи, где о сне нет ни слова. Окончание слова не проверяем, «сон» находит «сонный». */
 export function indexAtWordStart(text: string, query: string): number {
   if (!query) return -1;
+  // Запрос в три буквы как начало слова слишком широк: «сна» находило «сначала». Такой запрос совпадает
+  // только со словом целиком, а его формы ловит словарь
+  const whole = query.length <= 3 && !/\s/.test(query);
   for (let at = text.indexOf(query); at >= 0; at = text.indexOf(query, at + 1)) {
-    if (at === 0 || !wordChar.test(text[at - 1])) return at;
+    const end = at + query.length;
+    if ((at === 0 || !wordChar.test(text[at - 1])) && (!whole || end === text.length || !wordChar.test(text[end]))) return at;
   }
   return -1;
 }
