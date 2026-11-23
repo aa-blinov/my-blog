@@ -184,6 +184,13 @@ const links = [
     border-radius: var(--app-radius-sm);
   }
 
+  /* Pico обводит [role="group"] кольцом, когда кнопка внутри в фокусе: после клика по банке
+     панель и ряд банок вспыхивали рамкой. Клавиатурный фокус остаётся на самой кнопке */
+  .reader-controls,
+  .reader-controls [role="group"] {
+    box-shadow: none !important;
+  }
+
   .reader-controls button {
     display: grid;
     place-items: center;
