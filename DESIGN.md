@@ -386,10 +386,7 @@ link to the whole series. «Показать ещё» is an outlined button at t
 border; the next row takes the focus so a keyboard reader continues where the
 list grew.
 
-Below the feed, four editorial starting points («С чего начать»): a topic
-label, a title and one short description per row, separated by hairlines,
-covering AI, popular science, personal essays and development. Then the
-series as tags and the latest notes.
+Below the feed, the series as tags and the latest notes.
 
 ### Section labels and topic grouping
 

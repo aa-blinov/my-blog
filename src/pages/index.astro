@@ -27,41 +27,6 @@ const recentNotes = sortByDateDesc(
   (await getCollection('notes')).filter((n) => !n.data.draft)
 ).slice(0, 3);
 
-const startingPoints = [
-  {
-    topic: 'ИИ',
-    title: 'Как не потерять себя',
-    description: 'Как работа с ИИ влияет на собственное мышление.',
-    slug: 'ai/how-not-to-lose-yourself',
-  },
-  {
-    topic: 'Научпоп',
-    title: 'Прокрастинация как ремонт настроения',
-    description: 'Как неприятные чувства заставляют нас откладывать дела.',
-    slug: 'science/mind/procrastination-is-not-about-time',
-  },
-  {
-    topic: 'Личное',
-    title: 'Право передумать',
-    description: 'Что делать, когда давняя цель больше не твоя.',
-    slug: 'life/the-right-to-change-your-mind',
-  },
-  {
-    topic: 'Разработка',
-    title: 'Цикл, из которого сделан агент',
-    description: 'Как работает цикл кодового агента.',
-    slug: 'dev/agent/loop',
-  },
-];
-
-// Ссылки «Начать отсюда» заданы руками: если статью переехала или стала черновиком,
-// падаем на сборке, а не отдаём 404 с главной
-for (const item of startingPoints) {
-  if (!articles.some((p) => p.id === item.slug)) {
-    throw new Error(`«Начать отсюда»: статьи ${item.slug} нет в коллекции`);
-  }
-}
-
 // По десять строк: столько помещается на два экрана телефона, дальше читатель решает сам
 const FEED_PAGE = 10;
 const seriesTitles = Object.fromEntries(seriesRows.map((s) => [s.folder, s.title]));
@@ -81,7 +46,6 @@ if (homeEntry) {
 
 <PageFromEntry entry={entryData} fallbackTitle="Главная" fallbackH1="Главная" prompt="main &gt;" hideMeta>
   {Content ? <div class="home-intro"><Content /></div> : <p>Добавь в <code>content/pages/</code> файл <code>main.md</code> с frontmatter: <code>title</code>, <code>date</code>.</p>}
-  <p class="home-first-visit">Впервые здесь? <a href="#start">С чего начать</a></p>
 
   <section class="home-feed" aria-labelledby="feed-heading" data-page={FEED_PAGE}>
     <h2 id="feed-heading" class="section-heading">Статьи</h2>
@@ -98,21 +62,6 @@ if (homeEntry) {
       <button type="button" class="feed-more-button needs-js">Показать ещё</button>
       <a href={`${BASE}blog/`} class="post-title-link all-articles-link">Все статьи по датам <Arrow /></a>
     </p>
-  </section>
-
-  <section class="start-here" id="start" aria-labelledby="start-here-heading">
-    <h2 id="start-here-heading" class="section-heading">С чего начать</h2>
-    <ul class="start-here-list" role="list">
-      {startingPoints.map((item) => (
-        <li>
-          <a class="start-here-link post-title-link" href={`${BASE}blog/${item.slug}/`}>
-            <span class="start-here-topic">{item.topic}</span>
-            <span class="start-here-title">{item.title}</span>
-            <span class="start-here-description">{item.description}</span>
-          </a>
-        </li>
-      ))}
-    </ul>
   </section>
 
   {seriesRows.length > 0 && <section class="home-series" aria-labelledby="series-heading">
@@ -197,23 +146,6 @@ if (homeEntry) {
 </script>
 
 <style>
-  .home-first-visit {
-    margin-top: var(--app-spacing-md);
-    color: var(--pico-muted-color);
-    font-family: var(--font-family);
-    font-size: var(--app-font-sm);
-  }
-
-  .home-first-visit a {
-    color: inherit;
-    text-decoration: underline;
-    text-underline-offset: 0.2em;
-  }
-
-  .home-first-visit a:hover {
-    color: var(--pico-primary);
-  }
-
   .home-feed {
     margin-top: var(--app-spacing-xl);
   }
@@ -353,102 +285,5 @@ if (homeEntry) {
 
   .home-series .section-heading {
     margin-bottom: var(--app-spacing-md);
-  }
-
-  .recent-header {
-    display: flex;
-    align-items: baseline;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    column-gap: var(--app-spacing);
-    margin-bottom: var(--app-spacing-md);
-  }
-
-  .recent-header .section-heading {
-    margin: 0;
-  }
-
-  .recent-header .all-articles-link {
-    display: inline-flex;
-    align-items: center;
-    min-height: var(--app-touch-target);
-    font-size: var(--app-font-sm);
-    text-decoration: underline;
-    text-underline-offset: 0.2em;
-  }
-
-  .start-here {
-    margin-top: var(--app-spacing-2xl);
-  }
-
-  .start-here .section-heading {
-    margin-bottom: var(--app-spacing-md);
-  }
-
-  .start-here-list {
-    margin: 0;
-    padding: 0;
-  }
-
-  .start-here-list li {
-    margin: 0;
-    padding: 0;
-    border-top: 1px solid var(--pico-muted-border-color);
-    list-style: none;
-  }
-
-  .start-here-list li:last-child {
-    border-bottom: 1px solid var(--pico-muted-border-color);
-  }
-
-  .start-here-link {
-    display: grid;
-    grid-template-columns: minmax(7.5rem, max-content) minmax(0, 1fr);
-    align-items: baseline;
-    column-gap: var(--app-spacing);
-    row-gap: var(--app-spacing-xs);
-    min-height: var(--app-touch-target);
-    padding-block: var(--app-spacing-md);
-  }
-
-  .start-here-topic {
-    grid-column: 1;
-    grid-row: 1 / span 2;
-    color: var(--pico-muted-color);
-    font-family: var(--font-family);
-    font-size: var(--app-font-control);
-  }
-
-  .start-here-title {
-    grid-column: 2;
-    text-decoration: underline;
-    text-decoration-color: var(--pico-muted-border-color);
-    text-underline-offset: 0.2em;
-  }
-
-  .start-here-description {
-    grid-column: 2;
-    color: var(--pico-muted-color);
-    font-size: var(--app-font-sm);
-    line-height: 1.45;
-  }
-
-  .start-here-link:is(:hover, :focus-visible) .start-here-title {
-    color: var(--pico-primary);
-    text-decoration-color: currentColor;
-  }
-
-  @media (max-width: 480px) {
-    .start-here-link {
-      grid-template-columns: minmax(0, 1fr);
-      row-gap: var(--app-spacing-xs);
-    }
-
-    .start-here-topic,
-    .start-here-title,
-    .start-here-description {
-      grid-column: 1;
-      grid-row: auto;
-    }
   }
 </style>

@@ -556,7 +556,7 @@ pre, code {
 }
 
 /* Ссылка внутри фразы подводки на главной (.home-intro) остаётся обычной ссылкой: плашка посреди строки её рвала */
-.content a[href^="/"]:not(.post-title-link):not(.note-anchor):not(.series-nav a):not(.section-tags a):not(.feed-topics a):not(.home-first-visit a):not(.home-intro a) {
+.content a[href^="/"]:not(.post-title-link):not(.note-anchor):not(.series-nav a):not(.section-tags a):not(.feed-topics a):not(.home-intro a) {
   display: inline;
   padding: 0.1rem var(--app-spacing-md);
   border-radius: var(--app-radius-sm);
@@ -574,7 +574,7 @@ pre, code {
   -webkit-box-decoration-break: clone;
   box-decoration-break: clone;
 }
-.content a[href^="/"]:not(.post-title-link):not(.note-anchor):not(.series-nav a):not(.section-tags a):not(.feed-topics a):not(.home-first-visit a):not(.home-intro a):hover {
+.content a[href^="/"]:not(.post-title-link):not(.note-anchor):not(.series-nav a):not(.section-tags a):not(.feed-topics a):not(.home-intro a):hover {
   background-color: var(--pico-primary);
   border-color: var(--pico-primary);
   color: var(--pico-primary-inverse);
