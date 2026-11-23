@@ -26,5 +26,7 @@ export default defineConfig({
     '/blog/science/mind/antidepressants-map/': '/blog/science/mind/antidepressants/map/',
     // Старую ссылку на статью сохраняем после переноса в личные тексты
     '/blog/ideas/why-a-personal-project-stays-an-idea/': '/blog/life/why-a-personal-project-stays-an-idea/',
+    // Lazy to Text давно работает на трёх системах и не только с Whisper: старый адрес ведёт на новый
+    '/blog/projects/whisper-local-windows/': '/blog/projects/lazy-to-text/',
   },
 });

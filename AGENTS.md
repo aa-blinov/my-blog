@@ -137,9 +137,10 @@ because journals and news sites answer scripts that way.
   the section line and the search results only through `getSeriesTitles()`
   in `src/utils/series.ts`: a caller of `getArticleSections()` that skips it
   falls back to the list.
-- **The redirects live in `astro.config.mts`.** Eleven of them: the nine old
-  `dev/agent-*` addresses, the old map of the antidepressants series and the
-  old place of the article that moved from `ideas` to `life`. A changed path
+- **The redirects live in `astro.config.mts`.** Twelve of them: the nine old
+  `dev/agent-*` addresses, the old map of the antidepressants series, the
+  old place of the article that moved from `ideas` to `life` and the old
+  `whisper-local-windows` address of the Lazy to Text article. A changed path
   needs a redirect there, because that is where the bookmarks of other people
   point.
 - **A note carries its identity in the file name.** The file name, the `date`
