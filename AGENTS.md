@@ -15,14 +15,20 @@ npm install      # install
 npm run dev      # dev server on http://localhost:4321
 npm run check    # astro check: types and templates
 npm run build    # the static site into dist/
+npm run check:links     # internal links and #anchors of dist/, fails on any miss
+npm run check:external  # external links, writes link-report.md, fails on 404/410/dead domain
 npm run preview  # serve dist/
 ```
 
 There is no test suite. `npm run check` type-checks the templates and
 `npm run build` is the check that matters, because the content is part of the
 build: a broken frontmatter or a missing article shows up there and nowhere
-else. The deploy workflow runs `npm ci`, `npm run check` and `npm run build`
-on Node 22.
+else. The deploy workflow runs `npm ci`, `npm run check`, `npm run build` and
+`npm run check:links` on Node 22, so a broken link between articles stops the
+deploy. The `links` workflow checks the external links every Monday and keeps
+one issue, «Мёртвые ссылки в статьях», open while any source answers 404, 410
+or has lost its domain; a 403 or a timeout is reported but does not count,
+because journals and news sites answer scripts that way.
 
 ## Where things live
 
@@ -44,6 +50,8 @@ on Node 22.
 | `src/utils/series.ts` | What counts as a series, what counts as an intro file, which folders have an article to show. |
 | `src/utils/date.ts` | Dates, sorting, the reading time, the note anchor. |
 | `src/config.ts` | The site metadata, the Russian names of the folders, the mapping of the two body folders onto the body hub. |
+| `src/pages/og/[...path].png.ts`, `src/utils/og-image.ts` | The link preview image of every article and the shared one, `/og/default.png`, drawn as SVG and rendered to PNG at build time. |
+| `scripts/` | The internal and external link checkers. |
 | `astro.config.mts` | The static output, the sitemap, the redirects. |
 | `src/styles/global.css` | The visual system, over Pico CSS. `DESIGN.md` holds the rules behind it. |
 | `.claude/skills/` | Two skills that write articles and notes in the author's voice. Read them before writing prose for this site. |

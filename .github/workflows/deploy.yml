@@ -38,6 +38,10 @@ jobs:
       - name: Build
         run: npm run build
 
+      # Битая ссылка между статьями или несуществующий якорь останавливают деплой до публикации
+      - name: Check internal links
+        run: npm run check:links
+
       - name: Setup Pages
         uses: actions/configure-pages@v6
 

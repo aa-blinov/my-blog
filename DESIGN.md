@@ -423,6 +423,7 @@ Every value that a component reuses is a token in `:root` of
 | Radius | `--app-radius-xs`, `--app-radius-sm` | 3px, 4px |
 | Touch | `--app-touch-target` | 44px, the smallest height of any control on a touch screen |
 | Form | `--pico-form-element-spacing-vertical`, `--pico-form-element-spacing-horizontal` | 0.5rem, 0.75rem: a Pico field or button lands at 44–50px from phone to desktop |
+| Control border | `--pico-form-element-border-color`, `--mm-control-line` | the muted grey mixed 85% into the background: 3.8:1 on Night, so a field or a button stays findable (WCAG 1.4.11 asks 3:1). Containers keep the thin rule |
 | Icon | `--app-icon-size` | 1em, so an icon follows the text it sits beside |
 
 Where a component needs one value that the scales do not cover, it is named
@@ -458,6 +459,8 @@ picker (`+`, `!`, `~`, `×`), which are the legend itself.
 - **Do** give a tap target at least 44px on a phone.
 - **Do** set the text of a field to at least 16px: below that, iOS zooms the
   page when the field takes focus.
+- **Do** give anything a reader clicks or types into a border of at least 3:1
+  against the background, and let "reduce motion" switch every transition off.
 - **Do** keep the structural blocks out of a `<nav>`: the table of contents
   in a `details`, the footer of an article in an `aside`.
 - **Do** set the colour of a text link on the parent and give the link

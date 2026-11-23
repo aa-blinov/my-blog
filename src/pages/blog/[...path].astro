@@ -189,7 +189,7 @@ const folderDescription = isBodyHub
 ---
 
 {entry && Content ? (
-  <Layout title={entry.data.title} description={articleSummary(entry, DESCRIPTION_LIMIT)}>
+  <Layout title={entry.data.title} description={articleSummary(entry, DESCRIPTION_LIMIT)} ogImage={`${BASE}og/${entry.id}.png`}>
     <article>
       <div class="entry-header">
         {articleSections.length > 0 && (

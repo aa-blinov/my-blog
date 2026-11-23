@@ -105,6 +105,9 @@
      ложится в 44–48 px: палец попадает, на ПК поле не выглядит плашкой */
   --pico-form-element-spacing-vertical: 0.5rem;
   --pico-form-element-spacing-horizontal: 0.75rem;
+  /* Рамка поля у Pico #2a3140 давала 1.38:1 к фону при заливке 1.11:1: поле со слабым зрением
+     было не найти (WCAG 1.4.11 просит 3:1). Тот же серый, что у границ подборщика, даёт 3.8:1 */
+  --pico-form-element-border-color: color-mix(in srgb, var(--pico-muted-color) 85%, var(--pico-background-color));
 }
 
 /* ==========================================================================
@@ -175,6 +178,19 @@ body {
   line-height: 1.6;
   background-color: var(--pico-background-color);
   overflow-x: clip;
+}
+
+/* «Уменьшить движение» в системе гасит все переходы и анимации, а не только подсветку заметки:
+   повороты стрелок и сдвиг карты тоже движение, и у части читателей от него кружится голова */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 /* --- Skip link: first tab stop, visible only in focus, styled like a sidebar control --- */
@@ -629,8 +645,9 @@ a.all-articles-link.post-title-link:hover {
 }
 
 /* Meta line: date ~ reading time, the tilde as a quiet separator (one glyph for the whole site) */
+/* Без прозрачности: при 0.55 тильда давала 2.32:1 и на ярком экране пропадала. Тишину ей даёт
+   приглушённый цвет мета-строки, 4.77:1, этого хватает, чтобы она не спорила с датой */
 .meta-sep {
-  opacity: 0.55;
   user-select: none;
 }
 @media (max-width: 991px) {
@@ -1209,6 +1226,9 @@ html:not(.js) .needs-js {
   --mm-ink: var(--pico-contrast);
   --mm-muted: var(--pico-muted-color);
   --mm-rule: var(--pico-muted-border-color);
+  /* Рамка того, на что нажимают или куда печатают. Тонкая --mm-rule годится для контейнеров,
+     а поле и кнопки с ней сливались с фоном (1.18:1 при норме 3:1 для элементов управления) */
+  --mm-control-line: var(--pico-form-element-border-color);
   --mm-tone: var(--pico-code-background-color);
   --mm-accent: var(--pico-primary);
   margin: var(--app-spacing-lg) 0;
@@ -1410,7 +1430,7 @@ html.mm-locked body {
   margin: 0;
   cursor: text;
   padding: 0.5rem 0.7rem;
-  border: 1px solid var(--mm-rule);
+  border: 1px solid var(--mm-control-line);
   border-radius: var(--app-radius-xs);
   background: var(--mm-bg);
   color: var(--mm-ink);
@@ -1540,7 +1560,7 @@ html.mm-locked body {
   min-width: 36px;
   margin: 0;
   padding: 0 0.6rem;
-  border: 1px solid var(--mm-rule);
+  border: 1px solid var(--mm-control-line);
   border-radius: var(--app-radius-xs);
   background: var(--mm-bg);
   box-shadow: none;

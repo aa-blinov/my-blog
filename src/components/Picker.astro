@@ -43,18 +43,22 @@ const client = {
     <form class="pk-form" aria-label="Особенности пациента">
       {data.groups.map((g) => (
         <details class="pk-group" open>
-          <summary class="pk-group-title">{g.label}<span class="pk-count"></span></summary>
-          {data.options.filter((o) => o.group === g.id).map((o) => (
-            <label class="pk-opt">
-              <input type="checkbox" name="o" value={o.id} />
-              <span>{o.label}{o.hint && <span class="pk-hint">{o.hint}</span>}</span>
-            </label>
-          ))}
+          <summary class="pk-group-title"><span id={`pk-g-${g.id}`}>{g.label}</span><span class="pk-count"></span></summary>
+          {/* Без группы диктор читал «беременность» и не говорил, из какого она раздела */}
+          <div role="group" aria-labelledby={`pk-g-${g.id}`}>
+            {data.options.filter((o) => o.group === g.id).map((o) => (
+              <label class="pk-opt">
+                <input type="checkbox" name="o" value={o.id} />
+                <span>{o.label}{o.hint && <span class="pk-hint">{o.hint}</span>}</span>
+              </label>
+            ))}
+          </div>
           {g.id === 'safety' && <div class="pk-urgent"></div>}
         </details>
       ))}
       <details class="pk-group" open>
-        <summary class="pk-group-title">Опыт лечения<span class="pk-count"></span></summary>
+        <summary class="pk-group-title"><span id="pk-g-history">Опыт лечения</span><span class="pk-count"></span></summary>
+        <div role="group" aria-labelledby="pk-g-history">
         <label class="pk-select">
           <span>Раньше помог</span>
           <select name="helped">
@@ -69,6 +73,7 @@ const client = {
             {data.drugs.map((d) => <option value={d.id}>{d.label}</option>)}
           </select>
         </label>
+        </div>
       </details>
       <p class="pk-actions"><button type="reset" class="pk-reset">Сбросить отметки</button></p>
     </form>

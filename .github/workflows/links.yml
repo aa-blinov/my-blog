@@ -1,0 +1,66 @@
+name: links
+
+# Раз в неделю проверяет внешние ссылки: источники статей со временем умирают, а правило блога
+# требует источник у каждого утверждения. Мёртвая ссылка открывает (или обновляет) одно issue
+# со списком; когда всё снова живо, issue закрывается.
+
+on:
+  schedule:
+    - cron: "0 6 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: links
+  cancel-in-progress: true
+
+jobs:
+  external:
+    runs-on: ubuntu-26.04
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "22"
+          cache: "npm"
+
+      - run: npm ci
+
+      - run: npm run build
+
+      - name: Check external links
+        id: check
+        continue-on-error: true
+        run: npm run check:external
+
+      - name: Report to the job summary
+        if: always()
+        run: cat link-report.md >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Open or update the issue
+        if: steps.check.outcome == 'failure'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          title="Мёртвые ссылки в статьях"
+          number=$(gh issue list --state open --search "in:title \"$title\"" --json number -q '.[0].number')
+          if [ -n "$number" ]; then
+            gh issue edit "$number" --body-file link-report.md
+          else
+            gh issue create --title "$title" --body-file link-report.md
+          fi
+
+      - name: Close the issue when everything is alive
+        if: steps.check.outcome == 'success'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          title="Мёртвые ссылки в статьях"
+          number=$(gh issue list --state open --search "in:title \"$title\"" --json number -q '.[0].number')
+          if [ -n "$number" ]; then
+            gh issue close "$number" --comment "Все ссылки снова отвечают."
+          fi

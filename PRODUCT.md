@@ -111,6 +111,9 @@ Present now, confirmed by the code:
   the opening of its text cut at 160 characters; a section takes its intro, or
   names its three newest articles when it has none. The general line of the
   site is left for the home page and the archive.
+  Every article also carries its own preview image, 1200×630: the section line
+  and the title in JetBrains Mono on Night with the Original accent, drawn at
+  build time; the other pages share one image of the site.
 - The header disclosure offers five font sizes and three reading widths, and
   a lineup of can swatches that moves the accent to the chosen flavour. The
   default is the Original green; the choice is remembered and applied

@@ -8,3 +8,6 @@
 
 # impeccable review captures
 /.impeccable/review/
+
+# Отчёт еженедельной проверки внешних ссылок
+link-report.md
