@@ -56,6 +56,24 @@ function sameWord(queryWord: string, textWord: string): boolean {
   return queryStem.length >= 4 && textStem.includes(queryStem);
 }
 
+const wordChar = /[a-z0-9а-я]/i;
+
+/** Совпадение фразы засчитывается только с начала слова: иначе «сон» находился в «Олсон» и «персонаже»
+    и вытеснял наверх статьи, где о сне нет ни слова. Окончание слова не проверяем, «сон» находит «сонный». */
+export function indexAtWordStart(text: string, query: string): number {
+  if (!query) return -1;
+  for (let at = text.indexOf(query); at >= 0; at = text.indexOf(query, at + 1)) {
+    if (at === 0 || !wordChar.test(text[at - 1])) return at;
+  }
+  return -1;
+}
+
+/** Сколько слов текста совпало с запросом: статья, где тема проходит через весь текст, стоит выше той, где слово мелькнуло раз. */
+export function countWordMatches(words: SearchWord[], terms: string[]): number {
+  if (!terms.length) return 0;
+  return words.reduce((count, { value }) => count + (terms.some((term) => sameWord(term, value)) ? 1 : 0), 0);
+}
+
 export function findWordMatches(words: SearchWord[], terms: string[]): MatchRange[] | null {
   if (!terms.length) return null;
   const matches: MatchRange[] = [];

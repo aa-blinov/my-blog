@@ -86,7 +86,10 @@ Present now, confirmed by the code:
 
 - The header links to the home page, archive, notes, about page and search.
   The dedicated search page matches titles, sections, file names and article
-  text, including common Russian inflections. It shows excerpts with matched
+  text, including common Russian inflections. A match counts from the start
+  of a word, never from its middle. Title matches come first; among the
+  rest, the article where the query word occurs more often ranks higher.
+  It shows excerpts with matched
   words highlighted, transliterates Russian queries and remembers the query
   in the tab. It starts downloading the article texts when the field takes
   focus: the first matches on titles, sections and summaries render from the

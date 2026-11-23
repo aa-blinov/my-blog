@@ -91,10 +91,13 @@ on Node 22.
   so the field, the status line and the results carry `needs-js`, and the
   `noscript` block links to the archive.
 - **Search matches words, not only raw substrings.** A query matches a title,
-  a section or a summary as a substring, and the full text by words:
-  `src/utils/search-matching.ts` strips common Russian suffixes and drops
-  stop words, so «сахаром» finds «сахар». A Cyrillic query also becomes Latin
-  for the file names, matched against the start of each part of the name.
+  a section, a summary or the full text as a substring that starts a word,
+  and by words: `src/utils/search-matching.ts` strips common Russian
+  suffixes and drops stop words, so «сахаром» finds «сахар». A substring in
+  the middle of a word does not count, or «сон» would find «Олсон». Within a
+  rank, the article with more matching words comes first. A Cyrillic query
+  also becomes Latin for the file names, matched against the start of each
+  part of the name.
 - **The search query lives in session storage.** The key is `sidebar-search`,
   a name left over from the old sidebar. The query survives a reload in the
   same tab and is gone in the next one.

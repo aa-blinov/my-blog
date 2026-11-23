@@ -41,7 +41,7 @@ const seriesTitles = await getSeriesTitles();
 
 <script>
   import { plural } from '../utils/date';
-  import { findWordMatches, queryWords, wordsIn, type MatchRange, type SearchWord } from '../utils/search-matching';
+  import { countWordMatches, findWordMatches, indexAtWordStart, queryWords, wordsIn, type MatchRange, type SearchWord } from '../utils/search-matching';
 
   const ruToEn: Record<string, string> = {
     'а':'a','б':'b','в':'v','г':'g','д':'d','е':'e','ё':'yo',
@@ -169,14 +169,14 @@ const seriesTitles = await getSeriesTitles();
       const index = indexData;
 
       const translit = /[а-яё]/i.test(raw) ? [...raw.toLowerCase()].map((letter) => ruToEn[letter] ?? letter).join('') : '';
-      const matches: { item: HTMLLIElement; rank: number }[] = [];
+      const matches: { item: HTMLLIElement; rank: number; hits: number }[] = [];
       for (const result of results) {
         const { item, name, alias, title, section, summary, titleWords, sectionWords, summaryWords } = result;
         const text = index?.get(result.id);
-        const titleMatch = normalize(title).indexOf(query);
-        const sectionMatch = normalize(section).indexOf(query);
-        const summaryMatch = normalize(summary).indexOf(query);
-        const textMatch = text?.normalized.indexOf(query) ?? -1;
+        const titleMatch = indexAtWordStart(normalize(title), query);
+        const sectionMatch = indexAtWordStart(normalize(section), query);
+        const summaryMatch = indexAtWordStart(normalize(summary), query);
+        const textMatch = text ? indexAtWordStart(text.normalized, query) : -1;
         const titleTokenMatches = findWordMatches(titleWords, terms);
         const sectionTokenMatches = findWordMatches(sectionWords, terms);
         const summaryTokenMatches = findWordMatches(summaryWords, terms);
@@ -199,9 +199,10 @@ const seriesTitles = await getSeriesTitles();
         else showExcerpt(result.excerptNode, summary || text?.text || '', []);
 
         const rank = titleMatch >= 0 ? 0 : titleTokenMatches ? 1 : textMatch >= 0 || summaryMatch >= 0 ? 2 : contentMatch ? 3 : sectionMatch >= 0 || sectionTokenMatches ? 4 : 5;
-        matches.push({ item, rank });
+        const hits = countWordMatches(text?.words ?? summaryWords, terms);
+        matches.push({ item, rank, hits });
       }
-      matches.sort((a, b) => a.rank - b.rank);
+      matches.sort((a, b) => a.rank - b.rank || b.hits - a.hits);
       list.append(...matches.map(({ item }) => item));
       const count = matches.length;
       statusText.textContent = count
