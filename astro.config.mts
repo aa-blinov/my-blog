@@ -28,5 +28,10 @@ export default defineConfig({
     '/blog/ideas/why-a-personal-project-stays-an-idea/': '/blog/life/why-a-personal-project-stays-an-idea/',
     // Lazy to Text давно работает на трёх системах и не только с Whisper: старый адрес ведёт на новый
     '/blog/projects/whisper-local-windows/': '/blog/projects/lazy-to-text/',
+    // Четыре статьи о самодиагнозах собраны в курс: старые адреса ведут в папку курса
+    '/blog/science/mind/adult-adhd/': '/blog/science/mind/self-diagnosis/adult-adhd/',
+    '/blog/science/mind/vsd-diagnosis-that-isnt/': '/blog/science/mind/self-diagnosis/vsd-diagnosis-that-isnt/',
+    '/blog/science/mind/trauma-and-ptsd/': '/blog/science/mind/self-diagnosis/trauma-and-ptsd/',
+    '/blog/science/mind/narcissist-in-the-room/': '/blog/science/mind/self-diagnosis/narcissist-in-the-room/',
   },
 });

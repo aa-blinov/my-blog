@@ -29,6 +29,7 @@ export const SECTION_TITLES: Record<string, string> = {
   travel: 'Путешествия',
   mind: 'Психика',
   antidepressants: 'Антидепрессанты',
+  'self-diagnosis': 'Диагнозы, которые ставят себе сами',
   agent: 'Как устроен мой агент',
 };
 
