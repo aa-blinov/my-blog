@@ -316,8 +316,10 @@ main article .content :is(.mm, .pk, .tools, .qn, .mermaid) {
 main article .entry-header h1 {
   font-size: 2em;
 }
+/* Подзаголовок держится за заголовок, но отдельной строкой: вплотную он читался как продолжение H1 */
 main article .entry-header .summary {
   font-size: 1em;
+  margin-top: 0.5em;
 }
 
 article .entry-header {
@@ -337,6 +339,14 @@ main article .content h2 {
   line-height: 1.25;
   margin: 2.25em 0 0.6em;
   scroll-margin-top: var(--app-scroll-offset);
+}
+/* Черта между разделами стоит посередине: раньше она прилипала к концу прошлого раздела,
+   а заголовок после неё висел в пустоте. Отступ до H2 после черты даёт сама черта */
+main article .content hr {
+  margin: 2.25em 0;
+}
+main article .content hr + h2 {
+  margin-top: 0;
 }
 main article .content h3 {
   font-size: 1.15em;

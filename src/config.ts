@@ -42,14 +42,6 @@ const SECTION_PAGE_PATHS: Record<string, string> = {
   'science/body-and-environment': 'science/body',
 };
 
-/** Папки, где тексты касаются здоровья. Читатель приходит туда из поиска на одну статью и не знает,
-    кто её написал, поэтому над ней стоит строка об авторе и о том, на что текст опирается. */
-export const HEALTH_FOLDERS = ['science/mind/', 'science/human-body/', 'science/body-and-environment/'];
-
-export function isHealthArticle(id: string): boolean {
-  return HEALTH_FOLDERS.some((folder) => id.startsWith(folder));
-}
-
 export function sectionPagePath(path: string): string {
   return SECTION_PAGE_PATHS[path] ?? path;
 }

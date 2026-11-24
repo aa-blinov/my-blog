@@ -136,12 +136,9 @@ Present now, confirmed by the code:
   links to the months, topic pages, subtopics and article series in a hierarchy,
   with a shortcut from the topics to the chronological list. Each
   section and subfolder has a page. Articles link to their parent sections
-  above the title and show the date and reading time below it. An article
-  about health (`science/mind/`, `science/human-body/`,
-  `science/body-and-environment/`) adds a quiet line under the date: the
-  author is a developer, not a doctor or a psychologist, the text rests on
-  research and clinical guidelines linked in the text, and a health question
-  is decided with a doctor. Lists show the date and reading time; file names
+  above the title and show the date and reading time below it. Health
+  articles carry no separate disclaimer line: the sources sit in the text as
+  chips, and the author's role is on the about page. Lists show the date and reading time; file names
   and folder paths stay out of the interface. The science
   section groups body articles and the "Body and environment" series under
   `/blog/science/body/`; existing article and series addresses stay available.

@@ -16,7 +16,7 @@ import type { MarkdownHeading } from 'astro';
 import { formatDate, humanDate, readingMinutes, plural } from '../../utils/date';
 import { sortByDateDesc } from '../../utils/date';
 import { getSeries, getAllSeries, seriesOf, isAbout, liveFolders, type Series } from '../../utils/series';
-import { BASE, sectionTitle, isHealthArticle } from '../../config';
+import { BASE, sectionTitle } from '../../config';
 import { getArticleSections } from '../../utils/breadcrumb';
 import { articleSummary } from '../../utils/article-summary';
 
@@ -217,11 +217,6 @@ const folderDescription = isBodyHub
             </>
           )}
         </p>
-        {isHealthArticle(entry.id) && (
-          <p class="health-note">
-            <a href={`${BASE}about-me/`}>Автор</a> не врач. Источники в тексте, решения о здоровье принимаются с врачом.
-          </p>
-        )}
       </div>
       {headings.filter((h) => h.depth === 2).length >= 6 && <Toc headings={headings} />}
       <div class="content">
@@ -308,25 +303,10 @@ const folderDescription = isBodyHub
 )}
 
 <style>
-  /* Тихая строка под датой: читатель из поиска должен понять, кто пишет о здоровье,
-     но статья начинается с текста, поэтому без рамки-плашки и без акцентного цвета */
-  /* Одна строка размером с мету: три строки серого до первого слова статьи отодвигали текст,
-     а смысл помещается в одну фразу */
-  .health-note {
-    margin: var(--app-spacing-sm) 0 0;
-    color: var(--pico-muted-color);
-    font-size: var(--app-font-control);
-    line-height: 1.5;
-  }
-
-  .health-note a {
-    color: inherit;
-    text-decoration: underline;
-    text-underline-offset: 0.2em;
-  }
-
+  /* Разделы это навигация над заголовком: зазор до H1 больше, чем у H1 до подзаголовка,
+     иначе крошки читались как часть заголовка */
   .article-sections {
-    margin-bottom: var(--app-spacing-md);
+    margin-bottom: var(--app-spacing);
     color: var(--pico-muted-color);
     font-size: var(--app-font-sm);
   }
@@ -349,6 +329,11 @@ const folderDescription = isBodyHub
     list-style: none;
     margin: 0;
     padding: 0;
+  }
+
+  /* Pico ставит в пункт nav невидимый символ, и flex-отступ сдвигал первый раздел с края заголовка */
+  .article-sections li::before {
+    content: none;
   }
 
   .article-sections a {
