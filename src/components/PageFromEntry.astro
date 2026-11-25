@@ -7,17 +7,18 @@ interface Props {
   fallbackTitle: string;
   fallbackH1: string;
   prompt: string;
+  hideHeader?: boolean;
   hideMeta?: boolean;
   description?: string;
 }
 
-const { entry, fallbackTitle, fallbackH1, hideMeta = false, description } = Astro.props;
+const { entry, fallbackTitle, fallbackH1, hideHeader = false, hideMeta = false, description } = Astro.props;
 const hasEntry = !!entry;
 ---
 
 <Layout title={hasEntry ? entry.data.title : fallbackTitle} description={description ?? (hasEntry ? entry.data.summary : undefined)}>
   <article>
-    <div class="entry-header">
+    {!hideHeader && <div class="entry-header">
       {hasEntry ? (
         <>
           {!hideMeta && <p class="meta"><time datetime={formatDate(entry.data.date)}>{humanDate(entry.data.date)}</time></p>}
@@ -29,7 +30,7 @@ const hasEntry = !!entry;
       ) : (
         <h1>{fallbackH1}</h1>
       )}
-    </div>
+    </div>}
     <div class="content">
       <slot />
     </div>

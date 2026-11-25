@@ -6,7 +6,7 @@ import Arrow from '../components/Arrow.astro';
 import { getCollection, render } from 'astro:content';
 import { sortByDateDesc } from '../utils/date';
 import { BASE, sectionTitle } from '../config';
-import { isAbout, liveFolders, getSeries } from '../utils/series';
+import { getSeriesTitles, isAbout, liveFolders } from '../utils/series';
 
 const pages = (await getCollection('pages')).filter((e) => !e.data.draft);
 const homeEntry = pages.find((e) => e.id === 'main');
@@ -16,8 +16,7 @@ const published = (await getCollection('blog')).filter((p) => !p.data.draft);
 const articles = published.filter((p) => !isAbout(p.id));
 const posts = sortByDateDesc(articles);
 const live = liveFolders(published);
-const seriesFolders = [...new Set(articles.filter((p) => p.data.part !== undefined).map((p) => p.id.slice(0, p.id.lastIndexOf('/'))))];
-const seriesRows = (await Promise.all(seriesFolders.map((f) => getSeries(f)))).filter((s) => s !== null);
+const seriesTitles = await getSeriesTitles();
 const topSections = [...new Set(articles.map((p) => p.id.split('/')[0]))]
   .filter((s) => live.has(s))
   .map((s) => ({ slug: s, title: sectionTitle(s), count: articles.filter((p) => p.id.startsWith(s + '/')).length }))
@@ -29,7 +28,6 @@ const recentNotes = sortByDateDesc(
 
 // По десять строк: столько помещается на два экрана телефона, дальше читатель решает сам
 const FEED_PAGE = 10;
-const seriesTitles = Object.fromEntries(seriesRows.map((s) => [s.folder, s.title]));
 
 let Content: Awaited<ReturnType<typeof render>>['Content'] | null = null;
 let entryData: { data: { title: string; date: Date; summary?: string }; fileLabel: string } | null = null;
@@ -44,11 +42,11 @@ if (homeEntry) {
 }
 ---
 
-<PageFromEntry entry={entryData} fallbackTitle="Главная" fallbackH1="Главная" prompt="main &gt;" hideMeta>
+<PageFromEntry entry={entryData} fallbackTitle="Главная" fallbackH1="Главная" prompt="main &gt;" hideHeader>
   {Content ? <div class="home-intro"><Content /></div> : <p>Добавь в <code>content/pages/</code> файл <code>main.md</code> с frontmatter: <code>title</code>, <code>date</code>.</p>}
 
   <section class="home-feed" aria-labelledby="feed-heading" data-page={FEED_PAGE}>
-    <h2 id="feed-heading" class="section-heading">Статьи</h2>
+    <h1 id="feed-heading" class="section-heading">Статьи</h1>
     {/* Без JS фильтр это ссылки на страницы разделов; с JS тема фильтрует ленту на месте и пишется в адрес */}
     <ul class="feed-topics" role="list" aria-label="Темы ленты">
       <li><a href={`${BASE}blog/`} data-filter="all" aria-current="true"><span class="nav-bracket" aria-hidden="true">[</span>все <span class="feed-count">{articles.length}</span><span class="nav-bracket" aria-hidden="true">]</span></a></li>
@@ -63,15 +61,6 @@ if (homeEntry) {
       <a href={`${BASE}blog/`} class="post-title-link all-articles-link">Все статьи по датам <Arrow /></a>
     </p>
   </section>
-
-  {seriesRows.length > 0 && <section class="home-series" aria-labelledby="series-heading">
-    <h2 id="series-heading" class="section-heading">Серии статей</h2>
-    <ul class="section-tags" role="list">
-      {seriesRows.map((s) => (
-        <li><a href={`${BASE}blog/${s.folder}/`}>{s.title} <span class="tag-count">{s.parts.length}</span></a></li>
-      ))}
-    </ul>
-  </section>}
 
   {recentNotes.length > 0 && (
     <div class="recent-posts">
@@ -256,10 +245,6 @@ if (homeEntry) {
     font-size: var(--app-font-sm);
   }
 
-  .home-series {
-    margin-top: var(--app-spacing-2xl);
-  }
-
   /* На телефоне шесть тем в три строки отодвигали ленту на полэкрана. Одна строка, которая листается
      вбок внутри себя: следующая тема видна наполовину и сама подсказывает жест */
   @media (max-width: 640px) {
@@ -281,9 +266,5 @@ if (homeEntry) {
     .feed-topics li {
       flex-shrink: 0;
     }
-  }
-
-  .home-series .section-heading {
-    margin-bottom: var(--app-spacing-md);
   }
 </style>

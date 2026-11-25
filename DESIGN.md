@@ -325,10 +325,10 @@ thumb is 4px round, which is a rectangle with soft ends.
 
 ### Top navigation
 
-The author name links home. The other links lead to the archive, notes,
-about page and search. The current page marks itself through its square
-brackets in the accent, Monster Green by default; nothing else in the row
-changes. The reading settings open from the icon at the end of the row:
+The home, archive, search, notes and about links use the same type size and
+weight. They form a left-aligned group that wraps with compact gaps when space
+runs out. The current page uses square brackets in the accent, Monster Green
+by default. The reading settings open from the icon at the upper right:
 font size and a lineup of cans for the accent. Each can
 carries its English name — `Monster Khaos`, `Monster Mango Loco` — in the
 shared tooltip on hover and on keyboard focus.
@@ -368,7 +368,8 @@ in the archive.
 
 ### The home feed
 
-The home page is one chronological feed under a one-line introduction. A row
+The home page opens with a short introduction, followed by the chronological
+feed under its main heading, «Статьи». A row
 is the archive row with details: the title, the day and month at the right,
 the topic path, the summary and the reading time. The rows carry no rules;
 their spacing gives the rhythm, as in the archive.
@@ -380,13 +381,13 @@ phone the row stays one line and scrolls sideways inside itself; the next
 topic shows half-cut and invites the gesture.
 
 Parts of one series published within a week collapse into one row: the
-shared chevron, «Серия «…»», the date of the newest part and the line «N
-частей подряд: …». Opened, it lists the parts by number on a 1px rule with a
-link to the whole series. «Показать ещё» is an outlined button at the control
+shared chevron, a title that starts with «Серия из 9 частей» (with the count
+for that row), and the newest part's date. Opened, it lists the parts by number
+on a 1px rule with a link to the whole series. «Показать ещё» is an outlined button at the control
 border; the next row takes the focus so a keyboard reader continues where the
 list grew.
 
-Below the feed, the series as tags and the latest notes.
+The latest notes appear below the feed once there are published notes.
 
 ### Section labels and topic grouping
 

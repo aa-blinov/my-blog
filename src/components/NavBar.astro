@@ -11,7 +11,9 @@ const { hasAbout, hasNotes } = Astro.props;
 const currentPath = Astro.url.pathname.replace(/\/$/, '');
 const isCurrent = (href: string) => currentPath === href.replace(/\/$/, '');
 const links = [
+  { label: 'главная', href: BASE },
   { label: 'архив', href: BASE + 'blog/' },
+  { label: 'поиск', href: BASE + 'search/', id: 'site-search-link', shortcut: '/' },
   ...(hasNotes ? [{ label: 'заметки', href: BASE + 'notes/' }] : []),
   ...(hasAbout ? [{ label: 'обо мне', href: BASE + 'about-me/' }] : []),
 ];
@@ -19,30 +21,26 @@ const links = [
 
 <header class="site-header">
   <nav class="site-nav" aria-label="Навигация по сайту">
-    <a class="site-brand" href={BASE} aria-current={isCurrent(BASE) ? 'page' : undefined}><span class="nav-bracket">[</span>главная<span class="nav-bracket">]</span></a>
     <ul role="list">
-      {links.map(({ label, href }) => (
-        <li><a href={href} aria-current={isCurrent(href) ? 'page' : undefined}><span class="nav-bracket">[</span>{label}<span class="nav-bracket">]</span></a></li>
+      {links.map(({ label, href, id, shortcut }) => (
+        <li><a id={id} href={href} aria-current={isCurrent(href) ? 'page' : undefined} aria-keyshortcuts={shortcut}><span class="nav-bracket">[</span>{label}<span class="nav-bracket">]</span></a></li>
       ))}
-      <li><a id="site-search-link" href={BASE + 'search/'} aria-current={isCurrent(BASE + 'search/') ? 'page' : undefined} aria-keyshortcuts="/"><span class="nav-bracket">[</span>поиск<span class="nav-bracket">]</span></a></li>
-      <li class="needs-js">
-        <details class="reader-settings">
-          <summary title="Настройки чтения" aria-label="Настройки чтения"><Icon name="adjustments-horizontal" /></summary>
-          <div class="reader-controls" role="group" aria-label="Настройки чтения">
-            <button type="button" id="font-decrease" title="Уменьшить шрифт" aria-label="Уменьшить шрифт"><Icon name="minus" /></button>
-            <button type="button" id="font-increase" title="Увеличить шрифт" aria-label="Увеличить шрифт"><Icon name="plus" /></button>
-            <span class="flavor-row" role="group" aria-label="Банка для акцента">
-              <button type="button" class="flavor-btn" data-flavor="original" data-tip="Monster Energy Original" aria-label="Акцент: Оригинал" aria-pressed="true"><span class="flavor-dot" aria-hidden="true"></span></button>
-              <button type="button" class="flavor-btn" data-flavor="ultra-white" data-tip="Monster Ultra White" aria-label="Акцент: Ультра уайт" aria-pressed="false"><span class="flavor-dot" aria-hidden="true"></span></button>
-              <button type="button" class="flavor-btn" data-flavor="khaos" data-tip="Monster Khaos" aria-label="Акцент: Хаос" aria-pressed="false"><span class="flavor-dot" aria-hidden="true"></span></button>
-              <button type="button" class="flavor-btn" data-flavor="mango" data-tip="Monster Mango Loco" aria-label="Акцент: Манго Локо" aria-pressed="false"><span class="flavor-dot" aria-hidden="true"></span></button>
-              <button type="button" class="flavor-btn" data-flavor="vr46" data-tip="Monster VR46 The Doctor" aria-label="Акцент: VR46" aria-pressed="false"><span class="flavor-dot" aria-hidden="true"></span></button>
-              <button type="button" class="flavor-btn" data-flavor="ultra-black" data-tip="Monster Ultra Black" aria-label="Акцент: Ультра блэк" aria-pressed="false"><span class="flavor-dot" aria-hidden="true"></span></button>
-            </span>
-          </div>
-        </details>
-      </li>
     </ul>
+    <details class="reader-settings needs-js">
+      <summary title="Настройки чтения" aria-label="Настройки чтения"><Icon name="adjustments-horizontal" /></summary>
+      <div class="reader-controls" role="group" aria-label="Настройки чтения">
+        <button type="button" id="font-decrease" title="Уменьшить шрифт" aria-label="Уменьшить шрифт"><Icon name="minus" /></button>
+        <button type="button" id="font-increase" title="Увеличить шрифт" aria-label="Увеличить шрифт"><Icon name="plus" /></button>
+        <span class="flavor-row" role="group" aria-label="Банка для акцента">
+          <button type="button" class="flavor-btn" data-flavor="original" data-tip="Monster Energy Original" aria-label="Акцент: Оригинал" aria-pressed="true"><span class="flavor-dot" aria-hidden="true"></span></button>
+          <button type="button" class="flavor-btn" data-flavor="ultra-white" data-tip="Monster Ultra White" aria-label="Акцент: Ультра уайт" aria-pressed="false"><span class="flavor-dot" aria-hidden="true"></span></button>
+          <button type="button" class="flavor-btn" data-flavor="khaos" data-tip="Monster Khaos" aria-label="Акцент: Хаос" aria-pressed="false"><span class="flavor-dot" aria-hidden="true"></span></button>
+          <button type="button" class="flavor-btn" data-flavor="mango" data-tip="Monster Mango Loco" aria-label="Акцент: Манго Локо" aria-pressed="false"><span class="flavor-dot" aria-hidden="true"></span></button>
+          <button type="button" class="flavor-btn" data-flavor="vr46" data-tip="Monster VR46 The Doctor" aria-label="Акцент: VR46" aria-pressed="false"><span class="flavor-dot" aria-hidden="true"></span></button>
+          <button type="button" class="flavor-btn" data-flavor="ultra-black" data-tip="Monster Ultra Black" aria-label="Акцент: Ультра блэк" aria-pressed="false"><span class="flavor-dot" aria-hidden="true"></span></button>
+        </span>
+      </div>
+    </details>
     <span id="font-status" class="sr-only" aria-live="polite"></span>
   </nav>
 </header>
@@ -81,9 +79,7 @@ const links = [
 
   .site-nav {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
     column-gap: var(--app-spacing);
     max-width: var(--app-reading-measure);
     margin-inline: auto;
@@ -92,10 +88,13 @@ const links = [
   }
 
   .site-nav ul {
+    display: flex;
     flex-wrap: wrap;
     column-gap: var(--app-spacing);
+    min-width: 0;
     margin: 0;
     padding: 0;
+    font-size: var(--app-font-sm);
   }
 
   .site-nav li {
@@ -131,19 +130,14 @@ const links = [
   .site-nav ul a {
     justify-content: center;
     min-width: var(--app-touch-target);
-  }
-
-  .site-brand {
-    font-weight: 700;
-  }
-
-  .site-nav ul {
-    font-size: var(--app-font-sm);
+    white-space: nowrap;
   }
 
   .reader-settings {
     position: relative;
+    flex: none;
     margin: 0;
+    margin-inline-start: auto;
   }
 
   .reader-settings summary {
@@ -180,7 +174,8 @@ const links = [
     display: flex;
     /* Кнопки шрифта встают к правому краю, над банками: панель открывается от иконки справа */
     justify-content: flex-end;
-    width: max-content;
+    width: calc(var(--app-touch-target) * 6 + 2px);
+    max-width: calc(100vw - var(--app-page-gutter-start) - var(--app-page-gutter-end));
     background: var(--pico-background-color);
     border: 1px solid var(--pico-muted-border-color);
     border-radius: var(--app-radius-sm);
@@ -215,6 +210,7 @@ const links = [
   .flavor-row {
     display: flex;
     flex: 1 0 100%;
+    flex-wrap: wrap;
     justify-content: flex-end;
     border-top: 1px solid var(--pico-muted-border-color);
   }
@@ -253,42 +249,13 @@ const links = [
   .flavor-btn[data-flavor="ultra-black"] .flavor-dot { background: var(--app-flavor-ultra-black); }
 
   @media (max-width: 640px) {
-    .site-nav ul {
-      font-size: var(--app-font-control);
+    .site-nav {
       column-gap: var(--app-spacing-md);
     }
 
-    /* Иконка настроек не помещалась к ссылкам и уходила одна на третью строку.
-       Список растворяется в шапке: настройки встают рядом с «главной», ссылки ниже одной строкой */
     .site-nav ul {
-      display: contents;
-    }
-
-    .site-brand { order: 0; }
-    .site-nav li.needs-js { order: 1; }
-    .site-nav::after {
-      content: '';
-      order: 2;
-      flex-basis: 100%;
-    }
-    .site-nav li { order: 3; font-size: var(--app-font-control); }
-
-    .reader-settings {
-      position: static;
-    }
-
-    /* В одну строку панель шире телефона и уезжала за левый край: кнопки шрифта
-       остаются сверху, шесть банок ложатся строкой под ними */
-    .reader-controls {
-      inset-inline-end: var(--app-page-gutter-end);
-      width: calc(var(--app-touch-target) * 6 + 2px);
-    }
-  }
-
-  @media (max-width: 500px) {
-    .site-nav ul {
-      width: 100%;
-      justify-content: space-between;
+      font-size: var(--app-font-control);
+      column-gap: var(--app-spacing-md);
     }
   }
 </style>

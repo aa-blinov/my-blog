@@ -94,10 +94,9 @@ function categoryLabel(entry: BlogEntry): string {
           <summary class="chronology-link">
             <span class="chronology-group-head">
               <span class="chronology-chevron" aria-hidden="true"><Icon name="chevron-right" /></span>
-              <span class="chronology-title">Серия «{seriesTitles[row.folder]}»</span>
+              <span class="chronology-title">Серия из {row.parts.length}&nbsp;{plural(row.parts.length, 'части', 'частей', 'частей')} «{seriesTitles[row.folder]}»</span>
             </span>
             <time datetime={formatDate(row.parts[0].data.date)}>{humanDayMonth(row.parts[0].data.date)}</time>
-            <span class="chronology-category">{row.parts.length} {plural(row.parts.length, 'часть', 'части', 'частей')} подряд: {row.parts.map((p) => p.data.title).slice(0, 2).join(', ')}{row.parts.length > 2 ? ' и другие' : ''}</span>
           </summary>
           <ul class="chronology-parts" role="list">
             {[...row.parts].sort((a, b) => (a.data.part ?? 0) - (b.data.part ?? 0)).map((part) => (

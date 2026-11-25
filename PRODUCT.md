@@ -86,7 +86,7 @@ opinion and the guideline are kept apart.
 
 Present now, confirmed by the code:
 
-- The header links to the home page, archive, notes, about page and search.
+- The header links to the home page, archive, search, notes and about page in that order.
   The notes link, like the notes line in the footer and the notes feed in the
   head, appears only once a note is published: an empty feed in the menu reads
   as an abandoned site.
@@ -129,8 +129,8 @@ Present now, confirmed by the code:
   writes the topic into the address (`?topic=science`), so a filtered feed can
   be shared; on a phone the row scrolls sideways in one line. Without
   JavaScript the topics are links to the section pages and the first ten rows
-  show, with a link to the full list by date. Series and the latest notes
-  follow. A hand-picked «start here» list was tried and removed: placed under
+  show, with a link to the full list by date. The latest notes follow once
+  notes are published. A hand-picked «start here» list was tried and removed: placed under
   the feed nobody reached it, and the topic filter answers the same question. The archive at `/blog/` groups
   articles by year and month, newest first, shows the topic path below each title and
   links to the months, topic pages, subtopics and article series in a hierarchy,
