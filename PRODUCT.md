@@ -29,7 +29,7 @@ informal "you". One article keeps one form. The exception is the
 antidepressants series, a guide for patients, which says "вы" throughout.
 Quotes keep the form of the person quoted.
 
-Nothing else is known. The site carries no analytics and no comments, so the
+Nothing else is known. The site carries no behavioural analytics or comments, so the
 repository holds no traffic figure, no subscriber count and no reader
 feedback. A product record must not invent them.
 
@@ -176,8 +176,12 @@ Present now, confirmed by the code:
 
 Deliberately not true, and worth knowing before a change:
 
-- No analytics, no comments, no forms, no accounts. The site has no
-  server-side part and talks to no third party.
+- No behavioural analytics, comments, forms, or accounts. The optional view
+  counter stores aggregate counts in a standalone service. Each page load
+  with JavaScript counts as a view, including repeat loads. The home page
+  shows the site total, today's count in the Asia/Almaty time zone and the
+  first recorded day. Each article shows its count in the metadata line.
+  Counts are hidden if the service is unavailable or unconfigured.
 - The interface, the articles and the feeds are in Russian. An English version
   is not planned.
 - The licence is MIT, like every repository in the collection.

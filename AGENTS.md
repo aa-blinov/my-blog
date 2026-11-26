@@ -160,9 +160,10 @@ because journals and news sites answer scripts that way.
 - **The interface is in Russian.** A new label, a new error message, a new
   meta string is written in Russian. The documents in this repository are the
   exception and stay in English.
-- **No analytics, no comments, no forms, no accounts.** The site has no
-  server-side part and talks to no third party. A feature that needs one
-  belongs to a different product.
+- **No behavioural analytics, comments, forms, or accounts.** The static
+  site can call the standalone view counter under `workers/views/`. It
+  records aggregate counts without storing visitor identifiers. This is the
+  only server-side service used by the site.
 - **Every claim in an article carries a source.** The blocks under
   `src/data/` hold a URL for every statement they make, and the numbered chip
   in the text is the link to it. A claim without a source does not go in.

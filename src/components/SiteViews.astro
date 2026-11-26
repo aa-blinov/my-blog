@@ -1,0 +1,57 @@
+<aside class="site-views" aria-labelledby="site-views-heading" data-site-views hidden>
+  <h2 id="site-views-heading">Счётчик просмотров</h2>
+  <dl>
+    <div>
+      <dt>Всего</dt>
+      <dd data-view-total></dd>
+    </div>
+    <div>
+      <dt>Сегодня</dt>
+      <dd data-view-today></dd>
+    </div>
+  </dl>
+  <p>Считаем с <time></time></p>
+</aside>
+
+<style>
+  .site-views {
+    max-inline-size: 23rem;
+    margin-block: var(--app-spacing-2xl) var(--app-spacing-xl);
+    border-block: 1px solid var(--pico-muted-border-color);
+    padding-block: var(--app-spacing);
+    font-family: var(--font-family);
+    font-size: var(--app-font-control);
+    color: var(--pico-muted-color);
+  }
+
+  h2#site-views-heading {
+    margin: 0 0 var(--app-spacing);
+    color: var(--pico-color);
+    font-size: var(--app-font-sm);
+  }
+
+  dl {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--app-spacing-md) var(--app-spacing-2xl);
+    margin: 0 0 var(--app-spacing);
+  }
+
+  dd {
+    margin: 0;
+    color: var(--pico-color);
+    font-size: var(--app-font-lg);
+    font-variant-numeric: tabular-nums;
+  }
+
+  [data-view-total] {
+    font-size: var(--app-font-xl);
+    font-weight: 650;
+  }
+
+  .site-views p {
+    margin: 0;
+    color: inherit;
+  }
+</style>

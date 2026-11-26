@@ -13,9 +13,10 @@ interface Props {
   title: string;
   description?: string;
   ogImage?: string; // путь картинки превью от корня сайта; без неё берётся общая картинка блога
+  viewArticle?: string;
 }
 
-const { title, description, ogImage } = Astro.props;
+const { title, description, ogImage, viewArticle } = Astro.props;
 
 const pages = await getCollection('pages', (entry) => !entry.data.draft);
 const hasAbout = pages.some((entry) => entry.id === 'about-me');
@@ -75,7 +76,7 @@ const ogType = Astro.url.pathname.startsWith(`${BASE}blog/`) ? 'article' : 'webs
       })();
     </script>
   </head>
-  <body>
+  <body data-count-view={isNotFound ? undefined : ''} data-view-article={viewArticle}>
     <a href="#main" class="skip-link">к содержанию</a>
     <div class="app-layout">
       <NavBar hasAbout={hasAbout} hasNotes={hasNotes} />
@@ -88,6 +89,7 @@ const ogType = Astro.url.pathname.startsWith(`${BASE}blog/`) ? 'article' : 'webs
     <script>
       import '../scripts/theme.js';
       import '../scripts/ref-tip.js';
+      import '../scripts/views';
     </script>
   </body>
 </html>

@@ -189,7 +189,7 @@ const folderDescription = isBodyHub
 ---
 
 {entry && Content ? (
-  <Layout title={entry.data.title} description={articleSummary(entry, DESCRIPTION_LIMIT)} ogImage={`${BASE}og/${entry.id}.png`}>
+  <Layout title={entry.data.title} description={articleSummary(entry, DESCRIPTION_LIMIT)} ogImage={`${BASE}og/${entry.id}.png`} viewArticle={`${BASE}blog/${entry.id}/`}>
     <article>
       <div class="entry-header">
         {articleSections.length > 0 && (
@@ -216,6 +216,10 @@ const folderDescription = isBodyHub
               <span>{headings.filter((h) => h.depth === 2).length} {plural(headings.filter((h) => h.depth === 2).length, 'раздел', 'раздела', 'разделов')}</span>
             </>
           )}
+          <span data-article-views hidden>
+            <span class="meta-sep" aria-hidden="true">~</span>{' '}
+            <span data-view-label></span>
+          </span>
         </p>
       </div>
       {headings.filter((h) => h.depth === 2).length >= 6 && <Toc headings={headings} />}

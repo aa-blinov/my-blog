@@ -1,0 +1,16 @@
+name = "my-blog-views"
+main = "index.mjs"
+compatibility_date = "2026-11-26"
+workers_dev = true
+preview_urls = false
+
+[vars]
+SITE_ORIGIN = "https://blinov.monster"
+
+[[durable_objects.bindings]]
+name = "VIEWS"
+class_name = "ViewCounts"
+
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["ViewCounts"]

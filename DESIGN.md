@@ -389,6 +389,11 @@ list grew.
 
 The latest notes appear below the feed once there are published notes.
 
+The view counter sits below the feed and the archive link, between two thin
+rules. The site's total is the largest number in the group. Today's count and
+the start date sit beside and below it. Article counts use the existing date
+and reading-time line.
+
 ### Section labels and topic grouping
 
 The five active top-level labels are `ИИ`, `Разработка`, `Научпоп`, `Личное`
