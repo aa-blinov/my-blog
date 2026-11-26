@@ -178,9 +178,10 @@ Deliberately not true, and worth knowing before a change:
 
 - No behavioural analytics, comments, forms, or accounts. The optional view
   counter stores aggregate counts in a standalone service. Each page load
-  with JavaScript counts as a view, including repeat loads. The home page
+  with JavaScript counts as a view, including repeat loads. The shared footer
   shows the site total, today's count in the Asia/Almaty time zone and the
-  first recorded day. Each article shows its count in the metadata line.
+  first recorded day on every counted page. Each article also shows its count
+  in the metadata line.
   Counts are hidden if the service is unavailable or unconfigured.
 - The interface, the articles and the feeds are in Russian. An English version
   is not planned.

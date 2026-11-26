@@ -19,22 +19,26 @@ const Heading = level === 2 ? 'h2' : 'h3';
   {posts.length === 0 ? (
     <p>Пока ничего нет.</p>
   ) : (
-    posts.map((entry) => (
-      <div class="post-list-item">
-        <p class="meta">{numbered && entry.data.part !== undefined ? (
-          // Серия: номер и время чтения; одинаковые даты здесь только шумели. Имя файла читателю научпопа
-          // ничего не говорило и выглядело как служебная страница, открытая по ошибке
-          <><span>часть {entry.data.part}</span>{entry.body && <><span class="meta-sep" aria-hidden="true">~</span><span>≈ {readingMinutes(entry.body)} {plural(readingMinutes(entry.body), 'минута', 'минуты', 'минут')}</span></>}</>
-        ) : (
-          <><time datetime={formatDate(entry.data.date)}>{humanDate(entry.data.date)}</time>{entry.body && <><span class="meta-sep" aria-hidden="true">~</span><span>≈ {readingMinutes(entry.body)} {plural(readingMinutes(entry.body), 'минута', 'минуты', 'минут')}</span></>}</>
-        )}</p>
-        <Heading class="post-title">
-          <a href={`${BASE}blog/${entry.id}/`} class="post-title-link">
-            {entry.data.title}
-          </a>
-        </Heading>
-        {articleSummary(entry) && <p class="summary">{articleSummary(entry)}</p>}
-      </div>
-    ))
+    posts.map((entry) => {
+      const minutes = entry.body ? readingMinutes(entry.body) : null;
+      return (
+        <div class="post-list-item">
+          <p class="meta">
+            {numbered && entry.data.part !== undefined
+              ? <span>часть {entry.data.part}</span>
+              : <time datetime={formatDate(entry.data.date)}>{humanDate(entry.data.date)}</time>}
+            {minutes !== null && (
+              <span><span class="meta-sep meta-sep-accent" aria-hidden="true">*</span>{' '}≈ {minutes} {plural(minutes, 'минута', 'минуты', 'минут')}</span>
+            )}
+          </p>
+          <Heading class="post-title">
+            <a href={`${BASE}blog/${entry.id}/`} class="post-title-link">
+              {entry.data.title}
+            </a>
+          </Heading>
+          {articleSummary(entry) && <p class="summary">{articleSummary(entry)}</p>}
+        </div>
+      );
+    })
   )}
 </div>

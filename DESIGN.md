@@ -389,10 +389,12 @@ list grew.
 
 The latest notes appear below the feed once there are published notes.
 
-The view counter sits below the feed and the archive link, between two thin
-rules. The site's total is the largest number in the group. Today's count and
-the start date sit beside and below it. Article counts use the existing date
-and reading-time line.
+### The site footer
+
+The footer groups its links in one wrapping row. The site-wide view count below
+the links keeps the total, today's count and the start date on one line where
+space allows. Keyboard focus on footer links is shown with a thicker underline.
+Article counts use the existing date and reading-time line below the title.
 
 ### Section labels and topic grouping
 
@@ -409,7 +411,9 @@ chronological list.
 ### The article header
 
 Linked section names sit above the title. The date and reading time sit
-below it, followed by a 1px rule.
+below it, followed by a 1px rule. Asterisks take a muted tint of the current
+accent, separate the metadata fields in the article header and related article
+list, and wrap with the following field.
 
 ### The series line
 

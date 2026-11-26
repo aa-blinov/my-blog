@@ -80,10 +80,10 @@ const ogType = Astro.url.pathname.startsWith(`${BASE}blog/`) ? 'article' : 'webs
     <a href="#main" class="skip-link">к содержанию</a>
     <div class="app-layout">
       <NavBar hasAbout={hasAbout} hasNotes={hasNotes} />
-      <main id="main" tabindex="-1">
+      <main id="main">
         <slot />
       </main>
-      <Footer />
+      <Footer showViews={!isNotFound} />
     </div>
 
     <script>

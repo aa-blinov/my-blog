@@ -208,16 +208,12 @@ const folderDescription = isBodyHub
         {series && <SeriesNav series={series} entry={entry} where="head" />}
         <p class="read-line">
           <time datetime={formatDate(entry.data.date)}>{humanDate(entry.data.date)}</time>
-          <span class="meta-sep" aria-hidden="true">~</span>
-          <span>≈ {minutes} {plural(minutes, 'минута', 'минуты', 'минут')}</span>
+          <span><span class="meta-sep meta-sep-accent" aria-hidden="true">*</span>{' '}≈ {minutes} {plural(minutes, 'минута', 'минуты', 'минут')}</span>
           {headings.filter((h) => h.depth === 2).length >= 3 && (
-            <>
-              <span class="meta-sep" aria-hidden="true">~</span>
-              <span>{headings.filter((h) => h.depth === 2).length} {plural(headings.filter((h) => h.depth === 2).length, 'раздел', 'раздела', 'разделов')}</span>
-            </>
+            <span><span class="meta-sep meta-sep-accent" aria-hidden="true">*</span>{' '}{headings.filter((h) => h.depth === 2).length} {plural(headings.filter((h) => h.depth === 2).length, 'раздел', 'раздела', 'разделов')}</span>
           )}
           <span data-article-views hidden>
-            <span class="meta-sep" aria-hidden="true">~</span>{' '}
+            <span class="meta-sep meta-sep-accent" aria-hidden="true">*</span>{' '}
             <span data-view-label></span>
           </span>
         </p>

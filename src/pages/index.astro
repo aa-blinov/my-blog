@@ -3,7 +3,6 @@ import PageFromEntry from '../components/PageFromEntry.astro';
 import ChronologyList from '../components/ChronologyList.astro';
 import NoteList from '../components/NoteList.astro';
 import Arrow from '../components/Arrow.astro';
-import SiteViews from '../components/SiteViews.astro';
 import { getCollection, render } from 'astro:content';
 import { sortByDateDesc } from '../utils/date';
 import { BASE, sectionTitle } from '../config';
@@ -55,15 +54,13 @@ if (homeEntry) {
         <li><a href={`${BASE}blog/${s.slug}/`} data-filter={s.slug}><span class="nav-bracket" aria-hidden="true">[</span>{s.title.toLowerCase()} <span class="feed-count">{s.count}</span><span class="nav-bracket" aria-hidden="true">]</span></a></li>
       ))}
     </ul>
-    <p class="feed-status needs-js" role="status" aria-live="polite"></p>
+    <p class="feed-status needs-js sr-only" role="status" aria-live="polite"></p>
     <ChronologyList posts={posts} showDetails showCategory groupSeries limit={FEED_PAGE} seriesTitles={seriesTitles} />
     <p class="feed-more">
       <button type="button" class="feed-more-button needs-js">Показать ещё</button>
       <a href={`${BASE}blog/`} class="post-title-link all-articles-link">Все статьи по датам <Arrow /></a>
     </p>
   </section>
-
-  <SiteViews />
 
   {recentNotes.length > 0 && (
     <div class="recent-posts">
@@ -201,13 +198,6 @@ if (homeEntry) {
   .feed-count {
     margin-inline-start: 0.35em;
     color: var(--pico-muted-color);
-    font-size: var(--app-font-control);
-  }
-
-  .feed-status {
-    margin: 0 0 var(--app-spacing-sm);
-    color: var(--pico-muted-color);
-    font-family: var(--font-family);
     font-size: var(--app-font-control);
   }
 

@@ -520,9 +520,6 @@ pre, code {
   .footer-line {
     gap: 0 0.5rem; /* на таче у ссылок свой отступ под палец */
   }
-  .site-footer {
-    padding-bottom: max(var(--app-spacing-lg), env(safe-area-inset-bottom));
-  }
 }
 
 /* ==========================================================================
@@ -540,18 +537,25 @@ pre, code {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.35rem;
+  gap: var(--app-spacing-xs);
 }
 .site-footer {
   border-top: 1px solid var(--pico-muted-border-color);
-  padding: var(--app-spacing-lg) var(--app-spacing);
-  margin-top: var(--app-spacing-2xl);
+  padding: var(--app-spacing-sm) var(--app-spacing) max(var(--app-spacing-sm), env(safe-area-inset-bottom));
+  margin-top: var(--app-spacing-xl);
   text-align: center;
   display: flex;
+  flex-direction: column;
+  gap: var(--app-spacing-xs);
   align-items: center;
   justify-content: center;
   background: var(--pico-background-color);
   position: relative;
+}
+.site-footer a:focus-visible {
+  outline: none;
+  text-decoration: underline solid currentColor 2px;
+  text-underline-offset: 0.2em;
 }
 
 .highlight pre,
@@ -653,11 +657,12 @@ a.all-articles-link.post-title-link:hover {
   color: var(--pico-primary);
 }
 
-/* Meta line: date ~ reading time, the tilde as a quiet separator (one glyph for the whole site) */
-/* Без прозрачности: при 0.55 тильда давала 2.32:1 и на ярком экране пропадала. Тишину ей даёт
-   приглушённый цвет мета-строки, 4.77:1, этого хватает, чтобы она не спорила с датой */
+/* Разделители берут цвет мета-строки: с прозрачностью они теряли контраст на ярком экране. */
 .meta-sep {
   user-select: none;
+}
+.meta-sep-accent {
+  color: color-mix(in srgb, var(--pico-primary) 60%, currentColor);
 }
 @media (max-width: 991px) {
   main article .entry-header h1 {

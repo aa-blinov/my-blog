@@ -1,6 +1,13 @@
 ---
 import { SITE, BASE } from '../config';
 import { getCollection } from 'astro:content';
+import SiteViews from './SiteViews.astro';
+
+interface Props {
+  showViews: boolean;
+}
+
+const { showViews } = Astro.props;
 const year = new Date().getFullYear();
 // Ссылки на ленту появляются вместе с первой заметкой, как и пин в дереве
 const hasNotes = (await getCollection('notes')).some((n) => !n.data.draft);
@@ -12,11 +19,10 @@ const hasNotes = (await getCollection('notes')).some((n) => !n.data.draft);
       <a href={SITE.github} target="_blank" rel="noopener noreferrer me" aria-label="GitHub, откроется в новой вкладке">GitHub</a>
       <a href={SITE.telegram} target="_blank" rel="noopener noreferrer me" aria-label="Telegram, откроется в новой вкладке">Telegram</a>
       <a href={SITE.linkedin} target="_blank" rel="noopener noreferrer me" aria-label="LinkedIn, откроется в новой вкладке">LinkedIn</a>
-    </span>
-    <span class="footer-line">
       {hasNotes && <a href={`${BASE}notes/`}>Заметки</a>}
       <a href={`${BASE}rss.xml`}>RSS статей</a>
       {hasNotes && <a href={`${BASE}notes.xml`}>RSS заметок</a>}
     </span>
   </small>
+  {showViews && <SiteViews />}
 </footer>
