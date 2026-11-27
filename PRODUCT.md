@@ -77,7 +77,9 @@ opinion and the guideline are kept apart.
   A static build, deployed to GitHub Pages by GitHub Actions on Node 22, with
   an `astro check` step before the build.
 - Publication: the author writes in an editor, commits and pushes, and the
-  article appears after the build.
+  article appears after the build. Blog drafts can be opened by direct URL
+  in development. The development home feed also previews draft series
+  alongside published articles. Drafts are excluded from production builds.
 - The author writes cycles of related articles, nine of them about how his
   own agent is put together, and journalism about fresh news with the facts
   checked.
@@ -124,7 +126,10 @@ Present now, confirmed by the code:
   article newest first, ten rows at a time with a «Показать ещё» button, each
   row with its topic path, summary, date and reading time. Parts of one series
   published within a week of each other collapse into one row that unfolds
-  into the parts in order. Above it, a row of topics in the bracket idiom of
+  into the parts in order. A series enters the public home feed automatically
+  when a numbered part is published. Publish its `about-<folder>.md` with the
+  first part so the feed uses the series title. Mark both with `draft: false`.
+  Above the feed, a row of topics in the bracket idiom of
   the header, «[все 126] [научпоп 57] …», filters the feed in place and
   writes the topic into the address (`?topic=science`), so a filtered feed can
   be shared; on a phone the row scrolls sideways in one line. Without
@@ -140,7 +145,7 @@ Present now, confirmed by the code:
   articles carry no separate disclaimer line: the sources sit in the text as
   chips, and the author's role is on the about page. Lists show the date and reading time; file names
   and folder paths stay out of the interface. The science
-  section groups body articles and the "Body and environment" series under
+  section groups body articles and links to their series under
   `/blog/science/body/`; existing article and series addresses stay available.
 - The table of contents in long articles starts closed. Up to three related
   articles appear after the text. Author details and site links stay
@@ -157,7 +162,9 @@ Present now, confirmed by the code:
   holds no article. Such a folder has no page on the site either, so an empty
   section never reaches the sitemap.
 - Series: a folder whose files carry `part`, with `about-<folder>.md` giving
-  the name and the intro. Under the heading of a part, the line "Series «…»
+  the name and the intro. In the series contents, consecutive parts with
+  the same optional `partGroup` sit under that heading. The chapter order
+  and links still follow `part`. Under the heading of a part, the line "Series «…»
   ~ part N of M"; after the text, links to the previous and the next part
   with their titles. The folder page lists the parts in chapter order, and
   so does the parent page when the series is its direct subfolder. A page
@@ -173,6 +180,11 @@ Present now, confirmed by the code:
   ticked by the reader, a set of questions for the doctor with a checklist, a
   monitoring timeline and a table of combinations with a verdict on each.
   Every claim carries a source.
+- The second article in the joint hypermobility series starts with an adult five-question screen
+  based on the Hakim and Grahame questionnaire (5PQ). It asks about present
+  and past mobility without asking the reader to perform any movements.
+  The explanation below starts from the reader's answers. The answers stay
+  in the browser and the score is not a diagnosis.
 
 Deliberately not true, and worth knowing before a change:
 

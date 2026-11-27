@@ -28,11 +28,11 @@ type BlogEntry = CollectionEntry<'blog'>;
 type Props = { kind: 'file'; entry: BlogEntry; path?: never } | { kind: 'folder'; path: string; entry?: never };
 
 export async function getStaticPaths() {
-  const entries = await getCollection('blog');
+  const entries = await getCollection('blog', (entry) => import.meta.env.DEV || !entry.data.draft);
 
   // Раздел без единой статьи не собирается вовсе: ни страница раздела, ни его вводный текст.
   // Иначе пустые страницы попадают в sitemap и в поисковую выдачу.
-  const live = liveFolders(entries);
+  const live = liveFolders(entries.filter((entry) => !entry.data.draft));
   const folderOf = (id: string) => id.split('/').slice(0, -1).join('/');
 
   // 1. Routes for individual files
@@ -45,6 +45,13 @@ export async function getStaticPaths() {
 
   // 2. Routes for folders (directories)
   const directoryPaths = new Set<string>(live);
+  // Оглавление неопубликованной серии нужно для просмотра черновиков целиком.
+  if (import.meta.env.DEV) {
+    for (const entry of entries) {
+      const folder = entry.data.draft ? seriesOf(entry) : null;
+      if (folder) directoryPaths.add(folder);
+    }
+  }
   // Эта страница собирает статьи о теле, сохраняя их исходные адреса и адрес серии.
   directoryPaths.add('science/body');
 
@@ -72,7 +79,7 @@ if (entry) {
   headings = rendered.headings;
   minutes = readingMinutes(entry.body ?? '');
   const folder = seriesOf(entry);
-  if (folder) series = await getSeries(folder);
+  if (folder) series = await getSeries(folder, { includeDrafts: import.meta.env.DEV && entry.data.draft });
 }
 
 // If it's a folder, find all entries and group them
@@ -87,6 +94,7 @@ interface Group {
 }
 const allSeries = await getAllSeries();
 const seriesTitles = Object.fromEntries(allSeries.map((s) => [s.folder, s.title]));
+if (series) seriesTitles[series.folder] = series.title;
 let directEntries: BlogEntry[] = [];
 let subGroups: Group[] = [];
 let folderSeries = null as Awaited<ReturnType<typeof getSeries>>;
@@ -97,6 +105,7 @@ let bodyArticles: BlogEntry[] = [];
 let bodySeriesParts: BlogEntry[] = [];
 let bodyMaterialsCount = 0;
 const isBodyHub = kind === 'folder' && path === 'science/body';
+const bodySeries = isBodyHub ? allSeries.filter((item) => item.folder.startsWith('science/human-body/')) : [];
 
 if (kind === 'folder') {
   const allEntries = await getCollection('blog');
@@ -117,8 +126,8 @@ if (kind === 'folder') {
   });
 
   directEntries = sortByDateDesc(directEntries.filter((e) => !isAbout(e.id)));
-  folderSeries = await getSeries(path);
-  folderAbout = allEntries.find((e) => e.id === `${path}/about-${path.split('/').pop()}` && !e.data.draft) ?? null;
+  folderSeries = await getSeries(path, { includeDrafts: import.meta.env.DEV });
+  folderAbout = folderSeries?.about ?? allEntries.find((e) => e.id === `${path}/about-${path.split('/').pop()}` && !e.data.draft) ?? null;
   // about-файл это вводный текст раздела, не строка в списке; в серии части идут по номеру
   if (folderAbout) AboutContent = (await render(folderAbout)).Content;
   if (folderSeries) directEntries = folderSeries.parts;
@@ -170,6 +179,17 @@ if (kind === 'folder') {
     .sort((a, b) => a.name.localeCompare(b.name)); // Sort sections alphabetically
 }
 
+const partGroups: { title?: string; posts: BlogEntry[] }[] = [];
+for (const post of directEntries) {
+  const groupTitle = folderSeries ? post.data.partGroup : undefined;
+  const current = partGroups.at(-1);
+  if (current && current.title === groupTitle) {
+    current.posts.push(post);
+  } else {
+    partGroups.push({ title: groupTitle, posts: [post] });
+  }
+}
+
 // Папка с about-<имя>.md получает русское имя из него
 const folderName = path.split('/').pop() || path;
 const title = entry ? entry.data.title : (folderAbout?.data.title.replace(/:\s*Об этой секции$/, '') ?? sectionTitle(folderName));
@@ -186,6 +206,8 @@ const folderDescription = isBodyHub
   : folderAbout
     ? articleSummary(folderAbout, DESCRIPTION_LIMIT)
     : newestTitles ? `Раздел «${title}» в блоге Александра Блинова. Свежие статьи: ${newestTitles}.` : undefined;
+const questionnaire = entry?.data.questionnaire ? questionnaires[entry.data.questionnaire] : undefined;
+const questionnaireFirst = entry?.data.questionnairePosition === 'start';
 ---
 
 {entry && Content ? (
@@ -218,13 +240,18 @@ const folderDescription = isBodyHub
           </span>
         </p>
       </div>
+      {questionnaire && questionnaireFirst && (
+        <div class="content">
+          <Questionnaire data={questionnaire} headingLevel={2} />
+        </div>
+      )}
       {headings.filter((h) => h.depth === 2).length >= 6 && <Toc headings={headings} />}
       <div class="content">
         <Content />
         {entry.data.map && maps[entry.data.map] && <MindMap data={maps[entry.data.map]} />}
         {entry.data.picker && pickers[entry.data.picker] && <Picker data={pickers[entry.data.picker]} />}
         {entry.data.tools === 'antidepressants' && <Tools />}
-        {entry.data.questionnaire && questionnaires[entry.data.questionnaire] && <Questionnaire data={questionnaires[entry.data.questionnaire]} />}
+        {questionnaire && !questionnaireFirst && <Questionnaire data={questionnaire} />}
       </div>
       {series && <SeriesNav series={series} entry={entry} where="foot" />}
       <ArticleFooter entry={entry} inSeries={!!series} />
@@ -252,6 +279,11 @@ const folderDescription = isBodyHub
           <section class="section-block">
             <h2 class="section-heading">Тело человека</h2>
             <PostList posts={bodyArticles} level={3} />
+            {bodySeries.length > 0 && (
+              <ul>
+                {bodySeries.map((item) => <li><a href={`${BASE}blog/${item.folder}/`}>Серия «{item.title}»</a></li>)}
+              </ul>
+            )}
           </section>
           <section class="section-block">
             <hr class="section-divider" />
@@ -262,11 +294,12 @@ const folderDescription = isBodyHub
         </>
       ) : (
         <>
-          {directEntries.length > 0 && (
+          {partGroups.map((group) => (
             <section class="section-block">
-              <PostList posts={directEntries} numbered={!!folderSeries} level={2} />
+              {group.title && <h2 class="section-heading">{group.title}</h2>}
+              <PostList posts={group.posts} numbered={!!folderSeries} level={group.title ? 3 : 2} />
             </section>
-          )}
+          ))}
           {subGroups.map((group, index) => (
             <section class="section-block">
               {(index > 0 || directEntries.length > 0) && <hr class="section-divider" />}

@@ -21,6 +21,7 @@ export interface QuestionnaireData {
   title: string;
   intro: string;
   instruction: string;
+  manualInstructions?: string;
   scale: string[];
   items: QuestionnaireItem[];
   screenCount?: number; // сколько первых пунктов образуют короткий скрининг, если он есть
@@ -41,7 +42,7 @@ export interface QuestionnaireResult {
   safetyFlag: boolean;
 }
 
-// answers: индекс пункта -> выбранный балл (от 0 до 3); пункты без ответа в массиве не учитываются
+// answers: индекс пункта -> выбранный балл; результат появляется после всех ответов
 export function scoreQuestionnaire(data: QuestionnaireData, answers: (number | null)[]): QuestionnaireResult | null {
   if (answers.length !== data.items.length || answers.some((a) => a === null)) return null;
   const values = answers as number[];
@@ -51,7 +52,7 @@ export function scoreQuestionnaire(data: QuestionnaireData, answers: (number | n
   const screenTotal = hasScreen ? values.slice(0, data.screenCount).reduce((sum, v) => sum + v, 0) : null;
   return {
     total,
-    max: data.items.length * 3,
+    max: data.items.length * (data.scale.length - 1),
     band,
     screenTotal,
     screenPositive: screenTotal === null ? null : screenTotal >= (data.screenCutoff as number),

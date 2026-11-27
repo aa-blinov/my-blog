@@ -21,7 +21,7 @@ const series = (await Promise.all(seriesFolders.map((folder) => getSeries(folder
 const seriesTitles = Object.fromEntries(series.map((item) => [item.folder, item.title]));
 const seriesUnder = (parent: string) => series.filter((item) => {
   const mapped = sectionPagePath(item.folder);
-  const seriesParent = mapped !== item.folder ? mapped : item.folder.slice(0, item.folder.lastIndexOf('/'));
+  const seriesParent = mapped !== item.folder ? mapped : sectionPagePath(item.folder.slice(0, item.folder.lastIndexOf('/')));
   return seriesParent === parent;
 });
 const hasChildren = (name: string) => seriesUnder(name).length > 0 || (name === 'science' && scienceTopics.length > 0);

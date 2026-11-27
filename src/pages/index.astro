@@ -6,19 +6,20 @@ import Arrow from '../components/Arrow.astro';
 import { getCollection, render } from 'astro:content';
 import { sortByDateDesc } from '../utils/date';
 import { BASE, sectionTitle } from '../config';
-import { getSeriesTitles, isAbout, liveFolders } from '../utils/series';
+import { getSeriesTitles, isAbout, seriesOf } from '../utils/series';
 
 const pages = (await getCollection('pages')).filter((e) => !e.data.draft);
 const homeEntry = pages.find((e) => e.id === 'main');
 
 // Вводные страницы разделов не входят в список статей и счётчики.
-const published = (await getCollection('blog')).filter((p) => !p.data.draft);
-const articles = published.filter((p) => !isAbout(p.id));
+// Локально можно проверить, как серия из черновиков попадёт в ленту после публикации.
+const includeDrafts = import.meta.env.DEV;
+const articles = await getCollection('blog', (entry) =>
+  !isAbout(entry.id) && (!entry.data.draft || (includeDrafts && seriesOf(entry) !== null))
+);
 const posts = sortByDateDesc(articles);
-const live = liveFolders(published);
-const seriesTitles = await getSeriesTitles();
+const seriesTitles = await getSeriesTitles({ includeDrafts });
 const topSections = [...new Set(articles.map((p) => p.id.split('/')[0]))]
-  .filter((s) => live.has(s))
   .map((s) => ({ slug: s, title: sectionTitle(s), count: articles.filter((p) => p.id.startsWith(s + '/')).length }))
   .sort((a, b) => b.count - a.count);
 

@@ -3,9 +3,14 @@ import type { QuestionnaireData } from '../utils/questionnaire';
 
 interface Props {
   data: QuestionnaireData;
+  headingLevel?: 2 | 3;
 }
 
-const { data } = Astro.props;
+const { data, headingLevel = 3 } = Astro.props;
+const Heading = headingLevel === 2 ? 'h2' : 'h3';
+const binary = data.scale.length === 2;
+const options = data.scale.map((label, value) => ({ label, value }));
+if (binary) options.reverse();
 ---
 
 <script>
@@ -42,14 +47,14 @@ const { data } = Astro.props;
         show(result, `Осталось ответить: ${left}. Результат появится, когда ответы будут на все пункты.`);
         return;
       }
-      const heading = document.createElement('h4');
+      const heading = document.createElement(root.dataset.qnHeading === '2' ? 'h3' : 'h4');
       heading.textContent = `Сумма: ${res.total} из ${res.max}. ${res.band.title}`;
       const band = document.createElement('p');
       band.textContent = res.band.text;
       const parts: HTMLElement[] = [heading, band];
       if (res.screenTotal !== null && res.screenPositive !== null && data.screenCount !== undefined) {
         const screen = document.createElement('p');
-        const screenMax = data.screenCount * 3;
+        const screenMax = data.screenCount * (data.scale.length - 1);
         screen.textContent = `Короткий скрининг (первые ${data.screenCount} вопроса): ${res.screenTotal} из ${screenMax}. ${res.screenPositive ? `Порог ${data.screenCutoff} и больше достигнут.` : `Порог ${data.screenCutoff} и больше не достигнут.`}`;
         parts.push(screen);
       }
@@ -76,24 +81,25 @@ const { data } = Astro.props;
   document.querySelectorAll<HTMLElement>('[data-qn]').forEach(setup);
 </script>
 
-<section class="qn" data-qn data-qn-id={`qn-${data.id}`} aria-labelledby={`qn-${data.id}-title`}>
+<section class="qn" data-qn data-qn-id={`qn-${data.id}`} data-qn-heading={headingLevel} aria-labelledby={`qn-${data.id}-title`}>
+  {headingLevel === 2 && <Heading class="qn-title" id={`qn-${data.id}-title`}>{data.title}</Heading>}
   <div class="pk-disclaimer pk-disclaimer-box">
     <p class="pk-urgent-line" data-qn-urgent hidden></p>
     <p>{data.disclaimer}</p>
   </div>
-  <h3 id={`qn-${data.id}-title`}>{data.title}</h3>
+  {headingLevel === 3 && <Heading class="qn-title" id={`qn-${data.id}-title`}>{data.title}</Heading>}
   <p>{data.intro}</p>
-  <p class="qn-noscript">Подсчёту нужен JavaScript. Без него сложите баллы: за каждый пункт от 0 до 3, сумма от 0 до {data.items.length * 3}. Порог для разговора с врачом 10 баллов.</p>
+  <p class="qn-noscript">{data.manualInstructions ?? `Подсчёту нужен JavaScript. Без него сложите баллы: за каждый пункт от 0 до 3, сумма от 0 до ${data.items.length * (data.scale.length - 1)}. Порог для разговора с врачом 10 баллов.`}</p>
   <form class="qn-form" data-qn-form>
     <p class="qn-instruction">{data.instruction}</p>
     {data.items.map((item, i) => (
       <fieldset class="qn-item">
         <legend><span class="qn-num">{i + 1}.</span> {item.text}</legend>
-        <div class="qn-options">
-          {data.scale.map((label, v) => (
+        <div class:list={['qn-options', { 'qn-options-binary': binary }]}>
+          {options.map(({ label, value }) => (
             <label class="qn-opt">
-              <input type="radio" name={`qn-${data.id}-${i}`} value={v} />
-              <span class="qn-score">{v}</span>
+              <input type="radio" name={`qn-${data.id}-${i}`} value={value} />
+              {!binary && <span class="qn-score">{value}</span>}
               <span>{label}</span>
             </label>
           ))}
@@ -102,7 +108,7 @@ const { data } = Astro.props;
     ))}
   </form>
   <div class="qn-result" aria-live="polite" data-qn-result></div>
-  <p><button type="button" class="secondary outline" data-qn-reset>Сбросить ответы</button></p>
+  <p class="needs-js"><button type="button" class="secondary outline" data-qn-reset>Сбросить ответы</button></p>
   <script type="application/json" data-qn-data set:html={JSON.stringify(data)}></script>
 
   <p class="qn-sources">
@@ -118,7 +124,7 @@ const { data } = Astro.props;
     margin-block: var(--app-spacing-lg);
   }
 
-  .qn h3 {
+  .qn-title {
     margin-bottom: var(--app-spacing-xs);
   }
 
@@ -146,6 +152,10 @@ const { data } = Astro.props;
     .qn-options {
       grid-template-columns: repeat(4, 1fr);
     }
+  }
+
+  .qn-options-binary {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .qn-opt {
@@ -177,7 +187,7 @@ const { data } = Astro.props;
     margin-block: var(--app-spacing-md);
   }
 
-  .qn-result h4 {
+  .qn-result :is(h3, h4) {
     margin-bottom: var(--app-spacing-xs);
   }
 
