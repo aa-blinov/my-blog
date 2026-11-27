@@ -12,6 +12,9 @@ import Tools from '../../components/Tools.astro';
 import { pickers } from '../../data/pickers';
 import Questionnaire from '../../components/Questionnaire.astro';
 import { questionnaires } from '../../data/questionnaires';
+import CourseQuiz from '../../components/CourseQuiz.astro';
+import { advancedCourseQuiz } from '../../data/advanced-course-quiz';
+import { parseCourseQuiz } from '../../utils/course-quiz';
 import type { MarkdownHeading } from 'astro';
 import { formatDate, humanDate, readingMinutes, plural } from '../../utils/date';
 import { sortByDateDesc } from '../../utils/date';
@@ -208,6 +211,9 @@ const folderDescription = isBodyHub
     : newestTitles ? `Раздел «${title}» в блоге Александра Блинова. Свежие статьи: ${newestTitles}.` : undefined;
 const questionnaire = entry?.data.questionnaire ? questionnaires[entry.data.questionnaire] : undefined;
 const questionnaireFirst = entry?.data.questionnairePosition === 'start';
+const courseQuiz = entry?.data.courseQuiz === 'llm-business-advanced'
+  ? parseCourseQuiz(entry.body ?? '', advancedCourseQuiz)
+  : undefined;
 ---
 
 {entry && Content ? (
@@ -238,6 +244,12 @@ const questionnaireFirst = entry?.data.questionnairePosition === 'start';
             <span class="meta-sep meta-sep-accent" aria-hidden="true">*</span>{' '}
             <span data-view-label></span>
           </span>
+          {!entry.data.draft && !isAbout(entry.id) && (
+            <span>
+              <span class="meta-sep meta-sep-accent" aria-hidden="true">*</span>{' '}
+              <a href={`${BASE}blog/${entry.id}.txt`} aria-label="Текстовая версия статьи (TXT)">TXT</a>
+            </span>
+          )}
         </p>
       </div>
       {questionnaire && questionnaireFirst && (
@@ -247,7 +259,9 @@ const questionnaireFirst = entry?.data.questionnairePosition === 'start';
       )}
       {headings.filter((h) => h.depth === 2).length >= 6 && <Toc headings={headings} />}
       <div class="content">
-        <Content />
+        {courseQuiz && series
+          ? <CourseQuiz quiz={courseQuiz} coursePath={`${BASE}blog/${series.folder}/`}><Content /></CourseQuiz>
+          : <Content />}
         {entry.data.map && maps[entry.data.map] && <MindMap data={maps[entry.data.map]} />}
         {entry.data.picker && pickers[entry.data.picker] && <Picker data={pickers[entry.data.picker]} />}
         {entry.data.tools === 'antidepressants' && <Tools />}

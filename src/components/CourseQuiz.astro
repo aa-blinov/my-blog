@@ -1,0 +1,286 @@
+---
+import type { CourseQuiz } from '../utils/course-quiz';
+
+interface Props {
+  quiz: CourseQuiz;
+  coursePath: string;
+}
+
+const { quiz, coursePath } = Astro.props;
+const total = quiz.blocks.reduce((count, block) => count + block.questions.length, 0);
+---
+
+<div class="course-quiz" data-course-quiz data-course-path={coursePath}>
+  <div data-quiz-fallback>
+    <noscript><p>Для подсчёта баллов включите JavaScript. Вопросы доступны ниже.</p></noscript>
+    <slot />
+  </div>
+
+  <section aria-labelledby="quiz-intro-title" data-quiz-intro hidden>
+    <h2 id="quiz-intro-title">Проверьте себя</h2>
+    <p>{total} вопросов по пяти урокам. За верный ответ начисляется один балл. Проходной балл — {quiz.passMark} из {total}.</p>
+    <p>Вы сможете вернуться к предыдущему вопросу. Балл и разбор ответов появятся после завершения теста.</p>
+    <button type="button" data-quiz-start>Начать тест</button>
+  </section>
+
+  <form data-quiz-form hidden>
+    <p class="quiz-progress" data-quiz-progress></p>
+    <fieldset aria-describedby="quiz-instructions">
+      <legend tabindex="-1" data-quiz-question></legend>
+      <p class="quiz-instructions" id="quiz-instructions" data-quiz-instructions></p>
+      <div class="quiz-options" data-quiz-options></div>
+    </fieldset>
+    <p class="quiz-error" role="alert" data-quiz-error></p>
+    <div class="quiz-actions">
+      <button class="secondary outline" type="button" data-quiz-previous>Назад</button>
+      <button type="submit" data-quiz-next>Дальше</button>
+    </div>
+  </form>
+
+  <section aria-labelledby="quiz-score" data-quiz-result hidden>
+    <h2 id="quiz-score" tabindex="-1" data-quiz-score></h2>
+    <p data-quiz-outcome></p>
+    <button class="secondary outline" type="button" data-quiz-retry>Пройти заново</button>
+    <div data-quiz-review></div>
+  </section>
+
+  <script type="application/json" data-quiz-model set:html={JSON.stringify(quiz).replace(/</g, '\\u003c')}></script>
+</div>
+
+<script>
+  import { isQuizAnswerCorrect, type CourseQuiz, type QuizQuestion } from '../utils/course-quiz';
+
+  for (const root of document.querySelectorAll<HTMLElement>('[data-course-quiz]')) {
+    const element = <T extends HTMLElement = HTMLElement>(name: string) => root.querySelector<T>(`[data-quiz-${name}]`)!;
+    const quiz = JSON.parse(element('model').textContent ?? '') as CourseQuiz;
+    const questions = quiz.blocks.flatMap((block) => block.questions.map((question) => ({ ...question, block })));
+    const answers = new Map<number, string[]>();
+    const optionOrder = new Map<number, QuizQuestion['options']>();
+    const intro = element('intro');
+    const form = element<HTMLFormElement>('form');
+    const result = element('result');
+    const legend = element('question');
+    const options = element('options');
+    const error = element('error');
+    const previous = element<HTMLButtonElement>('previous');
+    const next = element<HTMLButtonElement>('next');
+    let index = 0;
+
+    function selectedValues() {
+      return [...options.querySelectorAll<HTMLInputElement>('input:checked')].map(({ value }) => value);
+    }
+
+    function showQuestion() {
+      const question = questions[index];
+      element('progress').textContent = `Вопрос ${question.number} из ${questions.length} / ${question.block.title}`;
+      legend.textContent = question.text;
+      element('instructions').textContent = question.multiple ? 'Выберите все верные варианты.' : 'Выберите один вариант.';
+      const selected = answers.get(question.number) ?? [];
+      options.replaceChildren(...optionOrder.get(question.number)!.map(({ value, text }) => {
+        const label = document.createElement('label');
+        const input = document.createElement('input');
+        input.name = 'answer';
+        input.type = question.multiple ? 'checkbox' : 'radio';
+        input.value = value;
+        input.checked = selected.includes(value);
+        const wording = document.createElement('span');
+        wording.textContent = text;
+        label.append(input, wording);
+        return label;
+      }));
+      previous.disabled = index === 0;
+      next.textContent = index === questions.length - 1 ? 'Завершить тест' : 'Дальше';
+      error.textContent = '';
+      legend.focus();
+    }
+
+    function start() {
+      index = 0;
+      answers.clear();
+      for (const question of questions) {
+        const shuffled = [...question.options];
+        for (let i = shuffled.length - 1; i > 0; i -= 1) {
+          const swap = Math.floor(Math.random() * (i + 1));
+          [shuffled[i], shuffled[swap]] = [shuffled[swap], shuffled[i]];
+        }
+        optionOrder.set(question.number, shuffled);
+      }
+      intro.hidden = true;
+      result.hidden = true;
+      element('review').replaceChildren();
+      form.hidden = false;
+      showQuestion();
+    }
+
+    function showResult() {
+      const score = questions.filter((question) => isQuizAnswerCorrect(question, answers.get(question.number) ?? [])).length;
+      const scoreHeading = element('score');
+      scoreHeading.textContent = `Ваш результат: ${score} из ${questions.length}`;
+      element('outcome').textContent = score >= quiz.passMark
+        ? `Тест пройден. Проходной балл — ${quiz.passMark}.`
+        : `Для прохождения нужно ${quiz.passMark} баллов. Посмотрите разбор и повторите нужные уроки.`;
+
+      const review = element('review');
+      const heading = document.createElement('h3');
+      heading.textContent = 'Разбор ответов';
+      review.append(heading);
+      let reviewOpened = false;
+      for (const block of quiz.blocks) {
+        const blockScore = block.questions.filter((question) => isQuizAnswerCorrect(question, answers.get(question.number) ?? [])).length;
+        const section = document.createElement('details');
+        const summary = document.createElement('summary');
+        summary.textContent = `${block.title} (${blockScore} из ${block.questions.length})`;
+        section.append(summary);
+        if (!reviewOpened && (blockScore < block.questions.length || score === questions.length)) {
+          section.open = true;
+          reviewOpened = true;
+        }
+
+        const lesson = document.createElement('a');
+        lesson.href = `${root.dataset.coursePath}${block.lesson}/`;
+        lesson.textContent = 'Повторить урок';
+        section.append(lesson);
+
+        const list = document.createElement('ul');
+        for (const question of block.questions) {
+          const selected = answers.get(question.number) ?? [];
+          const correct = isQuizAnswerCorrect(question, selected);
+          const formatOptions = (values: readonly string[]) => optionOrder.get(question.number)!
+            .filter((option) => values.includes(option.value)).map(({ text }) => text).join(' / ');
+          const item = document.createElement('li');
+          const title = document.createElement('strong');
+          title.textContent = `${question.number}. ${question.text}`;
+          const response = document.createElement('p');
+          response.textContent = correct
+            ? `Верно. ${formatOptions(selected)}`
+            : `Ваш ответ: ${formatOptions(selected)}`;
+          item.append(title, response);
+          if (!correct) {
+            const expected = document.createElement('p');
+            expected.textContent = `Верный ответ: ${formatOptions([...question.correct])}`;
+            item.append(expected);
+          }
+          if (question.explanation) {
+            const explanation = document.createElement('p');
+            explanation.textContent = question.explanation;
+            item.append(explanation);
+          }
+          list.append(item);
+        }
+        section.append(list);
+        review.append(section);
+      }
+      form.hidden = true;
+      result.hidden = false;
+      scoreHeading.focus();
+    }
+
+    element('start').addEventListener('click', start);
+    element('retry').addEventListener('click', start);
+    options.addEventListener('change', () => {
+      answers.set(questions[index].number, selectedValues());
+      error.textContent = '';
+    });
+    previous.addEventListener('click', () => {
+      if (index === 0) return;
+      index -= 1;
+      showQuestion();
+    });
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const selected = selectedValues();
+      if (!selected.length) {
+        error.textContent = 'Выберите ответ, чтобы продолжить.';
+        options.querySelector<HTMLInputElement>('input')?.focus();
+        return;
+      }
+      answers.set(questions[index].number, selected);
+      if (index === questions.length - 1) {
+        showResult();
+      } else {
+        index += 1;
+        showQuestion();
+      }
+    });
+    element('fallback').hidden = true;
+    intro.hidden = false;
+  }
+</script>
+
+<style>
+  .course-quiz [hidden] {
+    display: none;
+  }
+
+  .course-quiz fieldset {
+    min-width: 0;
+    margin-bottom: var(--app-spacing);
+  }
+
+  .course-quiz legend {
+    float: none;
+    padding: 0;
+    font-size: 1.2em;
+    font-weight: 650;
+  }
+
+  .course-quiz [tabindex="-1"]:focus {
+    outline: none;
+  }
+
+  .quiz-progress,
+  .quiz-instructions {
+    color: var(--pico-muted-color);
+    font-size: var(--app-font-sm);
+  }
+
+  .quiz-options {
+    display: grid;
+    gap: var(--app-spacing-sm);
+  }
+
+  .quiz-options :global(label) {
+    display: flex;
+    align-items: baseline;
+    gap: var(--app-spacing-md);
+    width: 100%;
+    min-height: var(--app-touch-target);
+    margin: 0;
+    padding: var(--app-spacing-md);
+    border: 1px solid var(--pico-muted-border-color);
+    border-radius: var(--app-radius-sm);
+    cursor: pointer;
+  }
+
+  .quiz-options :global(label:has(input:checked)) {
+    border-color: var(--pico-primary);
+  }
+
+  .quiz-options :global(input) {
+    flex: none;
+    margin: 0;
+  }
+
+  .quiz-error:empty {
+    margin: 0;
+  }
+
+  .quiz-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--app-spacing-md);
+  }
+
+  .course-quiz button {
+    min-height: var(--app-touch-target);
+    width: auto;
+  }
+
+  .course-quiz [data-quiz-review] {
+    margin-top: var(--app-spacing-xl);
+  }
+
+  .course-quiz [data-quiz-review] :global(li p) {
+    margin-bottom: var(--app-spacing-sm);
+  }
+</style>

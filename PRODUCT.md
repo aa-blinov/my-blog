@@ -152,6 +152,13 @@ Present now, confirmed by the code:
   in the shared footer rather than repeating after every article.
 - Code blocks with a copy button, Mermaid diagrams with a toggle back to the
   source, a sitemap.
+- The home feed links to `/txt`, a plain-text index for `curl` and terminal
+  readers. A TXT link under each published article's title opens its text
+  version at `/blog/<path>.txt`. The index lists all published articles by
+  date and links to their text versions, the about page and published notes.
+  Text versions
+  preserve the written content, code and source links and link back to the
+  index and the web page with its interactive features.
 - The notes feed at `/notes/`: one file per note
   at `src/content/notes/YYYY-MM-DD-HHMM.md`, frontmatter of `date` and `draft`
   only, an anchor for every note, and up to the latest three on the home page.
@@ -181,6 +188,9 @@ Present now, confirmed by the code:
   archive chronology and RSS. Each lesson remains available in search.
   The contents page links to a single Markdown file with the entire course,
   generated from the published content with its own table of contents.
+  The second level's quiz reuses its Markdown questions in the browser.
+  It gives one point per exact answer, passes at 38 out of 50 and reveals
+  the score by lesson and the answer review after submission.
 - The interactive blocks of the antidepressants series: a radial map of the
   drugs with a card per substance, a picker that sorts them by the constraints
   ticked by the reader, a set of questions for the doctor with a checklist, a
@@ -197,8 +207,8 @@ Deliberately not true, and worth knowing before a change:
 - No behavioural analytics, comments, forms, or accounts. The optional view
   counter stores aggregate counts in a standalone service. Each page load
   with JavaScript counts as a view, including repeat loads. The shared footer
-  shows the site total, today's count in the Asia/Almaty time zone and the
-  first recorded day on every counted page. Each article also shows its count
+  shows the site total and today's count in the Asia/Almaty time zone on every
+  counted page. Each article also shows its count
   in the metadata line.
   Counts are hidden if the service is unavailable or unconfigured.
 - The interface, the articles and the feeds are in Russian. An English version

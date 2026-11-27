@@ -392,7 +392,7 @@ The latest notes appear below the feed once there are published notes.
 ### The site footer
 
 The footer groups its links in one wrapping row. The site-wide view count below
-the links keeps the total, today's count and the start date on one line where
+the links keeps the total and today's count on one line where
 space allows. Keyboard focus on footer links is shown with a thicker underline.
 Article counts use the existing date and reading-time line below the title.
 
@@ -413,7 +413,7 @@ chronological list.
 Linked section names sit above the title. The date and reading time sit
 below it, followed by a 1px rule. Asterisks take a muted tint of the current
 accent, separate the metadata fields in the article header and related article
-list, and wrap with the following field.
+list, and wrap with the following field. The TXT link sits in the same row.
 
 ### The series line
 

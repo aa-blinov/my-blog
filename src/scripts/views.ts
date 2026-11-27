@@ -1,4 +1,4 @@
-import { humanDate, plural } from '../utils/date';
+import { plural } from '../utils/date';
 
 const endpoint = import.meta.env.PUBLIC_VIEWS_ENDPOINT ||
   (import.meta.env.DEV ? 'http://127.0.0.1:8787/views' : '');
@@ -7,7 +7,6 @@ const number = new Intl.NumberFormat('ru-RU');
 interface ViewCounts {
   total: number;
   today: number;
-  started: string;
   article: number | null;
 }
 
@@ -27,16 +26,10 @@ async function recordView() {
   const site = document.querySelector<HTMLElement>('[data-site-views]');
   const total = site?.querySelector('[data-view-total]');
   const today = site?.querySelector('[data-view-today]');
-  const started = site?.querySelector<HTMLTimeElement>('time');
-  if (site && total && today && started && Number.isSafeInteger(counts.total) && Number.isSafeInteger(counts.today)) {
-    const date = new Date(counts.started);
-    if (Number.isFinite(date.getTime())) {
-      total.textContent = number.format(counts.total);
-      today.textContent = `+${number.format(counts.today)}`;
-      started.dateTime = counts.started;
-      started.textContent = humanDate(date);
-      site.hidden = false;
-    }
+  if (site && total && today && Number.isSafeInteger(counts.total) && Number.isSafeInteger(counts.today)) {
+    total.textContent = number.format(counts.total);
+    today.textContent = `+${number.format(counts.today)}`;
+    site.hidden = false;
   }
 
   const articleViews = document.querySelector<HTMLElement>('[data-article-views]');

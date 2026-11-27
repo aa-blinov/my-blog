@@ -18,6 +18,7 @@ const blog = defineCollection({
     tools: z.string().optional(), // набор инструментов из src/components/Tools.astro под текстом статьи
     questionnaire: z.string().optional(), // опросник из src/data/questionnaires/<имя>.ts
     questionnairePosition: z.enum(['start', 'end']).default('end'),
+    courseQuiz: z.literal('llm-business-advanced').optional(),
   }),
 });
 
