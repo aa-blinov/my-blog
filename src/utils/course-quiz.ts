@@ -32,7 +32,10 @@ export function parseCourseQuiz(
       const firstLine = content.split('\n', 1)[0].trim();
       const multiple = firstLine.endsWith('*(выберите все верные ответы)*');
       const text = firstLine.replace(/\s*\*\(выберите все верные ответы\)\*$/, '');
-      const options = Array.from(content.matchAll(/^- ([A-F])\) (.+)$/gm), ([, value, text]) => ({ value, text }));
+      const options = Array.from(content.matchAll(/^- ([A-F])\) (.+)$/gm), ([, value, rawText]) => ({
+        value,
+        text: rawText.replace(/\[([^\]]+)\]\([^)]+\)/g, '$1'),
+      }));
       const correct = settings.key[number - 1];
       const values = new Set(options.map((option) => option.value));
       if (!text || values.size < 2 || values.size !== options.length || !correct

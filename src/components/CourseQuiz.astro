@@ -8,6 +8,8 @@ interface Props {
 
 const { quiz, coursePath } = Astro.props;
 const total = quiz.blocks.reduce((count, block) => count + block.questions.length, 0);
+const lessonWords: Record<number, string> = { 5: 'пяти', 6: 'шести' };
+const lessonCountText = lessonWords[quiz.blocks.length] ?? String(quiz.blocks.length);
 ---
 
 <div class="course-quiz" data-course-quiz data-course-path={coursePath}>
@@ -18,7 +20,7 @@ const total = quiz.blocks.reduce((count, block) => count + block.questions.lengt
 
   <section aria-labelledby="quiz-intro-title" data-quiz-intro hidden>
     <h2 id="quiz-intro-title">Проверьте себя</h2>
-    <p>{total} вопросов по пяти урокам. За верный ответ начисляется один балл. Проходной балл — {quiz.passMark} из {total}.</p>
+    <p>{total} вопросов по {lessonCountText} урокам. За верный ответ начисляется один балл. Проходной балл — {quiz.passMark} из {total}.</p>
     <p>Вы сможете вернуться к предыдущему вопросу. Балл и разбор ответов появятся после завершения теста.</p>
     <button type="button" data-quiz-start>Начать тест</button>
   </section>

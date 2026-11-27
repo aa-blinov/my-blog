@@ -13,7 +13,7 @@ import { pickers } from '../../data/pickers';
 import Questionnaire from '../../components/Questionnaire.astro';
 import { questionnaires } from '../../data/questionnaires';
 import CourseQuiz from '../../components/CourseQuiz.astro';
-import { advancedCourseQuiz } from '../../data/advanced-course-quiz';
+import { courseQuizzes } from '../../data/course-quizzes';
 import { parseCourseQuiz } from '../../utils/course-quiz';
 import type { MarkdownHeading } from 'astro';
 import { formatDate, humanDate, readingMinutes, plural } from '../../utils/date';
@@ -211,8 +211,8 @@ const folderDescription = isBodyHub
     : newestTitles ? `Раздел «${title}» в блоге Александра Блинова. Свежие статьи: ${newestTitles}.` : undefined;
 const questionnaire = entry?.data.questionnaire ? questionnaires[entry.data.questionnaire] : undefined;
 const questionnaireFirst = entry?.data.questionnairePosition === 'start';
-const courseQuiz = entry?.data.courseQuiz === 'llm-business-advanced'
-  ? parseCourseQuiz(entry.body ?? '', advancedCourseQuiz)
+const courseQuiz = entry?.data.courseQuiz
+  ? parseCourseQuiz(entry.body ?? '', courseQuizzes[entry.data.courseQuiz])
   : undefined;
 ---
 
