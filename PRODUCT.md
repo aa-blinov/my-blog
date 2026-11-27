@@ -179,6 +179,8 @@ Present now, confirmed by the code:
   Its contents groups the lessons and learner materials by level. A series
   with `seriesKind: course` in its intro has one entry in the home feed,
   archive chronology and RSS. Each lesson remains available in search.
+  The contents page links to a single Markdown file with the entire course,
+  generated from the published content with its own table of contents.
 - The interactive blocks of the antidepressants series: a radial map of the
   drugs with a card per substance, a picker that sorts them by the constraints
   ticked by the reader, a set of questions for the doctor with a checklist, a

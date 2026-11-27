@@ -270,6 +270,9 @@ const questionnaireFirst = entry?.data.questionnairePosition === 'start';
       {AboutContent && (
         <div class="content">
           <AboutContent />
+          {folderSeries?.kind === 'course' && !folderSeries.about?.data.draft && (
+            <p><a href={`${BASE}blog/${folderSeries.folder}.md`} download>Скачать весь курс в Markdown</a></p>
+          )}
         </div>
       )}
       {isBodyHub && <div class="content"><p>{bodyHubDescription}</p></div>}
