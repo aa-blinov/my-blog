@@ -261,7 +261,7 @@ const questionnaireFirst = entry?.data.questionnairePosition === 'start';
   <Layout title={title} description={folderDescription}>
     <article>
       <div class="entry-header">
-        <p class="meta"><span>{folderSeries ? 'серия' : 'раздел'}</span></p>
+        <p class="meta"><span>{folderSeries ? (folderSeries.kind === 'course' ? 'курс' : 'серия') : 'раздел'}</span></p>
         <hgroup>
           <h1>{title}</h1>
         </hgroup>
@@ -305,7 +305,9 @@ const questionnaireFirst = entry?.data.questionnairePosition === 'start';
               {(index > 0 || directEntries.length > 0) && <hr class="section-divider" />}
               <header>
                 <h2 class="section-heading">
-                  {group.title}
+                  {group.series?.kind === 'course'
+                    ? <a class="post-title-link" href={`${BASE}blog/${group.series.folder}/`}>Курс «{group.title}»</a>
+                    : group.title}
                 </h2>
               </header>
               {group.nestedSeries.length > 0 && (
@@ -326,7 +328,7 @@ const questionnaireFirst = entry?.data.questionnairePosition === 'start';
                     <p class="summary">{bodyMaterialsCount} {plural(bodyMaterialsCount, 'материал', 'материала', 'материалов')}, включая серию «Тело и среда».</p>
                   </div>
                 </div>
-              ) : (group.entries.length > 0 || group.nestedSeries.length === 0) && <PostList posts={group.entries} numbered={!!group.series} />}
+              ) : group.series?.kind !== 'course' && (group.entries.length > 0 || group.nestedSeries.length === 0) && <PostList posts={group.entries} numbered={!!group.series} />}
             </section>
           ))}
         </>

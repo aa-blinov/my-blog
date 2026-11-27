@@ -5,6 +5,7 @@ export type BlogEntry = CollectionEntry<'blog'>;
 export interface Series {
   folder: string; // 'dev/agent'
   title: string; // из about-<папка>.md, иначе имя папки
+  kind: 'series' | 'course';
   about?: BlogEntry;
   parts: BlogEntry[]; // по номеру части
 }
@@ -22,7 +23,7 @@ export async function getSeries(folder: string, { includeDrafts = false }: Serie
   const name = folder.split('/').pop()!;
   const about = inFolder.find((e) => e.id === `${folder}/about-${name}`);
   const title = about?.data.title.replace(/:\s*Об этой секции$/, '') ?? name;
-  return { folder, title, about, parts };
+  return { folder, title, kind: about?.data.seriesKind ?? 'series', about, parts };
 }
 
 /** Все серии блога. Имя серии берётся из её about-файла, и любое место, где она названа, читает его отсюда. */

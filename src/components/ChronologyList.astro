@@ -10,15 +10,16 @@ interface Props {
   showDetails?: boolean;
   showCategory?: boolean;
   seriesTitles?: Record<string, string>;
+  courseFolders?: ReadonlySet<string>;
   /** Подряд идущие части одной серии сворачиваются в одну строку: пачка из пяти частей не съедает ленту */
   groupSeries?: boolean;
   /** Сколько строк видно сразу; остальные получают hidden, и лента их раскрывает по кнопке */
   limit?: number;
 }
 
-const { posts, showDetails = false, showCategory = false, seriesTitles = {}, groupSeries = false, limit } = Astro.props;
+const { posts, showDetails = false, showCategory = false, seriesTitles = {}, courseFolders = new Set<string>(), groupSeries = false, limit } = Astro.props;
 
-type Row = { kind: 'post'; entry: BlogEntry } | { kind: 'series'; folder: string; parts: BlogEntry[] };
+type Row = { kind: 'post'; entry: BlogEntry } | { kind: 'series' | 'course'; folder: string; parts: BlogEntry[] };
 const folderOf = (entry: BlogEntry) => entry.id.slice(0, entry.id.lastIndexOf('/'));
 const seriesFolderOf = (entry: BlogEntry) => (entry.data.part !== undefined && seriesTitles[folderOf(entry)] ? folderOf(entry) : null);
 
@@ -29,19 +30,21 @@ const SERIES_WINDOW = 7 * 24 * 3600 * 1000;
 const rows: Row[] = [];
 const openBatch = new Map<string, number>(); // папка серии -> индекс её строки
 for (const entry of posts) {
-  const folder = groupSeries ? seriesFolderOf(entry) : null;
+  const candidate = seriesFolderOf(entry);
+  const course = candidate !== null && courseFolders.has(candidate);
+  const folder = groupSeries || course ? candidate : null;
   const at = folder ? openBatch.get(folder) : undefined;
   if (folder && at !== undefined) {
     const row = rows[at];
-    const newest = row.kind === 'series' ? row.parts[0] : row.entry;
-    if (newest.data.date.getTime() - entry.data.date.getTime() <= SERIES_WINDOW) {
-      if (row.kind === 'series') row.parts.push(entry);
+    const newest = row.kind === 'post' ? row.entry : row.parts[0];
+    if (row.kind === 'course' || newest.data.date.getTime() - entry.data.date.getTime() <= SERIES_WINDOW) {
+      if (row.kind !== 'post') row.parts.push(entry);
       else rows[at] = { kind: 'series', folder, parts: [row.entry, entry] };
       continue;
     }
   }
   if (folder) openBatch.set(folder, rows.length);
-  rows.push({ kind: 'post', entry });
+  rows.push(folder && course ? { kind: 'course', folder, parts: [entry] } : { kind: 'post', entry });
 }
 // Тема строки для фильтра на главной: верхняя папка статьи
 const topicOf = (row: Row) => (row.kind === 'post' ? row.entry.id : row.parts[0].id).split('/')[0];
@@ -86,6 +89,13 @@ function categoryLabel(entry: BlogEntry): string {
               <span class="chronology-reading-time">{readingLabel(row.entry)}</span>
             </>
           )}
+        </a>
+      </li>
+    ) : row.kind === 'course' ? (
+      <li data-topic={topicOf(row)} data-count={row.parts.length} hidden={limit !== undefined && index >= limit}>
+        <a class="post-title-link chronology-link" href={`${BASE}blog/${row.folder}/`}>
+          <span class="chronology-title">Курс «{seriesTitles[row.folder]}»</span>
+          <time datetime={formatDate(row.parts[0].data.date)}>{humanDayMonth(row.parts[0].data.date)}</time>
         </a>
       </li>
     ) : (

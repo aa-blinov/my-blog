@@ -19,6 +19,7 @@ const seriesFolders = [...new Set(entries.filter((entry) => entry.data.part !== 
 const series = (await Promise.all(seriesFolders.map((folder) => getSeries(folder))))
   .filter((item) => item !== null);
 const seriesTitles = Object.fromEntries(series.map((item) => [item.folder, item.title]));
+const courseFolders = new Set(series.filter((item) => item.kind === 'course').map((item) => item.folder));
 const seriesUnder = (parent: string) => series.filter((item) => {
   const mapped = sectionPagePath(item.folder);
   const seriesParent = mapped !== item.folder ? mapped : sectionPagePath(item.folder.slice(0, item.folder.lastIndexOf('/')));
@@ -55,14 +56,14 @@ const years = [...byYear].map(([year, posts]) => {
             <a href={`${BASE}blog/${name}/`}>{sectionTitle(name)} <span class="tag-count">{posts.length}</span></a>
             {hasChildren(name) && <ul class="section-tags archive-topic-children archive-topic-branches" role="list">
               {seriesUnder(name).map((item) => (
-                <li class="archive-series"><a href={`${BASE}blog/${item.folder}/`}>Серия «{item.title}»</a></li>
+                <li class="archive-series"><a href={`${BASE}blog/${item.folder}/`}>{item.kind === 'course' ? 'Курс' : 'Серия'} «{item.title}»</a></li>
               ))}
               {name === 'science' && scienceTopics.map(({ path, title }) => (
                 <li>
                   <a href={`${BASE}blog/${path}/`}>{title}</a>
                   {seriesUnder(path).length > 0 && <ul class="section-tags archive-topic-children archive-topic-branches" role="list">
                     {seriesUnder(path).map((item) => (
-                      <li class="archive-series"><a href={`${BASE}blog/${item.folder}/`}>Серия «{item.title}»</a></li>
+                      <li class="archive-series"><a href={`${BASE}blog/${item.folder}/`}>{item.kind === 'course' ? 'Курс' : 'Серия'} «{item.title}»</a></li>
                     ))}
                   </ul>}
                 </li>
@@ -92,7 +93,7 @@ const years = [...byYear].map(([year, posts]) => {
         {months.map(({ id, name, posts }) => (
           <section class="archive-month">
             <h3 id={id}>{name}</h3>
-            <ChronologyList posts={posts} showCategory seriesTitles={seriesTitles} />
+            <ChronologyList posts={posts} showCategory seriesTitles={seriesTitles} courseFolders={courseFolders} />
           </section>
         ))}
       </section>

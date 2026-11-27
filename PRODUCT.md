@@ -175,6 +175,10 @@ Present now, confirmed by the code:
   `ai/ai-for-the-unprepared/` with five parts, `dev/agent/` with nine,
   `science/body-and-environment/` with six, `science/mind/antidepressants/`
   with eight.
+- The course “Language models in business” lives under `ai/llm-for-business/`.
+  Its contents groups the lessons and learner materials by level. A series
+  with `seriesKind: course` in its intro has one entry in the home feed,
+  archive chronology and RSS. Each lesson remains available in search.
 - The interactive blocks of the antidepressants series: a radial map of the
   drugs with a card per substance, a picker that sorts them by the constraints
   ticked by the reader, a set of questions for the doctor with a checklist, a

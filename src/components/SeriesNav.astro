@@ -15,11 +15,12 @@ const prev = idx > 0 ? series.parts[idx - 1] : null;
 const next = idx >= 0 && idx < series.parts.length - 1 ? series.parts[idx + 1] : null;
 const href = (e: BlogEntry) => `${BASE}blog/${e.id}/`;
 const tocHref = `${BASE}blog/${series.folder}/`;
+const label = series.kind === 'course' ? 'Курс' : 'Серия';
 ---
 
 {where === 'head' ? (
   <p class="series-line">
-    <span>Серия <a href={tocHref}>«{series.title}»</a></span>
+    <span>{label} <a href={tocHref}>«{series.title}»</a></span>
     <span class="meta-sep" aria-hidden="true">~</span>
     <span>часть {entry.data.part} из {series.parts.length}</span>
   </p>
@@ -28,12 +29,12 @@ const tocHref = `${BASE}blog/${series.folder}/`;
     {prev ? (
       <a href={href(prev)} class="series-prev" rel="prev"><span class="series-label"><Arrow dir="left" size={14} /> часть {prev.data.part}</span>{prev.data.title}</a>
     ) : (
-      <a href={tocHref} class="series-prev"><span class="series-label"><Arrow dir="left" size={14} /> серия</span>Оглавление</a>
+      <a href={tocHref} class="series-prev"><span class="series-label"><Arrow dir="left" size={14} /> {label.toLowerCase()}</span>Оглавление</a>
     )}
     {next ? (
       <a href={href(next)} class="series-next" rel="next"><span class="series-label">часть {next.data.part} <Arrow dir="right" size={14} /></span>{next.data.title}</a>
     ) : (
-      <a href={tocHref} class="series-next"><span class="series-label">серия <Arrow dir="right" size={14} /></span>Оглавление</a>
+      <a href={tocHref} class="series-next"><span class="series-label">{label.toLowerCase()} <Arrow dir="right" size={14} /></span>Оглавление</a>
     )}
   </nav>
 )}

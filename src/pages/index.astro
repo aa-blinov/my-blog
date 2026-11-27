@@ -6,7 +6,7 @@ import Arrow from '../components/Arrow.astro';
 import { getCollection, render } from 'astro:content';
 import { sortByDateDesc } from '../utils/date';
 import { BASE, sectionTitle } from '../config';
-import { getSeriesTitles, isAbout, seriesOf } from '../utils/series';
+import { getAllSeries, isAbout, seriesOf } from '../utils/series';
 
 const pages = (await getCollection('pages')).filter((e) => !e.data.draft);
 const homeEntry = pages.find((e) => e.id === 'main');
@@ -18,7 +18,9 @@ const articles = await getCollection('blog', (entry) =>
   !isAbout(entry.id) && (!entry.data.draft || (includeDrafts && seriesOf(entry) !== null))
 );
 const posts = sortByDateDesc(articles);
-const seriesTitles = await getSeriesTitles({ includeDrafts });
+const series = await getAllSeries({ includeDrafts });
+const seriesTitles = Object.fromEntries(series.map(({ folder, title }) => [folder, title]));
+const courseFolders = new Set(series.filter((item) => item.kind === 'course').map((item) => item.folder));
 const topSections = [...new Set(articles.map((p) => p.id.split('/')[0]))]
   .map((s) => ({ slug: s, title: sectionTitle(s), count: articles.filter((p) => p.id.startsWith(s + '/')).length }))
   .sort((a, b) => b.count - a.count);
@@ -56,7 +58,7 @@ if (homeEntry) {
       ))}
     </ul>
     <p class="feed-status needs-js sr-only" role="status" aria-live="polite"></p>
-    <ChronologyList posts={posts} showDetails showCategory groupSeries limit={FEED_PAGE} seriesTitles={seriesTitles} />
+    <ChronologyList posts={posts} showDetails showCategory groupSeries limit={FEED_PAGE} seriesTitles={seriesTitles} courseFolders={courseFolders} />
     <p class="feed-more">
       <button type="button" class="feed-more-button needs-js">Показать ещё</button>
       <a href={`${BASE}blog/`} class="post-title-link all-articles-link">Все статьи по датам <Arrow /></a>
